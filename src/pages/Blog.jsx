@@ -56,7 +56,7 @@ const Blog = () => {
                 <div className="mb-40 max-w-5xl">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-mono tracking-widest uppercase mb-6 shadow-[0_0_15px_rgba(110,231,183,0.1)]">
                         <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                        Blog de Guerrilla
+                        Blog del Gorila
                     </div>
                     <h1 className="font-display text-5xl md:text-8xl font-black leading-tight mb-8 text-white tracking-tighter uppercase italic">
                         Automatización <br />
