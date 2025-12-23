@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #6EE7B7;
+  --color-primary-hover: #34D399;
+  --color-background-dark: #050505;
+  --color-surface-dark: #0F0F0F;
+  --color-border-dark: #1F2937;
+  --color-text-muted: #9CA3AF;
+
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  --animate-fade-in: fadeIn 0.5s ease-out forwards;
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-background-dark text-white font-body antialiased;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #050505;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}
+
+@layer components {
+  .scanline {
+    width: 100%;
+    height: 100px;
+    z-index: 10;
+    background: linear-gradient(0deg,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(110, 231, 183, 0.1) 50%,
+        rgba(0, 0, 0, 0) 100%);
+    opacity: 0.1;
+    position: absolute;
+    bottom: 100%;
+    animation: scanline 10s linear infinite;
+  }
+
+  @keyframes scanline {
+    0% {
+      bottom: 100%;
+    }
+
+    100% {
+      bottom: -100px;
+    }
+  }
+
+  .grid-pattern {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right,
+        rgba(255, 255, 255, 0.05) 1px,
+        transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  }
+}
