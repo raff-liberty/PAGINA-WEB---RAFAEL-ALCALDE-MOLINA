@@ -40,7 +40,7 @@ const Navbar = () => {
                         <img
                             src="/favicon.png"
                             alt="Engorilao Icon"
-                            className="h-8 md:h-9 w-auto"
+                            className="h-12 md:h-14 w-auto"
                         />
                         <div className="flex flex-col">
                             <span className="font-display font-bold text-2xl md:text-3xl tracking-tight text-primary leading-none">
