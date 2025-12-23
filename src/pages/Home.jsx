@@ -609,7 +609,7 @@ const Home = () => {
                 <div className="mt-40 mb-40 max-w-4xl mx-auto">
                     <div className="bg-[#1a1a1a] border border-white/10 p-8 md:p-12 rounded-2xl">
                         <h3 className="font-display text-2xl font-bold text-white mb-4">
-                            Inversión típica
+                            Inversión típica <span className="text-gray-400 font-normal text-lg">(aquí vamos de cara)</span>
                         </h3>
                         <p className="text-gray-300 leading-relaxed mb-6">
                             La mayoría de proyectos están entre <span className="text-primary font-semibold">800-2.500€</span>
