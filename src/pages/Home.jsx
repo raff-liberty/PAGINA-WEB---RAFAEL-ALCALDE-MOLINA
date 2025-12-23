@@ -624,7 +624,7 @@ const Home = () => {
                             <li><span className="text-primary font-semibold">Mejora de márgenes:</span> Invertir en IA te permite optimizar recursos y aumentar rentabilidad</li>
                         </ul>
                         <p className="text-gray-400 text-sm leading-relaxed">
-                            En la mayoría de casos, la inversión se amortiza en menos de 6 meses. Después de eso, es ganancia neta.
+                            En la mayoría de casos, la inversión se amortiza en menos de 2 meses. Después de eso, es ganancia neta.
                         </p>
                     </div>
                 </div>
