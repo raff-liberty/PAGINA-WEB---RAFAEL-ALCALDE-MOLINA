@@ -621,8 +621,8 @@ const Home = () => {
                                 <h3 className="font-display text-2xl md:text-3xl font-bold text-white">
                                     Lo que vas a invertir
                                 </h3>
-                                <p className="text-gray-400 text-sm md:text-base mt-2 leading-relaxed">
-                                    Aquí no ocultamos lo que vale. Esto vale lo que vale.
+                                <p className="text-gray-500 text-xs italic mt-1 leading-relaxed">
+                                    (Aquí no ocultamos lo que vale. Esto vale lo que vale.)
                                 </p>
                             </div>
 
