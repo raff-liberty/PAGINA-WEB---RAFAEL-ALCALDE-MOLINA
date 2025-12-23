@@ -365,141 +365,66 @@ const Home = () => {
                     </div>
 
 
-                    {useCarousel ? (
-                        // Horizontal scrollable carousel for 4+ cards
-                        <div className="relative">
-                            {/* Left gradient fade - subtle */}
-                            <div className="absolute left-0 top-0 bottom-6 w-12 bg-gradient-to-r from-background-dark/40 to-transparent z-10 pointer-events-none"></div>
-
-                            {/* Right gradient fade - subtle */}
-                            <div className="absolute right-0 top-0 bottom-6 w-12 bg-gradient-to-l from-background-dark/40 to-transparent z-10 pointer-events-none"></div>
-
-                            <div className="overflow-x-auto pb-6 scroll-smooth" style={{
-                                scrollbarWidth: 'thin',
-                                scrollbarColor: 'rgba(110, 231, 183, 0.3) transparent'
-                            }}>
-                                <motion.div layout className="flex gap-6 min-w-max px-2">
-                                    <AnimatePresence mode="popLayout">
-                                        {filteredSolutions.map((area, idx) => (
-                                            <motion.div
-                                                layout
-                                                key={area.title}
-                                                initial={{ opacity: 0, x: 20 }}
-                                                animate={{ opacity: 1, x: 0 }}
-                                                exit={{ opacity: 0, x: -20 }}
-                                                transition={{ duration: 0.4, delay: idx * 0.05 }}
-                                                className={`group relative border p-8 rounded-2xl transition-all duration-500 overflow-hidden shadow-2xl flex flex-col w-[340px] flex-shrink-0 ${area.isCustom
-                                                    ? 'bg-primary/5 border-primary/30 hover:bg-primary/10 hover:border-primary/50'
-                                                    : 'bg-[#252525] border-white/20 hover:border-primary/50 hover:bg-[#2a2a2a]'
-                                                    }`}
-                                            >
-                                                {/* Subtle inner glow top */}
-                                                <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none"></div>
-
-                                                <div className="relative z-10 flex-grow">
-                                                    <div className="flex items-center gap-4 mb-6">
-                                                        <div className={`p-3 rounded-xl transition-all duration-300 ${area.isCustom ? 'bg-primary text-gray-900 group-hover:scale-110' : 'bg-white/5 text-primary group-hover:bg-primary/10 group-hover:scale-110'
-                                                            }`}>
-                                                            <area.icon className="w-6 h-6" />
-                                                        </div>
-                                                        <h3 className="font-display text-xl font-bold text-white group-hover:text-primary transition-colors">{area.title}</h3>
-                                                    </div>
-                                                    <ul className="space-y-4">
-                                                        {area.items.map((item, i) => (
-                                                            <li key={i} className="flex items-start gap-3 text-gray-400 group-hover:text-gray-300 transition-colors">
-                                                                <div className={`mt-1.5 w-1.5 h-1.5 rounded-full transition-all flex-shrink-0 ${area.isCustom ? 'bg-primary' : 'bg-primary/40 group-hover:bg-primary group-hover:shadow-[0_0_8px_rgba(110,231,183,0.6)]'
-                                                                    }`} />
-                                                                <span className="text-base leading-snug">{item}</span>
-                                                            </li>
-                                                        ))}
-                                                    </ul>
-                                                </div>
-
-                                                {/* Decoration for custom card */}
-                                                {area.isCustom && (
-                                                    <div className="mt-8 pt-6 border-t border-primary/10">
-                                                        <p className="text-[10px] font-mono uppercase tracking-widest text-primary/60">Diseñado para tu caos</p>
-                                                    </div>
-                                                )}
-
-                                                {/* Bottom highlight line */}
-                                                <div className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-transparent via-primary/40 to-transparent w-0 group-hover:w-full transition-all duration-700"></div>
-                                            </motion.div>
-                                        ))}
-                                    </AnimatePresence>
-                                </motion.div>
-                            </div>
-
-                            {/* Enhanced scroll indicator */}
-                            <div className="flex justify-center mt-6 gap-3">
+                    {/* Solution Areas - Direct Grid Layout (Engorilate Style) */}
+                    <motion.div
+                        layout
+                        className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto"
+                    >
+                        <AnimatePresence mode="popLayout">
+                            {filteredSolutions.map((area, idx) => (
                                 <motion.div
-                                    initial={{ opacity: 0, y: 10 }}
+                                    layout
+                                    key={area.title}
+                                    initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
-                                    className="flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10"
+                                    exit={{ opacity: 0, y: -20 }}
+                                    transition={{ duration: 0.3, delay: idx * 0.1 }}
+                                    className={`group relative border p-8 rounded-2xl transition-all duration-300 overflow-hidden flex flex-col ${area.isCustom
+                                        ? 'bg-primary/5 border-primary/30 hover:bg-primary/10 hover:border-primary/50 hover:shadow-[0_0_30px_rgba(110,231,183,0.2)]'
+                                        : 'bg-[#1a1a1a] border-white/10 hover:border-primary/30 hover:bg-[#1f1f1f] hover:shadow-[0_0_20px_rgba(110,231,183,0.1)]'
+                                        }`}
                                 >
-                                    <div className="flex gap-1.5">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></div>
-                                        <div className="w-1.5 h-1.5 rounded-full bg-primary/50 animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-                                        <div className="w-1.5 h-1.5 rounded-full bg-primary/30 animate-pulse" style={{ animationDelay: '0.4s' }}></div>
-                                    </div>
-                                    <ArrowRight className="w-4 h-4 text-primary animate-pulse" />
-                                    <span className="text-xs text-gray-400 font-mono">Desliza para ver más</span>
-                                </motion.div>
-                            </div>
-                        </div>
-                    ) : (
-                        // Standard 3-column grid for 3 or fewer cards
-                        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <AnimatePresence mode="popLayout">
-                                {filteredSolutions.map((area, idx) => (
-                                    <motion.div
-                                        layout
-                                        key={area.title}
-                                        initial={{ opacity: 0, scale: 0.9 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        exit={{ opacity: 0, scale: 0.9 }}
-                                        transition={{ duration: 0.4, delay: idx * 0.05 }}
-                                        className={`group relative border p-8 rounded-2xl transition-all duration-500 overflow-hidden shadow-2xl flex flex-col ${area.isCustom
-                                            ? 'bg-primary/5 border-primary/30 hover:bg-primary/10 hover:border-primary/50'
-                                            : 'bg-[#252525] border-white/20 hover:border-primary/50 hover:bg-[#2a2a2a]'
-                                            }`}
-                                    >
-                                        {/* Subtle inner glow top */}
-                                        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none"></div>
+                                    {/* Background glow effect */}
+                                    <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/10 blur-[80px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-                                        <div className="relative z-10 flex-grow">
-                                            <div className="flex items-center gap-4 mb-6">
-                                                <div className={`p-3 rounded-xl transition-all duration-300 ${area.isCustom ? 'bg-primary text-gray-900 group-hover:scale-110' : 'bg-white/5 text-primary group-hover:bg-primary/10 group-hover:scale-110'
-                                                    }`}>
-                                                    <area.icon className="w-6 h-6" />
-                                                </div>
-                                                <h3 className="font-display text-xl font-bold text-white group-hover:text-primary transition-colors">{area.title}</h3>
+                                    <div className="relative z-10 flex-grow">
+                                        {/* Icon and Title */}
+                                        <div className="flex items-center gap-4 mb-6">
+                                            <div className={`flex items-center justify-center w-12 h-12 rounded-xl ${area.isCustom
+                                                ? 'bg-primary/20 text-primary'
+                                                : 'bg-primary/10 text-primary'
+                                                }`}>
+                                                {area.icon}
                                             </div>
-                                            <ul className="space-y-4">
-                                                {area.items.map((item, i) => (
-                                                    <li key={i} className="flex items-start gap-3 text-gray-400 group-hover:text-gray-300 transition-colors">
-                                                        <div className={`mt-1.5 w-1.5 h-1.5 rounded-full transition-all flex-shrink-0 ${area.isCustom ? 'bg-primary' : 'bg-primary/40 group-hover:bg-primary group-hover:shadow-[0_0_8px_rgba(110,231,183,0.6)]'
-                                                            }`} />
-                                                        <span className="text-base leading-snug">{item}</span>
-                                                    </li>
-                                                ))}
-                                            </ul>
+                                            <h3 className="font-display text-xl font-bold text-white group-hover:text-primary transition-colors">
+                                                {area.title}
+                                            </h3>
                                         </div>
 
-                                        {/* Decoration for custom card */}
+                                        {/* Features List */}
+                                        <ul className="space-y-3">
+                                            {area.items.map((item, i) => (
+                                                <li key={i} className="flex items-start gap-3 text-gray-300 text-sm group/item">
+                                                    <span className="text-primary mt-0.5 group-hover/item:scale-110 transition-transform">▸</span>
+                                                    <span className="leading-relaxed">{item}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+
+                                        {/* Custom solution badge */}
                                         {area.isCustom && (
-                                            <div className="mt-8 pt-6 border-t border-primary/10">
-                                                <p className="text-[10px] font-mono uppercase tracking-widest text-primary/60">Diseñado para tu caos</p>
+                                            <div className="mt-6 pt-6 border-t border-primary/20">
+                                                <p className="text-xs font-mono uppercase tracking-widest text-primary/80">Diseñado para tu caos</p>
                                             </div>
                                         )}
+                                    </div>
 
-                                        {/* Bottom highlight line */}
-                                        <div className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-transparent via-primary/40 to-transparent w-0 group-hover:w-full transition-all duration-700"></div>
-                                    </motion.div>
-                                ))}
-                            </AnimatePresence>
-                        </motion.div>
-                    )}
+                                    {/* Bottom accent line */}
+                                    <div className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent w-0 group-hover:w-full transition-all duration-500"></div>
+                                </motion.div>
+                            ))}
+                        </AnimatePresence>
+                    </motion.div>
                 </div>
 
                 {/* Testimonials Section */}
@@ -724,7 +649,7 @@ const Home = () => {
                     </motion.div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 
