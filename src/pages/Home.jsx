@@ -615,9 +615,16 @@ const Home = () => {
                             La mayoría de proyectos están entre <span className="text-primary font-semibold">800-2.500€</span>
                             {' '}(depende de la complejidad y el sector).
                         </p>
+                        <p className="text-gray-300 text-base leading-relaxed mb-4">
+                            El ROI viene por tres vías:
+                        </p>
+                        <ul className="text-gray-300 text-base leading-relaxed space-y-2 mb-4 list-disc list-inside">
+                            <li><span className="text-primary font-semibold">Incremento de rotación:</span> Más clientes atendidos con el mismo equipo</li>
+                            <li><span className="text-primary font-semibold">Reducción de errores:</span> Menos facturas olvidadas, stock mal gestionado, o mesas vacías</li>
+                            <li><span className="text-primary font-semibold">Mejora de márgenes:</span> Invertir en IA te permite optimizar recursos y aumentar rentabilidad</li>
+                        </ul>
                         <p className="text-gray-400 text-sm leading-relaxed">
-                            No te voy a prometer ROI mágico. Lo que sí te garantizo: menos tiempo perdido en tareas mecánicas,
-                            menos errores por despiste, y un negocio que funciona aunque no estés encima.
+                            En la mayoría de casos, la inversión se amortiza en menos de 6 meses. Después de eso, es ganancia neta.
                         </p>
                     </div>
                 </div>
