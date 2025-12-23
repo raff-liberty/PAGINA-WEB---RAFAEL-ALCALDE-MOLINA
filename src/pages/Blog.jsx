@@ -6,13 +6,12 @@ import { supabase } from '../lib/supabaseClient';
 
 const Blog = () => {
     const categories = [
+        "Pierdo tiempo",
+        "Pierdo dinero",
+        "Pierdo clientes",
+        "Casos Reales",
         "Automatización",
-        "Gestión",
-        "Business Intelligence",
-        "Productividad",
-        "Facturación",
-        "Inventario",
-        "Restaurantes"
+        "Gestión"
     ];
 
     const [selectedCategory, setSelectedCategory] = useState('Todos');
@@ -42,7 +41,7 @@ const Blog = () => {
 
     const filteredPosts = selectedCategory === 'Todos'
         ? posts
-        : posts.filter(post => post.category === selectedCategory);
+        : posts.filter(post => post.category === selectedCategory || post.pain_point === selectedCategory);
 
     return (
         <div className="relative pt-64 pb-48 min-h-screen">
@@ -54,16 +53,17 @@ const Blog = () => {
 
             <div className="relative z-10 max-w-7xl mx-auto px-6">
                 {/* Header */}
-                <div className="mb-40 max-w-4xl">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-mono tracking-widest uppercase mb-6">
+                <div className="mb-40 max-w-5xl">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-mono tracking-widest uppercase mb-6 shadow-[0_0_15px_rgba(110,231,183,0.1)]">
                         <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                        Blog
+                        Blog de Guerrilla
                     </div>
-                    <h1 className="font-display text-4xl md:text-6xl font-bold leading-tight mb-6 text-white">
-                        Automatización <span className="text-primary">Sin Humo</span>
+                    <h1 className="font-display text-5xl md:text-8xl font-black leading-tight mb-8 text-white tracking-tighter uppercase italic">
+                        Automatización <br />
+                        <span className="text-primary drop-shadow-[0_0_30px_rgba(110,231,183,0.3)]">Sin Humo</span>
                     </h1>
-                    <p className="text-xl text-gray-400 font-light max-w-2xl leading-relaxed">
-                        Guías prácticas, casos reales y soluciones honestas para pequeños negocios. Sin jerga técnica, solo resultados.
+                    <p className="text-xl md:text-2xl text-gray-400 font-light max-w-3xl leading-relaxed italic border-l-4 border-primary/30 pl-6">
+                        "Si el artículo no te ahorra al menos 10 horas al mes, no lo publicamos. Aquí venimos a facturar, no a leer cuentos de hadas."
                     </p>
                 </div>
 
@@ -116,40 +116,68 @@ const Blog = () => {
                                     >
                                         <Link
                                             to={`/blog/${post.slug}`}
-                                            className="group block bg-[#222222] border border-white/10 rounded-2xl overflow-hidden hover:border-primary/50 transition-all duration-300 hover:bg-[#2a2a2a] h-full flex flex-col"
+                                            className="group relative block bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] border border-white/10 rounded-3xl overflow-hidden hover:border-primary/50 transition-all duration-500 hover:shadow-[0_0_40px_rgba(110,231,183,0.15)] h-full flex flex-col"
                                         >
-                                            {/* Category Badge */}
-                                            <div className="p-6 pb-4">
-                                                <div className="inline-flex items-center gap-2 px-2 py-1 rounded bg-primary/10 text-primary text-xs font-mono mb-4">
-                                                    {post.category}
+                                            {/* Top indicators */}
+                                            <div className="absolute top-4 right-4 z-20 flex gap-2">
+                                                <div className="px-2 py-1 rounded bg-primary text-gray-900 text-[10px] font-black uppercase tracking-tighter shadow-[0_0_10px_rgba(110,231,183,0.5)]">
+                                                    Zero Humo
+                                                </div>
+                                            </div>
+
+                                            {/* Content */}
+                                            <div className="p-8 pb-4 relative z-10">
+                                                <div className="flex items-center gap-3 mb-6">
+                                                    <div className="h-px w-8 bg-primary/30"></div>
+                                                    <span className="text-primary text-[10px] font-mono uppercase tracking-[0.2em]">
+                                                        {post.category}
+                                                    </span>
                                                 </div>
 
-                                                <h2 className="font-display text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors line-clamp-2">
+                                                <h2 className="font-display text-2xl md:text-3xl font-black text-white mb-4 group-hover:text-primary transition-colors leading-[1.1] tracking-tight">
                                                     {post.title}
                                                 </h2>
 
-                                                <p className="text-gray-400 text-sm leading-relaxed mb-4 line-clamp-3">
-                                                    {post.excerpt}
+                                                <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-3 font-light italic">
+                                                    "{post.excerpt}"
                                                 </p>
+
+                                                {/* Potential Savings Indicator */}
+                                                <div className="mb-6 p-4 rounded-xl bg-white/5 border border-white/5 group-hover:border-primary/20 transition-colors">
+                                                    <div className="flex items-center justify-between">
+                                                        <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">Ahorro Estimado</span>
+                                                        <span className="text-primary font-bold text-sm">~{post.savings || '10h/mes'}</span>
+                                                    </div>
+                                                    <div className="mt-2 h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                                                        <motion.div
+                                                            initial={{ width: 0 }}
+                                                            whileInView={{ width: '70%' }}
+                                                            className="h-full bg-primary/40 group-hover:bg-primary transition-all duration-1000"
+                                                        />
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             {/* Footer */}
-                                            <div className="mt-auto p-6 pt-0 flex items-center justify-between text-xs text-gray-500">
-                                                <div className="flex items-center gap-4">
-                                                    <span className="flex items-center gap-1">
-                                                        <Clock className="w-3 h-3" />
+                                            <div className="mt-auto p-8 pt-0 flex items-center justify-between text-[10px] text-gray-500 font-mono uppercase tracking-widest">
+                                                <div className="flex items-center gap-6">
+                                                    <span className="flex items-center gap-2">
+                                                        <Clock className="w-3 h-3 text-primary" />
                                                         {post.read_time}
                                                     </span>
-                                                    <span className="flex items-center gap-1">
-                                                        <Calendar className="w-3 h-3" />
+                                                    <span className="flex items-center gap-2">
+                                                        <Calendar className="w-3 h-3 text-primary" />
                                                         {new Date(post.publish_date).toLocaleDateString('es-ES', { month: 'short', day: 'numeric' })}
                                                     </span>
                                                 </div>
-                                                <ArrowRight className="w-4 h-4 text-gray-600 group-hover:text-primary transition-all group-hover:translate-x-1" />
+                                                <div className="flex items-center gap-2 text-primary group-hover:gap-4 transition-all">
+                                                    <span>LEER</span>
+                                                    <ArrowRight className="w-4 h-4" />
+                                                </div>
                                             </div>
 
-                                            {/* Bottom highlight */}
-                                            <div className="h-1 bg-primary/30 w-0 group-hover:w-full transition-all duration-700"></div>
+                                            {/* Hover Glow */}
+                                            <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-primary/10 blur-[60px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                                         </Link>
                                     </motion.article>
                                 ))

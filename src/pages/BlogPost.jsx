@@ -88,43 +88,56 @@ const BlogPost = () => {
                     </div>
                 ) : (
                     <article>
-                        <div className="mb-8">
-                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-primary/10 text-primary text-xs font-mono mb-6">
-                                {post.category}
+                        <div className="mb-12 border-b border-white/5 pb-12">
+                            <div className="flex flex-wrap items-center gap-4 mb-8">
+                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-primary text-gray-900 text-xs font-black uppercase tracking-tighter shadow-[0_0_15px_rgba(110,231,183,0.3)]">
+                                    Zero Humo
+                                </div>
+                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded border border-primary/20 bg-primary/5 text-primary text-xs font-mono uppercase tracking-widest">
+                                    {post.category}
+                                </div>
+                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded border border-white/10 bg-white/5 text-gray-400 text-xs font-mono uppercase tracking-widest">
+                                    Ahorro: {post.savings || '10h/mes'}
+                                </div>
                             </div>
 
-                            <h1 className="font-display text-4xl md:text-5xl font-bold leading-tight mb-6 text-white">
+                            <h1 className="font-display text-4xl md:text-7xl font-black leading-[1.05] mb-8 text-white tracking-tighter uppercase italic">
                                 {post.title}
                             </h1>
 
-                            <div className="flex items-center gap-6 text-sm text-gray-500">
+                            <div className="flex flex-wrap items-center gap-6 text-xs text-gray-500 font-mono uppercase tracking-widest">
                                 <span className="flex items-center gap-2">
-                                    <Calendar className="w-4 h-4" />
+                                    <Calendar className="w-3.5 h-3.5 text-primary" />
                                     {new Date(post.publish_date).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}
                                 </span>
                                 <span className="flex items-center gap-2">
-                                    <Clock className="w-4 h-4" />
+                                    <Clock className="w-3.5 h-3.5 text-primary" />
                                     {post.read_time} de lectura
                                 </span>
                             </div>
                         </div>
 
                         {/* Article Content */}
-                        <div className="prose prose-invert prose-lg max-w-none">
-                            <div className="bg-[#222222] border border-white/10 p-8 md:p-12 rounded-2xl">
-                                <div className="text-gray-300 leading-relaxed space-y-6 blog-content">
-                                    {(post.content || post.excerpt).split('\n').map((line, idx) => {
+                        <div className="prose prose-invert prose-lg max-w-none mb-20">
+                            <div className="bg-gradient-to-b from-[#1a1a1a] to-[#0f0f0f] border border-white/10 p-8 md:p-16 rounded-[2rem] shadow-2xl relative overflow-hidden">
+                                {/* Subtle industrial accent */}
+                                <div className="absolute top-0 right-0 p-8 opacity-5">
+                                    <div className="w-32 h-32 border-8 border-primary rounded-full"></div>
+                                </div>
+
+                                <div className="relative z-10 text-gray-300 leading-relaxed space-y-8 blog-content text-lg font-light">
+                                    {(post.content || post.excerpt || '').split('\n').map((line, idx) => {
                                         // Headers
                                         if (line.startsWith('## ')) {
-                                            return <h2 key={idx} className="text-2xl font-display font-bold text-white mt-8 mb-4">{line.replace('## ', '')}</h2>;
+                                            return <h2 key={idx} className="text-3xl font-display font-black text-white mt-12 mb-6 uppercase tracking-tight italic border-b border-primary/20 pb-4">{line.replace('## ', '')}</h2>;
                                         }
                                         // Horizontal rule
                                         if (line === '---') {
-                                            return <hr key={idx} className="border-white/10 my-8" />;
+                                            return <hr key={idx} className="border-white/5 my-12" />;
                                         }
                                         // Empty line
                                         if (line.trim() === '') {
-                                            return <div key={idx} className="h-2" />;
+                                            return <div key={idx} className="h-4" />;
                                         }
                                         // Bold text with **
                                         if (line.includes('**')) {
@@ -132,28 +145,19 @@ const BlogPost = () => {
                                             return (
                                                 <p key={idx} className="leading-relaxed">
                                                     {parts.map((part, i) =>
-                                                        i % 2 === 1 ? <strong key={i} className="text-white font-semibold">{part}</strong> : part
+                                                        i % 2 === 1 ? <strong key={i} className="text-white font-bold bg-primary/10 px-1 rounded">{part}</strong> : part
                                                     )}
                                                 </p>
                                             );
                                         }
                                         // List items
                                         if (line.startsWith('- ')) {
-                                            return <li key={idx} className="ml-6 leading-relaxed">{line.replace('- ', '')}</li>;
-                                        }
-                                        // Links
-                                        if (line.includes('[') && line.includes('](')) {
-                                            const linkMatch = line.match(/\[([^\]]+)\]\(([^)]+)\)/);
-                                            if (linkMatch) {
-                                                const [full, text, url] = linkMatch;
-                                                return (
-                                                    <p key={idx} className="leading-relaxed">
-                                                        {line.split(full)[0]}
-                                                        <a href={url} className="text-primary hover:text-primary-hover underline">{text}</a>
-                                                        {line.split(full)[1]}
-                                                    </p>
-                                                );
-                                            }
+                                            return (
+                                                <div key={idx} className="flex items-start gap-4 ml-2">
+                                                    <span className="text-primary font-bold mt-1">▸</span>
+                                                    <span className="leading-relaxed">{line.replace('- ', '')}</span>
+                                                </div>
+                                            );
                                         }
                                         // Regular paragraph
                                         return <p key={idx} className="leading-relaxed">{line}</p>;
@@ -162,43 +166,81 @@ const BlogPost = () => {
                             </div>
                         </div>
 
-                        {/* CTA Section */}
-                        <div className="mt-16 bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 p-8 md:p-10 rounded-2xl text-center">
-                            <h3 className="font-display text-2xl font-bold text-white mb-4">
-                                ¿Te identificas con este problema?
-                            </h3>
-                            <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
-                                Si este artículo describe tu situación, podemos ayudarte a solucionarlo. Sin complicaciones técnicas, solo resultados.
-                            </p>
-                            <Link
-                                to="/contact"
-                                className="inline-flex items-center gap-3 bg-primary hover:bg-primary-hover text-gray-900 font-bold px-8 py-4 rounded transition-all transform hover:translate-y-[-2px]"
-                            >
-                                <span>Hablar antes de hacer</span>
-                                <ArrowRight className="w-5 h-5" />
-                            </Link>
+                        {/* Paso a paso Engorilao */}
+                        <div className="mt-16 relative group">
+                            <div className="absolute -inset-1 bg-gradient-to-r from-primary to-primary-hover rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+                            <div className="relative bg-[#0f0f0f] border border-primary/20 p-10 md:p-14 rounded-3xl">
+                                <div className="flex items-center gap-4 mb-8">
+                                    <div className="p-3 bg-primary/20 rounded-xl text-primary font-bold animate-pulse">
+                                        PLAN DE ACCIÓN
+                                    </div>
+                                    <h3 className="font-display text-3xl font-black text-white uppercase italic tracking-tighter">
+                                        Paso a paso <span className="text-primary italic underline decoration-wavy">Engorilao</span>
+                                    </h3>
+                                </div>
+
+                                <div className="space-y-6 text-left mb-10">
+                                    <div className="flex gap-4">
+                                        <div className="flex-shrink-0 w-8 h-8 rounded-full border border-primary/50 flex items-center justify-center text-primary font-bold text-sm">1</div>
+                                        <p className="text-gray-300"><strong>Identifica el dolor:</strong> Relee este post y confirma si de verdad te está pasando esto. Si no, no pierdas el tiempo.</p>
+                                    </div>
+                                    <div className="flex gap-4">
+                                        <div className="flex-shrink-0 w-8 h-8 rounded-full border border-primary/50 flex items-center justify-center text-primary font-bold text-sm">2</div>
+                                        <p className="text-gray-300"><strong>Mide el coste:</strong> Calcula cuántas horas reales estás tirando a la basura a la semana por este proceso.</p>
+                                    </div>
+                                    <div className="flex gap-4">
+                                        <div className="flex-shrink-0 w-8 h-8 rounded-full border border-primary/50 flex items-center justify-center text-primary font-bold text-sm">3</div>
+                                        <p className="text-gray-300"><strong>Pega el grito:</strong> Si el coste es alto, escríbeme. No te voy a vender un software, te voy a dar libertad.</p>
+                                    </div>
+                                </div>
+
+                                <div className="flex flex-col md:flex-row gap-4 justify-center">
+                                    <Link
+                                        to="/contact"
+                                        className="inline-flex items-center justify-center gap-3 bg-primary hover:bg-primary-hover text-gray-900 font-black px-10 py-5 rounded-xl transition-all transform hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(110,231,183,0.2)] uppercase tracking-tighter"
+                                    >
+                                        <span>Quiero mi tiempo de vuelta</span>
+                                        <ArrowRight className="w-5 h-5" />
+                                    </Link>
+                                    <Link
+                                        to="/sobre-mi"
+                                        className="inline-flex items-center justify-center gap-3 bg-white/5 hover:bg-white/10 text-white font-bold px-10 py-5 rounded-xl border border-white/10 transition-all uppercase tracking-tighter"
+                                    >
+                                        ¿Quién es este tío?
+                                    </Link>
+                                </div>
+                            </div>
                         </div>
                     </article>
                 )}
 
                 {/* Related Posts */}
                 {relatedPosts.length > 0 && (
-                    <div className="mt-20">
-                        <h3 className="font-display text-2xl font-bold text-white mb-8">
-                            Artículos relacionados
-                        </h3>
+                    <div className="mt-32">
+                        <div className="flex items-center gap-4 mb-10">
+                            <div className="h-px w-12 bg-primary/30"></div>
+                            <h3 className="font-display text-2xl font-black text-white uppercase italic tracking-tighter">
+                                Más munición <span className="text-primary italic">Sin Humo</span>
+                            </h3>
+                        </div>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             {relatedPosts.map((relatedPost) => (
                                 <Link
                                     key={relatedPost.id}
                                     to={`/blog/${relatedPost.slug}`}
-                                    className="group block bg-[#222222] border border-white/10 p-6 rounded-xl hover:border-primary/50 transition-all"
+                                    className="group block bg-[#1a1a1a] border border-white/10 p-8 rounded-2xl hover:border-primary/50 transition-all duration-300 hover:-translate-y-1 hover:bg-[#1f1f1f]"
                                 >
-                                    <div className="text-xs text-primary mb-2">{relatedPost.category}</div>
-                                    <h4 className="font-display text-lg font-bold text-white mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                                    <div className="text-[10px] font-mono text-primary uppercase tracking-widest mb-4 flex items-center gap-2">
+                                        <div className="w-1 h-1 rounded-full bg-primary"></div>
+                                        {relatedPost.category}
+                                    </div>
+                                    <h4 className="font-display text-xl font-bold text-white mb-4 group-hover:text-primary transition-colors line-clamp-2 leading-tight">
                                         {relatedPost.title}
                                     </h4>
-                                    <p className="text-sm text-gray-400 line-clamp-2">{relatedPost.excerpt}</p>
+                                    <div className="flex items-center gap-2 text-xs text-gray-500 font-mono group-hover:gap-4 transition-all">
+                                        <span>LEER</span>
+                                        <ArrowRight className="w-4 h-4" />
+                                    </div>
                                 </Link>
                             ))}
                         </div>
