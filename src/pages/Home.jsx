@@ -555,7 +555,7 @@ const Home = () => {
                             <div className="inline-block mb-6 px-6 py-3 bg-primary/10 border border-primary/30 rounded-2xl backdrop-blur-sm">
                                 <p className="text-gray-300 text-lg">
                                     La mayoría de proyectos están entre{' '}
-                                    <span className="text-primary font-bold text-2xl">800-2.500€</span>
+                                    <span className="text-primary font-bold text-2xl">600-2.500€</span>
                                     {' '}<span className="text-gray-400 text-base">(depende de la complejidad y el sector)</span>
                                 </p>
                             </div>
