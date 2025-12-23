@@ -619,8 +619,11 @@ const Home = () => {
                                     <Euro className="w-7 h-7" />
                                 </div>
                                 <h3 className="font-display text-2xl md:text-3xl font-bold text-white">
-                                    Lo que vas a invertir <span className="text-gray-400 font-normal text-lg">(vamos de cara)</span>
+                                    Lo que vas a invertir
                                 </h3>
+                                <p className="text-gray-400 text-sm md:text-base mt-2 leading-relaxed">
+                                    Aquí no ocultamos lo que vale. Esto vale lo que vale.
+                                </p>
                             </div>
 
                             {/* Price Badge */}
