@@ -36,13 +36,20 @@ const Navbar = () => {
             }`}>
             <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
                 <div className="flex items-center">
-                    <Link className="group flex flex-col" to="/">
-                        <span className="font-display font-bold text-2xl md:text-3xl tracking-tight text-primary leading-none">
-                            ENGORILAO
-                        </span>
-                        <span className="text-gray-400 text-xs md:text-sm font-light tracking-wide mt-0.5">
-                            Automatización de Negocios
-                        </span>
+                    <Link className="group flex items-center gap-3" to="/">
+                        <img
+                            src="/favicon.png"
+                            alt="Engorilao Icon"
+                            className="h-8 md:h-9 w-auto"
+                        />
+                        <div className="flex flex-col">
+                            <span className="font-display font-bold text-2xl md:text-3xl tracking-tight text-primary leading-none">
+                                ENGORILAO
+                            </span>
+                            <span className="text-gray-400 text-xs md:text-sm font-light tracking-wide mt-0.5">
+                                Automatización de Negocios
+                            </span>
+                        </div>
                     </Link>
                 </div>
 
