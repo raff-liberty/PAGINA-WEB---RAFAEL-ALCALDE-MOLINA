@@ -394,7 +394,7 @@ const Home = () => {
                                                 ? 'bg-primary/20 text-primary'
                                                 : 'bg-primary/10 text-primary'
                                                 }`}>
-                                                {area.icon}
+                                                <area.icon className="w-6 h-6" />
                                             </div>
                                             <h3 className="font-display text-xl font-bold text-white group-hover:text-primary transition-colors">
                                                 {area.title}
