@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Lightbulb, ArrowRight, MessageSquare, TrendingUp, FileText, Target, Database, Users, CheckCircle, PenTool as Custom, Search, Zap, DollarSign } from 'lucide-react';
+import { Lightbulb, ArrowRight, MessageSquare, TrendingUp, FileText, Target, Database, Users, CheckCircle, PenTool as Custom, Search, Zap, DollarSign, Euro } from 'lucide-react';
 
 const businessTypes = [
     { id: 'hair', label: 'Peluquería / Estética' },
@@ -615,8 +615,8 @@ const Home = () => {
                         <div className="relative z-10">
                             {/* Icon and Title */}
                             <div className="flex items-center gap-4 mb-6">
-                                <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 shadow-[0_0_20px_rgba(110,231,183,0.1)] p-2">
-                                    <img src="/favicon.png" alt="Engorilate" className="w-full h-full object-contain" />
+                                <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 text-primary border border-primary/20 shadow-[0_0_20px_rgba(110,231,183,0.1)]">
+                                    <Euro className="w-7 h-7" />
                                 </div>
                                 <h3 className="font-display text-2xl md:text-3xl font-bold text-white">
                                     Lo que vas a invertir <span className="text-gray-400 font-normal text-lg">(vamos de cara)</span>
