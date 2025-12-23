@@ -16,7 +16,7 @@ const LocationPage = () => {
 
     // Set page title and meta description
     useEffect(() => {
-        document.title = `Automatización de Negocios en ${locationData.name} | Engorilao`;
+        document.title = `Automatización de Negocios en ${locationData.name} | Engorilate`;
 
         // Update meta description
         const metaDescription = document.querySelector('meta[name="description"]');

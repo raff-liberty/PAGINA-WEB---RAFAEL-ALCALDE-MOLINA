@@ -11,7 +11,7 @@ const Footer = () => {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
                     {/* Company Info */}
                     <div>
-                        <h3 className="font-display font-bold text-lg text-white mb-4">Engorilao</h3>
+                        <h3 className="font-display font-bold text-lg text-white mb-4">Engorilate</h3>
                         <p className="text-sm text-gray-500 leading-relaxed">
                             Automatización y orden para pequeños negocios. Sin complicaciones técnicas.
                         </p>
@@ -65,7 +65,7 @@ const Footer = () => {
                 {/* Bottom Bar */}
                 <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
                     <div className="mb-4 md:mb-0">
-                        <p>© {new Date().getFullYear()} Engorilao. Todos los derechos reservados.</p>
+                        <p>© {new Date().getFullYear()} Engorilate. Todos los derechos reservados.</p>
                     </div>
                     <div className="flex space-x-6">
                         <Link className="hover:text-primary transition-colors" to="/legal">Aviso Legal</Link>
