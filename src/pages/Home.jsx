@@ -616,8 +616,8 @@ const Home = () => {
                             {' '}(depende de la complejidad y el sector).
                         </p>
                         <p className="text-gray-400 text-sm leading-relaxed">
-                            Algunos clientes recuperan la inversión en 2-3 meses solo con el tiempo que ahorran.
-                            Otros lo recuperan eliminando errores costosos (facturas olvidadas, mesas vacías, stock mal gestionado).
+                            No te voy a prometer ROI mágico. Lo que sí te garantizo: menos tiempo perdido en tareas mecánicas,
+                            menos errores por despiste, y un negocio que funciona aunque no estés encima.
                         </p>
                     </div>
                 </div>
