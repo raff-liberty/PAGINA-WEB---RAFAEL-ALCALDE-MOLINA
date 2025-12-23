@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Lightbulb, ArrowRight, MessageSquare, TrendingUp, FileText, Target, Database, Users, CheckCircle, PenTool as Custom } from 'lucide-react';
+import { Lightbulb, ArrowRight, MessageSquare, TrendingUp, FileText, Target, Database, Users, CheckCircle, PenTool as Custom, Search, Zap } from 'lucide-react';
 
 const businessTypes = [
     { id: 'hair', label: 'Peluquería / Estética' },
@@ -178,37 +178,54 @@ const Home = () => {
             <div className="relative z-10 max-w-7xl mx-auto px-6">
                 {/* Hero Section */}
                 <div className="flex flex-col items-center justify-center mb-40 text-center">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.1 }}
+                        className="mb-8 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20"
+                    >
+                        <span className="text-primary text-xs md:text-sm font-mono font-bold tracking-[0.2em] uppercase">
+                            Sistemas y Automatización de Negocios
+                        </span>
+                    </motion.div>
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="font-display text-6xl md:text-8xl font-bold tracking-tighter text-white mb-3 relative inline-block"
+                        className="font-display text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-6 relative inline-block max-w-5xl"
                     >
-                        ANTES DE HACER<span className="text-primary">:</span>
+                        Si haces todos los días lo mismo, <br className="hidden md:block" />
+                        no es trabajo. Es <span className="text-primary">castigo.</span>
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="text-sm md:text-base text-gray-400 font-light italic mb-12 max-w-3xl mx-auto leading-relaxed"
+                        className="text-lg md:text-xl text-gray-400 font-medium mb-16 max-w-3xl mx-auto leading-relaxed"
                     >
-                        Si haces todos los días lo mismo, no es trabajo. Es castigo.
+                        Automatiza los procesos repetitivos de tu empresa
                     </motion.p>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-6xl">
                         {[
                             {
-                                title: 'Identifica',
-                                icon: Target,
-                                step: '01'
+                                title: 'DETECCIÓN',
+                                icon: Search,
+                                step: '01',
+                                content: 'Identifico tareas que el dueño no debería estar haciendo.',
+                                highlight: 'Para que dejes de perder tiempo en la operativa.'
                             },
                             {
-                                title: 'Estructura',
-                                icon: Database,
-                                step: '02'
+                                title: 'AUTOMATIZACIÓN',
+                                icon: Zap,
+                                step: '02',
+                                content: 'Diseño automatizaciones para que esas tareas funcionen solas.',
+                                highlight: 'Tecnología trabajando por ti, no al revés.'
                             },
                             {
-                                title: 'Valida',
-                                icon: CheckCircle,
-                                step: '03'
+                                title: 'AUTONOMÍA',
+                                icon: TrendingUp,
+                                step: '03',
+                                content: 'Consigo que el negocio no dependa de estar encima todo el día.',
+                                highlight: 'Tu negocio funciona, tú recuperas tu vida.'
                             }
                         ].map((item, i) => (
                             <motion.div
@@ -239,54 +256,13 @@ const Home = () => {
 
                                     {/* Content with strategic line breaks */}
                                     <div className="text-gray-300 text-sm leading-relaxed flex-grow space-y-3">
-                                        {i === 0 && (
-                                            <>
-                                                <div className="space-y-0.5">
-                                                    <p>Aceptamos la realidad.</p>
-                                                    <p>Miramos todo lo que haces por inercia.</p>
-                                                    <p>Lo repetido.</p>
-                                                    <p>Lo absurdo.</p>
-                                                </div>
+                                        <p className="text-lg md:text-xl font-medium text-white group-hover:text-primary transition-colors leading-snug min-h-[5.5rem] lg:min-h-[6rem]">
+                                            {item.content}
+                                        </p>
 
-                                                <p className="text-base md:text-lg font-bold text-primary leading-tight py-2">
-                                                    Lo que haces tú porque "nadie más lo hace bien".
-                                                </p>
-
-                                                <p>Y lo separamos de lo que de verdad importa.</p>
-                                            </>
-                                        )}
-                                        {i === 1 && (
-                                            <>
-                                                <p>Para que no tengas que pensar en todo.</p>
-
-                                                <div className="space-y-0.5">
-                                                    <p>Ponemos reglas claras.</p>
-                                                    <p>Quitamos decisiones pequeñas.</p>
-                                                </div>
-
-                                                <p className="text-base md:text-lg font-bold text-primary leading-tight py-2">
-                                                    Para que el negocio deje de pedirte atención para todo.
-                                                </p>
-
-                                                <div className="space-y-0.5">
-                                                    <p>Menos interrupciones.</p>
-                                                    <p>Más cabeza libre.</p>
-                                                </div>
-                                            </>
-                                        )}
-                                        {i === 2 && (
-                                            <>
-                                                <p className="text-base md:text-lg font-bold text-primary leading-tight py-2">
-                                                    Lo que se pueda hacer solo, que se haga solo.
-                                                </p>
-
-                                                <p>Si algo se repite, no deberías hacerlo tú.</p>
-
-                                                <p>Porque tu tiempo no está para copiar, confirmar y revisar lo mismo otra vez.</p>
-
-                                                <p>Quitamos tareas de en medio para que el negocio no te coma.</p>
-                                            </>
-                                        )}
+                                        <p className="text-sm font-bold text-primary leading-tight py-2 border-l-2 border-primary/20 pl-3 min-h-[2.5rem] flex items-center">
+                                            {item.highlight}
+                                        </p>
                                     </div>
 
                                     {/* Bottom accent line */}
@@ -647,37 +623,63 @@ const Home = () => {
                 </div>
 
                 {/* CTA Section */}
-                <div className="mt-48 mb-40 text-center max-w-4xl mx-auto">
-                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 text-primary mb-8">
-                        <Lightbulb className="w-6 h-6" />
-                    </div>
+                <div className="mt-48 mb-40 text-center max-w-lg mx-auto px-4 md:max-w-4xl">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        className="relative bg-[#1a1a1a]/60 backdrop-blur-xl border border-white/10 p-8 md:p-16 rounded-3xl overflow-hidden shadow-2xl"
+                    >
+                        {/* Background glow for CTA */}
+                        <div className="absolute -top-24 -left-24 w-64 h-64 bg-primary/20 blur-[100px] rounded-full opacity-50"></div>
+                        <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-primary/10 blur-[100px] rounded-full opacity-30"></div>
 
-                    <h3 className="text-2xl md:text-3xl text-white font-bold mb-4">
-                        ¿Te ves reflejado en estos problemas?
-                    </h3>
-                    <p className="text-lg text-gray-400 mb-8 max-w-2xl mx-auto leading-relaxed">
-                        Hablemos 15 minutos. Sin compromiso. Solo para ver si tiene sentido trabajar juntos.
-                    </p>
+                        <div className="relative z-10 flex flex-col items-center">
+                            <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 text-primary mb-8 border border-primary/20 shadow-[0_0_20px_rgba(110,231,183,0.1)]">
+                                <Lightbulb className="w-7 h-7" />
+                            </div>
 
-                    <div className="flex flex-col items-center gap-4">
-                        <Link
-                            to="/contact"
-                            className="group relative inline-flex items-center gap-3 bg-primary hover:bg-primary-hover text-gray-900 font-bold text-lg px-8 py-4 rounded transition-all transform hover:translate-y-[-2px] shadow-[0_0_20px_rgba(110,231,183,0.2)]"
-                        >
-                            <span>Diagnóstico gratuito (15 min)</span>
-                            <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                        </Link>
-                        <span className="text-sm text-gray-600 mt-2">
-                            Sin vender nada. Solo evaluar si encajamos.
-                        </span>
+                            <h3 className="text-3xl md:text-5xl text-white font-bold mb-6 tracking-tight leading-tight">
+                                ¿Te ves reflejado en <br className="hidden md:block" />
+                                <span className="text-primary">estos problemas?</span>
+                            </h3>
 
-                        {/* Urgency element */}
-                        <div className="mt-6 px-4 py-2 bg-orange-500/10 border border-orange-500/20 rounded-lg">
-                            <p className="text-orange-400 text-sm">
-                                <span className="font-semibold">Solo trabajo con 3 clientes al mes</span> (para dar atención real, no vender y desaparecer)
+                            <p className="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
+                                Hablemos 15 minutos. Sin compromiso. Solo para ver si tiene sentido trabajar juntos.
                             </p>
+
+                            <div className="flex flex-col items-center gap-6 w-full px-4 md:px-0">
+                                <Link
+                                    to="/contact"
+                                    className="group relative w-full md:w-auto inline-flex items-center justify-center gap-3 bg-primary hover:bg-primary-hover text-gray-900 font-bold text-xl px-10 py-5 rounded-2xl transition-all transform hover:translate-y-[-4px] shadow-[0_10px_30px_rgba(110,231,183,0.3)] active:scale-95"
+                                >
+                                    <span>Diagnóstico gratuito</span>
+                                    <ArrowRight className="w-6 h-6 transition-transform group-hover:translate-x-1" />
+                                </Link>
+
+                                <div className="flex items-center gap-2 text-gray-500 font-medium tracking-wide">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-primary/40 animate-pulse"></span>
+                                    <span className="text-sm">Sin compromiso · Sesión estratégica rápida</span>
+                                </div>
+
+                                {/* Urgency element - Redesigned as a premium toast-like element with About Me link */}
+                                <Link
+                                    to="/sobre-mi"
+                                    className="group/small mt-10 px-6 py-4 bg-primary/5 border border-primary/20 rounded-2xl flex items-center gap-4 text-left max-w-md hover:border-primary/40 hover:bg-primary/10 transition-all duration-300"
+                                >
+                                    <div className="w-2 h-2 rounded-full bg-orange-500 animate-pulse flex-shrink-0"></div>
+                                    <div className="flex-grow">
+                                        <p className="text-gray-300 text-sm md:text-base leading-relaxed">
+                                            <span className="text-white font-bold">Solo 3 clientes al mes.</span> Reservo tiempo real para darte atención personalizada, no solo vender.
+                                        </p>
+                                        <span className="text-[10px] font-mono text-primary uppercase tracking-[0.2em] mt-1 inline-flex items-center gap-1 group-hover/small:translate-x-1 transition-transform">
+                                            Conoce quién está detrás <ArrowRight className="w-3 h-3" />
+                                        </span>
+                                    </div>
+                                </Link>
+                            </div>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </div>

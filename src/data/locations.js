@@ -104,6 +104,21 @@ export const locations = [
             'Comercios del centro con gestión caótica',
             'Negocios familiares que necesitan automatización simple'
         ]
+    },
+    {
+        id: 'molina-de-segura',
+        name: 'Molina de Segura',
+        slug: 'molina-de-segura',
+        description: 'Automatización y orden para negocios en Molina de Segura. Ayudamos a empresas locales a optimizar su operativa digital.',
+        metaDescription: 'Servicios de automatización de negocios en Molina de Segura. Optimización de procesos y tecnología para tu negocio.',
+        keywords: 'automatización negocios Molina de Segura, consultoría empresarial Molina, optimización procesos Molina',
+        population: '75.000 habitantes',
+        context: 'importante centro industrial y de servicios',
+        examples: [
+            'Empresas industriales con procesos manuales',
+            'Comercios del centro que necesitan digitalización',
+            'Servicios profesionales sin control de agenda'
+        ]
     }
 ];
 

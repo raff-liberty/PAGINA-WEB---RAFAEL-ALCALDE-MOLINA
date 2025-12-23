@@ -28,3 +28,4 @@ tmp
 temp
 _legacy
 *.backup
+.env

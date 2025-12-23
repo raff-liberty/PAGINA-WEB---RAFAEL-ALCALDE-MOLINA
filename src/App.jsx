@@ -18,6 +18,9 @@ import SectorLocationPage from './pages/SectorLocationPage';
 import SectorsDirectory from './pages/SectorsDirectory';
 import CookieBanner from './components/CookieBanner';
 import ScrollToTop from './components/ScrollToTop';
+import { supabase } from './lib/supabaseClient';
+
+console.log('Supabase Client Initialized:', !!supabase);
 
 function App() {
     return (

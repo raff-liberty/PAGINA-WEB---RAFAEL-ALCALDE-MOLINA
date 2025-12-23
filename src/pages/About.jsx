@@ -15,18 +15,14 @@ const About = () => {
                     <div className="lg:w-1/2 order-2 lg:order-1">
                         <div className="relative">
                             <div className="absolute -inset-4 bg-primary/20 rounded-full blur-3xl opacity-30"></div>
-                            <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+                            <div className="relative aspect-square max-w-[420px] mx-auto rounded-full overflow-hidden border-2 border-primary/20 shadow-2xl group">
                                 <img
                                     alt="Rafael Alcalde Molina"
-                                    className="w-full h-auto object-cover grayscale-[20%] hover:grayscale-0 transition-all duration-700"
-                                    style={{ maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)' }}
-                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzhAu_oORd8UW_R7gkTKujkQ2OETXXF6dSptyYxUsnqIwYqpoRbR6lDD9OTQ_oUzbjs8mPhU8X_tHUuCoiY0H5Y3csaQcQifP-vRw3bkcpOCC1ot5b8jlYQ7Fp7DpPcRBAHCcbI_LLEvJNymDEU5_XQnt9uBGt04FZeunY53vjG8_fH8ApZ5NXrscYKC0SnvDMRl3bp5g__UBXlEoyxk3ZvEZyRC5Fwp7W25tRNHyEnHSRd6iQic8SBD378abw80Ip4R74KPFpq9Rk"
+                                    className="w-full h-full object-cover object-[center_20%] grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                                    src="/rafael.png"
                                 />
-                                <div className="absolute inset-0 border-[1px] border-white/10 pointer-events-none"></div>
-                                <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-background-dark to-transparent opacity-80"></div>
-                                <div className="absolute bottom-4 left-6 text-white/90 font-mono text-sm tracking-widest uppercase">
-                                    Rafael Alcalde Molina
-                                </div>
+                                <div className="absolute inset-0 border-[1px] border-white/10 rounded-full pointer-events-none"></div>
+                                <div className="absolute inset-0 bg-gradient-to-t from-background-dark/40 to-transparent pointer-events-none"></div>
                             </div>
                         </div>
                     </div>
