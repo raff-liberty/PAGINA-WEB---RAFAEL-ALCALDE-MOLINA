@@ -53,7 +53,7 @@ const BlogPost = () => {
     // Set page title and meta
     useEffect(() => {
         if (post) {
-            document.title = `${post.title} | Antes De Hacer`;
+            document.title = `${post.title} | Engorilao`;
 
             const metaDescription = document.querySelector('meta[name="description"]');
             if (metaDescription) {

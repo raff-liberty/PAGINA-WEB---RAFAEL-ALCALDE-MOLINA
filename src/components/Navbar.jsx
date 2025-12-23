@@ -36,8 +36,13 @@ const Navbar = () => {
             }`}>
             <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
                 <div className="flex items-center">
-                    <Link className="font-display font-bold text-xl tracking-widest text-gray-400 hover:text-white transition-colors uppercase" to="/">
-                        Antes De Hacer
+                    <Link className="group flex items-center gap-2" to="/">
+                        <span className="font-display font-bold text-2xl tracking-tight text-white group-hover:text-primary transition-colors">
+                            Engorilao
+                        </span>
+                        <span className="text-primary/40 text-xs font-mono uppercase tracking-widest hidden md:block">
+                            / Automatización
+                        </span>
                     </Link>
                 </div>
 
