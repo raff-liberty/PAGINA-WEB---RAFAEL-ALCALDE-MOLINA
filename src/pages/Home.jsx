@@ -630,7 +630,7 @@ const Home = () => {
                 </div>
 
                 {/* CTA Section */}
-                <div className="mt-48 mb-40 text-center max-w-lg mx-auto px-4 md:max-w-4xl">
+                <div className="mt-48 mb-16 text-center max-w-lg mx-auto px-4 md:max-w-4xl">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
                         whileInView={{ opacity: 1, scale: 1 }}
