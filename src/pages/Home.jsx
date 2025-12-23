@@ -605,27 +605,59 @@ const Home = () => {
                     </div>
                 </div>
 
-                {/* Pricing Transparency Section */}
+                {/* Investment Section - Premium Design */}
                 <div className="mt-40 mb-40 max-w-4xl mx-auto">
-                    <div className="bg-[#1a1a1a] border border-white/10 p-8 md:p-12 rounded-2xl">
-                        <h3 className="font-display text-2xl font-bold text-white mb-4">
-                            Lo que vas a invertir <span className="text-gray-400 font-normal text-lg">(vamos de cara)</span>
-                        </h3>
-                        <p className="text-gray-300 leading-relaxed mb-6">
-                            La mayoría de proyectos están entre <span className="text-primary font-semibold">800-2.500€</span>
-                            {' '}(depende de la complejidad y el sector).
-                        </p>
-                        <p className="text-gray-300 text-base leading-relaxed mb-4">
-                            El ROI viene por tres vías:
-                        </p>
-                        <ul className="text-gray-300 text-base leading-relaxed space-y-2 mb-4 list-disc list-inside">
-                            <li><span className="text-primary font-semibold">Incremento de rotación:</span> Más clientes atendidos con el mismo equipo</li>
-                            <li><span className="text-primary font-semibold">Reducción de errores:</span> Menos facturas olvidadas, stock mal gestionado, o mesas vacías</li>
-                            <li><span className="text-primary font-semibold">Mejora de márgenes:</span> Invertir en IA te permite optimizar recursos y aumentar rentabilidad</li>
-                        </ul>
-                        <p className="text-gray-400 text-sm leading-relaxed">
-                            En la mayoría de casos, la inversión se amortiza en menos de 2 meses. Después de eso, es ganancia neta.
-                        </p>
+                    <div className="group relative bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] border border-white/10 p-8 md:p-12 rounded-3xl overflow-hidden hover:border-primary/30 transition-all duration-500 hover:shadow-[0_0_50px_rgba(110,231,183,0.15)]">
+                        {/* Background glow effects */}
+                        <div className="absolute -top-20 -right-20 w-64 h-64 bg-primary/10 blur-[100px] rounded-full opacity-50 group-hover:opacity-70 transition-opacity"></div>
+                        <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-primary/5 blur-[100px] rounded-full opacity-30"></div>
+
+                        <div className="relative z-10">
+                            {/* Icon and Title */}
+                            <div className="flex items-center gap-4 mb-6">
+                                <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 text-primary border border-primary/20 shadow-[0_0_20px_rgba(110,231,183,0.1)]">
+                                    <DollarSign className="w-7 h-7" />
+                                </div>
+                                <h3 className="font-display text-2xl md:text-3xl font-bold text-white">
+                                    Lo que vas a invertir <span className="text-gray-400 font-normal text-lg">(vamos de cara)</span>
+                                </h3>
+                            </div>
+
+                            {/* Price Badge */}
+                            <div className="inline-block mb-6 px-6 py-3 bg-primary/10 border border-primary/30 rounded-2xl backdrop-blur-sm">
+                                <p className="text-gray-300 text-lg">
+                                    La mayoría de proyectos están entre{' '}
+                                    <span className="text-primary font-bold text-2xl">800-2.500€</span>
+                                    {' '}<span className="text-gray-400 text-base">(depende de la complejidad y el sector)</span>
+                                </p>
+                            </div>
+
+                            {/* ROI Section */}
+                            <p className="text-gray-300 text-base leading-relaxed mb-4 font-semibold">
+                                El ROI viene por tres vías:
+                            </p>
+                            <ul className="text-gray-300 text-base leading-relaxed space-y-3 mb-6">
+                                <li className="flex items-start gap-3 group/item hover:translate-x-1 transition-transform">
+                                    <span className="text-primary mt-1">▸</span>
+                                    <span><span className="text-primary font-semibold">Incremento de rotación:</span> Más clientes atendidos con el mismo equipo</span>
+                                </li>
+                                <li className="flex items-start gap-3 group/item hover:translate-x-1 transition-transform">
+                                    <span className="text-primary mt-1">▸</span>
+                                    <span><span className="text-primary font-semibold">Reducción de errores:</span> Menos facturas olvidadas, stock mal gestionado, o mesas vacías</span>
+                                </li>
+                                <li className="flex items-start gap-3 group/item hover:translate-x-1 transition-transform">
+                                    <span className="text-primary mt-1">▸</span>
+                                    <span><span className="text-primary font-semibold">Mejora de márgenes:</span> Invertir en IA te permite optimizar recursos y aumentar rentabilidad</span>
+                                </li>
+                            </ul>
+
+                            {/* Bottom text */}
+                            <div className="pt-4 border-t border-white/10">
+                                <p className="text-gray-400 text-sm leading-relaxed">
+                                    En la mayoría de casos, la inversión se amortiza en menos de <span className="text-primary font-semibold">2 meses</span>. Después de eso, es ganancia neta.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
