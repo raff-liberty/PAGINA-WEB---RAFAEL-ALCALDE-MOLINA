@@ -3,6 +3,7 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Clock, Calendar, ArrowLeft, ArrowRight } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
+import { blogPosts as localPosts } from '../data/blogPosts';
 
 const BlogPost = () => {
     const { slug } = useParams();
@@ -14,18 +15,38 @@ const BlogPost = () => {
         const fetchPostData = async () => {
             setLoading(true);
             try {
-                // Fetch current post
-                const { data: postData, error: postError } = await supabase
-                    .from('blog_posts')
-                    .select('*')
-                    .eq('slug', slug)
-                    .single();
+                // Check local posts first
+                const localPost = localPosts.find(p => p.slug === slug);
 
-                if (postError) throw postError;
-                setPost(postData);
+                if (localPost) {
+                    setPost(localPost);
 
-                // Fetch related posts (same category, different slug)
-                if (postData) {
+                    // Set related posts from local if possible
+                    const related = localPosts.filter(p => p.category === localPost.category && p.slug !== slug).slice(0, 3);
+                    setRelatedPosts(related);
+
+                    // We still try to fetch related from Supabase if local is empty
+                    if (related.length === 0) {
+                        const { data: relatedData } = await supabase
+                            .from('blog_posts')
+                            .select('id, slug, title, category, excerpt')
+                            .eq('category', localPost.category)
+                            .neq('slug', slug)
+                            .limit(3);
+                        if (relatedData) setRelatedPosts(relatedData);
+                    }
+                } else {
+                    // Fallback to Supabase
+                    const { data: postData, error: postError } = await supabase
+                        .from('blog_posts')
+                        .select('*')
+                        .eq('slug', slug)
+                        .single();
+
+                    if (postError) throw postError;
+                    setPost(postData);
+
+                    // Fetch related posts
                     const { data: relatedData } = await supabase
                         .from('blog_posts')
                         .select('id, slug, title, category, excerpt')

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Clock, Calendar, AlertTriangle, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
+import { blogPosts as localPosts } from '../data/blogPosts';
 
 const Blog = () => {
     const categories = [
@@ -23,15 +24,25 @@ const Blog = () => {
         const fetchPosts = async () => {
             setLoading(true);
             try {
+                // Initialize with local posts first
+                let combinedPosts = [...localPosts];
+
                 const { data, error } = await supabase
                     .from('blog_posts')
                     .select('*')
                     .order('publish_date', { ascending: false });
 
-                if (error) throw error;
-                setPosts(data || []);
+                if (!error && data && data.length > 0) {
+                    // Filter out local posts if they already exist in Supabase by slug
+                    const supabaseSlugs = data.map(p => p.slug);
+                    const uniqueLocal = localPosts.filter(p => !supabaseSlugs.includes(p.slug));
+                    combinedPosts = [...uniqueLocal, ...data];
+                }
+
+                setPosts(combinedPosts);
             } catch (error) {
                 console.error('Error fetching posts:', error.message);
+                setPosts(localPosts); // Fallback to local on error
             } finally {
                 setLoading(false);
             }
