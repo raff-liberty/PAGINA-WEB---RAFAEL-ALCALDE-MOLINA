@@ -126,42 +126,140 @@ const BlogPost = () => {
                                 </div>
 
                                 <div className="relative z-10 text-gray-300 leading-relaxed space-y-8 blog-content text-lg font-light">
-                                    {(post.content || post.excerpt || '').split('\n').map((line, idx) => {
-                                        // Headers
-                                        if (line.startsWith('## ')) {
-                                            return <h2 key={idx} className="text-3xl font-display font-black text-white mt-12 mb-6 uppercase tracking-tight italic border-b border-primary/20 pb-4">{line.replace('## ', '')}</h2>;
-                                        }
-                                        // Horizontal rule
-                                        if (line === '---') {
-                                            return <hr key={idx} className="border-white/5 my-12" />;
-                                        }
-                                        // Empty line
-                                        if (line.trim() === '') {
-                                            return <div key={idx} className="h-4" />;
-                                        }
-                                        // Bold text with **
-                                        if (line.includes('**')) {
-                                            const parts = line.split('**');
-                                            return (
-                                                <p key={idx} className="leading-relaxed">
-                                                    {parts.map((part, i) =>
-                                                        i % 2 === 1 ? <strong key={i} className="text-white font-bold bg-primary/10 px-1 rounded">{part}</strong> : part
-                                                    )}
+                                    {(() => {
+                                        const lines = (post.content || post.excerpt || '').split('\n');
+                                        const elements = [];
+                                        let currentTable = null;
+
+                                        for (let i = 0; i < lines.length; i++) {
+                                            const line = lines[i].trim();
+
+                                            // Table handling
+                                            if (line.startsWith('|')) {
+                                                const cells = line.split('|').filter(c => c.trim() !== '' || (line.startsWith('|') && line.endsWith('|'))).map(c => c.trim());
+                                                if (line.includes('---')) continue; // Skip separator line
+
+                                                if (!currentTable) {
+                                                    currentTable = { header: cells, rows: [] };
+                                                } else {
+                                                    currentTable.rows.push(cells);
+                                                }
+
+                                                // Check if next line is not a table line
+                                                if (i + 1 >= lines.length || !lines[i + 1].trim().startsWith('|')) {
+                                                    elements.push(
+                                                        <div key={`table-${i}`} className="overflow-x-auto my-12 -mx-4 md:mx-0">
+                                                            <table className="w-full border-collapse bg-white/5 rounded-2xl overflow-hidden border border-white/10 backdrop-blur-sm">
+                                                                <thead>
+                                                                    <tr className="bg-primary/10 border-b border-white/10">
+                                                                        {currentTable.header.map((cell, idx) => (
+                                                                            <th key={idx} className="p-4 text-left text-sm font-black uppercase tracking-tighter text-primary">{cell}</th>
+                                                                        ))}
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {currentTable.rows.map((row, rowIdx) => (
+                                                                        <tr key={rowIdx} className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+                                                                            {row.map((cell, cellIdx) => (
+                                                                                <td key={cellIdx} className="p-4 text-sm text-gray-300 leading-tight">
+                                                                                    {cell.includes('**') ? (
+                                                                                        cell.split('**').map((part, pidx) => pidx % 2 === 1 ? <strong key={pidx} className="text-white font-bold">{part}</strong> : part)
+                                                                                    ) : cell}
+                                                                                </td>
+                                                                            ))}
+                                                                        </tr>
+                                                                    ))}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    );
+                                                    currentTable = null;
+                                                }
+                                                continue;
+                                            }
+
+                                            // Headers
+                                            if (line.startsWith('## ')) {
+                                                elements.push(<h2 key={i} className="text-3xl font-display font-black text-white mt-12 mb-6 uppercase tracking-tight italic border-b border-primary/20 pb-4">{line.replace('## ', '')}</h2>);
+                                                continue;
+                                            }
+                                            if (line.startsWith('### ')) {
+                                                elements.push(<h3 key={i} className="text-2xl font-display font-black text-white/90 mt-10 mb-4 uppercase tracking-tight italic">{line.replace('### ', '')}</h3>);
+                                                continue;
+                                            }
+
+                                            // Blockquotes
+                                            if (line.startsWith('> ')) {
+                                                elements.push(
+                                                    <blockquote key={i} className="border-l-4 border-primary bg-primary/5 p-6 rounded-r-2xl my-8 italic text-xl text-white font-light leading-relaxed">
+                                                        {line.replace('> ', '').split('**').map((part, pidx) => pidx % 2 === 1 ? <strong key={pidx} className="text-primary font-bold">{part}</strong> : part)}
+                                                    </blockquote>
+                                                );
+                                                continue;
+                                            }
+
+                                            // Horizontal rule
+                                            if (line === '---') {
+                                                elements.push(<hr key={i} className="border-white/5 my-12" />);
+                                                continue;
+                                            }
+
+                                            // Empty line
+                                            if (line === '') {
+                                                elements.push(<div key={i} className="h-4" />);
+                                                continue;
+                                            }
+
+                                            // List items
+                                            if (line.startsWith('- ') || (line.match(/^\d+\./))) {
+                                                const isOrdered = line.match(/^\d+\./);
+                                                const content = line.replace(/^[- \d.]+\s/, '');
+                                                elements.push(
+                                                    <div key={i} className="flex items-start gap-4 ml-2 group">
+                                                        <span className="text-primary font-bold mt-1.5 flex-shrink-0 group-hover:scale-125 transition-transform text-xs">
+                                                            {isOrdered ? line.match(/^\d+/)[0] + '.' : '▸'}
+                                                        </span>
+                                                        <span className="leading-relaxed">
+                                                            {content.split('**').map((part, pidx) => pidx % 2 === 1 ? <strong key={pidx} className="text-white font-bold bg-white/5 px-1 rounded">{part}</strong> : part)}
+                                                        </span>
+                                                    </div>
+                                                );
+                                                continue;
+                                            }
+
+                                            // Checkboxes
+                                            if (line.startsWith('[ ]') || line.startsWith('[x]')) {
+                                                const checked = line.startsWith('[x]');
+                                                elements.push(
+                                                    <div key={i} className="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/10 my-4">
+                                                        <div className={`w-5 h-5 rounded border flex items-center justify-center ${checked ? 'bg-primary border-primary' : 'border-white/20'}`}>
+                                                            {checked && <span className="text-[10px] text-black font-bold">✓</span>}
+                                                        </div>
+                                                        <span className={checked ? 'text-gray-500 line-through' : 'text-gray-200'}>
+                                                            {line.substring(4)}
+                                                        </span>
+                                                    </div>
+                                                );
+                                                continue;
+                                            }
+
+                                            // Regular paragraph with potential bold and links
+                                            elements.push(
+                                                <p key={i} className="leading-relaxed">
+                                                    {line.split(/(\[.*?\]\(.*?\))/g).map((part, pidx) => {
+                                                        const linkMatch = part.match(/\[(.*?)\]\((.*?)\)/);
+                                                        if (linkMatch) {
+                                                            return <Link key={pidx} to={linkMatch[2]} className="text-primary hover:underline font-bold">{linkMatch[1]}</Link>;
+                                                        }
+                                                        return part.split('**').map((subpart, spidx) =>
+                                                            spidx % 2 === 1 ? <strong key={spidx} className="text-white font-bold bg-primary/10 px-1.5 py-0.5 rounded-md border border-primary/20">{subpart}</strong> : subpart
+                                                        );
+                                                    })}
                                                 </p>
                                             );
                                         }
-                                        // List items
-                                        if (line.startsWith('- ')) {
-                                            return (
-                                                <div key={idx} className="flex items-start gap-4 ml-2">
-                                                    <span className="text-primary font-bold mt-1">▸</span>
-                                                    <span className="leading-relaxed">{line.replace('- ', '')}</span>
-                                                </div>
-                                            );
-                                        }
-                                        // Regular paragraph
-                                        return <p key={idx} className="leading-relaxed">{line}</p>;
-                                    })}
+                                        return elements;
+                                    })()}
                                 </div>
                             </div>
                         </div>

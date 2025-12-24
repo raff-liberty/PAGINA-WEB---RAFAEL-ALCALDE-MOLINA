@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Clock, Calendar } from 'lucide-react';
+import { ArrowRight, Clock, Calendar, AlertTriangle, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
 
 const Blog = () => {
@@ -17,6 +17,7 @@ const Blog = () => {
     const [selectedCategory, setSelectedCategory] = useState('Todos');
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [showManifesto, setShowManifesto] = useState(false);
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -62,9 +63,91 @@ const Blog = () => {
                         Automatización <br />
                         <span className="text-primary drop-shadow-[0_0_30px_rgba(110,231,183,0.3)]">Sin Humo</span>
                     </h1>
-                    <p className="text-xl md:text-2xl text-gray-400 font-light max-w-3xl leading-relaxed italic border-l-4 border-primary/30 pl-6">
-                        "Si el artículo no te ahorra al menos 10 horas al mes, no lo publicamos. Aquí venimos a facturar, no a leer cuentos de hadas."
-                    </p>
+
+                    <div className="flex flex-col md:flex-row gap-8 items-start">
+                        <p className="text-xl md:text-2xl text-gray-400 font-light max-w-3xl leading-relaxed italic border-l-4 border-primary/30 pl-6 mb-8 md:mb-0">
+                            "Si el artículo no te ahorra al menos 10 horas al mes, no lo publicamos. Aquí venimos a facturar, no a leer cuentos de hadas."
+                        </p>
+
+                        <button
+                            onClick={() => setShowManifesto(!showManifesto)}
+                            className="group relative flex items-center gap-3 px-6 py-3 rounded-xl bg-white/5 border border-white/10 hover:border-primary/50 transition-all duration-300 overflow-hidden whitespace-nowrap"
+                        >
+                            <div className="absolute inset-0 bg-primary/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                            <AlertTriangle className="w-5 h-5 text-primary relative z-10" />
+                            <span className="font-mono text-sm tracking-widest uppercase relative z-10">
+                                {showManifesto ? 'Cerrar Reglas' : 'Leer el Manifiesto'}
+                            </span>
+                            {showManifesto ? <ChevronUp className="w-4 h-4 text-primary relative z-10" /> : <ChevronDown className="w-4 h-4 text-primary relative z-10" />}
+                        </button>
+                    </div>
+
+                    {/* Gorilla Manifesto - Gamberra Edition */}
+                    <AnimatePresence>
+                        {showManifesto && (
+                            <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+                                className="overflow-hidden"
+                            >
+                                <div className="mt-12 p-8 md:p-12 rounded-3xl bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] border-2 border-primary/30 relative overflow-hidden shadow-[0_0_50px_rgba(110,231,183,0.1)]">
+                                    {/* Danger Stripes Decor */}
+                                    <div className="absolute top-0 right-0 w-32 h-8 bg-primary/20 -rotate-45 translate-x-12 -translate-y-4 flex items-center justify-center">
+                                        <span className="text-[10px] font-black text-primary uppercase tracking-tighter">WARNING</span>
+                                    </div>
+
+                                    <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12">
+                                        <div>
+                                            <h3 className="font-display text-3xl font-black text-white uppercase italic tracking-tighter mb-6">
+                                                Las Reglas de <span className="text-primary">esta Casa</span>
+                                            </h3>
+                                            <div className="space-y-6">
+                                                <div className="flex gap-4">
+                                                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-mono font-bold">1</div>
+                                                    <div>
+                                                        <h4 className="text-white font-bold uppercase tracking-tight mb-1">Zero Humo</h4>
+                                                        <p className="text-gray-400 text-sm leading-relaxed">Si te lo cuento, es porque lo he probado y funciona. Si te digo que algo es una mierda, es porque lo es. Aquí no vendemos humo de colores.</p>
+                                                    </div>
+                                                </div>
+                                                <div className="flex gap-4">
+                                                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-mono font-bold">2</div>
+                                                    <div>
+                                                        <h4 className="text-white font-bold uppercase tracking-tight mb-1">El tiempo es oro</h4>
+                                                        <p className="text-gray-400 text-sm leading-relaxed">Si un post te lleva 10 minutos leerlo, es porque te va a ahorrar al menos 10 horas este mes. Si no, no lo publicamos.</p>
+                                                    </div>
+                                                </div>
+                                                <div className="flex gap-4">
+                                                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-mono font-bold">3</div>
+                                                    <div>
+                                                        <h4 className="text-white font-bold uppercase tracking-tight mb-1">Directo a la Yugular</h4>
+                                                        <p className="text-gray-400 text-sm leading-relaxed">No hay azúcar. Si tu proceso está roto, te lo diré. Si estás tirando el dinero, también. Lo honesto es lo que factura.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="bg-primary/5 rounded-2xl p-8 border border-primary/10 flex flex-col justify-center">
+                                            <h3 className="font-display text-2xl font-black text-white uppercase italic tracking-tighter mb-4">
+                                                Misión del <span className="text-primary text-4xl block mt-2">Gorila</span>
+                                            </h3>
+                                            <p className="text-gray-300 italic leading-relaxed mb-6">
+                                                "Aquí no hemos venido a leer. Hemos venido a dejar de trabajar como animales para empezar a facturar como humanos."
+                                            </p>
+                                            <div className="flex items-center gap-4 py-4 border-t border-primary/20">
+                                                <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+                                                    <AlertTriangle className="w-6 h-6" />
+                                                </div>
+                                                <span className="text-[10px] font-mono text-primary font-bold uppercase tracking-[0.2em] leading-tight">
+                                                    Lectura recomendada <br /> solo para valientes
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
 
                 {/* Categories */}
