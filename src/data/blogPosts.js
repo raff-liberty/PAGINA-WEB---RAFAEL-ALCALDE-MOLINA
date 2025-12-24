@@ -7,9 +7,11 @@ export const blogPosts = [
         metaDescription: 'Guía completa para automatizar WhatsApp Business: respuestas automáticas, agentes virtuales, y gestión de clientes sin perder el toque humano.',
         keywords: 'automatizar whatsapp, whatsapp business automatico, agente virtual whatsapp negocio',
         category: 'Automatización',
+        pain_point: 'Pierdo tiempo',
+        savings: '12h/mes',
         readTime: '8 min',
         publishDate: '2025-01-15',
-        excerpt: 'Descubre cómo automatizar WhatsApp para tu negocio sin perder clientes.',
+        excerpt: 'WhatsApp te está robando la vida. Si contestas mensajes a las 11 de la noche, tienes un proceso roto. Aquí te enseño a arreglarlo.',
         image: '/images/blog/whatsapp-automation.jpg',
         content: `WhatsApp está en tu móvil personal.
 
@@ -19,15 +21,15 @@ Y tú contestas. Porque si no, pierdes el cliente.
 
 ---
 
-## Por qué "poner un agente virtual" no funciona
+## Por qué los agentes virtuales "baratos" son tu peor enemigo
 
-La solución obvia es automatizar. Poner un agente virtual que conteste por ti.
+La solución obvia es automatizar. Poner un bot que conteste por ti.
 
-Pero los agentes virtuales genéricos son horribles. El cliente pregunta algo específico y el agente responde con un menú. Frustrante.
+Pero los agentes genéricos de 20€ al mes son horribles. El cliente pregunta algo específico y el agente responde con un menú infinito o un "no te he entendido". Eso no es automatizar, es poner una barrera entre tu dinero y tú.
 
-Y si el agente no entiende, el cliente se va. O peor: se enfada.
+Y si el bot frustra al cliente, este se va a la competencia.
 
-**El problema no es contestar. El problema es que todo está mezclado.**
+**El secreto de un agente "Engorilao":** No es un menú. Es un sistema que entiende lo que el cliente necesita (Citas, Precios, Emergencias) y actúa en consecuencia, ahorrándote horas de copy-paste manual.
 
 ---
 
@@ -83,9 +85,11 @@ Automatizar por automatizar solo complica. Si contestar manualmente no te quita 
         metaDescription: 'Guía honesta sobre sistemas ERP para pequeños negocios.',
         keywords: 'erp pequeños negocios, sistema gestion empresarial',
         category: 'Gestión',
+        pain_point: 'Pierdo dinero',
+        savings: '300€/mes',
         readTime: '10 min',
         publishDate: '2025-01-18',
-        excerpt: 'La verdad sobre los ERP: cuándo los necesitas y cuándo son un gasto innecesario.',
+        excerpt: 'Un ERP de 5.000€ es como comprarse un camión para llevar el pan. Te están vendiendo humo. Lee esto antes de tirar tu dinero.',
         image: '/images/blog/erp-business.jpg',
         content: `Te han dicho que necesitas un ERP.
 
@@ -164,9 +168,11 @@ Si no cumples al menos 2 de estos puntos, un ERP es excesivo.
         metaDescription: 'Aprende a crear dashboards en tiempo real para tu negocio.',
         keywords: 'dashboard negocio, cuadro mando empresa',
         category: 'Business Intelligence',
+        pain_point: 'Pierdo tiempo',
+        savings: '8h/mes',
         readTime: '9 min',
         publishDate: '2025-01-12',
-        excerpt: 'Crea dashboards profesionales para ver tus números en tiempo real.',
+        excerpt: 'Mirar cinco sitios diferentes para saber cuánto has vendido hoy es perder el tiempo. Necesitas un cuadro de mando que ruge.',
         image: '/images/blog/dashboard-business.jpg',
         content: `Quieres saber cómo va el negocio hoy.
 
@@ -255,9 +261,11 @@ Un dashboard es útil cuando tienes datos dispersos que necesitas ver juntos. Si
         metaDescription: 'Guía práctica para automatizar Excel y Google Sheets.',
         keywords: 'automatizar excel, google sheets automatico',
         category: 'Productividad',
+        pain_point: 'Pierdo tiempo',
+        savings: '15h/mes',
         readTime: '11 min',
         publishDate: '2025-01-08',
-        excerpt: 'Si haces copy-paste todos los días en Excel, estás perdiendo tu tiempo.',
+        excerpt: 'Si haces copy-paste todos los días en Excel, no tienes un trabajo, tienes una condena. Aquí te enseño a automatizarlo de verdad.',
         image: '/images/blog/excel-automation.jpg',
         content: `Abres Excel.
 
@@ -338,9 +346,11 @@ Automatizar algo que haces poco es perder tiempo. El esfuerzo de automatizarlo n
         metaDescription: 'Todo sobre sistemas de reservas online.',
         keywords: 'sistema reservas online, reservas automaticas',
         category: 'Gestión',
+        pain_point: 'Pierdo clientes',
+        savings: '5h/semana',
         readTime: '10 min',
         publishDate: '2025-01-10',
-        excerpt: 'Guía definitiva para elegir un sistema de reservas online.',
+        excerpt: 'Si el teléfono no para de sonar para citas, no estás creciendo, estás colapsando. Un sistema de reservas online es tu salvación.',
         image: '/images/blog/booking-system.jpg',
         content: `El teléfono suena.
 
@@ -420,9 +430,11 @@ Un sistema de reservas es útil cuando el teléfono te interrumpe constantemente
         metaDescription: 'Cómo automatizar la facturación si eres autónomo.',
         keywords: 'facturacion automatica, programa facturacion autonomos',
         category: 'Facturación',
+        pain_point: 'Pierdo dinero',
+        savings: '200€/mes',
         readTime: '7 min',
         publishDate: '2025-01-05',
-        excerpt: 'Deja de perder tiempo facturando.',
+        excerpt: 'Olvidarte de facturar un trabajo es lo mismo que trabajar gratis. Automatiza tu facturación y deja de regalar tu tiempo.',
         image: '/images/blog/invoicing.jpg',
         content: `Terminas un trabajo. "Luego hago la factura". Pasan días. Semanas. Dinero perdido.
 
@@ -498,9 +510,11 @@ Un sistema de reservas es útil cuando el teléfono te interrumpe constantemente
         metaDescription: 'Sistema de control de inventario automático.',
         keywords: 'control inventario, gestion stock automatica',
         category: 'Inventario',
+        pain_point: 'Pierdo dinero',
+        savings: '400€/mes',
         readTime: '8 min',
         publishDate: '2024-12-30',
-        excerpt: 'Deja de quedarte sin productos críticos.',
+        excerpt: 'Quedarse sin stock es perder una venta asegurada. El control de inventario automático no es un lujo, es una necesidad básica.',
         image: '/images/blog/inventory.jpg',
         content: `Abres el armario. "¿Quedan cajas?" No sabes. Al día siguiente: se acabaron. Cliente esperando.
 
@@ -576,9 +590,11 @@ Un sistema de reservas es útil cuando el teléfono te interrumpe constantemente
         metaDescription: 'Estrategias probadas para reducir las ausencias en restaurantes.',
         keywords: 'no shows restaurante, clientes no aparecen',
         category: 'Restaurantes',
+        pain_point: 'Pierdo dinero',
+        savings: '600€/mes',
         readTime: '8 min',
         publishDate: '2024-12-20',
-        excerpt: 'Los no-shows te cuestan dinero.',
+        excerpt: 'Una mesa vacía por un no-show es dinero que nunca vuelve. Aquí tienes el plan para que no te la vuelvan a jugar.',
         image: '/images/blog/no-shows.jpg',
         content: `Reservas confirmadas. Mesa preparada. Nadie aparece. Mesa vacía. Dinero perdido.
 
