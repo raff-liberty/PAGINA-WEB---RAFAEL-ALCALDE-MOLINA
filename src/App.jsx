@@ -14,9 +14,9 @@ import Locations from './pages/Locations';
 import LocationPage from './pages/LocationPage';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
-import SectorLocationPage from './pages/SectorLocationPage';
+import SectorLocationPage from './pages/SectorLocationPage_v2';
 import SectorsDirectory from './pages/SectorsDirectory';
-import BlogAdmin from './pages/BlogAdmin';
+import AdminPanel from './pages/AdminPanel';
 import CookieBanner from './components/CookieBanner';
 import ScrollToTop from './components/ScrollToTop';
 import { supabase } from './lib/supabaseClient';
@@ -44,7 +44,7 @@ function App() {
                         <Route path="/sectores" element={<SectorsDirectory />} />
                         <Route path="/blog" element={<Blog />} />
                         <Route path="/blog/:slug" element={<BlogPost />} />
-                        <Route path="/admin" element={<BlogAdmin />} />
+                        <Route path="/admin" element={<AdminPanel />} />
                         <Route path="/:sector/:location" element={<SectorLocationPage />} />
                     </Routes>
                 </main>

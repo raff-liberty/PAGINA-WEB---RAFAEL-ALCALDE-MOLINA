@@ -4,10 +4,15 @@ import { motion } from 'framer-motion';
 import { MapPin, ArrowRight } from 'lucide-react';
 import { locations } from '../data/locations';
 import BackgroundMesh from '../components/BackgroundMesh';
+import SEO from '../components/SEO';
 
 const Locations = () => {
     return (
         <div className="relative pt-32 pb-24 min-h-screen">
+            <SEO
+                title="Servicios Locales | Engorilate"
+                description="Automatización de negocios en Murcia, Cartagena, Lorca, Totana y toda la región. Soluciones locales para problemas globales."
+            />
             <BackgroundMesh />
 
             <div className="relative z-10 max-w-7xl mx-auto px-6">

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Lightbulb, ArrowRight, MessageSquare, TrendingUp, FileText, Target, Database, Users, CheckCircle, PenTool as Custom, Search, Zap, DollarSign, Euro, ChevronLeft, ChevronRight, Globe } from 'lucide-react';
 import BackgroundMesh from '../components/BackgroundMesh';
+import SEO from '../components/SEO';
 
 const businessTypes = [
     { id: 'hair', label: 'Peluquería / Estética' },
@@ -220,6 +221,11 @@ const Home = () => {
 
     return (
         <div className="relative pt-32 pb-32 min-h-screen">
+            <SEO
+                title="Engorilate | Automatización de Negocios"
+                description="Automatiza los procesos repetitivos de tu empresa en Murcia. Recupera tu tiempo y deja de perder dinero en gestión manual."
+                keywords="automatización negocios murcia, digitalización pymes, eficiencia operativa"
+            />
             <BackgroundMesh />
 
             <div className="relative z-10 max-w-7xl mx-auto px-6">

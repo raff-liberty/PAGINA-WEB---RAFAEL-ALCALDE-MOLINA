@@ -7,15 +7,15 @@ export const sectorLocationContent = {
     // ========================================
 
     'peluquerias-murcia': {
-        metaTitle: 'Automatización para Peluquerías en Murcia | Elimina No-Shows y Caos de WhatsApp',
-        metaDescription: 'Automatiza tu peluquería en Murcia. Elimina no-shows, organiza reservas y libera tiempo. Sin complicaciones técnicas.',
+        metaTitle: 'Automatización para Peluquerías en Murcia | Elimina Plantones y Caos de WhatsApp',
+        metaDescription: 'Automatiza tu peluquería en Murcia. Elimina Plantones, organiza reservas y libera tiempo. Sin complicaciones técnicas.',
         hero: {
             title: 'Peluquerías en Murcia',
             subtitle: 'Deja de perseguir clientes que no vienen y organiza las reservas de una vez.',
         },
         problems: [
             {
-                title: 'No-shows constantes',
+                title: 'Plantones constantes',
                 description: 'Reservas confirmadas por WhatsApp que no aparecen. Hueco perdido, dinero perdido.',
             },
             {
@@ -35,7 +35,7 @@ export const sectorLocationContent = {
             {
                 title: 'Sistema de reservas con confirmación automática',
                 description: 'El cliente reserva online. Recibe recordatorio automático. Si no confirma, se libera el hueco.',
-                benefit: 'Reduces no-shows en un 70%',
+                benefit: 'Reduces Plantones en un 70%',
             },
             {
                 title: 'WhatsApp solo para lo importante',
@@ -53,14 +53,14 @@ export const sectorLocationContent = {
                 benefit: 'Organizas tu día en segundos',
             },
         ],
-        localContext: 'En Murcia capital, las peluquerías compiten por los mismos clientes. Los no-shows te cuestan más que en otros sitios porque el hueco es difícil de rellenar. Tener orden no es un lujo, es supervivencia.',
+        localContext: 'En Murcia capital, las peluquerías compiten por los mismos clientes. Los Plantones te cuestan más que en otros sitios porque el hueco es difícil de rellenar. Tener orden no es un lujo, es supervivencia.',
         relatedSectors: ['restaurantes-murcia', 'clinicas-murcia'],
         relatedLocations: ['peluquerias-cartagena', 'peluquerias-lorca'],
     },
 
     'peluquerias-cartagena': {
         metaTitle: 'Automatización para Peluquerías en Cartagena | Sistema de Reservas y Gestión',
-        metaDescription: 'Peluquerías en Cartagena: elimina no-shows, organiza reservas y controla tu stock sin complicaciones.',
+        metaDescription: 'Peluquerías en Cartagena: elimina Plantones, organiza reservas y controla tu stock sin complicaciones.',
         hero: {
             title: 'Peluquerías en Cartagena',
             subtitle: 'Organiza las reservas y deja de perder tiempo con WhatsApp.',
@@ -87,7 +87,7 @@ export const sectorLocationContent = {
             {
                 title: 'Reservas online con recordatorios',
                 description: 'El cliente reserva cuando quiere. Recibe recordatorio automático. Sin perseguir a nadie.',
-                benefit: 'No-shows reducidos drásticamente',
+                benefit: 'Plantones reducidos drásticamente',
             },
             {
                 title: 'Agenda digital accesible',
@@ -115,11 +115,11 @@ export const sectorLocationContent = {
         metaDescription: 'Automatiza tu peluquería en Lorca. Sistema de reservas, control de stock y organización sin complicaciones.',
         hero: {
             title: 'Peluquerías en Lorca',
-            subtitle: 'Menos WhatsApp, más orden. Menos no-shows, más negocio.',
+            subtitle: 'Menos WhatsApp, más orden. Menos Plantones, más negocio.',
         },
         problems: [
             {
-                title: 'No-shows que te descuadran el día',
+                title: 'Plantones que te descuadran el día',
                 description: 'Reservan, confirman y no vienen. El hueco queda vacío.',
             },
             {
@@ -139,7 +139,7 @@ export const sectorLocationContent = {
             {
                 title: 'Sistema de reservas automático',
                 description: 'El cliente reserva online. Confirmación automática. Recordatorio antes de la cita.',
-                benefit: 'Menos no-shows, más huecos aprovechados',
+                benefit: 'Menos Plantones, más huecos aprovechados',
             },
             {
                 title: 'Agenda clara y digital',
@@ -164,7 +164,7 @@ export const sectorLocationContent = {
 
     'peluquerias-molina-de-segura': {
         metaTitle: 'Peluquerías en Molina de Segura | Automatización y Gestión de Citas',
-        metaDescription: 'Peluquerías en Molina de Segura: organiza reservas, elimina no-shows y controla tu negocio sin complicaciones.',
+        metaDescription: 'Peluquerías en Molina de Segura: organiza reservas, elimina Plantones y controla tu negocio sin complicaciones.',
         hero: {
             title: 'Peluquerías en Molina de Segura',
             subtitle: 'Organiza las citas y deja de perder tiempo persiguiendo clientes.',
@@ -191,7 +191,7 @@ export const sectorLocationContent = {
             {
                 title: 'Reservas online automáticas',
                 description: 'El cliente reserva cuando quiere. Recordatorio automático. Sin perseguir.',
-                benefit: 'No-shows reducidos',
+                benefit: 'Plantones reducidos',
             },
             {
                 title: 'Agenda digital organizada',
@@ -216,14 +216,14 @@ export const sectorLocationContent = {
 
     'peluquerias-alcantarilla': {
         metaTitle: 'Peluquerías en Alcantarilla | Sistema de Reservas y Automatización',
-        metaDescription: 'Automatiza tu peluquería en Alcantarilla. Elimina no-shows, organiza citas y libera tiempo.',
+        metaDescription: 'Automatiza tu peluquería en Alcantarilla. Elimina Plantones, organiza citas y libera tiempo.',
         hero: {
             title: 'Peluquerías en Alcantarilla',
             subtitle: 'Menos caos, más control. Menos WhatsApp, más negocio.',
         },
         problems: [
             {
-                title: 'No-shows constantes',
+                title: 'Plantones constantes',
                 description: 'Reservas que no se cumplen. Huecos perdidos.',
             },
             {
@@ -243,7 +243,7 @@ export const sectorLocationContent = {
             {
                 title: 'Sistema de reservas automático',
                 description: 'Cliente reserva online. Confirmación y recordatorio automáticos.',
-                benefit: 'Menos no-shows',
+                benefit: 'Menos Plantones',
             },
             {
                 title: 'Agenda digital clara',
@@ -295,7 +295,7 @@ export const sectorLocationContent = {
             {
                 title: 'Reservas online automáticas',
                 description: 'Cliente reserva cuando quiere. Recordatorio automático.',
-                benefit: 'No-shows reducidos',
+                benefit: 'Plantones reducidos',
             },
             {
                 title: 'Agenda digital',
@@ -320,14 +320,14 @@ export const sectorLocationContent = {
 
     'peluquerias-totana': {
         metaTitle: 'Peluquerías en Totana | Automatización y Control de Citas',
-        metaDescription: 'Automatiza tu peluquería en Totana. Elimina no-shows, organiza citas y controla tu negocio.',
+        metaDescription: 'Automatiza tu peluquería en Totana. Elimina Plantones, organiza citas y controla tu negocio.',
         hero: {
             title: 'Peluquerías en Totana',
             subtitle: 'Menos caos de WhatsApp, más orden en tu día.',
         },
         problems: [
             {
-                title: 'No-shows que te descuadran',
+                title: 'Plantones que te descuadran',
                 description: 'Reservas confirmadas que no aparecen.',
             },
             {
@@ -347,7 +347,7 @@ export const sectorLocationContent = {
             {
                 title: 'Sistema de reservas automático',
                 description: 'Cliente reserva online. Confirmación y recordatorio automáticos.',
-                benefit: 'Menos no-shows',
+                benefit: 'Menos Plantones',
             },
             {
                 title: 'Agenda digital clara',
@@ -375,15 +375,15 @@ export const sectorLocationContent = {
     // ========================================
 
     'restaurantes-murcia': {
-        metaTitle: 'Automatización para Restaurantes en Murcia | Elimina No-Shows y Organiza Reservas',
-        metaDescription: 'Restaurantes en Murcia: elimina no-shows, organiza reservas y libera mesas. Sin complicaciones técnicas.',
+        metaTitle: 'Automatización para Restaurantes en Murcia | Elimina Plantones y Organiza Reservas',
+        metaDescription: 'Restaurantes en Murcia: elimina Plantones, organiza reservas y libera mesas. Sin complicaciones técnicas.',
         hero: {
             title: 'Restaurantes en Murcia',
-            subtitle: 'Deja de perder mesas por no-shows y organiza las reservas de verdad.',
+            subtitle: 'Deja de perder mesas por Plantones y organiza las reservas de verdad.',
         },
         problems: [
             {
-                title: 'No-shows que te vacían mesas',
+                title: 'Plantones que te vacían mesas',
                 description: 'Reservas confirmadas que no aparecen. Mesa vacía, dinero perdido.',
             },
             {
@@ -403,7 +403,7 @@ export const sectorLocationContent = {
             {
                 title: 'Sistema de reservas con depósito',
                 description: 'El cliente reserva online. Deja un depósito pequeño. Si no viene, no pierdes.',
-                benefit: 'No-shows reducidos en un 80%',
+                benefit: 'Plantones reducidos en un 80%',
             },
             {
                 title: 'Gestión de mesas automática',
@@ -428,10 +428,10 @@ export const sectorLocationContent = {
 
     'restaurantes-cartagena': {
         metaTitle: 'Restaurantes en Cartagena | Sistema de Reservas y Gestión de Mesas',
-        metaDescription: 'Automatiza tu restaurante en Cartagena. Elimina no-shows, organiza mesas y controla tu negocio.',
+        metaDescription: 'Automatiza tu restaurante en Cartagena. Elimina Plantones, organiza mesas y controla tu negocio.',
         hero: {
             title: 'Restaurantes en Cartagena',
-            subtitle: 'Menos no-shows, más mesas llenas. Menos caos, más servicio.',
+            subtitle: 'Menos Plantones, más mesas llenas. Menos caos, más servicio.',
         },
         problems: [
             {
@@ -455,7 +455,7 @@ export const sectorLocationContent = {
             {
                 title: 'Reservas online con confirmación',
                 description: 'Cliente reserva cuando quiere. Confirmación automática. Recordatorio antes.',
-                benefit: 'No-shows drásticamente reducidos',
+                benefit: 'Plantones drásticamente reducidos',
             },
             {
                 title: 'Gestión de mesas digital',
@@ -486,11 +486,11 @@ export const sectorLocationContent = {
         metaDescription: 'Restaurantes en Lorca: sistema de reservas automático, control de mesas y organización sin complicaciones.',
         hero: {
             title: 'Restaurantes en Lorca',
-            subtitle: 'Organiza las reservas y deja de perder mesas por no-shows.',
+            subtitle: 'Organiza las reservas y deja de perder mesas por Plantones.',
         },
         problems: [
             {
-                title: 'No-shows constantes',
+                title: 'Plantones constantes',
                 description: 'Reservas que no se cumplen. Mesas vacías.',
             },
             {
@@ -510,7 +510,7 @@ export const sectorLocationContent = {
             {
                 title: 'Reservas online automáticas',
                 description: 'Cliente reserva cuando quiere. Confirmación y recordatorio.',
-                benefit: 'Menos no-shows',
+                benefit: 'Menos Plantones',
             },
             {
                 title: 'Gestión de mesas clara',
@@ -535,19 +535,19 @@ export const sectorLocationContent = {
 
     'restaurantes-molina-de-segura': {
         metaTitle: 'Restaurantes en Molina de Segura | Automatización de Reservas',
-        metaDescription: 'Automatiza tu restaurante en Molina de Segura. Elimina no-shows y organiza mesas sin complicaciones.',
+        metaDescription: 'Automatiza tu restaurante en Molina de Segura. Elimina Plantones y organiza mesas sin complicaciones.',
         hero: {
             title: 'Restaurantes en Molina de Segura',
-            subtitle: 'Menos no-shows, más mesas aprovechadas.',
+            subtitle: 'Menos Plantones, más mesas aprovechadas.',
         },
         problems: [
-            { title: 'No-shows frecuentes', description: 'Mesas reservadas que quedan vacías.' },
+            { title: 'Plantones frecuentes', description: 'Mesas reservadas que quedan vacías.' },
             { title: 'Teléfono constante', description: 'Llamadas mientras cocinas o sirves.' },
             { title: 'Gestión caótica', description: 'Papel, Excel, memoria.' },
             { title: 'Stock descontrolado', description: 'Te quedas sin ingredientes.' },
         ],
         solutions: [
-            { title: 'Reservas online', description: 'Cliente reserva cuando quiere. Confirmación automática.', benefit: 'Menos no-shows' },
+            { title: 'Reservas online', description: 'Cliente reserva cuando quiere. Confirmación automática.', benefit: 'Menos Plantones' },
             { title: 'Gestión de mesas', description: 'Ves qué mesas están libres en tiempo real.', benefit: 'Aprovechas cada mesa' },
             { title: 'Teléfono liberado', description: 'Reservas online. Teléfono para urgencias.', benefit: 'Menos interrupciones' },
             { title: 'Control de inventario', description: 'Sabes qué gastas y cuándo reponer.', benefit: 'Compras lo justo' },
@@ -559,19 +559,19 @@ export const sectorLocationContent = {
 
     'restaurantes-alcantarilla': {
         metaTitle: 'Restaurantes en Alcantarilla | Sistema de Reservas Automático',
-        metaDescription: 'Restaurantes en Alcantarilla: elimina no-shows y organiza tu servicio sin complicaciones.',
+        metaDescription: 'Restaurantes en Alcantarilla: elimina Plantones y organiza tu servicio sin complicaciones.',
         hero: {
             title: 'Restaurantes en Alcantarilla',
             subtitle: 'Organiza las reservas y aprovecha cada mesa.',
         },
         problems: [
-            { title: 'No-shows constantes', description: 'Mesas vacías en pleno servicio.' },
+            { title: 'Plantones constantes', description: 'Mesas vacías en pleno servicio.' },
             { title: 'Llamadas sin parar', description: 'Teléfono mientras trabajas.' },
             { title: 'Gestión imposible', description: 'Todo desordenado.' },
             { title: 'Inventario caótico', description: 'Compras de más o te quedas sin nada.' },
         ],
         solutions: [
-            { title: 'Reservas automáticas', description: 'Cliente reserva online. Recordatorio automático.', benefit: 'No-shows reducidos' },
+            { title: 'Reservas automáticas', description: 'Cliente reserva online. Recordatorio automático.', benefit: 'Plantones reducidos' },
             { title: 'Mesas organizadas', description: 'Ves todo en tiempo real.', benefit: 'Aprovechas cada hueco' },
             { title: 'Teléfono libre', description: 'Reservas online. Teléfono para lo importante.', benefit: 'Menos interrupciones' },
             { title: 'Stock controlado', description: 'Sabes qué tienes y qué necesitas.', benefit: 'Compras inteligentes' },
@@ -589,7 +589,7 @@ export const sectorLocationContent = {
             subtitle: 'En temporada alta, cada mesa cuenta.',
         },
         problems: [
-            { title: 'No-shows en verano', description: 'Pierdes mesas en el mejor momento.' },
+            { title: 'Plantones en verano', description: 'Pierdes mesas en el mejor momento.' },
             { title: 'Teléfono desbordado', description: 'Llamadas constantes en temporada.' },
             { title: 'Gestión caótica', description: 'Papel, Excel, memoria.' },
             { title: 'Stock descontrolado', description: 'Te quedas sin ingredientes clave.' },
@@ -607,19 +607,19 @@ export const sectorLocationContent = {
 
     'restaurantes-totana': {
         metaTitle: 'Restaurantes en Totana | Sistema de Reservas y Gestión',
-        metaDescription: 'Automatiza tu restaurante en Totana. Elimina no-shows y organiza el servicio.',
+        metaDescription: 'Automatiza tu restaurante en Totana. Elimina Plantones y organiza el servicio.',
         hero: {
             title: 'Restaurantes en Totana',
             subtitle: 'Menos caos, más servicio profesional.',
         },
         problems: [
-            { title: 'No-shows frecuentes', description: 'Mesas vacías cuando podrían estar llenas.' },
+            { title: 'Plantones frecuentes', description: 'Mesas vacías cuando podrían estar llenas.' },
             { title: 'Teléfono constante', description: 'Llamadas mientras trabajas.' },
             { title: 'Gestión desordenada', description: 'Papel, Excel, memoria.' },
             { title: 'Inventario sin control', description: 'Compras de más o te quedas sin ingredientes.' },
         ],
         solutions: [
-            { title: 'Reservas automáticas', description: 'Cliente reserva online. Recordatorio automático.', benefit: 'Menos no-shows' },
+            { title: 'Reservas automáticas', description: 'Cliente reserva online. Recordatorio automático.', benefit: 'Menos Plantones' },
             { title: 'Gestión de mesas', description: 'Ves qué mesas están libres.', benefit: 'Aprovechas cada hueco' },
             { title: 'Teléfono libre', description: 'Reservas online. Teléfono para urgencias.', benefit: 'Menos interrupciones' },
             { title: 'Control de stock', description: 'Sabes qué gastas y cuándo reponer.', benefit: 'Compras lo necesario' },
@@ -635,19 +635,19 @@ export const sectorLocationContent = {
 
     'clinicas-murcia': {
         metaTitle: 'Automatización para Clínicas en Murcia | Gestión de Pacientes y Citas',
-        metaDescription: 'Clínicas en Murcia: organiza citas, elimina no-shows y libera tiempo administrativo sin complicaciones.',
+        metaDescription: 'Clínicas en Murcia: organiza citas, elimina Plantones y libera tiempo administrativo sin complicaciones.',
         hero: {
             title: 'Clínicas en Murcia',
             subtitle: 'Menos tiempo en administración, más tiempo para pacientes.',
         },
         problems: [
-            { title: 'No-shows constantes', description: 'Pacientes que no vienen. Hueco perdido.' },
+            { title: 'Plantones constantes', description: 'Pacientes que no vienen. Hueco perdido.' },
             { title: 'Teléfono desbordado', description: 'Llamadas para citas mientras atiendes pacientes.' },
             { title: 'Historiales en papel', description: 'Buscar información lleva tiempo.' },
             { title: 'Recordatorios manuales', description: 'Llamar a cada paciente para confirmar.' },
         ],
         solutions: [
-            { title: 'Sistema de citas online', description: 'Paciente reserva cuando quiere. Recordatorio automático.', benefit: 'No-shows reducidos' },
+            { title: 'Sistema de citas online', description: 'Paciente reserva cuando quiere. Recordatorio automático.', benefit: 'Plantones reducidos' },
             { title: 'Historiales digitales', description: 'Toda la información accesible al instante.', benefit: 'Atención más rápida' },
             { title: 'Recordatorios automáticos', description: 'SMS o WhatsApp automático antes de la cita.', benefit: 'Sin llamar manualmente' },
             { title: 'Teléfono liberado', description: 'Citas online. Teléfono para urgencias.', benefit: 'Menos interrupciones' },
@@ -659,7 +659,7 @@ export const sectorLocationContent = {
 
     'clinicas-cartagena': {
         metaTitle: 'Clínicas en Cartagena | Sistema de Citas y Gestión de Pacientes',
-        metaDescription: 'Automatiza tu clínica en Cartagena. Organiza citas, elimina no-shows y libera tiempo.',
+        metaDescription: 'Automatiza tu clínica en Cartagena. Organiza citas, elimina Plantones y libera tiempo.',
         hero: {
             title: 'Clínicas en Cartagena',
             subtitle: 'Organiza las citas y dedica más tiempo a los pacientes.',
@@ -671,7 +671,7 @@ export const sectorLocationContent = {
             { title: 'Confirmaciones manuales', description: 'Llamar a cada paciente.' },
         ],
         solutions: [
-            { title: 'Citas online', description: 'Paciente reserva cuando quiere. Recordatorio automático.', benefit: 'Menos no-shows' },
+            { title: 'Citas online', description: 'Paciente reserva cuando quiere. Recordatorio automático.', benefit: 'Menos Plantones' },
             { title: 'Historiales digitales', description: 'Información accesible al instante.', benefit: 'Atención más eficiente' },
             { title: 'Recordatorios automáticos', description: 'SMS o WhatsApp antes de la cita.', benefit: 'Sin llamar manualmente' },
             { title: 'Teléfono libre', description: 'Citas online. Teléfono para urgencias.', benefit: 'Menos interrupciones' },
@@ -689,13 +689,13 @@ export const sectorLocationContent = {
             subtitle: 'Menos administración, más atención al paciente.',
         },
         problems: [
-            { title: 'No-shows frecuentes', description: 'Pacientes que no vienen sin avisar.' },
+            { title: 'Plantones frecuentes', description: 'Pacientes que no vienen sin avisar.' },
             { title: 'Teléfono desbordado', description: 'Llamadas mientras trabajas.' },
             { title: 'Historiales en papel', description: 'Buscar información es lento.' },
             { title: 'Confirmaciones manuales', description: 'Llamar a cada paciente.' },
         ],
         solutions: [
-            { title: 'Sistema de citas online', description: 'Paciente reserva cuando quiere. Recordatorio automático.', benefit: 'Menos no-shows' },
+            { title: 'Sistema de citas online', description: 'Paciente reserva cuando quiere. Recordatorio automático.', benefit: 'Menos Plantones' },
             { title: 'Historiales digitales', description: 'Información accesible rápidamente.', benefit: 'Atención más ágil' },
             { title: 'Recordatorios automáticos', description: 'SMS o WhatsApp automático.', benefit: 'Sin llamar manualmente' },
             { title: 'Teléfono liberado', description: 'Citas online. Teléfono para urgencias.', benefit: 'Menos interrupciones' },
@@ -719,7 +719,7 @@ export const sectorLocationContent = {
             { title: 'Confirmaciones manuales', description: 'Llamar a cada paciente.' },
         ],
         solutions: [
-            { title: 'Citas online', description: 'Paciente reserva cuando quiere. Recordatorio automático.', benefit: 'Menos no-shows' },
+            { title: 'Citas online', description: 'Paciente reserva cuando quiere. Recordatorio automático.', benefit: 'Menos Plantones' },
             { title: 'Historiales digitales', description: 'Información accesible al instante.', benefit: 'Atención más rápida' },
             { title: 'Recordatorios automáticos', description: 'SMS o WhatsApp automático.', benefit: 'Sin llamar manualmente' },
             { title: 'Teléfono libre', description: 'Citas online. Teléfono para urgencias.', benefit: 'Menos interrupciones' },
@@ -731,19 +731,19 @@ export const sectorLocationContent = {
 
     'clinicas-alcantarilla': {
         metaTitle: 'Clínicas en Alcantarilla | Sistema de Citas Automático',
-        metaDescription: 'Clínicas en Alcantarilla: elimina no-shows y organiza la gestión de pacientes.',
+        metaDescription: 'Clínicas en Alcantarilla: elimina Plantones y organiza la gestión de pacientes.',
         hero: {
             title: 'Clínicas en Alcantarilla',
             subtitle: 'Menos caos administrativo, más atención profesional.',
         },
         problems: [
-            { title: 'No-shows constantes', description: 'Pacientes que no vienen.' },
+            { title: 'Plantones constantes', description: 'Pacientes que no vienen.' },
             { title: 'Teléfono desbordado', description: 'Llamadas mientras trabajas.' },
             { title: 'Historiales en papel', description: 'Buscar información es lento.' },
             { title: 'Confirmaciones manuales', description: 'Llamar a cada paciente.' },
         ],
         solutions: [
-            { title: 'Citas online', description: 'Paciente reserva cuando quiere. Recordatorio automático.', benefit: 'Menos no-shows' },
+            { title: 'Citas online', description: 'Paciente reserva cuando quiere. Recordatorio automático.', benefit: 'Menos Plantones' },
             { title: 'Historiales digitales', description: 'Información accesible rápidamente.', benefit: 'Atención más eficiente' },
             { title: 'Recordatorios automáticos', description: 'SMS o WhatsApp automático.', benefit: 'Sin llamar manualmente' },
             { title: 'Teléfono liberado', description: 'Citas online. Teléfono para urgencias.', benefit: 'Menos interrupciones' },
@@ -767,7 +767,7 @@ export const sectorLocationContent = {
             { title: 'Confirmaciones manuales', description: 'Llamar a cada paciente.' },
         ],
         solutions: [
-            { title: 'Citas online', description: 'Paciente reserva cuando quiere. Recordatorio automático.', benefit: 'Menos no-shows' },
+            { title: 'Citas online', description: 'Paciente reserva cuando quiere. Recordatorio automático.', benefit: 'Menos Plantones' },
             { title: 'Historiales digitales', description: 'Información accesible al instante.', benefit: 'Atención más rápida' },
             { title: 'Recordatorios automáticos', description: 'SMS o WhatsApp automático.', benefit: 'Sin llamar manualmente' },
             { title: 'Teléfono libre', description: 'Citas online. Teléfono para urgencias.', benefit: 'Menos interrupciones' },
@@ -779,19 +779,19 @@ export const sectorLocationContent = {
 
     'clinicas-totana': {
         metaTitle: 'Clínicas en Totana | Sistema de Gestión de Pacientes',
-        metaDescription: 'Clínicas en Totana: automatiza citas, elimina no-shows y organiza tu centro.',
+        metaDescription: 'Clínicas en Totana: automatiza citas, elimina Plantones y organiza tu centro.',
         hero: {
             title: 'Clínicas en Totana',
             subtitle: 'Menos administración, más atención al paciente.',
         },
         problems: [
-            { title: 'No-shows frecuentes', description: 'Pacientes que no vienen sin avisar.' },
+            { title: 'Plantones frecuentes', description: 'Pacientes que no vienen sin avisar.' },
             { title: 'Teléfono desbordado', description: 'Llamadas mientras trabajas.' },
             { title: 'Historiales en papel', description: 'Buscar información es lento.' },
             { title: 'Confirmaciones manuales', description: 'Llamar a cada paciente.' },
         ],
         solutions: [
-            { title: 'Citas online', description: 'Paciente reserva cuando quiere. Recordatorio automático.', benefit: 'Menos no-shows' },
+            { title: 'Citas online', description: 'Paciente reserva cuando quiere. Recordatorio automático.', benefit: 'Menos Plantones' },
             { title: 'Historiales digitales', description: 'Información accesible rápidamente.', benefit: 'Atención más ágil' },
             { title: 'Recordatorios automáticos', description: 'SMS o WhatsApp automático.', benefit: 'Sin llamar manualmente' },
             { title: 'Teléfono liberado', description: 'Citas online. Teléfono para urgencias.', benefit: 'Menos interrupciones' },

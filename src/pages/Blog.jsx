@@ -5,6 +5,7 @@ import { ArrowRight, Clock, Calendar, AlertTriangle, X, ChevronDown, ChevronUp }
 import { supabase } from '../lib/supabaseClient';
 import { blogPosts as localPosts } from '../data/blogPosts';
 import BackgroundMesh from '../components/BackgroundMesh';
+import SEO from '../components/SEO';
 
 const Blog = () => {
     const categories = [
@@ -58,6 +59,10 @@ const Blog = () => {
 
     return (
         <div className="relative pt-64 pb-48 min-h-screen">
+            <SEO
+                title="Blog | El Coste del Caos"
+                description="Artículos sin humo sobre automatización. Si no te ahorra tiempo o dinero, no lo escribimos."
+            />
             <BackgroundMesh />
 
             <div className="relative z-10 max-w-7xl mx-auto px-6">

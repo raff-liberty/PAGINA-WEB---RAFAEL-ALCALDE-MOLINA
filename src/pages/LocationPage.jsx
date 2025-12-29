@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { MapPin, ArrowRight, CheckCircle, Building2, Users, TrendingUp, AlertTriangle, HelpCircle, Brain, Euro, History } from 'lucide-react';
+import { MapPin, ArrowRight, CheckCircle, Building2, Users, TrendingUp, AlertTriangle, HelpCircle, Brain, Euro, History, ShieldCheck, Zap, XCircle } from 'lucide-react';
 import { getLocationBySlug } from '../data/locations';
 import { sectors } from '../data/sectors';
 import BackgroundMesh from '../components/BackgroundMesh';
+import SEO from '../components/SEO';
 
 const LocationPage = () => {
     const { location } = useParams();
@@ -15,66 +16,34 @@ const LocationPage = () => {
         return <Navigate to="/" replace />;
     }
 
-    // Set page title, meta description and structured data
-    useEffect(() => {
-        document.title = `Automatización de Negocios en ${locationData.name} | Engorilate`;
-
-        const metaDescription = document.querySelector('meta[name="description"]');
-        if (metaDescription) {
-            metaDescription.setAttribute('content', locationData.metaDescription);
+    // Build LocalBusiness format for SEO component
+    const schemaData = {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": `Engorilate - Automatización en ${locationData.name}`,
+        "description": locationData.metaDescription,
+        "url": window.location.href,
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": locationData.name,
+            "addressRegion": "Murcia",
+            "addressCountry": "ES"
+        },
+        "service": {
+            "@type": "Service",
+            "serviceType": "Automatización de Negocios",
+            "areaServed": locationData.name
         }
-
-        // Update keywords if meta exists
-        const metaKeywords = document.querySelector('meta[name="keywords"]');
-        if (metaKeywords) {
-            metaKeywords.setAttribute('content', locationData.keywords);
-        } else {
-            const k = document.createElement('meta');
-            k.name = "keywords";
-            k.content = locationData.keywords;
-            document.head.appendChild(k);
-        }
-
-        // Inject JSON-LD Schema for Local SEO
-        const schemaId = 'schema-local-business';
-        let script = document.getElementById(schemaId);
-        if (!script) {
-            script = document.createElement('script');
-            script.id = schemaId;
-            script.type = 'application/ld+json';
-            document.head.appendChild(script);
-        }
-
-        const schemaData = {
-            "@context": "https://schema.org",
-            "@type": "LocalBusiness",
-            "name": `Engorilate - Automatización en ${locationData.name}`,
-            "description": locationData.metaDescription,
-            "url": window.location.href,
-            "address": {
-                "@type": "PostalAddress",
-                "addressLocality": locationData.name,
-                "addressRegion": "Murcia",
-                "addressCountry": "ES"
-            },
-            "service": {
-                "@type": "Service",
-                "serviceType": "Automatización de Negocios",
-                "areaServed": locationData.name
-            }
-        };
-
-        script.innerHTML = JSON.stringify(schemaData);
-
-        return () => {
-            // Cleanup schema on unmount
-            const existingScript = document.getElementById(schemaId);
-            if (existingScript) existingScript.remove();
-        };
-    }, [locationData]);
+    };
 
     return (
         <div className="relative pt-32 pb-24 min-h-screen">
+            <SEO
+                title={`Automatización de Negocios en ${locationData.name} | Engorilate`}
+                description={locationData.metaDescription}
+                keywords={locationData.keywords}
+                schema={schemaData}
+            />
             <BackgroundMesh />
 
             <div className="relative z-10 max-w-7xl mx-auto px-6">
@@ -144,60 +113,96 @@ const LocationPage = () => {
                     </div>
                 </div>
 
-                {/* Local Examples */}
-                <div className="mb-20">
-                    <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">
-                        Problemas comunes en <span className="text-primary">{locationData.name}</span>
+                {/* Local Examples / Case Studies */}
+                <div className="mb-24">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold mb-6 uppercase tracking-widest">
+                        <AlertTriangle className="w-3 h-3" /> Realidad Local
+                    </div>
+                    <h2 className="font-display text-3xl md:text-5xl font-bold text-white mb-8">
+                        Escenarios críticos en <span className="text-primary italic">{locationData.name}</span>
                     </h2>
-                    <p className="text-gray-400 mb-10 max-w-2xl">
-                        Estos son algunos ejemplos de situaciones que vemos habitualmente en negocios de {locationData.name}:
-                    </p>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {locationData.examples.map((example, idx) => (
                             <motion.div
                                 key={idx}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: idx * 0.1 }}
-                                className="bg-[#1a1a1a] border border-white/5 p-6 rounded-xl hover:border-primary/30 transition-all"
+                                whileHover={{ scale: 1.02 }}
+                                className="bg-[#1a1a1a] border border-white/10 p-8 rounded-2xl relative overflow-hidden group shadow-2xl"
                             >
-                                <CheckCircle className="w-6 h-6 text-primary/50 mb-4" />
-                                <p className="text-gray-300 leading-relaxed">{example}</p>
+                                <div className="absolute top-0 left-0 w-1 h-full bg-primary/30 group-hover:bg-primary transition-colors"></div>
+                                <div className="text-primary/40 mb-6 font-mono text-sm">CASO_{String(idx + 1).padStart(2, '0')}</div>
+                                <p className="text-white text-lg leading-relaxed font-medium mb-4">{example}</p>
+                                <div className="flex items-center gap-2 text-red-400 text-xs font-bold uppercase">
+                                    <XCircle className="w-4 h-4" /> Fuga de ingresos detectada
+                                </div>
                             </motion.div>
                         ))}
                     </div>
                 </div>
 
-                {/* How We Help */}
-                <div className="bg-[#222222] border border-white/10 p-10 md:p-16 rounded-2xl mb-20">
-                    <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-6">
-                        Cómo ayudamos a negocios en {locationData.name}
-                    </h2>
-                    <div className="space-y-6 text-gray-300 leading-relaxed text-lg">
-                        <p>
-                            No importa si tienes una peluquería, un restaurante, un taller o una clínica en {locationData.name}.
-                            El problema es siempre el mismo: <strong className="text-white">caos operativo</strong>.
-                        </p>
-                        <p>
-                            Nuestro trabajo consiste en:
-                        </p>
-                        <ul className="space-y-6 ml-6">
-                            <li className="flex items-start gap-3">
-                                <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 flex-shrink-0" />
-                                <span><strong className="text-white">Entrar en el barro:</strong> Identifico dónde se te escapa el dinero y la salud. Sin paños calientes, directo al problema.</span>
-                            </li>
-                            <li className="flex items-start gap-3">
-                                <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 flex-shrink-0" />
-                                <span><strong className="text-white">Procesos de acero:</strong> Definimos reglas claras que no dependen de tu memoria. Si no aporta valor al negocio, se elimina.</span>
-                            </li>
-                            <li className="flex items-start gap-3">
-                                <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 flex-shrink-0" />
-                                <span><strong className="text-white">Sistemas en piloto automático:</strong> Conectamos tecnología que trabaja por ti 24/7. Tú descansas, tu operativa factura.</span>
-                            </li>
-                        </ul>
-                        <p className="pt-4">
-                            El resultado: recuperas tu tiempo, reduces el estrés y tu negocio funciona sin que tengas que estar encima de todo.
-                        </p>
+                {/* How We Help: THE SYSTEM */}
+                <div className="relative mb-24 overflow-hidden rounded-[3rem] border border-white/10 bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] p-8 md:p-20 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+                    {/* Background decoration */}
+                    <div className="absolute -top-40 -right-40 w-96 h-96 bg-primary/10 blur-[150px] rounded-full opacity-50"></div>
+                    <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-primary/5 blur-[150px] rounded-full opacity-30"></div>
+
+                    <div className="relative z-10">
+                        <div className="text-center max-w-3xl mx-auto mb-16">
+                            <h2 className="font-display text-4xl md:text-6xl font-bold text-white mb-8">
+                                El Método <span className="text-primary italic">Engorilate</span>
+                            </h2>
+                            <p className="text-gray-400 text-lg">
+                                No instalamos software. Construimos <strong className="text-white">sistemas de gestión</strong> que eliminan el error humano y recuperan tu libertad.
+                            </p>
+                        </div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                            {[
+                                {
+                                    title: "Entrar en el barro",
+                                    desc: "Mapeamos tu negocio en {locationData.name}. Detectamos dónde se te escapa el dinero por culpa de procesos manuales y descuidos.",
+                                    benefit: "Claridad Total",
+                                    icon: Brain,
+                                    color: "text-blue-400"
+                                },
+                                {
+                                    title: "Procesos de acero",
+                                    desc: "Diseñamos las reglas. Si un cliente no paga, el sistema reclama solo. Si hay una cita, el aviso llega solo. Sin fallos.",
+                                    benefit: "Cero Errores",
+                                    icon: ShieldCheck,
+                                    color: "text-primary"
+                                },
+                                {
+                                    title: "Motor Automático",
+                                    desc: "Conectamos tu WhatsApp, Email y CRM en un solo centro de control que trabaja 24/7 mientras tú estás fuera.",
+                                    benefit: "Libertad Real",
+                                    icon: Zap,
+                                    color: "text-yellow-400"
+                                }
+                            ].map((step, i) => (
+                                <div key={i} className="bg-black/40 border border-white/5 p-8 rounded-3xl hover:border-primary/40 transition-all group relative overflow-hidden">
+                                    <div className={`w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center mb-6 ${step.color} group-hover:bg-primary group-hover:text-black transition-all duration-500`}>
+                                        <step.icon className="w-8 h-8" />
+                                    </div>
+                                    <div className="absolute top-6 right-8 px-3 py-1 rounded-full bg-white/5 text-[10px] font-bold text-white/40 uppercase tracking-widest">
+                                        {step.benefit}
+                                    </div>
+                                    <h3 className="text-2xl font-bold text-white mb-4">{step.title}</h3>
+                                    <p className="text-gray-400 leading-relaxed text-sm">
+                                        {step.desc.replace('{locationData.name}', locationData.name)}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="mt-16 text-center">
+                            <p className="text-white/60 mb-8 italic">El resultado: Tu negocio funciona. Tú dejas de ser un esclavo de tu WhatsApp.</p>
+                            <Link
+                                to="/contact"
+                                className="inline-flex items-center gap-4 bg-primary text-black font-bold px-10 py-5 rounded-2xl hover:scale-105 transition-all shadow-[0_10px_30px_rgba(110,231,183,0.3)]"
+                            >
+                                Quiero mi Diagnóstico Gratuito <ArrowRight className="w-6 h-6" />
+                            </Link>
+                        </div>
                     </div>
                 </div>
 

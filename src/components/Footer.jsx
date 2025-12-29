@@ -13,7 +13,7 @@ const Footer = () => {
                     <div>
                         <h3 className="font-display font-bold text-lg text-white mb-4">Engorilate</h3>
                         <p className="text-sm text-gray-500 leading-relaxed">
-                            Automatización y orden para pequeños negocios. Sin complicaciones técnicas.
+                            Automatización y Sistemas para Pequeñas Empresas. Ponemos orden en tu negocio para que recuperes tu tiempo.
                         </p>
                     </div>
 
@@ -75,7 +75,7 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
-        </footer>
+        </footer >
     );
 };
 

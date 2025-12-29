@@ -5,6 +5,7 @@ import { Clock, Calendar, ArrowLeft, ArrowRight } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
 import { blogPosts as localPosts } from '../data/blogPosts';
 import BackgroundMesh from '../components/BackgroundMesh';
+import SEO from '../components/SEO';
 
 const BlogPost = () => {
     const { slug } = useParams();
@@ -72,20 +73,16 @@ const BlogPost = () => {
         return <Navigate to="/blog" replace />;
     }
 
-    // Set page title and meta
-    useEffect(() => {
-        if (post) {
-            document.title = `${post.title} | Engorilate`;
-
-            const metaDescription = document.querySelector('meta[name="description"]');
-            if (metaDescription) {
-                metaDescription.setAttribute('content', post.meta_description || post.metaDescription);
-            }
-        }
-    }, [post]);
-
     return (
         <div className="relative pt-32 pb-24 min-h-screen">
+            {post && (
+                <SEO
+                    title={`${post.title} | Engorilate`}
+                    description={post.meta_description || post.metaDescription}
+                    type="article"
+                    image={post.image || 'https://engorilate.com/og-image.jpg'}
+                />
+            )}
             <BackgroundMesh />
 
             <div className="relative z-10 max-w-4xl mx-auto px-6">

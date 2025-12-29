@@ -1,15 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Save, X, Eye, Edit, Plus, Trash2, Lock, Search, Filter, BookOpen, BarChart3, Copy, Upload, Download, Bold, Italic, List, ListOrdered, Quote, Table, CheckSquare } from 'lucide-react';
+import { Save, X, Eye, Edit, Plus, Trash2, Lock, Search, Filter, BookOpen, BarChart3, Copy, Upload, Download, Globe, MapPin, Briefcase, CheckCircle, AlertCircle, ExternalLink, Target } from 'lucide-react';
 import BackgroundMesh from '../components/BackgroundMesh';
+import StrategicRoadmap from '../components/StrategicRoadmap';
 
-const BlogAdmin = () => {
+const AdminPanel = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [password, setPassword] = useState('');
+
+    // Blog State
     const [posts, setPosts] = useState([]);
     const [selectedPost, setSelectedPost] = useState(null);
-    const [activeTab, setActiveTab] = useState('editor'); // 'editor', 'guidelines', 'stats', 'config'
+
+    // SEO / Landings State
+    const [activeTab, setActiveTab] = useState('editor'); // 'editor', 'landings', 'guidelines', 'stats', 'config'
+    const [sectors, setSectors] = useState([]);
+    const [locations, setLocations] = useState([]);
+    const [landingPages, setLandingPages] = useState([]);
+    const [selectedLanding, setSelectedLanding] = useState(null);
+
     const [siteConfig, setSiteConfig] = useState({
         whatsapp_url: '',
         instagram_url: '',
@@ -53,6 +63,13 @@ const BlogAdmin = () => {
 - **Guerrilla Marketing**: Agresivo, honesto, sin azúcar. Como un gorila que te dice las verdades que nadie más te dice.
 - **Orientado a resultados**: Cada artículo debe ahorrar al menos 10 horas al mes al lector.
 
+## Fuentes y Veracidad (CRÍTICO)
+> 🚨 **CERO ALUCINACIONES**: Bajo ningún concepto te inventes datos, estadísticas o ejemplos.
+1. **Fuentes Reputadas**: Usa documentación oficial (n8n docs, Make docs), estudios de mercado reales (McKinsey, Deloitte para PYMEs) o casos de éxito verificables.
+2. **Si no lo sabes, no lo digas**: Es mejor decir "según nuestra experiencia" que inventarse un % falso.
+3. **Cita las fuentes**: Si das un dato ("el 90% de las PYMEs cierran..."), pon el enlace o la fuente.
+
+
 ## Estructura de Posts
 1. **Hook brutal**: Primera frase que golpea el dolor del lector
 2. **El problema real**: Sin eufemismos, directo a la yugular
@@ -89,6 +106,7 @@ const BlogAdmin = () => {
         if (isAuthenticated) {
             fetchPosts();
             fetchSiteConfig();
+            fetchSEOData();
         }
     }, [isAuthenticated]);
 
@@ -104,6 +122,131 @@ const BlogAdmin = () => {
             setPosts(data || []);
         } catch (error) {
             console.error('Error fetching posts:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const fetchSEOData = async () => {
+        try {
+            // Fetch Sectors
+            const { data: sectorsData } = await supabase.from('sectors').select('*');
+            if (sectorsData) setSectors(sectorsData);
+
+            // Fetch Locations
+            const { data: locationsData } = await supabase.from('locations').select('*');
+            if (locationsData) setLocations(locationsData);
+
+            // Fetch Existing Content
+            const { data: contentData } = await supabase.from('sector_location_content').select('*');
+            if (contentData) setLandingPages(contentData);
+
+        } catch (error) {
+            console.error('Error fetching SEO data:', error);
+        }
+    };
+
+    const getLandingStatus = (sectorSlug, locationSlug) => {
+        return landingPages.find(p => p.sector_slug === sectorSlug && p.location_slug === locationSlug);
+    };
+
+    const handleSelectLanding = (sector, location) => {
+        const existing = getLandingStatus(sector.slug, location.slug);
+
+        if (existing) {
+            setSelectedLanding(existing);
+        } else {
+            // SMART TEMPLATES: High-conversion keywords per sector
+            const templates = {
+                'peluquerias': {
+                    metaTitle: `Software para Peluquerías en ${location.name} (Citas WhatsApp) | Engorilate`,
+                    metaDesc: `Agenda automática, recordatorios por WhatsApp y 0 ausencias. El software para peluquerías en ${location.name} que funciona solo.`,
+                    heroTitle: `Tu Peluquería en ${location.name} funcionando en Autopiloto`,
+                    heroSub: `Olvídate del teléfono. Citas por WhatsApp, agenda llena y cobros automáticos.`
+                },
+                'restaurantes': {
+                    metaTitle: `Sistema de Reservas Restaurantes ${location.name} (Sin Comisiones) | Engorilate`,
+                    metaDesc: `Automatiza reservas y llena tu restaurante en ${location.name}. Sin TheFork ni comisiones. Carta digital y gestión de mesas.`,
+                    heroTitle: `Llena tu Restaurante en ${location.name} sin depender del Teléfono`,
+                    heroSub: `Reservas automáticas, cero plantones y carta digital. Todo el control para ti.`
+                },
+                'clinicas': {
+                    metaTitle: `Software de Citas Médicas en ${location.name} (Recordatorios SMS) | Engorilate`,
+                    metaDesc: `Software para clínicas en ${location.name}. Reduce el absentismo con recordatorios automáticos y gestiona historiales fácilmente.`,
+                    heroTitle: `Más Pacientes en tu Clínica de ${location.name}, Menos Burocracia`,
+                    heroSub: `Gestión de citas, historiales y recordatorios automáticos. El tiempo es para curar.`
+                },
+                'talleres': {
+                    metaTitle: `Programa Taller Mecánico ${location.name} (Facturas y Presupuestos) | Engorilate`,
+                    metaDesc: `Software taller mecánico en ${location.name}. Crea presupuestos, envía facturas por WhatsApp y avisa cuando el coche está listo.`,
+                    heroTitle: `Control Total para tu Taller en ${location.name}`,
+                    heroSub: `Presupuestos al vuelo, facturas por WhatsApp y clientes avisados automáticamente.`
+                },
+                'tatuajes': {
+                    metaTitle: `Software Estudio Tatuajes ${location.name} (Citas y Depósitos) | Engorilate`,
+                    metaDesc: `Gestiona citas, cobros de señal y consentimientos digitales. El software para tatuadores en ${location.name}.`,
+                    heroTitle: `Tatúa más, Gestiona menos en ${location.name}`,
+                    heroSub: `Agenda, depósitos y consentimientos digitales. Todo desde el móvil.`
+                },
+                'agencias': {
+                    metaTitle: `Gestión de Proyectos Agencia en ${location.name} (CRM + Facturas) | Engorilate`,
+                    metaDesc: `Optimiza tu agencia en ${location.name}. Onboarding de clientes, facturación recurrente y gestión de proyectos unificada.`,
+                    heroTitle: `Escala tu Agencia en ${location.name} sin morir de éxito`,
+                    heroSub: `CRM, Project Management y Facturación en un solo lugar. Adiós al caos.`
+                },
+                'comercios': {
+                    metaTitle: `TPV y Software Tienda ${location.name} (Stock Real) | Engorilate`,
+                    metaDesc: `Software TPV para tiendas en ${location.name}. Control de stock en tiempo real, ventas y facturación simplificada.`,
+                    heroTitle: `Tu Tienda en ${location.name}, bajo control total`,
+                    heroSub: `TPV, Inventario y Ventas sincronizadas. Sabe lo que ganas cada día.`
+                }
+            };
+
+            const t = templates[sector.slug] || {
+                metaTitle: `Software para ${sector.name} en ${location.name} | Engorilate`,
+                metaDesc: `Automatiza tu negocio de ${sector.name.toLowerCase()} en ${location.name}. Deja de perder tiempo en gestión y céntrate en lo importante.`,
+                heroTitle: `Automatización para ${sector.name} en ${location.name}`,
+                heroSub: `Recupera tu tiempo y escala tu negocio de ${sector.name.toLowerCase()}.`
+            };
+
+            // Template for new landing content
+            setSelectedLanding({
+                sector_slug: sector.slug,
+                location_slug: location.slug,
+                meta_title: t.metaTitle,
+                meta_description: t.metaDesc,
+                hero_title: t.heroTitle,
+                hero_subtitle: t.heroSub,
+                problems: [],
+                solutions: [],
+                local_context: ''
+            });
+        }
+        setActiveTab('landings');
+    };
+
+    const handleSaveLanding = async () => {
+        if (!selectedLanding) return;
+        setLoading(true);
+        setSaveStatus('Guardando Landing...');
+
+        try {
+            // Ensure ID is set correctly (sector-location)
+            const id = selectedLanding.id || `${selectedLanding.sector_slug}-${selectedLanding.location_slug}`;
+            const dataToSave = { ...selectedLanding, id };
+
+            const { error } = await supabase
+                .from('sector_location_content')
+                .upsert(dataToSave, { onConflict: 'id' });
+
+            if (error) throw error;
+
+            setSaveStatus('✓ Landing guardada');
+            fetchSEOData(); // Refresh data to update list status
+            setTimeout(() => setSaveStatus(''), 3000);
+        } catch (error) {
+            console.error('Error saving landing:', error);
+            setSaveStatus('✗ Error al guardar');
         } finally {
             setLoading(false);
         }
@@ -492,14 +635,31 @@ const BlogAdmin = () => {
 
             <div className="relative z-10 max-w-7xl mx-auto px-6">
                 <div className="mb-8 flex items-center justify-between">
-                    <h1 className="text-4xl font-bold text-white">Blog Admin Panel</h1>
+                    <h1 className="text-4xl font-bold text-white">Admin Panel & SEO</h1>
                     <div className="flex items-center gap-4">
                         <button
                             onClick={() => setActiveTab('editor')}
                             className={`px-4 py-2 rounded-lg transition-all ${activeTab === 'editor' ? 'bg-primary text-gray-900' : 'bg-black/30 text-white border border-white/20'}`}
                         >
                             <Edit className="w-4 h-4 inline mr-2" />
-                            Editor
+                            Blog
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('growth')}
+                            className={`flex-1 flex flex-col items-center gap-2 p-3 rounded-xl border transition-all ${activeTab === 'growth'
+                                ? 'bg-primary text-gray-900 border-primary shadow-[0_0_20px_rgba(224,255,0,0.3)]'
+                                : 'bg-white/5 text-gray-400 border-transparent hover:bg-white/10 hover:border-white/20'
+                                }`}
+                        >
+                            <Target className="w-5 h-5" />
+                            <span className="text-sm font-bold">Estrategia</span>
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('landings')}
+                            className={`px-4 py-2 rounded-lg transition-all ${activeTab === 'landings' ? 'bg-primary text-gray-900' : 'bg-black/30 text-white border border-white/20'}`}
+                        >
+                            <Globe className="w-4 h-4 inline mr-2" />
+                            Landings SEO
                         </button>
                         <button
                             onClick={() => setActiveTab('guidelines')}
@@ -663,6 +823,208 @@ const BlogAdmin = () => {
                                 <Save className="w-5 h-5" />
                                 Guardar Configuración
                             </button>
+                        </div>
+                    </div>
+                )}
+
+                {activeTab === 'growth' && (
+                    <StrategicRoadmap />
+                )}
+
+                {activeTab === 'landings' && (
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        {/* Sidebar: List of Pages */}
+                        <div className="lg:col-span-1">
+                            <div className="bg-[#222222] border border-white/30 rounded-2xl p-6 shadow-[0_8px_32px_rgba(0,0,0,0.9)] h-[80vh] flex flex-col">
+                                <h2 className="text-xl font-bold text-white mb-4">Páginas de Aterrizaje</h2>
+                                <div className="flex-1 overflow-y-auto pr-2 space-y-4">
+                                    {sectors.map(sector => (
+                                        <div key={sector.id} className="mb-4">
+                                            <h3 className="text-primary font-bold mb-2 uppercase text-xs tracking-wider">{sector.name}</h3>
+                                            <div className="space-y-1">
+                                                {locations.map(location => {
+                                                    const hasContent = getLandingStatus(sector.slug, location.slug);
+                                                    const isSelected = selectedLanding?.sector_slug === sector.slug && selectedLanding?.location_slug === location.slug;
+
+                                                    return (
+                                                        <button
+                                                            key={location.id}
+                                                            onClick={() => handleSelectLanding(sector, location)}
+                                                            className={`w-full flex items-center justify-between px-3 py-2 rounded text-sm transition-all ${isSelected ? 'bg-primary/20 text-white border border-primary/50' : 'text-gray-400 hover:bg-white/5'
+                                                                }`}
+                                                        >
+                                                            <span>{location.name}</span>
+                                                            {hasContent ? (
+                                                                <CheckCircle className="w-3 h-3 text-green-500" />
+                                                            ) : (
+                                                                <div className="w-1.5 h-1.5 rounded-full bg-gray-600" />
+                                                            )}
+                                                        </button>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Editor: Form */}
+                        <div className="lg:col-span-2">
+                            {selectedLanding ? (
+                                <div className="bg-[#222222] border border-white/30 rounded-2xl p-6 shadow-[0_8px_32px_rgba(0,0,0,0.9)] h-[80vh] overflow-y-auto">
+                                    <div className="flex items-center justify-between mb-6 sticky top-0 bg-[#222222] z-10 py-2 border-b border-white/10">
+                                        <div>
+                                            <h2 className="text-xl font-bold text-white mb-1">
+                                                Editando: {selectedLanding.sector_slug} en {selectedLanding.location_slug}
+                                            </h2>
+                                            <a
+                                                href={`/${selectedLanding.sector_slug}/${selectedLanding.location_slug}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-xs text-primary hover:underline flex items-center gap-1"
+                                            >
+                                                Ver página en vivo <Globe className="w-3 h-3" />
+                                            </a>
+                                        </div>
+                                        <div className="flex items-center gap-3">
+                                            {saveStatus && <span className="text-sm text-primary">{saveStatus}</span>}
+                                            <button
+                                                onClick={handleSaveLanding}
+                                                disabled={loading}
+                                                className="flex items-center gap-2 px-6 py-2 bg-primary hover:bg-primary-hover text-gray-900 font-bold rounded-lg transition-all disabled:opacity-50"
+                                            >
+                                                <Save className="w-4 h-4" />
+                                                Guardar
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-6">
+                                        {/* SEO Section */}
+                                        <div className="p-4 bg-black/20 rounded-xl border border-white/10">
+                                            <h3 className="text-white font-bold mb-4 flex items-center gap-2">
+                                                <Search className="w-4 h-4 text-primary" />
+                                                SEO & Meta Tags
+                                            </h3>
+                                            <div className="space-y-4">
+                                                <div>
+                                                    <div className="flex justify-between items-center mb-1">
+                                                        <label className="block text-sm font-medium text-gray-400">Meta Title (Google)</label>
+                                                        {selectedLanding.meta_title && (
+                                                            <a
+                                                                href={`https://www.google.com/search?q=${encodeURIComponent(selectedLanding.meta_title.replace(' | Engorilate', ''))}`}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="text-xs text-primary hover:underline flex items-center gap-1"
+                                                            >
+                                                                Ver competencia en Google <ExternalLink className="w-3 h-3" />
+                                                            </a>
+                                                        )}
+                                                    </div>
+                                                    <input
+                                                        type="text"
+                                                        value={selectedLanding.meta_title || ''}
+                                                        onChange={(e) => setSelectedLanding({ ...selectedLanding, meta_title: e.target.value })}
+                                                        className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-2 text-white focus:border-primary focus:outline-none"
+                                                        placeholder="Ej: Automatización de Peluquerías en Murcia | Engorilate"
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label className="block text-sm font-medium text-gray-400 mb-1">Meta Description</label>
+                                                    <textarea
+                                                        value={selectedLanding.meta_description || ''}
+                                                        onChange={(e) => setSelectedLanding({ ...selectedLanding, meta_description: e.target.value })}
+                                                        className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-2 text-white focus:border-primary focus:outline-none h-20"
+                                                        placeholder="Descripción corta para los resultados de búsqueda..."
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Hero Section */}
+                                        <div className="p-4 bg-black/20 rounded-xl border border-white/10">
+                                            <h3 className="text-white font-bold mb-4 flex items-center gap-2">
+                                                <Briefcase className="w-4 h-4 text-primary" />
+                                                Sección Hero
+                                            </h3>
+                                            <div className="space-y-4">
+                                                <div>
+                                                    <label className="block text-sm font-medium text-gray-400 mb-1">Título Principal (H1)</label>
+                                                    <input
+                                                        type="text"
+                                                        value={selectedLanding.hero_title || ''}
+                                                        onChange={(e) => setSelectedLanding({ ...selectedLanding, hero_title: e.target.value })}
+                                                        className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-2 text-white focus:border-primary focus:outline-none"
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label className="block text-sm font-medium text-gray-400 mb-1">Subtítulo</label>
+                                                    <textarea
+                                                        value={selectedLanding.hero_subtitle || ''}
+                                                        onChange={(e) => setSelectedLanding({ ...selectedLanding, hero_subtitle: e.target.value })}
+                                                        className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-2 text-white focus:border-primary focus:outline-none h-20"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Local Context */}
+                                        <div className="p-4 bg-black/20 rounded-xl border border-white/10">
+                                            <h3 className="text-white font-bold mb-4 flex items-center gap-2">
+                                                <MapPin className="w-4 h-4 text-primary" />
+                                                Contexto Local
+                                            </h3>
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-400 mb-1">Texto Específico de la Zona</label>
+                                                <textarea
+                                                    value={selectedLanding.local_context || ''}
+                                                    onChange={(e) => setSelectedLanding({ ...selectedLanding, local_context: e.target.value })}
+                                                    className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-2 text-white focus:border-primary focus:outline-none h-32"
+                                                    placeholder="Menciona barrios, problemas específicos de la ciudad, etc..."
+                                                />
+                                            </div>
+                                        </div>
+
+                                        {/* Advanced JSON Data */}
+                                        <div className="p-4 bg-black/20 rounded-xl border border-white/10">
+                                            <h3 className="text-white font-bold mb-4 flex items-center gap-2">
+                                                <AlertCircle className="w-4 h-4 text-primary" />
+                                                Datos Avanzados (JSON)
+                                            </h3>
+                                            <div className="space-y-4">
+                                                <div>
+                                                    <label className="block text-sm font-medium text-gray-400 mb-1">Problemas (JSON Array)</label>
+                                                    <textarea
+                                                        value={JSON.stringify(selectedLanding.problems || [], null, 2)}
+                                                        onChange={(e) => {
+                                                            try {
+                                                                const parsed = JSON.parse(e.target.value);
+                                                                setSelectedLanding({ ...selectedLanding, problems: parsed });
+                                                            } catch (err) {
+                                                                // Allocating temporary state for invalid JSON could be complex, 
+                                                                // for now we just don't update state on invalid JSON or we could accept string and validate later.
+                                                                // A better approach for raw editing:
+                                                            }
+                                                        }}
+                                                        // For a simple raw editor, usually we separate "text" state from "object" state, 
+                                                        // but to keep it simple let's just warn it's raw.
+                                                        // Actually, simplified: Read Only for now or strict JSON.
+                                                        readOnly={true}
+                                                        className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-2 text-gray-500 font-mono text-xs h-32 cursor-not-allowed"
+                                                        placeholder="Edición de JSON próximamente..."
+                                                    />
+                                                    <p className="text-xs text-gray-500 mt-1">La edición de estructuras complejas (Problemas/Soluciones) se habilitará en la v2.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="h-full flex items-center justify-center text-gray-500 bg-[#222222] border border-white/30 rounded-2xl">
+                                    Selecciona una página del menú para editarla
+                                </div>
+                            )}
                         </div>
                     </div>
                 )}
@@ -955,4 +1317,4 @@ const BlogAdmin = () => {
     );
 };
 
-export default BlogAdmin;
+export default AdminPanel;

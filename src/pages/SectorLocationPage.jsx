@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { MapPin, ArrowRight, CheckCircle, AlertTriangle, Brain, ShieldCheck, Zap, XCircle, HelpCircle } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
 import BackgroundMesh from '../components/BackgroundMesh';
+import SEO from '../components/SEO';
 
 const SectorLocationPage = () => {
     const { sector: sectorSlug, location: locationSlug } = useParams();
@@ -82,56 +83,43 @@ const SectorLocationPage = () => {
         return <Navigate to="/sectores" replace />;
     }
 
-    // Set page title, meta and JSON-LD
-    useEffect(() => {
-        if (pageContent && location && sector) {
-            document.title = pageContent.meta_title || `${sector.name} en ${location.name} | Engorilate`;
-
-            const metaDesc = document.querySelector('meta[name="description"]');
-            if (metaDesc) {
-                metaDesc.setAttribute('content', pageContent.meta_description || pageContent.metaDescription);
-            }
-
-            // Inject JSON-LD
-            const schemaId = `schema-sector-location-${sectorSlug}-${locationSlug}`;
-            let script = document.getElementById(schemaId);
-            if (!script) {
-                script = document.createElement('script');
-                script.id = schemaId;
-                script.type = 'application/ld+json';
-                document.head.appendChild(script);
-            }
-
-            const schemaData = {
-                "@context": "https://schema.org",
-                "@type": "LocalBusiness",
-                "name": `Engorilate - ${sector.name} en ${location.name}`,
-                "description": pageContent.meta_description,
-                "url": window.location.href,
-                "address": {
-                    "@type": "PostalAddress",
-                    "addressLocality": location.name,
-                    "addressRegion": "Murcia",
-                    "addressCountry": "ES"
-                },
-                "service": {
-                    "@type": "Service",
-                    "serviceType": `Automatización para ${sector.name}`,
-                    "areaServed": location.name
-                }
-            };
-
-            script.innerHTML = JSON.stringify(schemaData);
-
-            return () => {
-                const existing = document.getElementById(schemaId);
-                if (existing) existing.remove();
-            };
+    // Build schema and SEO props
+    const schemaData = (pageContent && location && sector) ? {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": `Engorilate - ${sector.name} en ${location.name}`,
+        "description": pageContent.meta_description,
+        "url": window.location.href,
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": location.name,
+            "addressRegion": "Murcia",
+            "addressCountry": "ES"
+        },
+        "service": {
+            "@type": "Service",
+            "serviceType": `Automatización para ${sector.name}`,
+            "areaServed": location.name
         }
-    }, [pageContent, sector, location, sectorSlug, locationSlug]);
+    } : null;
+
+    const seoTitle = (pageContent && sector && location)
+        ? (pageContent.meta_title || `${sector.name} en ${location.name} | Engorilate`)
+        : 'Automatización de Negocios | Engorilate';
+
+    const seoDescription = (pageContent)
+        ? (pageContent.meta_description || pageContent.metaDescription)
+        : '';
 
     return (
         <div className="relative pt-32 pb-24 min-h-screen">
+            {pageContent && (
+                <SEO
+                    title={seoTitle}
+                    description={seoDescription}
+                    schema={schemaData}
+                />
+            )}
             <BackgroundMesh />
 
             {/* Hero Section */}

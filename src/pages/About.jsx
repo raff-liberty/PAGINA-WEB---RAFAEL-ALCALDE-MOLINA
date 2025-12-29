@@ -2,10 +2,15 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { History, Brain, ShieldCheck, ArrowRight } from 'lucide-react';
 import BackgroundMesh from '../components/BackgroundMesh';
+import SEO from '../components/SEO';
 
 const About = () => {
     return (
         <div className="relative pt-40 pb-16 min-h-screen">
+            <SEO
+                title="Sobre mí | Rafael Alcalde Molina"
+                description="Economista y Business Controller. Ayudo a pequeños negocios a poner orden operativo antes de automatizar. Claridad antes que velocidad."
+            />
             <BackgroundMesh />
 
             <div className="relative z-10 max-w-7xl mx-auto px-6">

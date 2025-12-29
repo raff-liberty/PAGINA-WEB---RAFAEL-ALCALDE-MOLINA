@@ -4,10 +4,15 @@ import { motion } from 'framer-motion';
 import { sectors } from '../data/sectors';
 import { locations } from '../data/locations';
 import BackgroundMesh from '../components/BackgroundMesh';
+import SEO from '../components/SEO';
 
 const SectorsDirectory = () => {
     return (
         <div className="relative pt-32 pb-24 min-h-screen">
+            <SEO
+                title="Directorio de Soluciones por Sector | Engorilate"
+                description="Encuentra soluciones de automatización específicas para tu sector: Peluquerías, Restaurantes, Clínicas, Talleres y pequeña empresa en Murcia."
+            />
             <BackgroundMesh />
 
             <div className="relative z-10 max-w-7xl mx-auto px-6">
@@ -64,7 +69,7 @@ const SectorsDirectory = () => {
                             Alcantarilla, Mazarrón y Totana.
                         </p>
                         <p>
-                            Cada sector tiene problemas específicos: las peluquerías luchan con los no-shows, los restaurantes con las reservas caóticas,
+                            Cada sector tiene problemas específicos: las peluquerías luchan con los plantones, los restaurantes con las reservas caóticas,
                             las clínicas con la gestión de pacientes, los talleres con la facturación olvidada, y los comercios con el inventario descontrolado.
                             Nuestras soluciones están diseñadas específicamente para cada tipo de negocio y adaptadas a cada localidad.
                         </p>
