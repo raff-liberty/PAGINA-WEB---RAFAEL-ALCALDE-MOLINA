@@ -33,7 +33,7 @@ const WorkMethod = () => {
                             Lo que te ahorramos
                         </h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-lg">
-                            <div className="bg-red-500/5 border border-red-500/20 p-8 rounded-2xl">
+                            <div className="bg-red-500/5 border border-red-500/30 p-8 rounded-2xl shadow-[0_8px_32px_rgba(220,38,38,0.15)]">
                                 <h3 className="text-red-400 font-bold mb-6 flex items-center gap-3 text-xl">
                                     <XCircle className="w-6 h-6" /> Tu situación actual
                                 </h3>
@@ -56,7 +56,7 @@ const WorkMethod = () => {
                                     </li>
                                 </ul>
                             </div>
-                            <div className="bg-primary/5 border border-primary/20 p-8 rounded-2xl relative overflow-hidden">
+                            <div className="bg-primary/5 border border-primary/30 p-8 rounded-2xl relative overflow-hidden shadow-[0_8px_32px_rgba(110,231,183,0.15)]">
                                 <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 blur-[50px] rounded-full"></div>
                                 <h3 className="text-primary font-bold mb-6 flex items-center gap-3 text-xl relative z-10">
                                     <CheckCircle className="w-6 h-6" /> Después de 4 semanas
@@ -91,7 +91,7 @@ const WorkMethod = () => {
                         <div className="md:w-1/2 flex justify-start md:justify-end md:pr-16 md:text-right">
                             <motion.div
                                 whileHover={{ y: -2 }}
-                                className="bg-[#252525] border border-white/20 p-10 rounded-2xl shadow-2xl max-w-lg w-full relative group hover:border-primary/50 transition-all duration-300"
+                                className="bg-[#222222] border border-white/30 p-10 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.9)] max-w-lg w-full relative group hover:border-primary/50 transition-all duration-300"
                             >
                                 <div className="absolute top-0 right-0 left-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none"></div>
                                 <h3 className="font-display text-2xl font-bold text-white mb-2 group-hover:text-primary transition-colors">Paso 1 — Auditoría Real</h3>
@@ -105,6 +105,10 @@ const WorkMethod = () => {
                                         <li className="flex items-center gap-2">
                                             <span className="w-1 h-1 rounded-full bg-primary/50"></span>
                                             Mapa de tus 'fugas de tiempo'
+                                        </li>
+                                        <li className="flex items-center gap-2">
+                                            <span className="w-1 h-1 rounded-full bg-primary/50"></span>
+                                            Diagnóstico de cuellos de botella
                                         </li>
                                     </ul>
                                 </div>
@@ -121,7 +125,7 @@ const WorkMethod = () => {
                         <div className="md:w-1/2 flex justify-start md:pl-16">
                             <motion.div
                                 whileHover={{ y: -2 }}
-                                className="bg-[#252525] border border-white/20 p-10 rounded-2xl shadow-2xl max-w-lg w-full relative group hover:border-primary/50 transition-all duration-300"
+                                className="bg-[#222222] border border-white/30 p-10 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.9)] max-w-lg w-full relative group hover:border-primary/50 transition-all duration-300"
                             >
                                 <div className="absolute top-0 right-0 left-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none"></div>
                                 <h3 className="font-display text-2xl font-bold text-white mb-2 group-hover:text-primary transition-colors">Paso 2 — Reglas del Juego</h3>
@@ -129,16 +133,101 @@ const WorkMethod = () => {
                                 <p className="text-gray-400 leading-relaxed text-lg font-light italic mb-8">
                                     "Antes de automatizar, simplificamos. Definimos qué pasa si un cliente cancela."
                                 </p>
+                                <div className="bg-black/30 p-6 rounded-xl border border-white/5 text-left">
+                                    <strong className="text-primary text-xs uppercase tracking-wider block mb-3">Recibes:</strong>
+                                    <ul className="text-sm text-gray-300 space-y-2">
+                                        <li className="flex items-center gap-2">
+                                            <span className="w-1 h-1 rounded-full bg-primary/50"></span>
+                                            Flujo de procesos documentado
+                                        </li>
+                                        <li className="flex items-center gap-2">
+                                            <span className="w-1 h-1 rounded-full bg-primary/50"></span>
+                                            Reglas de negocio claras
+                                        </li>
+                                    </ul>
+                                </div>
+                            </motion.div>
+                        </div>
+                    </div>
+
+                    {/* Step 3 */}
+                    <div className="flex flex-col md:flex-row gap-12 items-start relative">
+                        <div className="md:w-1/2 flex justify-start md:justify-end md:pr-16 md:text-right">
+                            <motion.div
+                                whileHover={{ y: -2 }}
+                                className="bg-[#222222] border border-white/30 p-10 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.9)] max-w-lg w-full relative group hover:border-primary/50 transition-all duration-300"
+                            >
+                                <div className="absolute top-0 right-0 left-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none"></div>
+                                <h3 className="font-display text-2xl font-bold text-white mb-2 group-hover:text-primary transition-colors">Paso 3 — Construcción del Motor</h3>
+                                <p className="text-[10px] font-mono text-gray-500 uppercase tracking-widest mb-8">Implementación técnica</p>
+                                <p className="text-gray-400 leading-relaxed text-lg font-light italic mb-8">
+                                    "Conectamos tus herramientas (CRM, WhatsApp, Email) y construimos el Smart Hub que ejecuta todo solo."
+                                </p>
+                                <div className="bg-black/30 p-6 rounded-xl border border-white/5 text-left">
+                                    <strong className="text-primary text-xs uppercase tracking-wider block mb-3">Recibes:</strong>
+                                    <ul className="text-sm text-gray-300 space-y-2">
+                                        <li className="flex items-center gap-2">
+                                            <span className="w-1 h-1 rounded-full bg-primary/50"></span>
+                                            Hub n8n/Zapier operativo
+                                        </li>
+                                        <li className="flex items-center gap-2">
+                                            <span className="w-1 h-1 rounded-full bg-primary/50"></span>
+                                            Integraciones activas
+                                        </li>
+                                        <li className="flex items-center gap-2">
+                                            <span className="w-1 h-1 rounded-full bg-primary/50"></span>
+                                            Dashboard de control
+                                        </li>
+                                    </ul>
+                                </div>
+                            </motion.div>
+                        </div>
+                        <div className="absolute left-[10px] md:left-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-background-dark border-2 border-white z-10 mt-12 shadow-[0_0_15px_rgba(100,100,100,0.5)] bg-white"></div>
+                        <div className="md:w-1/2 md:pl-16 hidden md:block"></div>
+                    </div>
+
+                    {/* Step 4 */}
+                    <div className="flex flex-col md:flex-row gap-12 items-start relative">
+                        <div className="md:w-1/2 md:pr-16 hidden md:block"></div>
+                        <div className="absolute left-[10px] md:left-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-background-dark border-2 border-primary z-10 mt-12 shadow-[0_0_15px_rgba(110,231,183,0.5)]"></div>
+                        <div className="md:w-1/2 flex justify-start md:pl-16">
+                            <motion.div
+                                whileHover={{ y: -2 }}
+                                className="bg-[#222222] border border-white/30 p-10 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.9)] max-w-lg w-full relative group hover:border-primary/50 transition-all duration-300"
+                            >
+                                <div className="absolute top-0 right-0 left-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none"></div>
+                                <h3 className="font-display text-2xl font-bold text-white mb-2 group-hover:text-primary transition-colors">Paso 4 — Despegue y Control</h3>
+                                <p className="text-[10px] font-mono text-gray-500 uppercase tracking-widest mb-8">Lanzamiento y optimización</p>
+                                <p className="text-gray-400 leading-relaxed text-lg font-light italic mb-8">
+                                    "Probamos, formamos a tu equipo y te entregamos las llaves. Seguimiento durante 30 días para ajustar."
+                                </p>
+                                <div className="bg-black/30 p-6 rounded-xl border border-white/5 text-left">
+                                    <strong className="text-primary text-xs uppercase tracking-wider block mb-3">Recibes:</strong>
+                                    <ul className="text-sm text-gray-300 space-y-2">
+                                        <li className="flex items-center gap-2">
+                                            <span className="w-1 h-1 rounded-full bg-primary/50"></span>
+                                            Sistema 100% funcional
+                                        </li>
+                                        <li className="flex items-center gap-2">
+                                            <span className="w-1 h-1 rounded-full bg-primary/50"></span>
+                                            Formación del equipo
+                                        </li>
+                                        <li className="flex items-center gap-2">
+                                            <span className="w-1 h-1 rounded-full bg-primary/50"></span>
+                                            Soporte 30 días
+                                        </li>
+                                    </ul>
+                                </div>
                             </motion.div>
                         </div>
                     </div>
                 </div>
 
-                {/* THE CUSTOMER JOURNEY INFOGRAPHIC (Replacement for former Simple Quote) */}
+                {/* MERGED: Ecosistema de Soluciones (formerly "Tu Viaje" + "Qué construimos") */}
                 <div className="mt-64 mb-40 relative">
                     <div className="text-center mb-20">
                         <h2 className="font-display text-4xl md:text-6xl font-bold text-white mb-8">
-                            Tu Viaje hacia la <span className="text-primary italic">Libertad Operativa</span>
+                            Ecosistema de <span className="text-primary italic">Soluciones Engorilate</span>
                         </h2>
                         <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
                             Diseñamos una experiencia de usuario impecable que alimenta tu Hub centralizado y ejecuta procesos sin que tú muevas un dedo.
@@ -156,28 +245,32 @@ const WorkMethod = () => {
                                     title: "Web Impecable",
                                     desc: "Tu cliente llega a una web rápida, bonita y profesional (como esta). Generas confianza instantánea.",
                                     icon: Globe,
-                                    color: "bg-blue-500/10 text-blue-400"
+                                    color: "bg-blue-500/10 text-blue-400",
+                                    tool: "Webs & Hubs Operativos"
                                 },
                                 {
                                     stage: "02. Filtro",
                                     title: "Cualificación IA",
                                     desc: "Un agente virtual o formulario inteligente detecta qué necesita el cliente y filtra a los curiosos del resto.",
                                     icon: MessageSquare,
-                                    color: "bg-purple-500/10 text-purple-400"
+                                    color: "bg-purple-500/10 text-purple-400",
+                                    tool: "Apps & Herramientas Internas"
                                 },
                                 {
                                     stage: "03. El Corazón",
                                     title: "Smart Hub (n8n)",
                                     desc: "Se cruzan datos en tu panel: disponibilidad, pagos, facturación y avisos. Todo sucede solo.",
                                     icon: Memory,
-                                    color: "bg-primary/10 text-primary"
+                                    color: "bg-primary/10 text-primary",
+                                    tool: "Automatización de Flujos"
                                 },
                                 {
                                     stage: "04. Resultado",
                                     title: "Cierre & Pago",
                                     desc: "Cita agendada, señal cobrada y factura enviada. Tú solo tienes que aparecer a trabajar.",
                                     icon: CreditCard,
-                                    color: "bg-green-500/10 text-green-400"
+                                    color: "bg-green-500/10 text-green-400",
+                                    tool: "Dashboards de Control"
                                 }
                             ].map((step, i) => (
                                 <motion.div
@@ -186,7 +279,7 @@ const WorkMethod = () => {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: i * 0.1 }}
-                                    className="bg-[#151515] border border-white/5 p-8 rounded-3xl relative flex flex-col items-center text-center group"
+                                    className="bg-[#222222] border border-white/30 p-8 rounded-2xl relative flex flex-col items-center text-center group hover:border-primary/50 transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.9)]"
                                 >
                                     <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-mono uppercase tracking-widest text-gray-500">
                                         {step.stage}
@@ -195,92 +288,57 @@ const WorkMethod = () => {
                                         <step.icon className="w-8 h-8" />
                                     </div>
                                     <h3 className="text-xl font-bold text-white mb-4">{step.title}</h3>
-                                    <p className="text-gray-400 text-sm leading-relaxed">{step.desc}</p>
+                                    <p className="text-gray-400 text-sm leading-relaxed mb-4">{step.desc}</p>
+
+                                    {/* Tool Badge */}
+                                    <div className="mt-auto pt-4 border-t border-white/10 w-full">
+                                        <p className="text-[10px] font-mono text-primary uppercase tracking-wider">
+                                            → {step.tool}
+                                        </p>
+                                    </div>
                                 </motion.div>
                             ))}
                         </div>
                     </div>
                 </div>
 
-                {/* Services Section */}
-                <div className="mt-40 mb-40 relative">
-                    <div className="text-center mb-16">
-                        <h2 className="font-display text-3xl md:text-5xl font-bold text-white mb-6">
-                            Qué construimos (cuando hace falta)
-                        </h2>
-                    </div>
+                {/* Final CTA - Premium Integrated Box */}
+                <div className="mt-40 mb-12 max-w-5xl mx-auto px-4">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="relative bg-gradient-to-br from-[#222222] to-[#181818] border border-white/30 rounded-2xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.9)] p-8 md:p-12"
+                    >
+                        {/* Background effects */}
+                        <div className="absolute -top-40 -right-40 w-96 h-96 bg-primary/10 blur-[120px] rounded-full opacity-40"></div>
+                        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-primary/5 blur-[120px] rounded-full opacity-30"></div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {[
-                            {
-                                title: "Automatización de Flujos",
-                                desc: "Conectamos tus herramientas actuales (CRM, WhatsApp, Email, Calendario) para que hablen entre sí sin que tengas que mover un dedo.",
-                                icon: Zap,
-                                color: "text-yellow-400"
-                            },
-                            {
-                                title: "Webs & Hubs Operativos",
-                                desc: "Creamos interfaces impecables (como esta que estás viendo) que no solo son 'bonitas', sino que están de verdad diseñadas para gestionar tu operación.",
-                                icon: Globe,
-                                color: "text-blue-400"
-                            },
-                            {
-                                title: "Dashboards de Control",
-                                desc: "Un panel visual donde ves en tiempo real lo que importa: conversiones, cuellos de botella y ROI. Deja de adivinar y empieza a decidir con datos.",
-                                icon: Laptop,
-                                color: "text-primary"
-                            },
-                            {
-                                title: "Apps & Herramientas Internas",
-                                desc: "Si lo que necesitas no existe, lo construimos. Herramientas a medida que resuelven problemas específicos de tu equipo.",
-                                icon: ArrowRight, // Using ArrowRight as a fallback or distinct icon
-                                color: "text-green-400"
-                            }
-                        ]
-                            .map((service, idx) => (
-                                <motion.div
-                                    key={idx}
-                                    whileHover={{ y: -5 }}
-                                    className="bg-[#1a1a1a] border border-white/5 p-10 rounded-2xl relative group overflow-hidden"
+                        <div className="relative z-10 text-center">
+                            {/* Urgency Badge */}
+                            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-primary/10 text-primary text-sm font-bold mb-8 border border-primary/20">
+                                <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                                Solo aceptamos 3 proyectos nuevos en Febrero
+                            </div>
+
+                            <h2 className="text-4xl md:text-6xl text-white font-bold mb-8">
+                                ¿Hablamos 15 minutos?
+                            </h2>
+
+                            <div className="flex flex-col items-center gap-6 mt-12">
+                                <Link
+                                    to="/contact"
+                                    className="group relative inline-flex items-center gap-4 bg-primary hover:bg-primary-hover text-gray-900 font-bold text-2xl px-12 py-6 rounded-2xl transition-all transform hover:translate-y-[-4px] shadow-[0_0_30px_rgba(110,231,183,0.3)] hover:shadow-[0_0_50px_rgba(110,231,183,0.5)]"
                                 >
-                                    <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 blur-[40px] rounded-full group-hover:bg-primary/10 transition-colors"></div>
-                                    <div className={`p-4 rounded-xl bg-white/5 inline-block mb-6 ${service.color}`}>
-                                        <service.icon className="w-8 h-8" />
-                                    </div>
-                                    <h3 className="font-display text-xl font-bold text-white mb-4 group-hover:text-primary transition-colors">
-                                        {service.title}
-                                    </h3>
-                                    <p className="text-gray-400 leading-relaxed text-sm">
-                                        {service.desc}
-                                    </p>
-                                </motion.div>
-                            ))}
-                    </div>
-                </div>
-
-                {/* Final CTA */}
-                <div className="text-center pb-12 mt-40">
-                    <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-primary/10 text-primary text-sm font-bold mb-8 border border-primary/20">
-                        <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                        Solo aceptamos 3 proyectos nuevos en Febrero
-                    </div>
-
-                    <h2 className="text-4xl md:text-6xl text-white font-bold mb-8">
-                        ¿Hablamos 15 minutos?
-                    </h2>
-
-                    <div className="flex flex-col items-center gap-6 mt-12">
-                        <Link
-                            to="/contact"
-                            className="group relative inline-flex items-center gap-4 bg-primary hover:bg-primary-hover text-gray-900 font-bold text-2xl px-12 py-6 rounded-2xl transition-all transform hover:translate-y-[-4px] shadow-[0_0_30px_rgba(110,231,183,0.3)] hover:shadow-[0_0_50px_rgba(110,231,183,0.5)]"
-                        >
-                            <span>Agendar Diagnóstico (Gratis)</span>
-                            <ArrowRight className="w-7 h-7 transition-transform group-hover:translate-x-1" />
-                        </Link>
-                        <span className="text-base text-gray-500 font-medium">
-                            Garantía: Si no podemos ayudarte, te lo diremos en el minuto 1.
-                        </span>
-                    </div>
+                                    <span>Agendar Diagnóstico (Gratis)</span>
+                                    <ArrowRight className="w-7 h-7 transition-transform group-hover:translate-x-1" />
+                                </Link>
+                                <span className="text-base text-gray-500 font-medium">
+                                    Garantía: Si no podemos ayudarte, te lo diremos en el minuto 1.
+                                </span>
+                            </div>
+                        </div>
+                    </motion.div>
                 </div>
             </div>
         </div>

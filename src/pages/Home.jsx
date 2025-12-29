@@ -280,7 +280,7 @@ const Home = () => {
                                 initial={{ opacity: 0, y: 30 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.2 + i * 0.1, duration: 0.8, ease: "easeOut" }}
-                                className="group relative bg-[#1a1a1a] backdrop-blur-md border border-white/20 p-6 rounded-xl hover:border-primary/50 transition-all duration-500 hover:bg-[#222222] flex flex-col shadow-[0_8px_32px_rgba(0,0,0,0.8)] overflow-hidden h-full"
+                                className="group relative bg-[#222222] backdrop-blur-md border border-white/30 p-6 rounded-xl hover:border-primary/50 transition-all duration-500 hover:bg-[#282828] flex flex-col shadow-[0_8px_32px_rgba(0,0,0,0.9)] overflow-hidden h-full"
                             >
                                 {/* Background step number */}
                                 <span className="absolute -top-4 -right-4 text-8xl font-bold text-white/[0.02] group-hover:text-primary/[0.05] transition-colors pointer-events-none font-mono">
@@ -394,7 +394,7 @@ const Home = () => {
                                         {/* Ambient glow on hover */}
                                         <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-primary/5 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
 
-                                        <div className="relative grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 bg-[#1a1a1a] border border-white/30 p-6 md:p-12 rounded-2xl transition-all duration-300 items-start shadow-[0_8px_32px_rgba(0,0,0,0.8)] overflow-hidden group-hover:border-primary/40">
+                                        <div className="relative grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 bg-[#222222] border border-white/40 p-6 md:p-12 rounded-2xl transition-all duration-300 items-start shadow-[0_8px_32px_rgba(0,0,0,0.9)] overflow-hidden group-hover:border-primary/50">
                                             {/* Subtle glass effect border on top */}
                                             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
 
@@ -476,9 +476,9 @@ const Home = () => {
                                             exit={{ opacity: 0, y: -20 }}
                                             transition={{ duration: 0.5, delay: idx * 0.1 }}
                                             onClick={() => navigate(`/contact?service=${area.serviceId}`)}
-                                            className={`group relative p-6 md:p-8 rounded-3xl transition-all duration-700 overflow-hidden flex flex-col cursor-pointer border shadow-[0_8px_32px_rgba(0,0,0,0.8)] ${area.isCustom
-                                                ? 'bg-gradient-to-br from-primary/[0.12] to-[#1a1a1a] border-primary/50 hover:border-primary/70 hover:shadow-[0_8px_32px_rgba(110,231,183,0.2)]'
-                                                : 'bg-[#1a1a1a] border-white/20 hover:border-primary/50 hover:bg-[#222222]'
+                                            className={`group relative p-6 md:p-8 rounded-3xl transition-all duration-700 overflow-hidden flex flex-col cursor-pointer border shadow-[0_8px_32px_rgba(0,0,0,0.9)] ${area.isCustom
+                                                ? 'bg-gradient-to-br from-primary/[0.15] to-[#222222] border-primary/60 hover:border-primary/80 hover:shadow-[0_8px_32px_rgba(110,231,183,0.3)]'
+                                                : 'bg-[#222222] border-white/30 hover:border-primary/50 hover:bg-[#282828]'
                                                 }`}
                                         >
                                             {/* Background glow effect */}
@@ -611,7 +611,7 @@ const Home = () => {
                                         ].map((testimonial, idx) => (
                                             <div
                                                 key={`${setIndex}-${idx}`}
-                                                className="w-[240px] flex-shrink-0 bg-[#1a1a1a] border border-white/20 p-4 rounded-lg hover:border-primary/50 transition-all group relative overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.6)]"
+                                                className="w-[240px] flex-shrink-0 bg-[#222222] border border-white/30 p-4 rounded-lg hover:border-primary/50 transition-all group relative overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.8)]"
                                             >
                                                 <div className="mb-3">
                                                     <div className="text-primary/40 mb-2 group-hover:text-primary transition-colors">
@@ -642,7 +642,7 @@ const Home = () => {
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] border border-white/20 rounded-2xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.8)]"
+                            className="relative bg-gradient-to-br from-[#222222] to-[#181818] border border-white/30 rounded-2xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.9)]"
                         >
                             {/* Background effects */}
                             <div className="absolute -top-40 -right-40 w-96 h-96 bg-primary/10 blur-[120px] rounded-full opacity-40"></div>
