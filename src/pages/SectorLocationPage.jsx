@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { MapPin, ArrowRight, CheckCircle, AlertTriangle } from 'lucide-react';
+import { MapPin, ArrowRight, CheckCircle, AlertTriangle, Brain, ShieldCheck, Zap, XCircle, HelpCircle } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
 import BackgroundMesh from '../components/BackgroundMesh';
 
@@ -22,7 +22,6 @@ const SectorLocationPage = () => {
                     .select('*')
                     .eq('slug', sectorSlug)
                     .single();
-                setSector(sectorData);
 
                 // Fetch location
                 const { data: locationData } = await supabase
@@ -30,6 +29,13 @@ const SectorLocationPage = () => {
                     .select('*')
                     .eq('slug', locationSlug)
                     .single();
+
+                if (!sectorData || !locationData) {
+                    setLoading(false);
+                    return;
+                }
+
+                setSector(sectorData);
                 setLocation(locationData);
 
                 // Fetch content
@@ -39,7 +45,27 @@ const SectorLocationPage = () => {
                     .select('*')
                     .eq('id', contentKey)
                     .single();
-                setPageContent(contentData);
+
+                if (contentData) {
+                    setPageContent(contentData);
+                } else {
+                    // Fallback content strategy
+                    setPageContent({
+                        hero_title: `Automatización para ${sectorData.name} en ${locationData.name}`,
+                        hero_subtitle: `Optimizamos la operativa de tu ${sectorData.name.toLowerCase().replace(/s$/, '')} en ${locationData.name} para que dejes de perder tiempo en tareas manuales.`,
+                        problems: [
+                            { title: "Caos en la gestión", description: `Tu ${sectorData.name.toLowerCase().replace(/s$/, '')} en ${locationData.name} pierde clientes por no tener procesos claros.` },
+                            { title: "Fugas de dinero", description: "Tareas que podrías automatizar te están robando horas de facturación real." }
+                        ],
+                        solutions: [
+                            { title: "Sistemas Inteligentes", description: "Configuramos herramientas que trabajan por ti.", benefit: "Recupera tu tiempo" },
+                            { title: "Control Total", description: "Mide lo que pasa en tu negocio sin estar físicamente ahí.", benefit: "Escalabilidad real" }
+                        ],
+                        local_context: `${locationData.name} es un mercado competitivo. Los negocios de ${sectorData.name.toLowerCase()} que no se digitalizan hoy, se quedan atrás mañana.`,
+                        meta_title: `${sectorData.name} en ${locationData.name} | Automatización y Control | Engorilate`,
+                        meta_description: `¿Tienes ${sectorData.name.toLowerCase()} en ${locationData.name}? Eliminamos el caos operativo y automatizamos tus procesos para que recuperes el control de tu negocio.`
+                    });
+                }
 
             } catch (error) {
                 console.error('Error fetching data:', error.message);
@@ -51,22 +77,58 @@ const SectorLocationPage = () => {
         fetchData();
     }, [sectorSlug, locationSlug]);
 
-    // Redirect if invalid (after loading)
-    if (!loading && (!sector || !location || !pageContent)) {
-        return <Navigate to="/" replace />;
+    // Redirect ONLY if core data is missing
+    if (!loading && (!sector || !location)) {
+        return <Navigate to="/sectores" replace />;
     }
 
-    // Set page title and meta
+    // Set page title, meta and JSON-LD
     useEffect(() => {
-        if (pageContent) {
-            document.title = pageContent.meta_title || pageContent.metaTitle;
+        if (pageContent && location && sector) {
+            document.title = pageContent.meta_title || `${sector.name} en ${location.name} | Engorilate`;
 
-            const metaDescription = document.querySelector('meta[name="description"]');
-            if (metaDescription) {
-                metaDescription.setAttribute('content', pageContent.meta_description || pageContent.metaDescription);
+            const metaDesc = document.querySelector('meta[name="description"]');
+            if (metaDesc) {
+                metaDesc.setAttribute('content', pageContent.meta_description || pageContent.metaDescription);
             }
+
+            // Inject JSON-LD
+            const schemaId = `schema-sector-location-${sectorSlug}-${locationSlug}`;
+            let script = document.getElementById(schemaId);
+            if (!script) {
+                script = document.createElement('script');
+                script.id = schemaId;
+                script.type = 'application/ld+json';
+                document.head.appendChild(script);
+            }
+
+            const schemaData = {
+                "@context": "https://schema.org",
+                "@type": "LocalBusiness",
+                "name": `Engorilate - ${sector.name} en ${location.name}`,
+                "description": pageContent.meta_description,
+                "url": window.location.href,
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": location.name,
+                    "addressRegion": "Murcia",
+                    "addressCountry": "ES"
+                },
+                "service": {
+                    "@type": "Service",
+                    "serviceType": `Automatización para ${sector.name}`,
+                    "areaServed": location.name
+                }
+            };
+
+            script.innerHTML = JSON.stringify(schemaData);
+
+            return () => {
+                const existing = document.getElementById(schemaId);
+                if (existing) existing.remove();
+            };
         }
-    }, [pageContent]);
+    }, [pageContent, sector, location, sectorSlug, locationSlug]);
 
     return (
         <div className="relative pt-32 pb-24 min-h-screen">
@@ -93,14 +155,14 @@ const SectorLocationPage = () => {
 
                     {/* Hero Section */}
                     <div className="mb-20 max-w-4xl">
-                        <div className="flex items-center gap-3 mb-6">
-                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-mono tracking-widest uppercase">
-                                <MapPin className="w-3 h-3" />
+                        <div className="flex items-center gap-4 mb-8">
+                            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-bold tracking-widest uppercase shadow-[0_0_15px_rgba(110,231,183,0.1)]">
+                                <MapPin className="w-3.5 h-3.5" />
                                 {location.name}
                             </div>
-                            <div className="text-3xl">{sector.icon}</div>
+                            <div className="p-3 bg-white/5 border border-white/10 rounded-2xl text-4xl shadow-xl">{sector.icon}</div>
                         </div>
-                        <h1 className="font-display text-4xl md:text-6xl font-bold leading-tight mb-6 text-white">
+                        <h1 className="font-display text-4xl md:text-7xl font-bold leading-tight mb-8 text-white text-balance">
                             {pageContent.hero_title || pageContent.hero?.title}
                         </h1>
                         <p className="text-xl text-gray-400 font-light max-w-2xl leading-relaxed">
@@ -108,104 +170,110 @@ const SectorLocationPage = () => {
                         </p>
                     </div>
 
-                    {/* Problems Section */}
-                    <div className="mb-20">
-                        <div className="flex items-center gap-3 mb-8">
-                            <AlertTriangle className="w-8 h-8 text-orange-400" />
-                            <h2 className="font-display text-3xl md:text-4xl font-bold text-white">
-                                Problemas Reales
-                            </h2>
+                    {/* Critical Scenarios Section */}
+                    <div className="mb-24">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold mb-6 uppercase tracking-widest">
+                            <AlertTriangle className="w-3 h-3" /> Realidad en {location.name}
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {pageContent.problems.map((problem, idx) => (
+                        <h2 className="font-display text-3xl md:text-5xl font-bold text-white mb-10">
+                            Escenarios críticos que <span className="text-primary italic">frenan tu negocio</span>
+                        </h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {(pageContent.problems || []).map((problem, idx) => (
                                 <motion.div
                                     key={idx}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: idx * 0.1 }}
-                                    className="bg-[#1a1a1a] border border-white/5 p-6 rounded-xl hover:border-orange-400/30 transition-all"
+                                    whileHover={{ scale: 1.02, translateY: -5 }}
+                                    className="bg-[#1a1a1a] border border-white/10 p-8 rounded-3xl relative overflow-hidden group shadow-2xl transition-all duration-300"
                                 >
-                                    <div className="flex flex-col gap-2">
-                                        <div className="flex items-start gap-3">
-                                            <AlertTriangle className="w-5 h-5 text-orange-400/50 mt-1 flex-shrink-0" />
-                                            <h3 className="text-white font-semibold">{problem.title}</h3>
-                                        </div>
-                                        <p className="text-gray-400 text-sm leading-relaxed ml-8">{problem.description}</p>
+                                    <div className="absolute top-0 left-0 w-1.5 h-full bg-primary/20 group-hover:bg-primary transition-colors"></div>
+                                    <div className="text-primary/40 mb-6 font-mono text-sm tracking-tighter">CASO_SECTOR_{String(idx + 1).padStart(2, '0')}</div>
+                                    <h3 className="text-white text-xl font-bold mb-4">{problem.title}</h3>
+                                    <p className="text-gray-400 leading-relaxed font-light mb-6">{problem.description}</p>
+                                    <div className="flex items-center gap-2 text-red-500/80 text-[10px] font-bold uppercase tracking-widest">
+                                        <XCircle className="w-3.5 h-3.5" /> Fuga operativa detectada
                                     </div>
                                 </motion.div>
                             ))}
                         </div>
                     </div>
 
-                    {/* Solutions Section */}
-                    <div className="mb-20">
-                        <div className="flex items-center gap-3 mb-8">
-                            <CheckCircle className="w-8 h-8 text-primary" />
-                            <h2 className="font-display text-3xl md:text-4xl font-bold text-white">
-                                Cómo lo Solucionamos
+                    {/* The Engorilate Methodology Redesign */}
+                    <div className="relative mb-32 overflow-hidden rounded-[3.5rem] border border-white/10 bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] p-10 md:p-24 shadow-[0_20px_60px_rgba(0,0,0,0.6)]">
+                        {/* Background decoration */}
+                        <div className="absolute -top-40 -right-40 w-[30rem] h-[30rem] bg-primary/10 blur-[180px] rounded-full opacity-60"></div>
+                        <div className="absolute -bottom-40 -left-40 w-[30rem] h-[30rem] bg-primary/5 blur-[180px] rounded-full opacity-40"></div>
+
+                        <div className="relative z-10 text-center max-w-4xl mx-auto mb-20">
+                            <h2 className="font-display text-4xl md:text-6xl font-bold text-white mb-10">
+                                Tu {sector.name.toLowerCase().replace(/s$/, '')} en <span className="text-primary italic">Piloto Automático</span>
                             </h2>
+                            <p className="text-gray-400 text-xl font-light leading-relaxed">
+                                No instalamos parches. Construimos el <strong className="text-white">Motor de Gestión</strong> que permite que tu {sector.name.toLowerCase().replace(/s$/, '')} facture mientras tú recuperas tu vida.
+                            </p>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {pageContent.solutions.map((solution, idx) => (
-                                <motion.div
-                                    key={idx}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: idx * 0.1 }}
-                                    className="bg-[#222222] border border-white/10 p-6 rounded-xl hover:border-primary/50 transition-all group"
-                                >
-                                    <div className="flex flex-col gap-3">
-                                        <div className="flex items-start gap-3">
-                                            <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
-                                            <h3 className="text-white font-semibold">{solution.title}</h3>
-                                        </div>
-                                        <p className="text-gray-400 text-sm leading-relaxed ml-8">{solution.description}</p>
-                                        <div className="ml-8 mt-2">
-                                            <span className="text-primary text-xs font-medium">→ {solution.benefit}</span>
-                                        </div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 relative z-10">
+                            {[
+                                {
+                                    title: "Auditoría de Procesos",
+                                    desc: `Analizamos paso a paso cómo entra un cliente en tu ${sector.name.toLowerCase().replace(/s$/, '')} y dónde se pierde el rastro de la información.`,
+                                    benefit: "Claridad Total",
+                                    icon: Brain,
+                                    color: "text-blue-400"
+                                },
+                                {
+                                    title: "Blindaje de Reglas",
+                                    desc: "Definimos protocolos automáticos: avisos de cita, reclamación de pagos y altas de clientes. Sin errores humanos.",
+                                    benefit: "Cero Fallos",
+                                    icon: ShieldCheck,
+                                    color: "text-primary"
+                                },
+                                {
+                                    title: "Escalado Inteligente",
+                                    desc: "Dejamos operativas las herramientas (CRM, WhatsApp, n8n) para que el negocio crezca sin que tú trabajes más horas.",
+                                    benefit: "Libertad Real",
+                                    icon: Zap,
+                                    color: "text-yellow-400"
+                                }
+                            ].map((step, i) => (
+                                <div key={i} className="bg-white/[0.02] border border-white/5 p-10 rounded-[2.5rem] hover:border-primary/40 transition-all group relative overflow-hidden backdrop-blur-sm">
+                                    <div className={`w-16 h-16 rounded-[1.25rem] bg-white/5 flex items-center justify-center mb-8 ${step.color} group-hover:bg-primary group-hover:text-black transition-all duration-500 shadow-lg`}>
+                                        <step.icon className="w-9 h-9" />
                                     </div>
-                                </motion.div>
+                                    <div className="absolute top-8 right-10 px-4 py-1 rounded-full bg-white/5 text-[10px] font-bold text-primary/60 uppercase tracking-widest border border-primary/10">
+                                        {step.benefit}
+                                    </div>
+                                    <h3 className="text-2xl font-bold text-white mb-6 leading-tight">{step.title}</h3>
+                                    <p className="text-gray-400 leading-relaxed font-light">
+                                        {step.desc}
+                                    </p>
+                                </div>
                             ))}
+                        </div>
+
+                        <div className="mt-20 text-center relative z-10">
+                            <Link
+                                to="/contact"
+                                className="group relative inline-flex items-center gap-4 bg-primary text-black font-bold text-xl px-12 py-6 rounded-2xl hover:scale-105 transition-all shadow-[0_15px_40px_rgba(110,231,183,0.4)]"
+                            >
+                                <span>Pedir Diagnóstico de {sector.name}</span>
+                                <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                            </Link>
+                            <p className="mt-8 text-white/40 text-sm italic">"El mejor momento para automatizar fue ayer. El segundo mejor es hoy."</p>
                         </div>
                     </div>
 
-                    {/* Local Context */}
-                    <div className="bg-[#1a1a1a] border border-white/5 p-8 rounded-xl mb-20">
-                        <h3 className="font-display text-2xl font-bold text-white mb-4">
-                            Por qué en {location.name}
-                        </h3>
-                        <p className="text-gray-300 leading-relaxed">
+                    {/* Local Context Brief */}
+                    <div className="max-w-4xl mb-32">
+                        <div className="flex items-center gap-4 mb-8">
+                            <HelpCircle className="w-8 h-8 text-primary/50" />
+                            <h3 className="font-display text-3xl font-bold text-white">
+                                ¿Por qué esto es vital en {location.name}?
+                            </h3>
+                        </div>
+                        <p className="text-gray-400 text-xl font-light leading-relaxed border-l-2 border-primary/20 pl-8 italic">
                             {pageContent.local_context || pageContent.localContext}
                         </p>
-                    </div>
-
-                    {/* How We Work */}
-                    <div className="bg-[#222222] border border-white/10 p-10 md:p-16 rounded-2xl mb-20">
-                        <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-6">
-                            Cómo Trabajamos
-                        </h2>
-                        <div className="space-y-6 text-gray-300 leading-relaxed text-lg">
-                            <p>
-                                No vendemos software. No te complicamos con tecnicismos. Nuestro trabajo es simple:
-                            </p>
-                            <ul className="space-y-4 ml-6">
-                                <li className="flex items-start gap-3">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 flex-shrink-0" />
-                                    <span><strong className="text-white">Entendemos</strong> cómo funciona tu negocio hoy (sin juzgar)</span>
-                                </li>
-                                <li className="flex items-start gap-3">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 flex-shrink-0" />
-                                    <span><strong className="text-white">Decidimos reglas claras</strong> para eliminar la fatiga de decisión diaria</span>
-                                </li>
-                                <li className="flex items-start gap-3">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 flex-shrink-0" />
-                                    <span><strong className="text-white">Automatizamos lo que sobra</strong> con tecnología invisible que funciona sola</span>
-                                </li>
-                            </ul>
-                            <p className="pt-4">
-                                <strong className="text-white">Resultado:</strong> Recuperas tu tiempo, reduces el estrés, y tu negocio funciona sin que tengas que estar encima de todo.
-                            </p>
-                        </div>
                     </div>
 
                     {/* Related Links */}
@@ -252,23 +320,29 @@ const SectorLocationPage = () => {
                         </div>
                     </div>
 
-                    {/* CTA */}
-                    <div className="text-center max-w-3xl mx-auto">
-                        <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-6">
-                            ¿Tienes {sector.slug === 'peluquerias' ? 'una peluquería' : sector.slug === 'restaurantes' ? 'un restaurante' : sector.slug === 'clinicas' ? 'una clínica' : sector.slug === 'talleres' ? 'un taller' : 'un comercio'} en {location.name}?
-                        </h3>
-                        <p className="text-xl text-gray-400 mb-8 leading-relaxed">
-                            Si te ves reflejado en estos problemas, quizá tenga sentido que hablemos.
-                        </p>
-                        <div className="flex flex-col items-center gap-4">
-                            <Link
-                                to="/contact"
-                                className="group relative inline-flex items-center gap-3 bg-primary hover:bg-primary-hover text-gray-900 font-bold text-lg px-8 py-4 rounded transition-all transform hover:translate-y-[-2px] shadow-[0_0_20px_rgba(110,231,183,0.2)]"
-                            >
-                                <span>Hablar antes de hacer</span>
-                                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                            </Link>
-                            <span className="text-sm text-gray-600 mt-2">Sin compromisos comerciales. Solo evaluar si encajamos.</span>
+                    {/* CTA Bottom (Integrated) */}
+                    <div className="relative bg-gradient-to-br from-[#222222] to-[#111111] border border-white/20 p-12 md:p-20 rounded-[3rem] overflow-hidden text-center shadow-3xl">
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 blur-[100px] -mr-32 -mt-32"></div>
+                        <div className="relative z-10 max-w-2xl mx-auto">
+                            <h3 className="font-display text-3xl md:text-5xl font-bold text-white mb-8">
+                                ¿Hablamos sobre tu <span className="text-primary">{sector.name.toLowerCase().replace(/s$/, '')}</span> en {location.name}?
+                            </h3>
+                            <p className="text-xl text-gray-400 mb-12 leading-relaxed font-light">
+                                Si estás cansado de que el día a día te coma y quieres que tu negocio empiece a trabajar para ti, agendemos un café virtual.
+                            </p>
+                            <div className="flex flex-col items-center gap-6">
+                                <Link
+                                    to="/contact"
+                                    className="group relative inline-flex items-center gap-4 bg-white text-black font-bold text-xl px-12 py-6 rounded-2xl hover:bg-primary transition-all transform hover:scale-105 shadow-2xl"
+                                >
+                                    <span>Agendar Diagnóstico Gratuito</span>
+                                    <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                                </Link>
+                                <div className="flex items-center gap-2 text-gray-500 text-sm font-mono mt-4">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                                    Disponible para proyectos en {location.name}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
