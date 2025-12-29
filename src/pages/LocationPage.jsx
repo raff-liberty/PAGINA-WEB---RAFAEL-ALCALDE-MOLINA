@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { MapPin, ArrowRight, CheckCircle, Building2, Users, TrendingUp } from 'lucide-react';
+import { MapPin, ArrowRight, CheckCircle, Building2, Users, TrendingUp, AlertTriangle, HelpCircle, Brain, Euro, History } from 'lucide-react';
 import { getLocationBySlug } from '../data/locations';
 import { sectors } from '../data/sectors';
 import BackgroundMesh from '../components/BackgroundMesh';
@@ -15,15 +15,62 @@ const LocationPage = () => {
         return <Navigate to="/" replace />;
     }
 
-    // Set page title and meta description
+    // Set page title, meta description and structured data
     useEffect(() => {
         document.title = `Automatización de Negocios en ${locationData.name} | Engorilate`;
 
-        // Update meta description
         const metaDescription = document.querySelector('meta[name="description"]');
         if (metaDescription) {
             metaDescription.setAttribute('content', locationData.metaDescription);
         }
+
+        // Update keywords if meta exists
+        const metaKeywords = document.querySelector('meta[name="keywords"]');
+        if (metaKeywords) {
+            metaKeywords.setAttribute('content', locationData.keywords);
+        } else {
+            const k = document.createElement('meta');
+            k.name = "keywords";
+            k.content = locationData.keywords;
+            document.head.appendChild(k);
+        }
+
+        // Inject JSON-LD Schema for Local SEO
+        const schemaId = 'schema-local-business';
+        let script = document.getElementById(schemaId);
+        if (!script) {
+            script = document.createElement('script');
+            script.id = schemaId;
+            script.type = 'application/ld+json';
+            document.head.appendChild(script);
+        }
+
+        const schemaData = {
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": `Engorilate - Automatización en ${locationData.name}`,
+            "description": locationData.metaDescription,
+            "url": window.location.href,
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": locationData.name,
+                "addressRegion": "Murcia",
+                "addressCountry": "ES"
+            },
+            "service": {
+                "@type": "Service",
+                "serviceType": "Automatización de Negocios",
+                "areaServed": locationData.name
+            }
+        };
+
+        script.innerHTML = JSON.stringify(schemaData);
+
+        return () => {
+            // Cleanup schema on unmount
+            const existingScript = document.getElementById(schemaId);
+            if (existingScript) existingScript.remove();
+        };
     }, [locationData]);
 
     return (
@@ -48,46 +95,53 @@ const LocationPage = () => {
                         <MapPin className="w-3 h-3" />
                         {locationData.context}
                     </div>
-                    <h1 className="font-display text-4xl md:text-6xl font-bold leading-tight mb-6 text-white">
-                        Automatización y Orden para <br />
-                        Negocios en <span className="text-primary">{locationData.name}</span>
+                    <h1 className="font-display text-4xl md:text-6xl font-bold leading-tight mb-6 text-white text-balance">
+                        Soluciones de <span className="text-primary tracking-tight">Automatización</span> <br className="hidden md:block" />
+                        para tu negocio en <span className="text-primary">{locationData.name}</span>
                     </h1>
                     <p className="text-xl text-gray-400 font-light max-w-2xl leading-relaxed">
                         {locationData.description}
                     </p>
                 </div>
 
-                {/* Stats */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="bg-[#222222] border border-white/10 p-6 rounded-xl"
-                    >
-                        <Users className="w-8 h-8 text-primary mb-3" />
-                        <div className="text-2xl font-bold text-white mb-1">{locationData.population}</div>
-                        <div className="text-sm text-gray-500">Población</div>
-                    </motion.div>
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
-                        className="bg-[#222222] border border-white/10 p-6 rounded-xl"
-                    >
-                        <Building2 className="w-8 h-8 text-primary mb-3" />
-                        <div className="text-2xl font-bold text-white mb-1">Pequeños Negocios</div>
-                        <div className="text-sm text-gray-500">Nuestro enfoque</div>
-                    </motion.div>
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
-                        className="bg-[#222222] border border-white/10 p-6 rounded-xl"
-                    >
-                        <TrendingUp className="w-8 h-8 text-primary mb-3" />
-                        <div className="text-2xl font-bold text-white mb-1">Orden Real</div>
-                        <div className="text-sm text-gray-500">Resultados medibles</div>
-                    </motion.div>
+                {/* SEO Intent Section: El Coste del Caos */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-24 items-center">
+                    <div className="lg:col-span-7">
+                        <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">
+                            El coste mental y operativo de <br className="hidden md:block" />
+                            gestionar <span className="underline decoration-primary/30">a ciegas</span> en {locationData.name}
+                        </h2>
+                        <div className="space-y-6">
+                            <p className="text-gray-400 text-lg leading-relaxed">
+                                No importa si tienes una peluquería, un taller o una clínica. El problema en {locationData.name} es el mismo: <strong className="text-white">tareas que te roban la vida</strong>. Cada WhatsApp no contestado, cada reserva mal apuntada y cada hora perdida en Excel es dinero que se escapa.
+                            </p>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div className="bg-white/[0.03] border border-white/5 p-5 rounded-2xl">
+                                    <Brain className="w-8 h-8 text-primary/60 mb-3" />
+                                    <h3 className="text-white font-bold mb-1">Cansancio Mental</h3>
+                                    <p className="text-xs text-gray-500">Deja de ser el "cuello de botella" de tu propia empresa.</p>
+                                </div>
+                                <div className="bg-white/[0.03] border border-white/5 p-5 rounded-2xl">
+                                    <Euro className="w-8 h-8 text-primary/60 mb-3" />
+                                    <h3 className="text-white font-bold mb-1">Goteo de Dinero</h3>
+                                    <p className="text-xs text-gray-500">Un negocio sin procesos claros es un negocio que pierde caja.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="lg:col-span-5">
+                        <div className="bg-primary/5 border border-primary/20 p-8 rounded-3xl relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 blur-3xl -mr-16 -mt-16"></div>
+                            <HelpCircle className="w-12 h-12 text-primary mb-6" />
+                            <h3 className="text-2xl font-bold text-white mb-4 italic">"¿Te gustaría que tu negocio funcionara solo mientras tú descansas?"</h3>
+                            <p className="text-gray-400 text-sm leading-relaxed mb-6">
+                                En {locationData.name} ayudo a dueños de negocios a recuperar el control. Sin complicaciones, sin tecnicismos. Solo orden.
+                            </p>
+                            <Link to="/contact" className="inline-flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all">
+                                Pedir diagnóstico gratuito <ArrowRight className="w-4 h-4" />
+                            </Link>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Local Examples */}

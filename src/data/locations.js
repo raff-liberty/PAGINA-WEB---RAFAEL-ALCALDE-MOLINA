@@ -4,120 +4,98 @@ export const locations = [
         id: 'murcia',
         name: 'Murcia',
         slug: 'murcia',
-        description: 'Automatización y orden para negocios en Murcia capital. Ayudamos a pequeños negocios a recuperar el control operativo.',
-        metaDescription: 'Servicios de automatización de negocios en Murcia. Eliminamos el caos operativo de tu negocio con procesos claros y tecnología invisible.',
-        keywords: 'automatización negocios Murcia, consultoría empresarial Murcia, optimización procesos Murcia',
-        population: '460.000 habitantes',
-        context: 'capital de la Región de Murcia',
+        description: 'La capital no perdona el desorden. Si tu negocio en Murcia sigue gestionando citas por papel o perdiendo WhatsApps por el camino, estás regalando clientes a la competencia. Automatización real para negocios que quieren crecer de verdad.',
+        metaDescription: '¿Tu negocio en Murcia es un caos? Automatización de procesos para peluquerías, restaurantes y clínicas. Recupera el control operativo y deja de perder dinero.',
+        keywords: 'automatización negocios Murcia, optimizar procesos Murcia, gestión digital negocios Murcia, consultoría automatización Murcia',
+        context: 'centro neurálgico y empresarial de la Región',
         examples: [
-            'Peluquerías en el centro que pierden clientes por no contestar WhatsApp',
-            'Restaurantes en la zona universitaria con problemas de reservas',
-            'Clínicas en Ronda Sur con gestión manual de citas'
+            'Peluquerías saturadas en Gran Vía que ignoran citas por WhatsApp',
+            'Restaurantes en Santo Domingo con reservas que se apuntan mal o se olvidan',
+            'Clínicas en Juan Carlos I que pierden mañanas enteras en tareas administrativas'
         ]
     },
     {
         id: 'cartagena',
         name: 'Cartagena',
         slug: 'cartagena',
-        description: 'Automatización y orden para negocios en Cartagena. Soluciones prácticas para pequeños negocios del puerto y la ciudad.',
-        metaDescription: 'Servicios de automatización de negocios en Cartagena. Orden operativo para tu negocio sin complicaciones técnicas.',
-        keywords: 'automatización negocios Cartagena, consultoría empresarial Cartagena, optimización procesos Cartagena',
-        population: '218.000 habitantes',
-        context: 'ciudad portuaria e industrial',
+        description: 'En Cartagena el tiempo es oro y el caos es plomo. Ayudo a negocios de la ciudad portuaria a digitalizar su trastienda para que dejen de ser esclavos de sus propios procesos manuales.',
+        metaDescription: 'Elimina el caos de tu negocio en Cartagena. Expertos en automatización para hostelería y servicios técnicos. Orden real, sin rodeos.',
+        keywords: 'automatización Cartagena, digitalizar negocio Cartagena, gestión flujos Cartagena, eficiencia operativa Cartagena',
+        context: 'ciudad portuaria con fuerte pulmón industrial',
         examples: [
-            'Talleres mecánicos que pierden facturas',
-            'Negocios turísticos en el puerto con gestión caótica',
-            'Servicios técnicos que no tienen control de stock'
+            'Talleres mecánicos que pierden el rastro de piezas y facturas',
+            'Negocios turísticos saturados con correos de reserva nunca contestados',
+            'Empresas en el Polígono Cabezo Beaza con procesos del siglo pasado'
         ]
     },
     {
         id: 'lorca',
         name: 'Lorca',
         slug: 'lorca',
-        description: 'Automatización y orden para negocios en Lorca. Ayudamos a pequeños negocios locales a trabajar con menos estrés.',
-        metaDescription: 'Servicios de automatización de negocios en Lorca. Procesos claros y tecnología que funciona para tu negocio.',
-        keywords: 'automatización negocios Lorca, consultoría empresarial Lorca, optimización procesos Lorca',
-        population: '95.000 habitantes',
-        context: 'tercer municipio más poblado de Murcia',
+        description: 'Lorca tiene una fuerza increíble, pero muchos de sus negocios están frenados por una gestión "de toda la vida" que ya no aguanta el ritmo. Ponemos orden en tu operativa para que tú te centres en vender.',
+        metaDescription: 'Servicios de automatización en Lorca. Especialistas en optimizar comercios y servicios locales. Deja de trabajar más y empieza a trabajar mejor.',
+        keywords: 'automatización Lorca, optimización comercios Lorca, consultoría negocios Lorca, procesos Lorca',
+        context: 'el corazón comercial del Valle del Guadalentín',
         examples: [
-            'Comercios del centro histórico con gestión manual',
-            'Negocios agrícolas que necesitan control de inventario',
-            'Servicios locales sin sistema de facturación automatizado'
+            'Comercios del centro que se vuelven locos con el stock manual',
+            'Negocios agrícolas que necesitan reportes automáticos sin Excel infinitos',
+            'Servicios profesionales que entierran su rentabilidad en papeleo'
         ]
     },
     {
         id: 'totana',
         name: 'Totana',
         slug: 'totana',
-        description: 'Automatización y orden para negocios en Totana. Soluciones prácticas sin complicaciones para pequeños negocios.',
-        metaDescription: 'Servicios de automatización de negocios en Totana. Eliminamos tareas repetitivas y recuperas tu tiempo.',
-        keywords: 'automatización negocios Totana, consultoría empresarial Totana, optimización procesos Totana',
-        population: '32.000 habitantes',
-        context: 'municipio del Bajo Guadalentín',
+        description: 'Tu negocio en Totana no debería ser tu cárcel. Si cada vez que un cliente te pide algo sientes que el caos aumenta, necesitas automatizar. Tecnología invisible para recuperar tu libertad operativa.',
+        metaDescription: 'Automatiza tu negocio en Totana. Tecnología simple para eliminar tareas repetitivas. Recupera tu tiempo y multiplica tu eficiencia.',
+        keywords: 'automatización Totana, gestión negocios Totana, ahorrar tiempo negocio Totana, procesos digitales Totana',
+        context: 'municipio clave del Bajo Guadalentín',
         examples: [
-            'Negocios familiares que necesitan orden',
-            'Servicios locales sin control de clientes',
-            'Pequeños comercios con gestión en papel'
+            'Negocios familiares donde "todo está en la cabeza del dueño"',
+            'Servicios locales que dependen de llamadas interminables para agendar',
+            'Pequeñas industrias que pierden el control de sus costes diarios'
         ]
     },
     {
         id: 'mazarron',
         name: 'Mazarrón',
         slug: 'mazarron',
-        description: 'Automatización y orden para negocios en Mazarrón. Ayudamos a negocios turísticos y locales a organizarse mejor.',
-        metaDescription: 'Servicios de automatización de negocios en Mazarrón. Orden operativo para negocios turísticos y servicios locales.',
-        keywords: 'automatización negocios Mazarrón, consultoría empresarial Mazarrón, optimización procesos Mazarrón',
-        population: '35.000 habitantes',
-        context: 'municipio costero con actividad turística',
+        description: 'En Mazarrón, la estacionalidad te mata si no eres eficiente. Automatiza la gestión de tus clientes y reservas para que tu negocio sea rentable y ordenado todo el año, no solo en verano.',
+        metaDescription: 'Optimización para negocios en Mazarrón. Especialistas en gestión de reservas y servicios turísticos mediante automatización.',
+        keywords: 'automatización Mazarrón, gestión reservas Mazarrón, optimización hostelería Mazarrón',
+        context: 'localidad costera con gran potencial turístico y agrícola',
         examples: [
-            'Restaurantes de playa con problemas de reservas',
-            'Apartamentos turísticos sin gestión automatizada',
-            'Servicios de mantenimiento sin control de trabajos'
-        ]
-    },
-    {
-        id: 'alhama-de-murcia',
-        name: 'Alhama de Murcia',
-        slug: 'alhama-de-murcia',
-        description: 'Automatización y orden para negocios en Alhama de Murcia. Soluciones prácticas para pequeños negocios locales.',
-        metaDescription: 'Servicios de automatización de negocios en Alhama de Murcia. Procesos claros para tu negocio sin tecnología complicada.',
-        keywords: 'automatización negocios Alhama de Murcia, consultoría empresarial Alhama, optimización procesos Alhama',
-        population: '22.000 habitantes',
-        context: 'municipio del Bajo Guadalentín',
-        examples: [
-            'Comercios locales con gestión manual',
-            'Negocios de servicios sin sistema de citas',
-            'Pequeñas empresas familiares que necesitan orden'
+            'Restaurantes del Puerto colapsados que no gestionan bien las cancelaciones',
+            'Alquileres vacacionales con entradas y salidas que son un dolor de cabeza manual',
+            'Servicios de mantenimiento que no saben qué técnico está en cada sitio'
         ]
     },
     {
         id: 'alcantarilla',
         name: 'Alcantarilla',
         slug: 'alcantarilla',
-        description: 'Automatización y orden para negocios en Alcantarilla. Ayudamos a pequeños negocios a eliminar el caos operativo.',
-        metaDescription: 'Servicios de automatización de negocios en Alcantarilla. Recupera el control de tu negocio con procesos simples.',
-        keywords: 'automatización negocios Alcantarilla, consultoría empresarial Alcantarilla, optimización procesos Alcantarilla',
-        population: '43.000 habitantes',
-        context: 'municipio del área metropolitana de Murcia',
+        description: 'Alcantarilla se mueve rápido, y tu negocio no puede quedarse atrás. Eliminamos el cuello de botella de tu administración para que tu estructura sea ágil, moderna y totalmente productiva.',
+        metaDescription: 'Expertos en automatización en Alcantarilla. Ayudamos a PYMES y profesionales a eliminar el ruido operativo y digitalizar su día a día.',
+        keywords: 'automatización Alcantarilla, eficiencia PYME Alcantarilla, consultor procesos Alcantarilla',
+        context: 'nodo logístico y comercial estratégico',
         examples: [
-            'Talleres y servicios técnicos sin control de trabajos',
-            'Comercios del centro con gestión caótica',
-            'Negocios familiares que necesitan automatización simple'
+            'Distribuidores locales con albaranes cruzados y datos perdidos',
+            'Tiendas de ropa que podrían vender por WhatsApp de forma automatizada',
+            'Gestoras y servicios profesionales que duplican tareas sin sentido'
         ]
     },
     {
         id: 'molina-de-segura',
         name: 'Molina de Segura',
         slug: 'molina-de-segura',
-        description: 'Automatización y orden para negocios en Molina de Segura. Ayudamos a empresas locales a optimizar su operativa digital.',
-        metaDescription: 'Servicios de automatización de negocios en Molina de Segura. Optimización de procesos y tecnología para tu negocio.',
-        keywords: 'automatización negocios Molina de Segura, consultoría empresarial Molina, optimización procesos Molina',
-        population: '75.000 habitantes',
-        context: 'importante centro industrial y de servicios',
+        description: 'La industria en Molina ya sabe que la eficiencia es la clave. Llevamos esa mentalidad a tu pequeño negocio o comercio para que compitas con las mejores herramientas del mercado.',
+        metaDescription: 'Servicios de optimización en Molina de Segura. Tecnología aplicada al orden de pequeños negocios y servicios industriales.',
+        keywords: 'automatización Molina de Segura, procesos industriales Molina, consultoría eficiencia Molina',
+        context: 'referente industrial del Levante español',
         examples: [
-            'Empresas industriales con procesos manuales',
-            'Comercios del centro que necesitan digitalización',
-            'Servicios profesionales sin control de agenda'
+            'Pequeñas naves industriales que aún dependen de libretas para el control',
+            'Comercios con un potencial enorme frenados por una administración lenta',
+            'Servicios a domicilio que coordinan sus rutas por llamadas y audios de voz'
         ]
     }
 ];
