@@ -1,9 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import BackgroundMesh from '../components/BackgroundMesh';
 
 const Cookies = () => {
     return (
         <div className="relative pt-32 pb-24 min-h-screen">
+            <BackgroundMesh />
             <div className="relative z-10 max-w-4xl mx-auto px-6">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}

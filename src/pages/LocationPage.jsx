@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { MapPin, ArrowRight, CheckCircle, Building2, Users, TrendingUp } from 'lucide-react';
 import { getLocationBySlug } from '../data/locations';
 import { sectors } from '../data/sectors';
+import BackgroundMesh from '../components/BackgroundMesh';
 
 const LocationPage = () => {
     const { location } = useParams();
@@ -27,11 +28,7 @@ const LocationPage = () => {
 
     return (
         <div className="relative pt-32 pb-24 min-h-screen">
-            {/* Background */}
-            <div className="absolute inset-0 z-0 opacity-20 pointer-events-none h-[60vh]">
-                <div className="absolute inset-0 bg-gradient-to-b from-background-dark via-transparent to-background-dark"></div>
-                <div className="absolute inset-0 grid-pattern"></div>
-            </div>
+            <BackgroundMesh />
 
             <div className="relative z-10 max-w-7xl mx-auto px-6">
                 {/* Breadcrumbs */}
