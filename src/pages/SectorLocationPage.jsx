@@ -3,6 +3,7 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { MapPin, ArrowRight, CheckCircle, AlertTriangle } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
+import BackgroundMesh from '../components/BackgroundMesh';
 
 const SectorLocationPage = () => {
     const { sector: sectorSlug, location: locationSlug } = useParams();
@@ -69,11 +70,7 @@ const SectorLocationPage = () => {
 
     return (
         <div className="relative pt-32 pb-24 min-h-screen">
-            {/* Background */}
-            <div className="absolute inset-0 z-0 opacity-20 pointer-events-none h-[60vh]">
-                <div className="absolute inset-0 bg-gradient-to-b from-background-dark via-transparent to-background-dark"></div>
-                <div className="absolute inset-0 grid-pattern"></div>
-            </div>
+            <BackgroundMesh />
 
             {/* Hero Section */}
             {loading ? (
@@ -220,27 +217,30 @@ const SectorLocationPage = () => {
                             <div>
                                 <h4 className="text-sm text-gray-500 uppercase tracking-wider mb-3">Otros sectores en {location.name}</h4>
                                 <div className="flex flex-col gap-2">
-                                    {(pageContent.related_sectors || pageContent.relatedSectors || []).map((relatedSlug) => (
-                                        <Link
-                                            key={relatedSlug}
-                                            to={`/${relatedSlug}`}
-                                            className="text-gray-400 hover:text-primary transition-colors text-sm"
-                                        >
-                                            → {relatedSlug.split('-')[0].charAt(0).toUpperCase() + relatedSlug.split('-')[0].slice(1)} en {location.name}
-                                        </Link>
-                                    ))}
+                                    {(pageContent.related_sectors || pageContent.relatedSectors || []).map((relatedSlug) => {
+                                        const rSectorSlug = relatedSlug.replace(`-${locationSlug}`, '');
+                                        return (
+                                            <Link
+                                                key={relatedSlug}
+                                                to={`/${rSectorSlug}/${locationSlug}`}
+                                                className="text-gray-400 hover:text-primary transition-colors text-sm"
+                                            >
+                                                → {rSectorSlug.charAt(0).toUpperCase() + rSectorSlug.slice(1).replace(/-/g, ' ')} en {location.name}
+                                            </Link>
+                                        );
+                                    })}
                                 </div>
                             </div>
                             <div>
                                 <h4 className="text-sm text-gray-500 uppercase tracking-wider mb-3">{sector.name} en otras localidades</h4>
                                 <div className="flex flex-col gap-2">
                                     {(pageContent.related_locations || pageContent.relatedLocations || []).map((relatedSlug) => {
-                                        // Still using a hardcoded slice for now, ideally this would be dynamic from query
-                                        const locName = relatedSlug.split('-').slice(1).join(' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+                                        const rLocationSlug = relatedSlug.replace(`${sectorSlug}-`, '');
+                                        const locName = rLocationSlug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
                                         return (
                                             <Link
                                                 key={relatedSlug}
-                                                to={`/${relatedSlug}`}
+                                                to={`/${sectorSlug}/${rLocationSlug}`}
                                                 className="text-gray-400 hover:text-primary transition-colors text-sm"
                                             >
                                                 → {sector.name} en {locName}
