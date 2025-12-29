@@ -181,18 +181,18 @@ const LocationPage = () => {
                         <p>
                             Nuestro trabajo consiste en:
                         </p>
-                        <ul className="space-y-4 ml-6">
+                        <ul className="space-y-6 ml-6">
                             <li className="flex items-start gap-3">
                                 <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 flex-shrink-0" />
-                                <span><strong className="text-white">Entender</strong> cómo funciona tu negocio hoy (sin juzgar)</span>
+                                <span><strong className="text-white">Entrar en el barro:</strong> Identifico dónde se te escapa el dinero y la salud. Sin paños calientes, directo al problema.</span>
                             </li>
                             <li className="flex items-start gap-3">
                                 <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 flex-shrink-0" />
-                                <span><strong className="text-white">Decidir reglas claras</strong> para eliminar la fatiga de decisión diaria</span>
+                                <span><strong className="text-white">Procesos de acero:</strong> Definimos reglas claras que no dependen de tu memoria. Si no aporta valor al negocio, se elimina.</span>
                             </li>
                             <li className="flex items-start gap-3">
                                 <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 flex-shrink-0" />
-                                <span><strong className="text-white">Automatizar lo que sobra</strong> con tecnología invisible que funciona sola</span>
+                                <span><strong className="text-white">Sistemas en piloto automático:</strong> Conectamos tecnología que trabaja por ti 24/7. Tú descansas, tu operativa factura.</span>
                             </li>
                         </ul>
                         <p className="pt-4">
