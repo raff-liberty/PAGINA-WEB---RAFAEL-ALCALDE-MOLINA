@@ -5,7 +5,7 @@ import BackgroundMesh from '../components/BackgroundMesh';
 
 const About = () => {
     return (
-        <div className="relative pt-24 pb-16 min-h-screen">
+        <div className="relative pt-40 pb-16 min-h-screen">
             <BackgroundMesh />
 
             <div className="relative z-10 max-w-7xl mx-auto px-6">
