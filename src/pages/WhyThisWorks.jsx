@@ -46,7 +46,7 @@ const WhyThisWorks = () => {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mb-40 max-w-4xl"
+                    className="mb-24 max-w-4xl"
                 >
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-mono tracking-widest uppercase mb-6">
                         <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
@@ -61,26 +61,31 @@ const WhyThisWorks = () => {
                     </p>
                 </motion.div>
 
-                <div className="space-y-32 mb-48">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
                     {principles.map((item, i) => (
                         <motion.div
                             key={i}
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true, margin: "-100px" }}
-                            transition={{ duration: 0.8, ease: "easeOut" }}
-                            className="flex flex-col md:flex-row gap-8 md:gap-20 items-start"
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            transition={{ duration: 0.6, delay: i * 0.1 }}
+                            className="bg-[#222222] border border-white/30 p-8 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.9)] hover:border-primary/50 transition-all duration-300 group relative overflow-hidden"
                         >
-                            <div className="flex-shrink-0">
-                                <span className="text-7xl md:text-9xl font-display font-black text-white/5 select-none leading-none">
+                            {/* Background glow */}
+                            <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/5 blur-[60px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                            {/* Number badge */}
+                            <div className="absolute -top-3 -right-3 w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
+                                <span className="text-2xl font-display font-black text-white/20">
                                     {item.number}
                                 </span>
                             </div>
-                            <div className="max-w-3xl pt-4">
-                                <h3 className="font-display text-3xl md:text-5xl font-bold text-white mb-8 leading-tight">
+
+                            <div className="relative z-10">
+                                <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-4 leading-tight group-hover:text-primary transition-colors">
                                     {item.title}
                                 </h3>
-                                <p className="text-xl md:text-2xl text-gray-400 font-light leading-relaxed"
+                                <p className="text-lg text-gray-400 font-light leading-relaxed"
                                     dangerouslySetInnerHTML={{ __html: item.text.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-semibold">$1</strong>') }}
                                 />
                             </div>
@@ -88,24 +93,32 @@ const WhyThisWorks = () => {
                     ))}
                 </div>
 
-                <div className="relative max-w-5xl mx-auto mb-40">
-                    <div className="absolute -inset-1 bg-gradient-to-r from-primary/30 via-transparent to-primary/30 rounded-3xl blur-xl opacity-20"></div>
-                    <div className="relative bg-[#111] border border-white/10 p-10 md:p-20 rounded-3xl overflow-hidden">
-                        <div className="absolute top-0 right-0 p-10 opacity-[0.03]">
+                {/* Final CTA - Premium Integrated Box */}
+                <div className="mt-24 mb-12 max-w-5xl mx-auto">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="relative bg-gradient-to-br from-[#222222] to-[#181818] border border-white/30 rounded-2xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.9)] p-8 md:p-12"
+                    >
+                        {/* Background effects */}
+                        <div className="absolute -top-40 -right-40 w-96 h-96 bg-primary/10 blur-[120px] rounded-full opacity-40"></div>
+                        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-primary/5 blur-[120px] rounded-full opacity-30"></div>
+                        <div className="absolute top-0 right-0 p-10 opacity-[0.02]">
                             <AllInclusive className="w-64 h-64 text-primary" />
                         </div>
 
                         <div className="relative z-10 flex flex-col items-center text-center">
-                            <span className="text-xs font-mono text-primary uppercase tracking-[0.3em] mb-10">La Promesa Real</span>
-                            <h2 className="text-3xl md:text-5xl text-white font-display font-bold leading-tight mb-12">
+                            <span className="text-xs font-mono text-primary uppercase tracking-[0.3em] mb-8">La Promesa Real</span>
+                            <h2 className="text-3xl md:text-5xl text-white font-display font-bold leading-tight mb-8">
                                 El éxito no es trabajar más duro, <br />
                                 <span className="text-primary italic">es que el negocio te necesite menos.</span>
                             </h2>
 
-                            <div className="flex flex-col md:flex-row gap-6 mt-4">
+                            <div className="flex flex-col md:flex-row gap-6 mt-8">
                                 <Link
                                     to="/contact"
-                                    className="group relative inline-flex items-center gap-3 bg-primary hover:bg-primary-hover text-gray-900 font-bold text-xl px-12 py-6 rounded-2xl transition-all shadow-[0_0_30px_rgba(110,231,183,0.3)]"
+                                    className="group relative inline-flex items-center gap-3 bg-primary hover:bg-primary-hover text-gray-900 font-bold text-xl px-12 py-6 rounded-2xl transition-all transform hover:translate-y-[-4px] shadow-[0_0_30px_rgba(110,231,183,0.3)] hover:shadow-[0_0_50px_rgba(110,231,183,0.5)]"
                                 >
                                     <span>¿Compartes esta visión? Hablemos</span>
                                     <ArrowRight className="w-6 h-6 transition-transform group-hover:translate-x-1" />
@@ -118,7 +131,7 @@ const WhyThisWorks = () => {
                                 </Link>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </div>
