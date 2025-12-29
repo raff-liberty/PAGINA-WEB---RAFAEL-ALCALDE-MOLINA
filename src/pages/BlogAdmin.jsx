@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Save, X, Eye, Edit, Plus, Trash2, Lock, Search, Filter, BookOpen, BarChart3, Copy, Upload, Bold, Italic, List, ListOrdered, Quote, Table, CheckSquare } from 'lucide-react';
+import { Save, X, Eye, Edit, Plus, Trash2, Lock, Search, Filter, BookOpen, BarChart3, Copy, Upload, Download, Bold, Italic, List, ListOrdered, Quote, Table, CheckSquare } from 'lucide-react';
 import BackgroundMesh from '../components/BackgroundMesh';
 
 const BlogAdmin = () => {
@@ -250,6 +250,109 @@ const BlogAdmin = () => {
         }, 0);
     };
 
+    const handleExportCSV = () => {
+        // Create CSV content
+        const headers = ['title', 'slug', 'excerpt', 'category', 'content', 'read_time', 'savings', 'publish_date', 'meta_description'];
+        const csvRows = [headers.join(',')];
+
+        posts.forEach(post => {
+            const row = headers.map(header => {
+                const value = post[header] || '';
+                // Escape quotes and wrap in quotes if contains comma or newline
+                const escaped = String(value).replace(/"/g, '""');
+                return `"${escaped}"`;
+            });
+            csvRows.push(row.join(','));
+        });
+
+        const csvContent = csvRows.join('\n');
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+
+        link.setAttribute('href', url);
+        link.setAttribute('download', `blog_posts_${new Date().toISOString().split('T')[0]}.csv`);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    const handleImportCSV = (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+            try {
+                const text = e.target.result;
+                const lines = text.split('\n');
+                const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+
+                const postsToImport = [];
+
+                for (let i = 1; i < lines.length; i++) {
+                    if (!lines[i].trim()) continue;
+
+                    // Parse CSV line (handle quoted values with commas)
+                    const values = [];
+                    let current = '';
+                    let inQuotes = false;
+
+                    for (let char of lines[i]) {
+                        if (char === '"') {
+                            inQuotes = !inQuotes;
+                        } else if (char === ',' && !inQuotes) {
+                            values.push(current.replace(/^"|"$/g, '').replace(/""/g, '"'));
+                            current = '';
+                        } else {
+                            current += char;
+                        }
+                    }
+                    values.push(current.replace(/^"|"$/g, '').replace(/""/g, '"'));
+
+                    const post = {};
+                    headers.forEach((header, index) => {
+                        post[header] = values[index] || '';
+                    });
+
+                    postsToImport.push(post);
+                }
+
+                if (postsToImport.length === 0) {
+                    alert('No se encontraron posts válidos en el archivo CSV');
+                    return;
+                }
+
+                if (!confirm(`¿Importar ${postsToImport.length} posts? Esto creará nuevos posts en la base de datos.`)) {
+                    return;
+                }
+
+                setLoading(true);
+                setSaveStatus('Importando posts...');
+
+                const { error } = await supabase
+                    .from('blog_posts')
+                    .insert(postsToImport);
+
+                if (error) throw error;
+
+                setSaveStatus(`✓ ${postsToImport.length} posts importados correctamente`);
+                fetchPosts();
+                setTimeout(() => setSaveStatus(''), 3000);
+            } catch (error) {
+                console.error('Error importing CSV:', error);
+                setSaveStatus('✗ Error al importar CSV');
+                alert('Error al importar CSV: ' + error.message);
+            } finally {
+                setLoading(false);
+                event.target.value = ''; // Reset file input
+            }
+        };
+
+        reader.readAsText(file);
+    };
+
     const filteredPosts = posts.filter(post => {
         const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesCategory = filterCategory === 'all' || post.category === filterCategory;
@@ -300,7 +403,7 @@ const BlogAdmin = () => {
     }
 
     return (
-        <div className="relative min-h-screen pt-24 pb-12">
+        <div className="relative min-h-screen pt-32 pb-12">
             <BackgroundMesh />
 
             <div className="relative z-10 max-w-7xl mx-auto px-6">
@@ -348,21 +451,44 @@ const BlogAdmin = () => {
                 )}
 
                 {activeTab === 'stats' && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="bg-[#222222] border border-white/30 rounded-2xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.9)]">
-                            <h2 className="text-2xl font-bold text-white mb-6">Resumen General</h2>
-                            <div className="text-6xl font-bold text-primary mb-2">{stats.total}</div>
-                            <p className="text-gray-400">Posts totales</p>
+                    <div className="space-y-6">
+                        {/* Export/Import Buttons */}
+                        <div className="flex gap-4">
+                            <button
+                                onClick={handleExportCSV}
+                                className="flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary-hover text-gray-900 font-bold rounded-lg transition-all"
+                            >
+                                <Download className="w-5 h-5" />
+                                Exportar Posts (CSV)
+                            </button>
+                            <label className="flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-lg transition-all cursor-pointer border border-white/20">
+                                <Upload className="w-5 h-5" />
+                                Importar Posts (CSV)
+                                <input
+                                    type="file"
+                                    accept=".csv"
+                                    onChange={handleImportCSV}
+                                    className="hidden"
+                                />
+                            </label>
                         </div>
-                        <div className="bg-[#222222] border border-white/30 rounded-2xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.9)]">
-                            <h2 className="text-2xl font-bold text-white mb-6">Por Categoría</h2>
-                            <div className="space-y-3">
-                                {stats.byCategory.map((cat, i) => (
-                                    <div key={i} className="flex items-center justify-between">
-                                        <span className="text-gray-300">{cat.name}</span>
-                                        <span className="text-primary font-bold">{cat.count}</span>
-                                    </div>
-                                ))}
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="bg-[#222222] border border-white/30 rounded-2xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.9)]">
+                                <h2 className="text-2xl font-bold text-white mb-6">Resumen General</h2>
+                                <div className="text-6xl font-bold text-primary mb-2">{stats.total}</div>
+                                <p className="text-gray-400">Posts totales</p>
+                            </div>
+                            <div className="bg-[#222222] border border-white/30 rounded-2xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.9)]">
+                                <h2 className="text-2xl font-bold text-white mb-6">Por Categoría</h2>
+                                <div className="space-y-3">
+                                    {stats.byCategory.map((cat, i) => (
+                                        <div key={i} className="flex items-center justify-between">
+                                            <span className="text-gray-300">{cat.name}</span>
+                                            <span className="text-primary font-bold">{cat.count}</span>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -415,8 +541,8 @@ const BlogAdmin = () => {
                                             <div
                                                 key={post.id}
                                                 className={`p-4 rounded-lg cursor-pointer transition-all ${selectedPost?.id === post.id
-                                                        ? 'bg-primary/20 border border-primary/50'
-                                                        : 'bg-black/30 border border-white/10 hover:border-white/30'
+                                                    ? 'bg-primary/20 border border-primary/50'
+                                                    : 'bg-black/30 border border-white/10 hover:border-white/30'
                                                     }`}
                                                 onClick={() => handleSelectPost(post)}
                                             >
