@@ -14,7 +14,7 @@ const WorkMethod = () => {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mb-40 max-w-4xl"
+                    className="mb-24 max-w-4xl"
                 >
                     <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-white">
                         Cómo Trabajamos <br />
@@ -26,7 +26,7 @@ const WorkMethod = () => {
                 </motion.div>
 
                 {/* Before/After Section */}
-                <div className="mb-40 relative">
+                <div className="mb-24 relative">
                     <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-primary to-transparent rounded-full opacity-50"></div>
                     <div className="pl-8 md:pl-12 py-2">
                         <h2 className="font-display text-2xl md:text-3xl font-bold text-white mb-8">
@@ -224,7 +224,7 @@ const WorkMethod = () => {
                 </div>
 
                 {/* MERGED: Ecosistema de Soluciones (formerly "Tu Viaje" + "Qué construimos") */}
-                <div className="mt-64 mb-40 relative">
+                <div className="mt-32 mb-24 relative">
                     <div className="text-center mb-20">
                         <h2 className="font-display text-4xl md:text-6xl font-bold text-white mb-8">
                             Ecosistema de <span className="text-primary italic">Soluciones Engorilate</span>
@@ -281,7 +281,7 @@ const WorkMethod = () => {
                                     transition={{ delay: i * 0.1 }}
                                     className="bg-[#222222] border border-white/30 p-8 rounded-2xl relative flex flex-col items-center text-center group hover:border-primary/50 transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.9)]"
                                 >
-                                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-mono uppercase tracking-widest text-gray-500">
+                                    <div className="absolute -top-6 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-mono uppercase tracking-widest text-gray-500">
                                         {step.stage}
                                     </div>
                                     <div className={`w-16 h-16 rounded-2xl ${step.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500`}>
@@ -303,7 +303,7 @@ const WorkMethod = () => {
                 </div>
 
                 {/* Final CTA - Premium Integrated Box */}
-                <div className="mt-40 mb-12 max-w-5xl mx-auto px-4">
+                <div className="mt-24 mb-12 max-w-5xl mx-auto px-4">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
