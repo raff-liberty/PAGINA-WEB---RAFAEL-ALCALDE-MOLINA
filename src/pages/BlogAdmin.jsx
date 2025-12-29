@@ -15,6 +15,7 @@ const BlogAdmin = () => {
     const [showPreview, setShowPreview] = useState(false);
     const [loading, setLoading] = useState(false);
     const [saveStatus, setSaveStatus] = useState('');
+    const [selectedPostsForExport, setSelectedPostsForExport] = useState([]);
 
     // Editable fields
     const [editedTitle, setEditedTitle] = useState('');
@@ -251,11 +252,20 @@ const BlogAdmin = () => {
     };
 
     const handleExportCSV = () => {
+        const postsToExport = selectedPostsForExport.length > 0
+            ? posts.filter(p => selectedPostsForExport.includes(p.id))
+            : posts;
+
+        if (postsToExport.length === 0) {
+            alert('No hay posts para exportar');
+            return;
+        }
+
         // Create CSV content
         const headers = ['title', 'slug', 'excerpt', 'category', 'content', 'read_time', 'savings', 'publish_date', 'meta_description'];
         const csvRows = [headers.join(',')];
 
-        posts.forEach(post => {
+        postsToExport.forEach(post => {
             const row = headers.map(header => {
                 const value = post[header] || '';
                 // Escape quotes and wrap in quotes if contains comma or newline
@@ -276,6 +286,25 @@ const BlogAdmin = () => {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+
+        // Clear selection after export
+        setSelectedPostsForExport([]);
+    };
+
+    const togglePostSelection = (postId) => {
+        setSelectedPostsForExport(prev =>
+            prev.includes(postId)
+                ? prev.filter(id => id !== postId)
+                : [...prev, postId]
+        );
+    };
+
+    const toggleSelectAll = () => {
+        if (selectedPostsForExport.length === filteredPosts.length) {
+            setSelectedPostsForExport([]);
+        } else {
+            setSelectedPostsForExport(filteredPosts.map(p => p.id));
+        }
     };
 
     const handleImportCSV = (event) => {
@@ -459,7 +488,7 @@ const BlogAdmin = () => {
                                 className="flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary-hover text-gray-900 font-bold rounded-lg transition-all"
                             >
                                 <Download className="w-5 h-5" />
-                                Exportar Posts (CSV)
+                                Exportar {selectedPostsForExport.length > 0 ? `${selectedPostsForExport.length} Posts` : 'Todos los Posts'} (CSV)
                             </button>
                             <label className="flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-lg transition-all cursor-pointer border border-white/20">
                                 <Upload className="w-5 h-5" />
@@ -522,13 +551,29 @@ const BlogAdmin = () => {
                                     <select
                                         value={filterCategory}
                                         onChange={(e) => setFilterCategory(e.target.value)}
-                                        className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-2 text-white text-sm focus:border-primary focus:outline-none"
+                                        className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-2 text-white text-sm focus:border-primary focus:outline-none mb-3"
                                     >
                                         <option value="all">Todas las categorías</option>
                                         {categories.map(cat => (
                                             <option key={cat} value={cat}>{cat}</option>
                                         ))}
                                     </select>
+
+                                    <div className="flex items-center justify-between mb-2">
+                                        <button
+                                            onClick={toggleSelectAll}
+                                            className="text-xs text-primary hover:text-primary-hover transition-colors"
+                                        >
+                                            {selectedPostsForExport.length === filteredPosts.length && filteredPosts.length > 0
+                                                ? 'Deseleccionar todos'
+                                                : 'Seleccionar todos'}
+                                        </button>
+                                        {selectedPostsForExport.length > 0 && (
+                                            <span className="text-xs text-gray-400">
+                                                {selectedPostsForExport.length} seleccionados
+                                            </span>
+                                        )}
+                                    </div>
                                 </div>
 
                                 <div className="max-h-[60vh] overflow-y-auto space-y-2">
@@ -547,9 +592,20 @@ const BlogAdmin = () => {
                                                 onClick={() => handleSelectPost(post)}
                                             >
                                                 <div className="flex items-start justify-between gap-2">
-                                                    <div className="flex-1 min-w-0">
-                                                        <h3 className="text-sm font-bold text-white truncate">{post.title}</h3>
-                                                        <p className="text-xs text-gray-400 mt-1">{post.category}</p>
+                                                    <div className="flex items-start gap-3 flex-1 min-w-0">
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={selectedPostsForExport.includes(post.id)}
+                                                            onChange={(e) => {
+                                                                e.stopPropagation();
+                                                                togglePostSelection(post.id);
+                                                            }}
+                                                            className="mt-1 w-4 h-4 rounded border-white/20 bg-black/30 text-primary focus:ring-primary focus:ring-offset-0"
+                                                        />
+                                                        <div className="flex-1 min-w-0">
+                                                            <h3 className="text-sm font-bold text-white truncate">{post.title}</h3>
+                                                            <p className="text-xs text-gray-400 mt-1">{post.category}</p>
+                                                        </div>
                                                     </div>
                                                     <button
                                                         onClick={(e) => {
