@@ -9,7 +9,14 @@ const BlogAdmin = () => {
     const [password, setPassword] = useState('');
     const [posts, setPosts] = useState([]);
     const [selectedPost, setSelectedPost] = useState(null);
-    const [activeTab, setActiveTab] = useState('editor'); // 'editor', 'guidelines', 'stats'
+    const [activeTab, setActiveTab] = useState('editor'); // 'editor', 'guidelines', 'stats', 'config'
+    const [siteConfig, setSiteConfig] = useState({
+        whatsapp_url: '',
+        instagram_url: '',
+        linkedin_url: '',
+        contact_email: '',
+        n8n_webhook_url: ''
+    });
     const [searchTerm, setSearchTerm] = useState('');
     const [filterCategory, setFilterCategory] = useState('all');
     const [showPreview, setShowPreview] = useState(false);
@@ -81,6 +88,7 @@ const BlogAdmin = () => {
     useEffect(() => {
         if (isAuthenticated) {
             fetchPosts();
+            fetchSiteConfig();
         }
     }, [isAuthenticated]);
 
@@ -96,6 +104,53 @@ const BlogAdmin = () => {
             setPosts(data || []);
         } catch (error) {
             console.error('Error fetching posts:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const fetchSiteConfig = async () => {
+        try {
+            const { data, error } = await supabase
+                .from('site_config')
+                .select('key, value');
+
+            if (error) throw error;
+
+            const config = {};
+            data?.forEach(item => {
+                config[item.key] = item.value || '';
+            });
+            setSiteConfig(prev => ({ ...prev, ...config }));
+        } catch (error) {
+            console.error('Error fetching site config:', error);
+        }
+    };
+
+    const saveSiteConfig = async () => {
+        setLoading(true);
+        setSaveStatus('Guardando configuración...');
+
+        try {
+            const updates = Object.entries(siteConfig).map(([key, value]) => ({
+                key,
+                value,
+                updated_at: new Date().toISOString()
+            }));
+
+            for (const update of updates) {
+                const { error } = await supabase
+                    .from('site_config')
+                    .upsert(update, { onConflict: 'key' });
+
+                if (error) throw error;
+            }
+
+            setSaveStatus('✓ Configuración guardada correctamente');
+            setTimeout(() => setSaveStatus(''), 3000);
+        } catch (error) {
+            console.error('Error saving site config:', error);
+            setSaveStatus('✗ Error al guardar configuración');
         } finally {
             setLoading(false);
         }
@@ -461,6 +516,13 @@ const BlogAdmin = () => {
                             Estadísticas
                         </button>
                         <button
+                            onClick={() => setActiveTab('config')}
+                            className={`px-4 py-2 rounded-lg transition-all ${activeTab === 'config' ? 'bg-primary text-gray-900' : 'bg-black/30 text-white border border-white/20'}`}
+                        >
+                            <Save className="w-4 h-4 inline mr-2" />
+                            Configuración
+                        </button>
+                        <button
                             onClick={() => setIsAuthenticated(false)}
                             className="text-gray-400 hover:text-white transition-colors"
                         >
@@ -519,6 +581,88 @@ const BlogAdmin = () => {
                                     ))}
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                )}
+
+                {activeTab === 'config' && (
+                    <div className="bg-[#222222] border border-white/30 rounded-2xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.9)]">
+                        <div className="mb-6 flex items-center justify-between">
+                            <h2 className="text-2xl font-bold text-white">Configuración del Sitio</h2>
+                            {saveStatus && (
+                                <span className="text-sm text-primary">{saveStatus}</span>
+                            )}
+                        </div>
+
+                        <div className="space-y-6 max-w-2xl">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-400 mb-2">WhatsApp URL</label>
+                                <input
+                                    type="text"
+                                    value={siteConfig.whatsapp_url}
+                                    onChange={(e) => setSiteConfig({ ...siteConfig, whatsapp_url: e.target.value })}
+                                    placeholder="https://wa.me/34600000000"
+                                    className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                />
+                                <p className="text-xs text-gray-500 mt-1">URL para el botón de WhatsApp en la página de contacto</p>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-400 mb-2">Instagram URL</label>
+                                <input
+                                    type="text"
+                                    value={siteConfig.instagram_url}
+                                    onChange={(e) => setSiteConfig({ ...siteConfig, instagram_url: e.target.value })}
+                                    placeholder="https://instagram.com/tu_usuario"
+                                    className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                />
+                                <p className="text-xs text-gray-500 mt-1">URL de tu perfil de Instagram</p>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-400 mb-2">LinkedIn URL</label>
+                                <input
+                                    type="text"
+                                    value={siteConfig.linkedin_url}
+                                    onChange={(e) => setSiteConfig({ ...siteConfig, linkedin_url: e.target.value })}
+                                    placeholder="https://linkedin.com/in/tu_perfil"
+                                    className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                />
+                                <p className="text-xs text-gray-500 mt-1">URL de tu perfil de LinkedIn</p>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-400 mb-2">Email de Contacto</label>
+                                <input
+                                    type="email"
+                                    value={siteConfig.contact_email}
+                                    onChange={(e) => setSiteConfig({ ...siteConfig, contact_email: e.target.value })}
+                                    placeholder="hola@tuempresa.com"
+                                    className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                />
+                                <p className="text-xs text-gray-500 mt-1">Email que aparecerá en la página de contacto</p>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-400 mb-2">N8N Webhook URL</label>
+                                <input
+                                    type="text"
+                                    value={siteConfig.n8n_webhook_url}
+                                    onChange={(e) => setSiteConfig({ ...siteConfig, n8n_webhook_url: e.target.value })}
+                                    placeholder="https://tu-n8n.com/webhook/..."
+                                    className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none font-mono text-sm"
+                                />
+                                <p className="text-xs text-gray-500 mt-1">Webhook de N8N para recibir los formularios de contacto</p>
+                            </div>
+
+                            <button
+                                onClick={saveSiteConfig}
+                                disabled={loading}
+                                className="w-full flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-gray-900 font-bold py-3 rounded-lg transition-all disabled:opacity-50"
+                            >
+                                <Save className="w-5 h-5" />
+                                Guardar Configuración
+                            </button>
                         </div>
                     </div>
                 )}
