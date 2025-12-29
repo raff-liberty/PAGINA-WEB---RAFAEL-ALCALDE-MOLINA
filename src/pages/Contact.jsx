@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Phone, ArrowRight, MessageSquare, Send, Instagram, Linkedin, MapPin, Zap, Globe, Laptop, ChevronLeft, CheckCircle2, Clock } from 'lucide-react';
 import BookingCalendar from '../components/BookingCalendar';
@@ -44,6 +45,18 @@ const Contact = () => {
         privacyAccepted: false
     });
 
+    const location = useLocation();
+
+    // Handle service pre-selection from query params
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const serviceId = params.get('service');
+        if (serviceId && services.find(s => s.id === serviceId)) {
+            setFormData(prev => ({ ...prev, service: serviceId }));
+            setStep(2);
+        }
+    }, [location.search]);
+
     const handleServiceSelect = (serviceId) => {
         setFormData(prev => ({ ...prev, service: serviceId }));
         setStep(2);
@@ -87,7 +100,7 @@ const Contact = () => {
     const isStep3Valid = formData.name && formData.email && formData.phone && formData.location && formData.companyName && formData.sector && formData.activity && formData.entityType && formData.privacyAccepted;
 
     return (
-        <div className="relative pt-32 pb-24 min-h-screen">
+        <div className="relative pt-24 pb-16 min-h-screen">
             <div className="absolute inset-0 z-0 opacity-20 pointer-events-none h-[50vh]">
                 <div className="absolute inset-0 bg-gradient-to-b from-background-dark via-transparent to-background-dark"></div>
                 <div className="absolute inset-0 grid-pattern"></div>
@@ -99,7 +112,7 @@ const Contact = () => {
                         <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
                         Diagnóstico Estratégico
                     </div>
-                    <h1 className="font-display text-4xl md:text-6xl font-bold leading-tight mb-6 text-white text-balance">
+                    <h1 className="font-display text-4xl md:text-5xl font-bold leading-tight mb-6 text-white text-balance">
                         {step === 7 ? "¡Todo listo!" : "15 minutos para ver si encajamos"}
                     </h1>
                     <div className="max-w-2xl">

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Clock, Calendar, AlertTriangle, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
 import { blogPosts as localPosts } from '../data/blogPosts';
+import BackgroundMesh from '../components/BackgroundMesh';
 
 const Blog = () => {
     const categories = [
@@ -57,11 +58,7 @@ const Blog = () => {
 
     return (
         <div className="relative pt-64 pb-48 min-h-screen">
-            {/* Background */}
-            <div className="absolute inset-0 z-0 opacity-20 pointer-events-none h-[50vh]">
-                <div className="absolute inset-0 bg-gradient-to-b from-background-dark via-transparent to-background-dark"></div>
-                <div className="absolute inset-0 grid-pattern"></div>
-            </div>
+            <BackgroundMesh />
 
             <div className="relative z-10 max-w-7xl mx-auto px-6">
                 {/* Header */}

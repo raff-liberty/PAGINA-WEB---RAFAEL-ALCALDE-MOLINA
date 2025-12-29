@@ -1,24 +1,13 @@
 export const solutionAreas = [
     {
-        id: 'ventas',
-        title: 'Ventas',
+        id: 'ventas_comunicacion',
+        title: 'Ventas y Comunicación',
         icon: 'Target',
-        sectors: ['peluquerias', 'tatuajes', 'talleres', 'restaurantes'],
+        sectors: ['hair', 'tattoo', 'plumber', 'clinic', 'restaurant'],
         items: [
-            'Generación de leads automáticos',
-            'Recordatorios automatizados de seguimiento',
-            'Seguimiento de propuestas comerciales'
-        ]
-    },
-    {
-        id: 'comunicacion',
-        title: 'Comunicación',
-        icon: 'MessageSquare',
-        sectors: ['peluquerias', 'tatuajes', 'clinicas', 'restaurantes'],
-        items: [
-            'Automatización de mensajes y WhatsApp',
-            'Gestión inteligente de citas y reservas',
-            'Notificaciones proactivas a clientes'
+            'Generación de leads y WhatsApp 24/7',
+            'Gestión inteligente de citas y seguimiento',
+            'Notificaciones proactivas y cierre automático'
         ]
     },
     {
@@ -52,6 +41,17 @@ export const solutionAreas = [
             'Estandarización de procesos internos',
             'Cuadros de mando de rendimiento',
             'Gestión documental sin papeles'
+        ]
+    },
+    {
+        id: 'web',
+        title: 'Web Diseñada y Conectada',
+        icon: 'Globe',
+        sectors: ['hair', 'tattoo', 'plumber', 'clinic', 'agency', 'restaurant'],
+        items: [
+            'Diseño profesional de alto impacto',
+            'Integración con herramientas locales',
+            'Optimizada para conversión inmediata'
         ]
     }
 ];

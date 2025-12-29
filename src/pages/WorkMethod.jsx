@@ -2,14 +2,12 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { MemoryStick as Memory, CheckCircle, AlertTriangle, ArrowRight, XCircle, ShieldCheck, Zap, Globe, Laptop, MessageSquare, Database, CreditCard } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import BackgroundMesh from '../components/BackgroundMesh';
 
 const WorkMethod = () => {
     return (
         <div className="relative pt-64 pb-48 min-h-screen">
-            <div className="absolute inset-0 z-0 opacity-20 pointer-events-none h-[50vh]">
-                <div className="absolute inset-0 bg-gradient-to-b from-background-dark via-transparent to-background-dark"></div>
-                <div className="absolute inset-0 grid-pattern"></div>
-            </div>
+            <BackgroundMesh />
 
             <div className="relative z-10 max-w-7xl mx-auto px-6">
                 {/* Header */}

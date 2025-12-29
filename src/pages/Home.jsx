@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Lightbulb, ArrowRight, MessageSquare, TrendingUp, FileText, Target, Database, Users, CheckCircle, PenTool as Custom, Search, Zap, DollarSign, Euro } from 'lucide-react';
+import { Lightbulb, ArrowRight, MessageSquare, TrendingUp, FileText, Target, Database, Users, CheckCircle, PenTool as Custom, Search, Zap, DollarSign, Euro, ChevronLeft, ChevronRight, Globe } from 'lucide-react';
+import BackgroundMesh from '../components/BackgroundMesh';
 
 const businessTypes = [
     { id: 'hair', label: 'Peluquería / Estética' },
@@ -94,71 +95,123 @@ const contentMap = {
 
 const solutionAreas = [
     {
-        title: 'Ventas',
+        title: 'Ventas y Comunicación Total',
         icon: Target,
-        sectors: ['hair', 'tattoo', 'plumber', 'restaurant'],
+        sectors: ['hair', 'tattoo', 'plumber', 'clinic', 'restaurant'],
+        serviceId: 'automation',
+        badge: 'Crecimiento',
+        roi: 'Alta',
         items: [
-            'Generación de leads automáticos',
-            'Recordatorios automatizados de seguimiento',
-            'Seguimiento de propuestas comerciales'
+            'WhatsApp inteligente y generación de leads 24/7',
+            'Gestión de citas y recordatorios sin errores',
+            'Cierre de propuestas y notificaciones automáticas'
         ]
     },
     {
-        title: 'Comunicación',
-        icon: MessageSquare,
-        sectors: ['hair', 'tattoo', 'clinic', 'restaurant'],
-        items: [
-            'Automatización de mensajes y WhatsApp',
-            'Gestión inteligente de citas y reservas',
-            'Notificaciones proactivas a clientes'
-        ]
-    },
-    {
-        title: 'Facturación y Contabilidad',
+        title: 'Cerebro Financiero',
         icon: FileText,
         sectors: ['plumber', 'agency', 'clinic', 'restaurant'],
+        serviceId: 'dashboard',
+        badge: 'Control',
+        roi: 'Media',
         items: [
             'Integración automática de facturas',
-            'Procesos de cobro y conciliación bancaria',
-            'Reportes financieros en tiempo real'
+            'Conciliación bancaria sin Excel',
+            'Radiografía de tu negocio en tiempo real'
         ]
     },
     {
-        title: 'Inventario y Stock',
+        title: 'Inventario Inteligente',
         icon: Database,
         sectors: ['hair', 'tattoo', 'restaurant'],
+        serviceId: 'automation',
+        badge: 'Eficiencia',
+        roi: 'Alta',
         items: [
-            'Control de stock en tiempo real',
-            'Pedidos automáticos a proveedores',
-            'Escaneo de códigos para reposición rápida'
+            'Stock bajo control en tiempo real',
+            'Pedidos a proveedores automatizados',
+            'Cero roturas de stock imprevistas'
         ]
     },
     {
-        title: 'Operaciones',
+        title: 'Maquinaria Operativa',
         icon: Users,
         sectors: ['agency', 'clinic', 'plumber'],
+        serviceId: 'automation',
+        badge: 'Estructura',
+        roi: 'Alta',
         items: [
             'Estandarización de procesos internos',
-            'Cuadros de mando de rendimiento',
-            'Gestión documental sin papeles'
+            'Cuadros de mando de rendimiento (KPIs)',
+            'Oficina sin papeles ni caos diario'
+        ]
+    },
+    {
+        title: 'Web Diseñada y Conectada',
+        icon: Globe,
+        sectors: ['hair', 'tattoo', 'plumber', 'clinic', 'agency', 'restaurant'],
+        serviceId: 'web',
+        badge: 'Premium',
+        roi: 'Inmediata',
+        items: [
+            'Diseño profesional de alto impacto',
+            'Conectada con tus herramientas de gestión',
+            'Optimizada para convertir visitas en clientes'
         ]
     }
 ];
 
 const Home = () => {
+    const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('hair');
+    const [scrollIndex, setScrollIndex] = useState(0);
+    const scrollRef = useRef(null);
+    const content = contentMap[activeTab];
+
+    const scrollToIndex = (index) => {
+        if (scrollRef.current) {
+            const container = scrollRef.current;
+            const cardWidth = container.offsetWidth;
+            container.scrollTo({
+                left: index * cardWidth,
+                behavior: 'smooth'
+            });
+            setScrollIndex(index);
+        }
+    };
+
+    const handleScroll = () => {
+        if (scrollRef.current) {
+            const container = scrollRef.current;
+            const index = Math.round(container.scrollLeft / container.offsetWidth);
+            if (index !== scrollIndex) {
+                setScrollIndex(index);
+            }
+        }
+    };
+
+    // Reset scroll when tab changes
+    useEffect(() => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollLeft = 0;
+            setScrollIndex(0);
+        }
+    }, [activeTab]);
 
     // Get filtered solutions for the active sector
     const filteredSolutions = [
         ...solutionAreas.filter(area => area.sectors.includes(activeTab)),
         {
-            title: 'Personalización propia',
+            title: 'Arquitectura a Medida',
             icon: Custom,
             isCustom: true,
+            serviceId: 'other',
+            badge: 'Premium',
+            roi: 'Variable',
             items: [
-                'Desarrollo de flujos a medida',
-                'Integración con herramientas actuales',
-                'Soporte técnico y formación continua'
+                'Resolución de tu cuello de botella específico',
+                'Integración profunda con tus herramientas',
+                'Soporte estratégico y evolución continua'
             ]
         }
     ];
@@ -166,18 +219,12 @@ const Home = () => {
     const useCarousel = filteredSolutions.length > 3;
 
     return (
-        <div className="relative pt-64 pb-48 min-h-screen">
-            <div className="absolute inset-0 z-0 opacity-30 pointer-events-none overflow-hidden h-[70vh]">
-                <div className="absolute inset-0 bg-gradient-to-b from-background-dark via-transparent to-background-dark"></div>
-                <div className="absolute inset-0 grid-pattern"></div>
-                {/* Ambient light blobs for premium feel */}
-                <div className="absolute -top-24 -left-24 w-96 h-96 bg-primary/10 blur-[120px] rounded-full"></div>
-                <div className="absolute top-1/2 -right-24 w-64 h-64 bg-primary/5 blur-[100px] rounded-full"></div>
-            </div>
+        <div className="relative pt-32 pb-32 min-h-screen">
+            <BackgroundMesh />
 
             <div className="relative z-10 max-w-7xl mx-auto px-6">
                 {/* Hero Section */}
-                <div className="flex flex-col items-center justify-center mb-40 text-center">
+                <div className="flex flex-col items-center justify-center mb-20 text-center">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -191,7 +238,7 @@ const Home = () => {
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="font-display text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-6 relative inline-block max-w-5xl"
+                        className="font-display text-4xl md:text-5xl lg:text-5xl font-bold tracking-tight text-white mb-6 relative inline-block max-w-5xl"
                     >
                         Si haces todos los días lo mismo, <br className="hidden md:block" />
                         no es trabajo. Es <span className="text-primary">castigo.</span>
@@ -200,7 +247,7 @@ const Home = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="text-lg md:text-xl text-gray-400 font-medium mb-16 max-w-3xl mx-auto leading-relaxed"
+                        className="text-lg md:text-xl text-gray-400 font-medium mb-12 max-w-3xl mx-auto leading-relaxed"
                     >
                         Automatiza los procesos repetitivos de tu empresa
                     </motion.p>
@@ -211,21 +258,21 @@ const Home = () => {
                                 icon: Search,
                                 step: '01',
                                 content: 'Identifico tareas que el dueño no debería estar haciendo.',
-                                highlight: 'Para que dejes de perder tiempo en la operativa.'
+                                highlight: 'Te tiras 5 horas diarias contestando Whatsapps de clientes curiosos'
                             },
                             {
                                 title: 'AUTOMATIZACIÓN',
                                 icon: Zap,
                                 step: '02',
                                 content: 'Diseño automatizaciones para que esas tareas funcionen solas.',
-                                highlight: 'Tecnología trabajando por ti, no al revés.'
+                                highlight: 'Diseñamos un embudo de automatización que responde a todos los mensajes como tu responderías de manera natural'
                             },
                             {
                                 title: 'AUTONOMÍA',
                                 icon: TrendingUp,
                                 step: '03',
                                 content: 'Consigo que el negocio no dependa de estar encima todo el día.',
-                                highlight: 'Tu negocio funciona, tú recuperas tu vida.'
+                                highlight: 'Tu negocio funciona, dedica tu tiempo a aquello que da rentabilidad a la empresa.'
                             }
                         ].map((item, i) => (
                             <motion.div
@@ -233,7 +280,7 @@ const Home = () => {
                                 initial={{ opacity: 0, y: 30 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.2 + i * 0.1, duration: 0.8, ease: "easeOut" }}
-                                className="group relative bg-[#222222]/80 backdrop-blur-md border border-white/10 p-6 rounded-xl hover:border-primary/50 transition-all duration-500 hover:bg-[#2a2a2a] flex flex-col shadow-2xl overflow-hidden"
+                                className="group relative bg-[#1a1a1a] backdrop-blur-md border border-white/20 p-6 rounded-xl hover:border-primary/50 transition-all duration-500 hover:bg-[#222222] flex flex-col shadow-[0_8px_32px_rgba(0,0,0,0.8)] overflow-hidden h-full"
                             >
                                 {/* Background step number */}
                                 <span className="absolute -top-4 -right-4 text-8xl font-bold text-white/[0.02] group-hover:text-primary/[0.05] transition-colors pointer-events-none font-mono">
@@ -277,7 +324,17 @@ const Home = () => {
                 </div>
 
                 {/* Introduction */}
-                <div className="mb-32 max-w-4xl mt-64">
+                <div className="mb-20 max-w-4xl mt-20">
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="mb-8 inline-block px-4 py-1.5 bg-primary/5 border border-primary/20 rounded-lg"
+                    >
+                        <span className="text-primary font-mono text-xs md:text-sm font-bold tracking-[0.3em] uppercase">
+                            Ejemplos
+                        </span>
+                    </motion.div>
                     <h2 className="font-display text-4xl md:text-5xl font-bold leading-tight mb-6 text-white">
                         Cómo funcionaría tu negocio <br />
                         <span className="text-primary">con un poco más de orden</span>
@@ -304,352 +361,420 @@ const Home = () => {
                         ))}
                     </div>
 
-                    <div className="hidden md:grid grid-cols-12 gap-8 text-xs font-mono uppercase tracking-widest text-gray-500 mb-8 px-8">
-                        <div className="col-span-4">Situación habitual</div>
-                        <div className="col-span-4">Qué se hace para ordenar</div>
-                        <div className="col-span-4">Resultado real</div>
-                    </div>
+                    <div className="relative group/carousel">
+                        {/* Navigation Buttons */}
+                        {content.length > 1 && (
+                            <>
+                                <button
+                                    onClick={() => scrollToIndex(Math.max(0, scrollIndex - 1))}
+                                    className={`absolute -left-4 md:-left-12 top-[200px] z-20 w-10 h-10 rounded-full bg-surface-dark/80 border border-white/10 flex items-center justify-center text-white backdrop-blur-sm transition-all hover:bg-primary hover:text-gray-900 shadow-xl ${scrollIndex === 0 ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+                                >
+                                    <ChevronLeft className="w-6 h-6" />
+                                </button>
+                                <button
+                                    onClick={() => scrollToIndex(Math.min(content.length - 1, scrollIndex + 1))}
+                                    className={`absolute -right-4 md:-right-12 top-[200px] z-20 w-10 h-10 rounded-full bg-surface-dark/80 border border-white/10 flex items-center justify-center text-white backdrop-blur-sm transition-all hover:bg-primary hover:text-gray-900 shadow-xl ${scrollIndex === content.length - 1 ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+                                >
+                                    <ChevronRight className="w-6 h-6" />
+                                </button>
+                            </>
+                        )}
 
-                    <motion.div
-                        key={activeTab}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="space-y-8"
-                    >
-                        {contentMap[activeTab].map((item, idx) => (
-                            <div key={idx} className="relative group">
-                                {/* Ambient glow on hover */}
-                                <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/10 to-primary/5 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
+                        <div
+                            ref={scrollRef}
+                            onScroll={handleScroll}
+                            className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide gap-6 pb-8"
+                        >
+                            {content.map((item, idx) => (
+                                <div
+                                    key={idx}
+                                    className="min-w-full md:min-w-[45%] lg:min-w-[100%] first:ml-0 snap-center transition-all duration-500"
+                                >
+                                    <div className="relative group">
+                                        {/* Ambient glow on hover */}
+                                        <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-primary/5 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
 
-                                <div className="relative grid grid-cols-1 md:grid-cols-12 gap-10 bg-[#121212] border border-white/10 p-10 rounded-2xl transition-all duration-300 items-start shadow-2xl overflow-hidden">
-                                    {/* Subtle glass effect border on top */}
-                                    <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+                                        <div className="relative grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 bg-[#1a1a1a] border border-white/30 p-6 md:p-12 rounded-2xl transition-all duration-300 items-start shadow-[0_8px_32px_rgba(0,0,0,0.8)] overflow-hidden group-hover:border-primary/40">
+                                            {/* Subtle glass effect border on top */}
+                                            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
 
-                                    <div className="col-span-4">
-                                        <div className="flex items-center gap-3 mb-4">
-                                            <span className="text-[10px] font-mono text-gray-500 uppercase tracking-[0.2em] px-2 py-1 bg-white/5 rounded">Situación</span>
+                                            <div className="col-span-12 md:col-span-4">
+                                                <div className="flex items-center gap-3 mb-4">
+                                                    <span className="text-[10px] font-mono text-gray-500 uppercase tracking-[0.2em] px-2 py-1 bg-white/5 rounded">Situación</span>
+                                                </div>
+                                                <p className="text-gray-300 leading-relaxed text-base md:text-lg font-light italic">"{item.problem}"</p>
+                                            </div>
+
+                                            <div className="col-span-12 md:col-span-4 relative md:border-l md:border-white/10 md:pl-10">
+                                                <div className="flex items-center gap-3 mb-4">
+                                                    <span className="text-[10px] font-mono text-primary/60 uppercase tracking-[0.2em] px-2 py-1 bg-primary/5 rounded">Qué se hace</span>
+                                                </div>
+                                                <p className="text-white font-medium text-lg md:text-xl leading-snug">{item.solution}</p>
+                                            </div>
+
+                                            <div className="col-span-12 md:col-span-4 relative md:border-l md:border-white/10 md:pl-10">
+                                                <div className="flex items-center gap-3 mb-4">
+                                                    <span className="text-[10px] font-mono text-primary uppercase tracking-[0.2em] px-2 py-1 bg-primary/10 rounded">Resultado</span>
+                                                </div>
+                                                <p className="text-primary font-bold text-xl md:text-2xl leading-snug group-hover:text-primary transition-colors">{item.result}</p>
+                                            </div>
                                         </div>
-                                        <p className="text-gray-300 leading-relaxed text-lg font-light italic">"{item.problem}"</p>
-                                    </div>
-
-                                    <div className="col-span-4 relative md:border-l md:border-white/10 md:pl-10">
-                                        <div className="flex items-center gap-3 mb-4">
-                                            <span className="text-[10px] font-mono text-primary/60 uppercase tracking-[0.2em] px-2 py-1 bg-primary/5 rounded">Qué se hace</span>
-                                        </div>
-                                        <p className="text-white font-medium text-lg leading-snug">{item.solution}</p>
-                                    </div>
-
-                                    <div className="col-span-4 relative md:border-l md:border-white/10 md:pl-10">
-                                        <div className="flex items-center gap-3 mb-4">
-                                            <span className="text-[10px] font-mono text-primary uppercase tracking-[0.2em] px-2 py-1 bg-primary/10 rounded">Resultado</span>
-                                        </div>
-                                        <p className="text-primary font-bold text-xl leading-snug group-hover:text-primary transition-colors">{item.result}</p>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
-                    </motion.div>
-
-                </div>
-
-                {/* Dynamic Solution Areas Section */}
-                <div className="mt-64">
-                    <div className="mb-32">
-                        <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">
-                            Ejemplos de soluciones concretas
-                            <span className="text-primary ml-3">
-                                ({businessTypes.find(t => t.id === activeTab)?.label})
-                            </span>
-                        </h2>
-                        <div className="h-1 w-20 bg-primary/30"></div>
-                    </div>
-
-
-                    {/* Solution Areas - Direct Grid Layout (Engorilate Style) */}
-                    <motion.div
-                        layout
-                        className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto"
-                    >
-                        <AnimatePresence mode="popLayout">
-                            {filteredSolutions.map((area, idx) => (
-                                <motion.div
-                                    layout
-                                    key={area.title}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -20 }}
-                                    transition={{ duration: 0.3, delay: idx * 0.1 }}
-                                    className={`group relative border p-8 rounded-2xl transition-all duration-300 overflow-hidden flex flex-col ${area.isCustom
-                                        ? 'bg-primary/5 border-primary/30 hover:bg-primary/10 hover:border-primary/50 hover:shadow-[0_0_30px_rgba(110,231,183,0.2)]'
-                                        : 'bg-[#1a1a1a] border-white/10 hover:border-primary/30 hover:bg-[#1f1f1f] hover:shadow-[0_0_20px_rgba(110,231,183,0.1)]'
-                                        }`}
-                                >
-                                    {/* Background glow effect */}
-                                    <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/10 blur-[80px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-                                    <div className="relative z-10 flex-grow">
-                                        {/* Icon and Title */}
-                                        <div className="flex items-center gap-4 mb-6">
-                                            <div className={`flex items-center justify-center w-12 h-12 rounded-xl ${area.isCustom
-                                                ? 'bg-primary/20 text-primary'
-                                                : 'bg-primary/10 text-primary'
-                                                }`}>
-                                                <area.icon className="w-6 h-6" />
-                                            </div>
-                                            <h3 className="font-display text-xl font-bold text-white group-hover:text-primary transition-colors">
-                                                {area.title}
-                                            </h3>
-                                        </div>
-
-                                        {/* Features List */}
-                                        <ul className="space-y-3">
-                                            {area.items.map((item, i) => (
-                                                <li key={i} className="flex items-start gap-3 text-gray-300 text-sm group/item">
-                                                    <span className="text-primary mt-0.5 group-hover/item:scale-110 transition-transform">▸</span>
-                                                    <span className="leading-relaxed">{item}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-
-                                        {/* Custom solution badge */}
-                                        {area.isCustom && (
-                                            <div className="mt-6 pt-6 border-t border-primary/20">
-                                                <p className="text-xs font-mono uppercase tracking-widest text-primary/80">Diseñado para tu caos</p>
-                                            </div>
-                                        )}
-                                    </div>
-
-                                    {/* Bottom accent line */}
-                                    <div className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent w-0 group-hover:w-full transition-all duration-500"></div>
-                                </motion.div>
                             ))}
-                        </AnimatePresence>
-                    </motion.div>
-                </div>
+                        </div>
 
-                {/* Testimonials Section */}
-                <div className="mt-64 mb-40">
-                    <div className="text-center mb-12">
-                        <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">
-                            Resultados Reales
-                        </h2>
-                        <p className="text-gray-400 max-w-2xl mx-auto">
-                            Pequeños negocios que recuperaron su tiempo y su cordura
-                        </p>
-                    </div>
+                        {/* Pagination Dots */}
+                        {content.length > 1 && (
+                            <div className="flex justify-center gap-3 mt-8">
+                                {content.map((_, idx) => (
+                                    <button
+                                        key={idx}
+                                        onClick={() => scrollToIndex(idx)}
+                                        className={`w-3 h-3 rounded-full transition-all duration-300 ${scrollIndex === idx ? 'bg-primary w-8' : 'bg-white/10 hover:bg-white/30'}`}
+                                    />
+                                ))}
+                            </div>
+                        )}
+                        {/* Specific Solutions Grid - Integrated */}
+                        {/* Specific Solutions Grid - Integrated as a Product Showcase */}
+                        <div className="mt-16 relative">
+                            {/* Visual connector line from top */}
+                            <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-px h-12 bg-gradient-to-b from-white/0 to-primary/30"></div>
 
-                    {/* Horizontal Scroll Container */}
-                    <div className="relative">
-                        {/* Fade gradients for scroll indication */}
-                        <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-background-dark to-transparent z-10 pointer-events-none md:hidden"></div>
-                        <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-background-dark to-transparent z-10 pointer-events-none md:hidden"></div>
-
-                        <div className="flex overflow-x-auto pb-8 gap-6 px-6 snap-x snap-mandatory scrollbar-hide md:grid md:grid-cols-3 md:overflow-visible md:pb-0">
-                            {[
-                                {
-                                    quote: "Pasé de 30% de ausencias a menos del 5% en 2 meses. Las mesas vacías me costaban dinero real.",
-                                    author: "María González",
-                                    business: "Peluquería en Murcia",
-                                    metric: "25% menos pérdidas",
-                                    link: "/blog/sistema-reservas-online"
-                                },
-                                {
-                                    quote: "Recuperé 15 horas al mes que perdía facturando y persiguiendo pagos. Ahora lo hace todo solo.",
-                                    author: "Juan Martínez",
-                                    business: "Taller Mecánico, Cartagena",
-                                    metric: "15h/mes ahorradas",
-                                    link: "/blog/facturacion-automatica-autonomos"
-                                },
-                                {
-                                    quote: "Ya no me llaman mientras atiendo pacientes. El sistema filtra lo urgente de lo que puede esperar.",
-                                    author: "Ana Ruiz",
-                                    business: "Clínica Dental, Lorca",
-                                    metric: "80% menos interrupciones",
-                                    link: "/blog/automatizar-whatsapp-negocio"
-                                },
-                                {
-                                    quote: "Antes perdía 2 horas cada viernes haciendo pedidos. Ahora escaneo lo que falta y la lista se hace sola.",
-                                    author: "Pedro Sánchez",
-                                    business: "Restaurante, Murcia",
-                                    metric: "Inventario automático",
-                                    link: "/blog/control-inventario-automatico"
-                                },
-                                {
-                                    quote: "Mis clientes ya no preguntan '¿a qué hora tienes hueco?'. Entran, ven y reservan. Cero llamadas.",
-                                    author: "Laura M.",
-                                    business: "Estudio Tatuajes, Molina",
-                                    metric: "Agenda llena sola",
-                                    link: "/blog/sistema-reservas-online"
-                                }
-                            ].map((testimonial, idx) => (
-                                <Link
-                                    key={idx}
-                                    to={testimonial.link}
-                                    className="min-w-[300px] md:min-w-0 snap-center"
+                            <div className="flex flex-col items-center text-center mb-16">
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    className="mb-6 inline-block px-4 py-1.5 bg-primary/5 border border-primary/20 rounded-full"
                                 >
-                                    <motion.div
-                                        initial={{ opacity: 0, x: 20 }}
-                                        whileInView={{ opacity: 1, x: 0 }}
-                                        viewport={{ once: true }}
-                                        transition={{ delay: idx * 0.1 }}
-                                        className="bg-[#1a1a1a] border border-white/10 p-6 rounded-xl hover:border-primary/50 transition-all flex flex-col h-full group relative overflow-hidden"
-                                    >
-                                        {/* Hover Overlay */}
-                                        <div className="absolute inset-0 bg-primary/95 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 p-6 text-center">
-                                            <div>
-                                                <p className="font-display font-bold text-gray-900 text-lg mb-2">
-                                                    ¿Conoce la solución implantada?
-                                                </p>
-                                                <div className="inline-flex items-center gap-2 text-gray-800 font-medium text-sm">
-                                                    <span>Leer caso práctico</span>
-                                                    <ArrowRight className="w-4 h-4" />
+                                    <span className="text-primary font-mono text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase">
+                                        Catálogo de Soluciones de Alto Impacto
+                                    </span>
+                                </motion.div>
+                                <h3 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">
+                                    Sistemas listos para <span className="text-primary">implementar</span>
+                                </h3>
+                                <p className="text-gray-400 max-w-xl text-sm md:text-base">
+                                    Productos diseñados para eliminar la fricción operativa y multiplicar la rentabilidad de tu pyme.
+                                </p>
+                            </div>
+
+                            <motion.div
+                                layout
+                                className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto px-4"
+                            >
+                                <AnimatePresence mode="popLayout">
+                                    {filteredSolutions.map((area, idx) => (
+                                        <motion.div
+                                            layout
+                                            key={area.title}
+                                            initial={{ opacity: 0, y: 20 }}
+                                            whileInView={{ opacity: 1, y: 0 }}
+                                            viewport={{ once: true }}
+                                            exit={{ opacity: 0, y: -20 }}
+                                            transition={{ duration: 0.5, delay: idx * 0.1 }}
+                                            onClick={() => navigate(`/contact?service=${area.serviceId}`)}
+                                            className={`group relative p-6 md:p-8 rounded-3xl transition-all duration-700 overflow-hidden flex flex-col cursor-pointer border shadow-[0_8px_32px_rgba(0,0,0,0.8)] ${area.isCustom
+                                                ? 'bg-gradient-to-br from-primary/[0.12] to-[#1a1a1a] border-primary/50 hover:border-primary/70 hover:shadow-[0_8px_32px_rgba(110,231,183,0.2)]'
+                                                : 'bg-[#1a1a1a] border-white/20 hover:border-primary/50 hover:bg-[#222222]'
+                                                }`}
+                                        >
+                                            {/* Background glow effect */}
+                                            <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/10 blur-[80px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+
+                                            {/* Top Glass Highlight */}
+                                            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+
+                                            {/* Badges Container */}
+                                            <div className="flex justify-between items-start mb-8 relative z-10">
+                                                <div className={`px-3 py-1 rounded-full text-[9px] font-mono font-bold uppercase tracking-widest border transition-colors ${area.isCustom
+                                                    ? 'bg-primary/20 border-primary/30 text-primary'
+                                                    : 'bg-white/5 border-white/10 text-gray-400 group-hover:border-primary/30 group-hover:text-primary'
+                                                    }`}>
+                                                    {area.badge}
+                                                </div>
+                                                <div className="text-[9px] font-mono text-gray-500 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
+                                                    <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                                                    Disponibilidad limitada
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div className="mb-4 flex-grow relative z-10">
-                                            {/* Subtle icon instead of quotes */}
-                                            <div className="text-primary/40 mb-3 group-hover:text-primary transition-colors">
-                                                <MessageSquare className="w-5 h-5" />
+                                            <div className="relative z-10 flex-grow">
+                                                <div className="flex items-center gap-5 mb-8">
+                                                    <div className={`flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-white/5 text-gray-400 border border-white/10 transition-all duration-700 group-hover:scale-110 group-hover:bg-primary/10 group-hover:text-primary group-hover:border-primary/20 shadow-lg`}>
+                                                        <area.icon className="w-7 h-7 md:w-8 md:h-8" />
+                                                    </div>
+                                                    <div>
+                                                        <h3 className="font-display text-2xl md:text-3xl font-bold text-white group-hover:text-primary transition-colors leading-tight">
+                                                            {area.title}
+                                                        </h3>
+                                                        <div className="mt-1 flex items-center gap-2 text-xs font-mono text-gray-500">
+                                                            <span>ROI Estimado:</span>
+                                                            <span className="text-primary/70">{area.roi}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <ul className="space-y-4 mb-10">
+                                                    {area.items.map((item, i) => (
+                                                        <li key={i} className="flex items-start gap-4 text-gray-300 text-sm md:text-base group/item">
+                                                            <CheckCircle className="w-5 h-5 text-primary/40 mt-0.5 flex-shrink-0 group-hover/item:text-primary group-hover/item:scale-110 transition-all" />
+                                                            <span className="leading-relaxed group-hover/item:text-white transition-colors">{item}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+
+                                                {/* Price/Value Visual */}
+                                                <div className="mb-8 p-4 rounded-2xl bg-white/5 border border-white/5 group-hover:border-primary/20 group-hover:bg-primary/[0.02] transition-all">
+                                                    <div className="flex justify-between items-center">
+                                                        <span className="text-[10px] font-mono text-gray-500 uppercase">Consultoría inicial</span>
+                                                        <span className="text-white font-bold font-mono">GRATUITA</span>
+                                                    </div>
+                                                </div>
+
+
                                             </div>
-                                            <p className="text-gray-300 leading-relaxed italic text-sm group-hover:text-white transition-colors">
-                                                {testimonial.quote}
+
+                                            {/* Bottom accent glass line */}
+                                            <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                                        </motion.div>
+                                    ))}
+                                </AnimatePresence>
+                            </motion.div>
+                        </div>
+                    </div>
+
+                    {/* Social Proof Wall - Infinite Marquee */}
+                    <div className="mt-40 mb-32 overflow-hidden">
+                        <div className="text-center mb-16">
+                            <motion.div
+                                initial={{ opacity: 0, y: 10 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                className="mb-6 inline-block px-4 py-1.5 bg-primary/5 border border-primary/20 rounded-lg"
+                            >
+                                <span className="text-primary font-mono text-xs md:text-sm font-bold tracking-[0.3em] uppercase">
+                                    Evidencia Real
+                                </span>
+                            </motion.div>
+                            <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">
+                                Pequeños negocios, <span className="text-primary">grandes resultados</span>
+                            </h2>
+                            <p className="text-gray-400 max-w-2xl mx-auto text-base md:text-lg">
+                                Recuperaron su tiempo, su cordura y su rentabilidad
+                            </p>
+                        </div>
+
+                        {/* Infinite Marquee Container */}
+                        <div className="relative">
+                            {/* Fade gradients on edges */}
+                            <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background-dark to-transparent z-10 pointer-events-none"></div>
+                            <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background-dark to-transparent z-10 pointer-events-none"></div>
+
+                            {/* Marquee Track - duplicated for seamless loop */}
+                            <div className="flex gap-6 animate-marquee">
+                                {[...Array(2)].map((_, setIndex) => (
+                                    <div key={setIndex} className="flex gap-6 flex-shrink-0">
+                                        {[
+                                            {
+                                                quote: "Pasé de 30% de ausencias a menos del 5% en 2 meses.",
+                                                author: "María González",
+                                                business: "Peluquería, Murcia",
+                                                metric: "↓ 25% pérdidas"
+                                            },
+                                            {
+                                                quote: "Recuperé 15 horas al mes que perdía facturando.",
+                                                author: "Juan Martínez",
+                                                business: "Taller Mecánico",
+                                                metric: "15h/mes ahorradas"
+                                            },
+                                            {
+                                                quote: "Ya no me interrumpen mientras atiendo pacientes.",
+                                                author: "Ana Ruiz",
+                                                business: "Clínica Dental",
+                                                metric: "↓ 80% interrupciones"
+                                            },
+                                            {
+                                                quote: "Antes perdía 2 horas cada viernes haciendo pedidos.",
+                                                author: "Pedro Sánchez",
+                                                business: "Restaurante",
+                                                metric: "Stock automático"
+                                            },
+                                            {
+                                                quote: "Mis clientes reservan solos. Cero llamadas.",
+                                                author: "Laura M.",
+                                                business: "Estudio Tatuajes",
+                                                metric: "Agenda llena sola"
+                                            }
+                                        ].map((testimonial, idx) => (
+                                            <div
+                                                key={`${setIndex}-${idx}`}
+                                                className="w-[240px] flex-shrink-0 bg-[#1a1a1a] border border-white/20 p-4 rounded-lg hover:border-primary/50 transition-all group relative overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.6)]"
+                                            >
+                                                <div className="mb-3">
+                                                    <div className="text-primary/40 mb-2 group-hover:text-primary transition-colors">
+                                                        <MessageSquare className="w-4 h-4" />
+                                                    </div>
+                                                    <p className="text-gray-300 leading-snug text-xs group-hover:text-white transition-colors">
+                                                        "{testimonial.quote}"
+                                                    </p>
+                                                </div>
+                                                <div className="border-t border-white/5 pt-3">
+                                                    <p className="text-white font-semibold text-xs">{testimonial.author}</p>
+                                                    <p className="text-gray-500 text-[10px] mb-2">{testimonial.business}</p>
+                                                    <div className="inline-block px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-mono rounded border border-primary/20 group-hover:bg-primary group-hover:text-gray-900 transition-colors">
+                                                        {testimonial.metric}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Integrated Investment & CTA Section - Split Layout */}
+                    <div className="mt-24 mb-12 max-w-6xl mx-auto px-4">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] border border-white/20 rounded-2xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.8)]"
+                        >
+                            {/* Background effects */}
+                            <div className="absolute -top-40 -right-40 w-96 h-96 bg-primary/10 blur-[120px] rounded-full opacity-40"></div>
+                            <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-primary/5 blur-[120px] rounded-full opacity-30"></div>
+
+                            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-0">
+                                {/* LEFT: Investment & ROI */}
+                                <div className="p-6 md:p-8 lg:border-r border-white/10">
+                                    <div className="flex items-start gap-3 mb-6">
+                                        <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 text-primary border border-primary/20 flex-shrink-0">
+                                            <Euro className="w-5 h-5" />
+                                        </div>
+                                        <div>
+                                            <h3 className="font-display text-xl md:text-2xl font-bold text-white mb-1">
+                                                La inversión
+                                            </h3>
+                                            <p className="text-gray-500 text-xs italic">
+                                                (Sin letra pequeña)
                                             </p>
                                         </div>
-                                        <div className="border-t border-white/5 pt-4 mt-auto relative z-10">
-                                            <p className="text-white font-semibold text-sm">{testimonial.author}</p>
-                                            <p className="text-gray-500 text-xs">{testimonial.business}</p>
-                                            <div className="mt-3 inline-block px-2 py-1 bg-primary/10 text-primary text-[10px] font-mono rounded border border-primary/10 group-hover:bg-primary group-hover:text-gray-900 transition-colors">
-                                                {testimonial.metric}
-                                            </div>
-                                        </div>
-                                    </motion.div>
-                                </Link>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-
-                {/* Investment Section - Premium Design */}
-                <div className="mt-40 mb-40 max-w-4xl mx-auto">
-                    <div className="group relative bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] border border-white/10 p-8 md:p-12 rounded-3xl overflow-hidden hover:border-primary/30 transition-all duration-500 hover:shadow-[0_0_50px_rgba(110,231,183,0.15)]">
-                        {/* Background glow effects */}
-                        <div className="absolute -top-20 -right-20 w-64 h-64 bg-primary/10 blur-[100px] rounded-full opacity-50 group-hover:opacity-70 transition-opacity"></div>
-                        <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-primary/5 blur-[100px] rounded-full opacity-30"></div>
-
-                        <div className="relative z-10">
-                            {/* Icon and Title */}
-                            <div className="flex items-center gap-4 mb-6">
-                                <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 text-primary border border-primary/20 shadow-[0_0_20px_rgba(110,231,183,0.1)]">
-                                    <Euro className="w-7 h-7" />
-                                </div>
-                                <h3 className="font-display text-2xl md:text-3xl font-bold text-white">
-                                    Lo que vas a invertir
-                                </h3>
-                                <p className="text-gray-500 text-xs italic mt-1 leading-relaxed">
-                                    (Aquí no ocultamos lo que vale. Esto vale lo que vale.)
-                                </p>
-                            </div>
-
-                            {/* Price Badge */}
-                            <div className="inline-block mb-6 px-6 py-3 bg-primary/10 border border-primary/30 rounded-2xl backdrop-blur-sm">
-                                <p className="text-gray-300 text-lg">
-                                    La mayoría de proyectos están entre{' '}
-                                    <span className="text-primary font-bold text-2xl">600 y 2.500€</span>
-                                    {' '}<span className="text-gray-400 text-base">(depende de la complejidad y el sector)</span>
-                                </p>
-                            </div>
-
-                            {/* ROI Section */}
-                            <p className="text-gray-300 text-base leading-relaxed mb-4 font-semibold">
-                                El ROI viene por tres vías:
-                            </p>
-                            <ul className="text-gray-300 text-base leading-relaxed space-y-3 mb-6">
-                                <li className="flex items-start gap-3 group/item hover:translate-x-1 transition-transform">
-                                    <span className="text-primary mt-1">▸</span>
-                                    <span><span className="text-primary font-semibold">Incremento de rotación:</span> Más clientes atendidos con el mismo equipo</span>
-                                </li>
-                                <li className="flex items-start gap-3 group/item hover:translate-x-1 transition-transform">
-                                    <span className="text-primary mt-1">▸</span>
-                                    <span><span className="text-primary font-semibold">Reducción de errores:</span> Menos facturas olvidadas, stock mal gestionado, o mesas vacías</span>
-                                </li>
-                                <li className="flex items-start gap-3 group/item hover:translate-x-1 transition-transform">
-                                    <span className="text-primary mt-1">▸</span>
-                                    <span><span className="text-primary font-semibold">Mejora de márgenes:</span> Invertir en IA te permite optimizar recursos y aumentar rentabilidad</span>
-                                </li>
-                            </ul>
-
-                            {/* Bottom text */}
-                            <div className="pt-4 border-t border-white/10">
-                                <p className="text-gray-400 text-sm leading-relaxed">
-                                    En la mayoría de casos, la inversión se amortiza en menos de <span className="text-primary font-semibold">2 meses</span>. Después de eso, es ganancia neta.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* CTA Section */}
-                <div className="mt-48 mb-16 text-center max-w-lg mx-auto px-4 md:max-w-4xl">
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        className="relative bg-[#1a1a1a]/60 backdrop-blur-xl border border-white/10 p-8 md:p-16 rounded-3xl overflow-hidden shadow-2xl"
-                    >
-                        {/* Background glow for CTA */}
-                        <div className="absolute -top-24 -left-24 w-64 h-64 bg-primary/20 blur-[100px] rounded-full opacity-50"></div>
-                        <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-primary/10 blur-[100px] rounded-full opacity-30"></div>
-
-                        <div className="relative z-10 flex flex-col items-center">
-                            <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 text-primary mb-8 border border-primary/20 shadow-[0_0_20px_rgba(110,231,183,0.1)]">
-                                <Lightbulb className="w-7 h-7" />
-                            </div>
-
-                            <h3 className="text-3xl md:text-5xl text-white font-bold mb-6 tracking-tight leading-tight">
-                                ¿Te ves reflejado en <br className="hidden md:block" />
-                                <span className="text-primary">estos problemas?</span>
-                            </h3>
-
-                            <p className="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-                                Hablemos 15 minutos. Sin compromiso. Solo para ver si tiene sentido trabajar juntos.
-                            </p>
-
-                            <div className="flex flex-col items-center gap-6 w-full px-4 md:px-0">
-                                <Link
-                                    to="/contact"
-                                    className="group relative w-full md:w-auto inline-flex items-center justify-center gap-3 bg-primary hover:bg-primary-hover text-gray-900 font-bold text-xl px-10 py-5 rounded-2xl transition-all transform hover:translate-y-[-4px] shadow-[0_10px_30px_rgba(110,231,183,0.3)] active:scale-95"
-                                >
-                                    <span>Diagnóstico gratuito</span>
-                                    <ArrowRight className="w-6 h-6 transition-transform group-hover:translate-x-1" />
-                                </Link>
-
-                                <div className="flex items-center gap-2 text-gray-500 font-medium tracking-wide">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-primary/40 animate-pulse"></span>
-                                    <span className="text-sm">Sin compromiso · Sesión estratégica rápida</span>
-                                </div>
-
-                                {/* Urgency element - Redesigned as a premium toast-like element with About Me link */}
-                                <Link
-                                    to="/sobre-mi"
-                                    className="group/small mt-10 px-6 py-4 bg-primary/5 border border-primary/20 rounded-2xl flex items-center gap-4 text-left max-w-md hover:border-primary/40 hover:bg-primary/10 transition-all duration-300"
-                                >
-                                    <div className="w-2 h-2 rounded-full bg-orange-500 animate-pulse flex-shrink-0"></div>
-                                    <div className="flex-grow">
-                                        <p className="text-gray-300 text-sm md:text-base leading-relaxed">
-                                            <span className="text-white font-bold">Solo 3 clientes al mes.</span> Reservo tiempo real para darte atención personalizada, no solo vender.
-                                        </p>
-                                        <span className="text-[10px] font-mono text-primary uppercase tracking-[0.2em] mt-1 inline-flex items-center gap-1 group-hover/small:translate-x-1 transition-transform">
-                                            Conoce quién está detrás <ArrowRight className="w-3 h-3" />
-                                        </span>
                                     </div>
-                                </Link>
+
+                                    {/* Price */}
+                                    <div className="mb-6 p-4 bg-primary/5 border border-primary/20 rounded-xl">
+                                        <p className="text-gray-300 text-sm mb-1">
+                                            La mayoría de proyectos:
+                                        </p>
+                                        <p className="text-primary font-bold text-2xl md:text-3xl">
+                                            600 - 2.500€
+                                        </p>
+                                        <p className="text-gray-400 text-xs mt-1">
+                                            Depende de la complejidad y el sector
+                                        </p>
+                                    </div>
+
+                                    {/* ROI Routes */}
+                                    <div className="mb-5">
+                                        <p className="text-white font-semibold text-base mb-3">
+                                            El retorno viene por tres vías:
+                                        </p>
+                                        <ul className="space-y-3">
+                                            <li className="flex items-start gap-2 group/item">
+                                                <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                    <TrendingUp className="w-3 h-3 text-primary" />
+                                                </div>
+                                                <div>
+                                                    <p className="text-primary font-semibold text-xs">Incremento de rotación</p>
+                                                    <p className="text-gray-400 text-xs">Más clientes con el mismo equipo</p>
+                                                </div>
+                                            </li>
+                                            <li className="flex items-start gap-2 group/item">
+                                                <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                    <CheckCircle className="w-3 h-3 text-primary" />
+                                                </div>
+                                                <div>
+                                                    <p className="text-primary font-semibold text-xs">Reducción de errores</p>
+                                                    <p className="text-gray-400 text-xs">Menos facturas olvidadas, stock mal gestionado</p>
+                                                </div>
+                                            </li>
+                                            <li className="flex items-start gap-2 group/item">
+                                                <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                    <DollarSign className="w-3 h-3 text-primary" />
+                                                </div>
+                                                <div>
+                                                    <p className="text-primary font-semibold text-xs">Mejora de márgenes</p>
+                                                    <p className="text-gray-400 text-xs">Optimización de recursos y rentabilidad</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    {/* Amortization */}
+                                    <div className="pt-4 border-t border-white/10">
+                                        <p className="text-gray-400 text-xs leading-relaxed">
+                                            Amortización típica: <span className="text-primary font-bold">menos de 2 meses</span>. Después, ganancia neta.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* RIGHT: Decision & CTA */}
+                                <div className="p-6 md:p-8 flex flex-col justify-center bg-gradient-to-br from-primary/[0.02] to-transparent">
+                                    <div className="text-center lg:text-left">
+                                        <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 text-primary mb-5 border border-primary/20">
+                                            <Lightbulb className="w-6 h-6" />
+                                        </div>
+
+                                        <h3 className="text-2xl md:text-3xl text-white font-bold mb-3 tracking-tight leading-tight">
+                                            ¿Te ves reflejado en estos problemas?
+                                        </h3>
+
+                                        <p className="text-base text-gray-400 mb-6 leading-relaxed">
+                                            Hablemos 15 minutos. Sin compromiso. Solo para ver si tiene sentido trabajar juntos.
+                                        </p>
+
+                                        <div className="flex flex-col items-center lg:items-start gap-4">
+                                            <Link
+                                                to="/contact"
+                                                className="group relative w-full lg:w-auto inline-flex items-center justify-center gap-3 bg-primary hover:bg-primary-hover text-gray-900 font-bold text-lg px-8 py-4 rounded-xl transition-all transform hover:translate-y-[-4px] shadow-[0_10px_30px_rgba(110,231,183,0.3)] active:scale-95"
+                                            >
+                                                <span>Diagnóstico gratuito</span>
+                                                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                                            </Link>
+
+                                            <div className="flex items-center gap-2 text-gray-500 font-medium">
+                                                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 animate-pulse"></span>
+                                                <span className="text-xs">Sin compromiso · Sesión rápida</span>
+                                            </div>
+
+                                            {/* Scarcity Badge */}
+                                            <Link
+                                                to="/sobre-mi"
+                                                className="group/small mt-2 px-4 py-2.5 bg-primary/5 border border-primary/20 rounded-lg flex items-center gap-2.5 text-left hover:border-primary/40 hover:bg-primary/10 transition-all duration-300"
+                                            >
+                                                <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse flex-shrink-0"></div>
+                                                <div>
+                                                    <p className="text-gray-300 text-xs leading-tight">
+                                                        <span className="text-white font-bold">Solo 3 clientes al mes.</span> Atención personalizada real.
+                                                    </p>
+                                                    <span className="text-[9px] font-mono text-primary uppercase tracking-wider mt-0.5 inline-flex items-center gap-1 group-hover/small:translate-x-1 transition-transform">
+                                                        Conoce quién está detrás <ArrowRight className="w-2.5 h-2.5" />
+                                                    </span>
+                                                </div>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </motion.div>
+                        </motion.div>
+                    </div>
                 </div>
             </div>
-        </div >
+        </div>
     );
 };
 

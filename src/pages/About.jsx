@@ -1,14 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { History, Brain, ShieldCheck, ArrowRight } from 'lucide-react';
+import BackgroundMesh from '../components/BackgroundMesh';
 
 const About = () => {
     return (
-        <div className="relative pt-32 pb-24 min-h-screen overflow-hidden">
-            <div className="absolute inset-0 z-0 opacity-20 pointer-events-none h-[80vh]">
-                <div className="absolute inset-0 bg-gradient-to-b from-background-dark via-transparent to-background-dark"></div>
-                <div className="absolute inset-0 grid-pattern"></div>
-            </div>
+        <div className="relative pt-24 pb-16 min-h-screen">
+            <BackgroundMesh />
 
             <div className="relative z-10 max-w-7xl mx-auto px-6">
                 <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center mb-24">
@@ -27,7 +25,7 @@ const About = () => {
                         </div>
                     </div>
                     <div className="lg:w-1/2 order-1 lg:order-2">
-                        <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-white">
+                        <h1 className="font-display text-4xl md:text-5xl lg:text-5xl font-bold leading-tight mb-6 text-white">
                             Sobre mí <br />
                             <span className="text-primary">Rafael Alcalde Molina</span>
                         </h1>
