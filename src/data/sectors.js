@@ -8,7 +8,7 @@ export const sectors = [
         problems: [
             {
                 problem: "El cliente te escribe por WhatsApp a las 23:00 para pedir cita. Al día siguiente, entre secadores y tintes, se te olvida contestar.",
-                solution: "No se dan citas por chat. Se activa un calendario online donde el cliente ve los huecos reales y reserva solo.",
+                solution: "No se dan citas por chat. Un agente virtual se conecta a tu calendario y CRM para entender quién es el cliente y de manera natural responde, agenda y cobra la cita si se desea.",
                 result: "Te levantas con la agenda llena. No has usado el móvil fuera de tu horario."
             },
             {

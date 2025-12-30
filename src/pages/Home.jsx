@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Lightbulb, ArrowRight, MessageSquare, TrendingUp, FileText, Target, Database, Users, CheckCircle, PenTool as Custom, Search, Zap, DollarSign, Euro, ChevronLeft, ChevronRight, Globe } from 'lucide-react';
+import { Lightbulb, ArrowRight, MessageSquare, TrendingUp, FileText, Target, Database, Users, CheckCircle, PenTool as Custom, Search, Zap, DollarSign, Euro, ChevronLeft, ChevronRight, Globe, Instagram, Linkedin } from 'lucide-react';
 import BackgroundMesh from '../components/BackgroundMesh';
 import SEO from '../components/SEO';
+import ContactForm from '../components/ContactForm';
 
 const businessTypes = [
     { id: 'hair', label: 'Peluquería / Estética' },
@@ -18,7 +19,7 @@ const contentMap = {
     hair: [
         {
             problem: "El cliente te escribe por WhatsApp a las 23:00 para pedir cita. Al día siguiente, entre secadores y tintes, se te olvida contestar.",
-            solution: "No se dan citas por chat. Se activa un calendario online donde el cliente ve los huecos reales y reserva solo.",
+            solution: "No se dan citas por chat. Un agente virtual se conecta a tu calendario y CRM para entender quién es el cliente y de manera natural responde, agenda y cobra la cita si se desea.",
             result: "Te levantas con la agenda llena. No has usado el móvil fuera de tu horario."
         },
         {
@@ -728,50 +729,44 @@ const Home = () => {
                                     </div>
                                 </div>
 
-                                {/* RIGHT: Decision & CTA */}
+                                {/* RIGHT: Contact Form + Social Links */}
                                 <div className="p-6 md:p-8 flex flex-col justify-center bg-gradient-to-br from-primary/[0.02] to-transparent">
-                                    <div className="text-center lg:text-left">
-                                        <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 text-primary mb-5 border border-primary/20">
-                                            <Lightbulb className="w-6 h-6" />
+                                    {/* Logo */}
+                                    <div className="flex items-center gap-3 mb-6">
+                                        <img
+                                            src="/favicon.png"
+                                            alt="Engorilate Icon"
+                                            className="h-12 w-auto"
+                                        />
+                                        <div className="flex flex-col">
+                                            <span className="font-display font-bold text-xl tracking-tight text-primary leading-none">
+                                                ENGORILATE
+                                            </span>
+                                            <span className="text-gray-400 text-[10px] font-light tracking-wide mt-0.5">
+                                                Automatización de Negocios
+                                            </span>
                                         </div>
+                                    </div>
 
-                                        <h3 className="text-2xl md:text-3xl text-white font-bold mb-3 tracking-tight leading-tight">
-                                            ¿Te ves reflejado en estos problemas?
-                                        </h3>
+                                    {/* Contact Form */}
+                                    <ContactForm source="Home Investment Section" />
 
-                                        <p className="text-base text-gray-400 mb-6 leading-relaxed">
-                                            Hablemos 15 minutos. Sin compromiso. Solo para ver si tiene sentido trabajar juntos.
-                                        </p>
-
-                                        <div className="flex flex-col items-center lg:items-start gap-4">
-                                            <Link
-                                                to="/contact"
-                                                className="group relative w-full lg:w-auto inline-flex items-center justify-center gap-3 bg-primary hover:bg-primary-hover text-gray-900 font-bold text-lg px-8 py-4 rounded-xl transition-all transform hover:translate-y-[-4px] shadow-[0_10px_30px_rgba(110,231,183,0.3)] active:scale-95"
-                                            >
-                                                <span>Diagnóstico gratuito</span>
-                                                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                                            </Link>
-
-                                            <div className="flex items-center gap-2 text-gray-500 font-medium">
-                                                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 animate-pulse"></span>
-                                                <span className="text-xs">Sin compromiso · Sesión rápida</span>
-                                            </div>
-
-                                            {/* Scarcity Badge */}
-                                            <Link
-                                                to="/sobre-mi"
-                                                className="group/small mt-2 px-4 py-2.5 bg-primary/5 border border-primary/20 rounded-lg flex items-center gap-2.5 text-left hover:border-primary/40 hover:bg-primary/10 transition-all duration-300"
-                                            >
-                                                <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse flex-shrink-0"></div>
-                                                <div>
-                                                    <p className="text-gray-300 text-xs leading-tight">
-                                                        <span className="text-white font-bold">Solo 3 clientes al mes.</span> Atención personalizada real.
-                                                    </p>
-                                                    <span className="text-[9px] font-mono text-primary uppercase tracking-wider mt-0.5 inline-flex items-center gap-1 group-hover/small:translate-x-1 transition-transform">
-                                                        Conoce quién está detrás <ArrowRight className="w-2.5 h-2.5" />
-                                                    </span>
-                                                </div>
-                                            </Link>
+                                    {/* Social Links */}
+                                    <div className="mt-6 pt-6 border-t border-white/10">
+                                        <p className="text-xs text-gray-500 mb-3">O contáctame directamente:</p>
+                                        <div className="flex gap-3">
+                                            <a href="https://wa.me/34600000000" target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 p-2 rounded-lg bg-white/5 hover:bg-[#25D366]/20 border border-transparent hover:border-[#25D366]/50 transition-all group">
+                                                <MessageSquare className="w-4 h-4 text-[#25D366]" />
+                                                <span className="text-xs text-gray-400 group-hover:text-[#25D366]">WhatsApp</span>
+                                            </a>
+                                            <a href="https://instagram.com/engorilate" target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 p-2 rounded-lg bg-white/5 hover:bg-[#E1306C]/20 border border-transparent hover:border-[#E1306C]/50 transition-all group">
+                                                <Instagram className="w-4 h-4 text-[#E1306C]" />
+                                                <span className="text-xs text-gray-400 group-hover:text-[#E1306C]">Instagram</span>
+                                            </a>
+                                            <a href="https://linkedin.com/in/engorilate" target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 p-2 rounded-lg bg-white/5 hover:bg-[#0077B5]/20 border border-transparent hover:border-[#0077B5]/50 transition-all group">
+                                                <Linkedin className="w-4 h-4 text-[#0077B5]" />
+                                                <span className="text-xs text-gray-400 group-hover:text-[#0077B5]">LinkedIn</span>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
