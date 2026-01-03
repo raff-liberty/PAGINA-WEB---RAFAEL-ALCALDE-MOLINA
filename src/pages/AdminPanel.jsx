@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Save, X, Eye, Edit, Plus, Trash2, Lock, Search, Filter, BookOpen, BarChart3, Copy, Upload, Download, Globe, MapPin, Briefcase, CheckCircle, AlertCircle, ExternalLink, Target, Bold, Quote, List, ListOrdered, CheckSquare, Table } from 'lucide-react';
+import { Save, X, Eye, Edit, Plus, Trash2, Lock, Search, Filter, BookOpen, BarChart3, Copy, Upload, Download, Globe, MapPin, Briefcase, CheckCircle, AlertCircle, ExternalLink, Target, Bold, Quote, List, ListOrdered, CheckSquare, Table, Users, Mail, FileText, Send, Calendar, Tag, MoreHorizontal } from 'lucide-react';
 import BackgroundMesh from '../components/BackgroundMesh';
 import StrategicRoadmap from '../components/StrategicRoadmap';
 import SEOPreview from '../components/SEOPreview';
@@ -37,7 +37,8 @@ const AdminPanel = () => {
         twitter_handle: '@engorilate',
         default_meta_title: 'Engorilate | Automatización de Negocios en Murcia',
         default_meta_description: 'Automatiza los procesos repetitivos de tu empresa en Murcia. Recupera tu tiempo y deja de perder dinero en gestión manual.',
-        default_keywords: 'automatización negocios murcia, digitalización pymes, eficiencia operativa'
+        default_keywords: 'automatización negocios murcia, digitalización pymes, eficiencia operativa',
+        chat_embed_url: ''
     });
     const [searchTerm, setSearchTerm] = useState('');
     const [filterCategory, setFilterCategory] = useState('all');
@@ -54,9 +55,21 @@ const AdminPanel = () => {
     const [showBlogPreview, setShowBlogPreview] = useState(false);
     const [selectedPostsForExport, setSelectedPostsForExport] = useState([]);
 
+    // CRM state
+    const [crmTab, setCrmTab] = useState('contacts'); // 'contacts', 'templates', 'campaigns'
+    const [contacts, setContacts] = useState([]);
+    const [messages, setMessages] = useState([]);
+    const [templates, setTemplates] = useState([]);
+    const [campaigns, setCampaigns] = useState([]);
+    const [selectedContacts, setSelectedContacts] = useState([]);
+    const [crmSearchTerm, setCrmSearchTerm] = useState('');
+    const [crmFilterStatus, setCrmFilterStatus] = useState('all');
+    const [crmFilterService, setCrmFilterService] = useState('all');
+    const [isCRMModalOpen, setIsCRMModalOpen] = useState(false);
+    const [crmModalType, setCrmModalType] = useState('contact'); // 'contact', 'template', 'campaign'
+    const [currentCrmItem, setCurrentCrmItem] = useState(null);
+
     // Sectors & Locations state
-    const [sectors, setSectors] = useState([]);
-    const [locations, setLocations] = useState([]);
     const [selectedSector, setSelectedSector] = useState(null);
     const [selectedLocation, setSelectedLocation] = useState(null);
     const [editingSector, setEditingSector] = useState(false);
@@ -135,8 +148,295 @@ const AdminPanel = () => {
             fetchPosts();
             fetchSiteConfig();
             fetchSEOData();
+            if (activeTab === 'crm') {
+                fetchCRMData();
+            }
+            if (activeTab === 'sectors') {
+                fetchSectors();
+            }
+            if (activeTab === 'locations') {
+                fetchLocations();
+            }
         }
-    }, [user]);
+    }, [user, activeTab]);
+
+    const fetchSectors = async () => {
+        try {
+            const { data, error } = await supabase
+                .from('sectors')
+                .select('*')
+                .order('name');
+            if (error) throw error;
+            setSectors(data || []);
+        } catch (error) {
+            console.error('Error fetching sectors:', error);
+        }
+    };
+
+    const fetchLocations = async () => {
+        try {
+            const { data, error } = await supabase
+                .from('locations')
+                .select('*')
+                .order('name');
+            if (error) throw error;
+            setLocations(data || []);
+        } catch (error) {
+            console.error('Error fetching locations:', error);
+        }
+    };
+
+    const handleSaveSector = async () => {
+        if (!selectedSector) return;
+        setLoading(true);
+        try {
+            const { error } = await supabase
+                .from('sectors')
+                .upsert({
+                    id: selectedSector.id,
+                    name: selectedSector.name,
+                    slug: selectedSector.slug,
+                    description: selectedSector.description
+                });
+            if (error) throw error;
+            setEditingSector(false);
+            fetchSectors();
+            fetchSEOData();
+        } catch (error) {
+            console.error('Error saving sector:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleDeleteSector = async (id) => {
+        if (!confirm('¿Estás seguro de eliminar este sector? Esto puede afectar a las landings asociadas.')) return;
+        try {
+            const { error } = await supabase
+                .from('sectors')
+                .delete()
+                .eq('id', id);
+            if (error) throw error;
+            fetchSectors();
+            fetchSEOData();
+        } catch (error) {
+            console.error('Error deleting sector:', error);
+        }
+    };
+
+    const handleSaveLocation = async () => {
+        if (!selectedLocation) return;
+        setLoading(true);
+        try {
+            const { error } = await supabase
+                .from('locations')
+                .upsert({
+                    id: selectedLocation.id,
+                    name: selectedLocation.name,
+                    slug: selectedLocation.slug,
+                    province: selectedLocation.province,
+                    region: selectedLocation.region
+                });
+            if (error) throw error;
+            setEditingLocation(false);
+            fetchLocations();
+            fetchSEOData();
+        } catch (error) {
+            console.error('Error saving location:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleDeleteLocation = async (id) => {
+        if (!confirm('¿Estás seguro de eliminar esta localización? Esto puede afectar a las landings asociadas.')) return;
+        try {
+            const { error } = await supabase
+                .from('locations')
+                .delete()
+                .eq('id', id);
+            if (error) throw error;
+            fetchLocations();
+            fetchSEOData();
+        } catch (error) {
+            console.error('Error deleting location:', error);
+        }
+    };
+
+    const fetchCRMData = async () => {
+        setLoading(true);
+        await Promise.all([
+            fetchContacts(),
+            fetchTemplates(),
+            fetchCampaigns()
+        ]);
+        setLoading(false);
+    };
+
+    const fetchContacts = async () => {
+        try {
+            let query = supabase
+                .from('contacts')
+                .select('*, contact_messages(count)')
+                .order('last_contact_at', { ascending: false });
+
+            if (crmFilterStatus !== 'all') {
+                query = query.eq('status', crmFilterStatus);
+            }
+            if (crmFilterService !== 'all') {
+                query = query.eq('service_interest', crmFilterService);
+            }
+            if (crmSearchTerm) {
+                query = query.or(`name.ilike.%${crmSearchTerm}%,email.ilike.%${crmSearchTerm}%`);
+            }
+
+            const { data, error } = await query;
+            if (error) throw error;
+            setContacts(data || []);
+        } catch (error) {
+            console.error('Error fetching contacts:', error);
+        }
+    };
+
+    const fetchTemplates = async () => {
+        try {
+            const { data, error } = await supabase
+                .from('email_templates')
+                .select('*')
+                .order('name');
+            if (error) throw error;
+            setTemplates(data || []);
+        } catch (error) {
+            console.error('Error fetching templates:', error);
+        }
+    };
+
+    const fetchCampaigns = async () => {
+        try {
+            const { data, error } = await supabase
+                .from('email_campaigns')
+                .select('*, email_templates(name)')
+                .order('created_at', { ascending: false });
+            if (error) throw error;
+            setCampaigns(data || []);
+        } catch (error) {
+            console.error('Error fetching campaigns:', error);
+        }
+    };
+
+    const fetchMessages = async (contactId) => {
+        try {
+            const { data, error } = await supabase
+                .from('contact_messages')
+                .select('*')
+                .eq('contact_id', contactId)
+                .order('created_at', { ascending: false });
+            if (error) throw error;
+            setMessages(data || []);
+        } catch (error) {
+            console.error('Error fetching messages:', error);
+        }
+    };
+
+    const handleUpdateContactStatus = async (id, status) => {
+        try {
+            const { error } = await supabase
+                .from('contacts')
+                .update({ status })
+                .eq('id', id);
+            if (error) throw error;
+            setContacts(contacts.map(c => c.id === id ? { ...c, status } : c));
+            setCurrentCrmItem(prev => prev ? { ...prev, status } : null);
+        } catch (error) {
+            console.error('Error updating status:', error);
+        }
+    };
+
+    const handleUpdateContactNotes = async (id, notes) => {
+        try {
+            const { error } = await supabase
+                .from('contacts')
+                .update({ notes })
+                .eq('id', id);
+            if (error) throw error;
+        } catch (error) {
+            console.error('Error updating notes:', error);
+        }
+    };
+
+    const handleSaveTemplate = async () => {
+        if (!currentCrmItem) return;
+        setLoading(true);
+        try {
+            const { error } = await supabase
+                .from('email_templates')
+                .upsert({
+                    id: currentCrmItem.id,
+                    name: currentCrmItem.name,
+                    subject: currentCrmItem.subject,
+                    body: currentCrmItem.body,
+                    variables: currentCrmItem.variables
+                });
+            if (error) throw error;
+            setIsCRMModalOpen(false);
+            fetchTemplates();
+        } catch (error) {
+            console.error('Error saving template:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleSendCampaign = async (name, templateId, sendCopy) => {
+        setLoading(true);
+        try {
+            // 1. Create Campaign Record in Supabase
+            const { data: campaign, error: campaignError } = await supabase
+                .from('email_campaigns')
+                .insert({
+                    name,
+                    template_id: templateId,
+                    total_recipients: selectedContacts.length,
+                    status: 'sending'
+                })
+                .select()
+                .single();
+
+            if (campaignError) throw campaignError;
+
+            // 2. Prepare contacts data for n8n
+            const recipients = contacts.filter(c => selectedContacts.includes(c.id));
+
+            // 3. Send to n8n
+            const response = await fetch(siteConfig.n8n_webhook_url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'send_campaign',
+                    campaign_id: campaign.id,
+                    template_id: templateId,
+                    recipients,
+                    options: {
+                        send_copy: sendCopy,
+                        admin_email: 'r.alcalde@engorilate.com'
+                    }
+                })
+            });
+
+            if (!response.ok) throw new Error('N8N Request Failed');
+
+            // 4. Update local state
+            setIsCRMModalOpen(false);
+            setSelectedContacts([]);
+            fetchCampaigns();
+            alert('✓ Campaña enviada a n8n para procesamiento');
+        } catch (error) {
+            console.error('Error sending campaign:', error);
+            alert('✗ Error al enviar campaña');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const fetchPosts = async () => {
         setLoading(true);
@@ -893,6 +1193,13 @@ const AdminPanel = () => {
                             Localizaciones
                         </button>
                         <button
+                            onClick={() => setActiveTab('crm')}
+                            className={`px-4 py-2 rounded-lg transition-all ${activeTab === 'crm' ? 'bg-primary text-gray-900' : 'bg-black/30 text-white border border-white/20'}`}
+                        >
+                            <BarChart3 className="w-4 h-4 inline mr-2" />
+                            CRM
+                        </button>
+                        <button
                             onClick={() => setActiveTab('config')}
                             className={`px-4 py-2 rounded-lg transition-all ${activeTab === 'config' ? 'bg-primary text-gray-900' : 'bg-black/30 text-white border border-white/20'}`}
                         >
@@ -959,6 +1266,542 @@ const AdminPanel = () => {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                )}
+
+                {activeTab === 'sectors' && (
+                    <div className="space-y-6">
+                        <div className="bg-[#222222] border border-white/30 rounded-2xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.9)]">
+                            <div className="flex items-center justify-between mb-8">
+                                <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+                                    <Briefcase className="w-6 h-6 text-primary" />
+                                    Gestión de Sectores
+                                </h2>
+                                <button
+                                    onClick={() => {
+                                        setSelectedSector({ name: '', slug: '', description: '' });
+                                        setEditingSector(true);
+                                    }}
+                                    className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-white text-gray-900 font-bold rounded-lg transition-all"
+                                >
+                                    <Plus className="w-4 h-4" />
+                                    Nuevo Sector
+                                </button>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {sectors.map(sector => (
+                                    <div key={sector.id} className="bg-black/30 border border-white/10 rounded-xl p-6 hover:border-primary/50 transition-all group">
+                                        <div className="flex justify-between items-start mb-4">
+                                            <div className="bg-primary/20 p-2 rounded-lg">
+                                                <Briefcase className="w-5 h-5 text-primary" />
+                                            </div>
+                                            <div className="flex gap-2">
+                                                <button
+                                                    onClick={() => {
+                                                        setSelectedSector(sector);
+                                                        setEditingSector(true);
+                                                    }}
+                                                    className="p-2 hover:bg-white/10 rounded-lg transition-all"
+                                                >
+                                                    <Edit className="w-4 h-4 text-white" />
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDeleteSector(sector.id)}
+                                                    className="p-2 hover:bg-red-500/20 rounded-lg transition-all"
+                                                >
+                                                    <Trash2 className="w-4 h-4 text-red-500" />
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <h3 className="text-white font-bold mb-1">{sector.name}</h3>
+                                        <p className="text-xs text-primary mb-3">{sector.slug}</p>
+                                        <p className="text-sm text-gray-400 line-clamp-2">{sector.description || 'Sin descripción'}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Sector Edit Modal */}
+                        {editingSector && (
+                            <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+                                <div className="bg-[#1a1a1a] border border-white/20 rounded-2xl p-8 max-w-xl w-full shadow-2xl">
+                                    <h3 className="text-2xl font-bold text-white mb-6">
+                                        {selectedSector.id ? 'Editar Sector' : 'Nuevo Sector'}
+                                    </h3>
+                                    <div className="space-y-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-400 mb-2">Nombre</label>
+                                            <input
+                                                type="text"
+                                                value={selectedSector.name}
+                                                onChange={(e) => setSelectedSector({ ...selectedSector, name: e.target.value })}
+                                                className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                                placeholder="Ej: Peluquerías"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-400 mb-2">Slug</label>
+                                            <input
+                                                type="text"
+                                                value={selectedSector.slug}
+                                                onChange={(e) => setSelectedSector({ ...selectedSector, slug: e.target.value })}
+                                                className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                                placeholder="ej: peluquerias"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-400 mb-2">Descripción</label>
+                                            <textarea
+                                                value={selectedSector.description}
+                                                onChange={(e) => setSelectedSector({ ...selectedSector, description: e.target.value })}
+                                                className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none resize-none"
+                                                rows={3}
+                                                placeholder="Breve descripción del sector..."
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-4 mt-8">
+                                        <button
+                                            onClick={() => setEditingSector(false)}
+                                            className="flex-1 px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-lg transition-all"
+                                        >
+                                            Cancelar
+                                        </button>
+                                        <button
+                                            onClick={handleSaveSector}
+                                            className="flex-1 px-6 py-3 bg-primary hover:bg-white text-gray-900 font-bold rounded-lg transition-all shadow-[0_4px_15px_rgba(255,184,0,0.3)]"
+                                        >
+                                            {selectedSector.id ? 'Actualizar' : 'Crear'}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {activeTab === 'locations' && (
+                    <div className="space-y-6">
+                        <div className="bg-[#222222] border border-white/30 rounded-2xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.9)]">
+                            <div className="flex items-center justify-between mb-8">
+                                <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+                                    <MapPin className="w-6 h-6 text-primary" />
+                                    Gestión de Localizaciones
+                                </h2>
+                                <button
+                                    onClick={() => {
+                                        setSelectedLocation({ name: '', slug: '', province: '', region: '' });
+                                        setEditingLocation(true);
+                                    }}
+                                    className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-white text-gray-900 font-bold rounded-lg transition-all"
+                                >
+                                    <Plus className="w-4 h-4" />
+                                    Nueva Localización
+                                </button>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                {locations.map(location => (
+                                    <div key={location.id} className="bg-black/30 border border-white/10 rounded-xl p-6 hover:border-primary/50 transition-all group">
+                                        <div className="flex justify-between items-start mb-4">
+                                            <div className="bg-primary/20 p-2 rounded-lg">
+                                                <MapPin className="w-5 h-5 text-primary" />
+                                            </div>
+                                            <div className="flex gap-2">
+                                                <button
+                                                    onClick={() => {
+                                                        setSelectedLocation(location);
+                                                        setEditingLocation(true);
+                                                    }}
+                                                    className="p-2 hover:bg-white/10 rounded-lg transition-all"
+                                                >
+                                                    <Edit className="w-4 h-4 text-white" />
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDeleteLocation(location.id)}
+                                                    className="p-2 hover:bg-red-500/20 rounded-lg transition-all"
+                                                >
+                                                    <Trash2 className="w-4 h-4 text-red-500" />
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <h3 className="text-white font-bold mb-1">{location.name}</h3>
+                                        <p className="text-xs text-primary mb-2">{location.slug}</p>
+                                        <p className="text-xs text-gray-500">{location.province}, {location.region}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Location Edit Modal */}
+                        {editingLocation && (
+                            <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+                                <div className="bg-[#1a1a1a] border border-white/20 rounded-2xl p-8 max-w-xl w-full shadow-2xl">
+                                    <h3 className="text-2xl font-bold text-white mb-6">
+                                        {selectedLocation.id ? 'Editar Localización' : 'Nueva Localización'}
+                                    </h3>
+                                    <div className="space-y-4">
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-400 mb-2">Nombre</label>
+                                                <input
+                                                    type="text"
+                                                    value={selectedLocation.name}
+                                                    onChange={(e) => setSelectedLocation({ ...selectedLocation, name: e.target.value })}
+                                                    className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                                    placeholder="Ej: Murcia"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-400 mb-2">Slug</label>
+                                                <input
+                                                    type="text"
+                                                    value={selectedLocation.slug}
+                                                    onChange={(e) => setSelectedLocation({ ...selectedLocation, slug: e.target.value })}
+                                                    className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                                    placeholder="ej: murcia"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-400 mb-2">Provincia</label>
+                                                <input
+                                                    type="text"
+                                                    value={selectedLocation.province}
+                                                    onChange={(e) => setSelectedLocation({ ...selectedLocation, province: e.target.value })}
+                                                    className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                                    placeholder="Ej: Murcia"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-400 mb-2">Comunidad Autónoma</label>
+                                                <input
+                                                    type="text"
+                                                    value={selectedLocation.region}
+                                                    onChange={(e) => setSelectedLocation({ ...selectedLocation, region: e.target.value })}
+                                                    className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                                    placeholder="Ej: Región de Murcia"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-4 mt-8">
+                                        <button
+                                            onClick={() => setEditingLocation(false)}
+                                            className="flex-1 px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-lg transition-all"
+                                        >
+                                            Cancelar
+                                        </button>
+                                        <button
+                                            onClick={handleSaveLocation}
+                                            className="flex-1 px-6 py-3 bg-primary hover:bg-white text-gray-900 font-bold rounded-lg transition-all shadow-[0_4px_15px_rgba(255,184,0,0.3)]"
+                                        >
+                                            {selectedLocation.id ? 'Actualizar' : 'Crear'}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {activeTab === 'crm' && (
+                    <div className="space-y-6">
+                        {/* CRM Sub-tabs */}
+                        <div className="flex bg-[#222222]/80 backdrop-blur-md rounded-xl p-1 border border-white/10 w-fit">
+                            {[
+                                { id: 'contacts', label: 'Contactos', icon: Users },
+                                { id: 'templates', label: 'Plantillas', icon: Mail },
+                                { id: 'campaigns', label: 'Campañas', icon: Calendar }
+                            ].map(tab => (
+                                <button
+                                    key={tab.id}
+                                    onClick={() => setCrmTab(tab.id)}
+                                    className={`flex items-center gap-2 px-6 py-2 rounded-lg transition-all ${crmTab === tab.id
+                                        ? 'bg-primary text-gray-900 font-bold'
+                                        : 'text-gray-400 hover:text-white hover:bg-white/5'
+                                        }`}
+                                >
+                                    <tab.icon className="w-4 h-4" />
+                                    {tab.label}
+                                </button>
+                            ))}
+                        </div>
+
+                        {crmTab === 'contacts' && (
+                            <div className="bg-[#222222] border border-white/30 rounded-2xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.9)]">
+                                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
+                                    <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+                                        <Users className="w-6 h-6 text-primary" />
+                                        Gestión de Contactos
+                                        <span className="text-sm font-normal text-gray-400 bg-white/5 px-3 py-1 rounded-full border border-white/10">
+                                            {contacts.length} total
+                                        </span>
+                                    </h2>
+
+                                    <div className="flex flex-wrap gap-4">
+                                        {selectedContacts.length > 0 && (
+                                            <button
+                                                onClick={() => {
+                                                    setCrmModalType('campaign');
+                                                    setIsCRMModalOpen(true);
+                                                }}
+                                                className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-white text-gray-900 font-bold rounded-lg transition-all"
+                                            >
+                                                <Send className="w-4 h-4" />
+                                                Enviar a {selectedContacts.length}
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Filters & Search */}
+                                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                                    <div className="relative">
+                                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                                        <input
+                                            type="text"
+                                            placeholder="Buscar nombre o email..."
+                                            value={crmSearchTerm}
+                                            onChange={(e) => setCrmSearchTerm(e.target.value)}
+                                            onKeyUp={(e) => e.key === 'Enter' && fetchContacts()}
+                                            className="w-full bg-black/30 border border-white/20 rounded-lg pl-10 pr-4 py-2 text-white focus:border-primary focus:outline-none"
+                                        />
+                                    </div>
+                                    <select
+                                        value={crmFilterStatus}
+                                        onChange={(e) => setCrmFilterStatus(e.target.value)}
+                                        className="bg-black/30 border border-white/20 rounded-lg px-4 py-2 text-white focus:border-primary focus:outline-none"
+                                    >
+                                        <option value="all">Todos los estados</option>
+                                        <option value="new">Nuevo</option>
+                                        <option value="contacted">Contactado</option>
+                                        <option value="qualified">Cualificado</option>
+                                        <option value="converted">Convertido</option>
+                                        <option value="lost">Perdido</option>
+                                    </select>
+                                    <select
+                                        value={crmFilterService}
+                                        onChange={(e) => setCrmFilterService(e.target.value)}
+                                        className="bg-black/30 border border-white/20 rounded-lg px-4 py-2 text-white focus:border-primary focus:outline-none"
+                                    >
+                                        <option value="all">Todos los servicios</option>
+                                        <option value="automation">Automatización</option>
+                                        <option value="web">Web</option>
+                                        <option value="dashboard">Dashboard</option>
+                                        <option value="other">Otro</option>
+                                    </select>
+                                    <button
+                                        onClick={fetchContacts}
+                                        className="bg-white/10 hover:bg-white/20 text-white rounded-lg px-6 py-2 transition-all flex items-center justify-center gap-2 border border-white/10"
+                                    >
+                                        <Filter className="w-4 h-4" />
+                                        Filtrar
+                                    </button>
+                                </div>
+
+                                {/* Contacts Table */}
+                                <div className="overflow-x-auto rounded-xl border border-white/10">
+                                    <table className="w-full text-left bg-black/20">
+                                        <thead>
+                                            <tr className="bg-white/5 text-gray-400 text-sm uppercase tracking-wider border-b border-white/10">
+                                                <th className="px-6 py-4">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={selectedContacts.length === contacts.length && contacts.length > 0}
+                                                        onChange={(e) => {
+                                                            if (e.target.checked) setSelectedContacts(contacts.map(c => c.id));
+                                                            else setSelectedContacts([]);
+                                                        }}
+                                                        className="rounded border-white/20 bg-transparent text-primary focus:ring-primary"
+                                                    />
+                                                </th>
+                                                <th className="px-6 py-4">Contacto</th>
+                                                <th className="px-6 py-4">Interés</th>
+                                                <th className="px-6 py-4">Estado</th>
+                                                <th className="px-6 py-4">Última Actividad</th>
+                                                <th className="px-6 py-4 text-right">Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="divide-y divide-white/5">
+                                            {contacts.map((contact) => (
+                                                <tr key={contact.id} className="hover:bg-white/5 transition-all text-gray-300">
+                                                    <td className="px-6 py-4">
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={selectedContacts.includes(contact.id)}
+                                                            onChange={(e) => {
+                                                                if (e.target.checked) setSelectedContacts([...selectedContacts, contact.id]);
+                                                                else setSelectedContacts(selectedContacts.filter(id => id !== contact.id));
+                                                            }}
+                                                            className="rounded border-white/20 bg-transparent text-primary focus:ring-primary"
+                                                        />
+                                                    </td>
+                                                    <td className="px-6 py-4">
+                                                        <div className="flex flex-col">
+                                                            <span className="text-white font-medium">{contact.name}</span>
+                                                            <span className="text-sm text-gray-500">{contact.email}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-6 py-4">
+                                                        <span className="px-3 py-1 bg-white/5 rounded-full text-xs border border-white/10">
+                                                            {contact.service_interest}
+                                                        </span>
+                                                    </td>
+                                                    <td className="px-6 py-4">
+                                                        <span className={`px-3 py-1 rounded-full text-xs font-medium border ${contact.status === 'new' ? 'bg-primary/20 text-primary border-primary/20' :
+                                                            contact.status === 'contacted' ? 'bg-blue-500/20 text-blue-400 border-blue-500/20' :
+                                                                contact.status === 'converted' ? 'bg-green-500/20 text-green-400 border-green-500/20' :
+                                                                    'bg-gray-500/20 text-gray-400 border-gray-500/20'
+                                                            }`}>
+                                                            {contact.status}
+                                                        </span>
+                                                    </td>
+                                                    <td className="px-6 py-4 text-sm">
+                                                        {new Date(contact.last_contact_at).toLocaleDateString()}
+                                                    </td>
+                                                    <td className="px-6 py-4 text-right">
+                                                        <div className="flex justify-end gap-2">
+                                                            <button
+                                                                onClick={() => {
+                                                                    setCurrentCrmItem(contact);
+                                                                    setCrmModalType('contact');
+                                                                    setIsCRMModalOpen(true);
+                                                                    fetchMessages(contact.id);
+                                                                }}
+                                                                className="p-2 hover:bg-primary/20 hover:text-primary rounded-lg transition-all"
+                                                                title="Ver historial"
+                                                            >
+                                                                <FileText className="w-4 h-4" />
+                                                            </button>
+                                                            <button
+                                                                className="p-2 hover:bg-white/10 rounded-lg transition-all"
+                                                                title="Más acciones"
+                                                            >
+                                                                <MoreHorizontal className="w-4 h-4" />
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        )}
+
+                        {crmTab === 'templates' && (
+                            <div className="bg-[#222222] border border-white/30 rounded-2xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.9)]">
+                                <div className="flex items-center justify-between mb-8">
+                                    <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+                                        <Mail className="w-6 h-6 text-primary" />
+                                        Plantillas de Email
+                                    </h2>
+                                    <button
+                                        onClick={() => {
+                                            setCurrentCrmItem({ name: '', subject: '', body: '', variables: ['name', 'service_interest'] });
+                                            setCrmModalType('template');
+                                            setIsCRMModalOpen(true);
+                                        }}
+                                        className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-white text-gray-900 font-bold rounded-lg transition-all"
+                                    >
+                                        <Plus className="w-4 h-4" />
+                                        Nueva Plantilla
+                                    </button>
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    {templates.map(template => (
+                                        <div key={template.id} className="bg-black/30 border border-white/10 rounded-xl p-6 hover:border-primary/50 transition-all group">
+                                            <div className="flex justify-between items-start mb-4">
+                                                <div className="bg-primary/20 p-2 rounded-lg">
+                                                    <FileText className="w-5 h-5 text-primary" />
+                                                </div>
+                                                <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-all">
+                                                    <button
+                                                        onClick={() => {
+                                                            setCurrentCrmItem(template);
+                                                            setCrmModalType('template');
+                                                            setIsCRMModalOpen(true);
+                                                        }}
+                                                        className="p-2 hover:bg-white/10 rounded-lg"
+                                                    >
+                                                        <Edit className="w-4 h-4 text-white" />
+                                                    </button>
+                                                    <button className="p-2 hover:bg-red-500/20 rounded-lg">
+                                                        <Trash2 className="w-4 h-4 text-red-500" />
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <h3 className="text-white font-bold mb-2">{template.name}</h3>
+                                            <p className="text-sm text-gray-400 line-clamp-2 mb-4">{template.subject}</p>
+                                            <div className="flex flex-wrap gap-2">
+                                                {template.variables?.map(v => (
+                                                    <span key={v} className="text-[10px] bg-white/5 border border-white/10 px-2 py-0.5 rounded text-gray-500">
+                                                        {v}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {crmTab === 'campaigns' && (
+                            <div className="bg-[#222222] border border-white/30 rounded-2xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.9)]">
+                                <div className="flex items-center justify-between mb-8">
+                                    <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+                                        <Calendar className="w-6 h-6 text-primary" />
+                                        Campañas Enviadas
+                                    </h2>
+                                </div>
+
+                                <div className="space-y-4">
+                                    {campaigns.map(campaign => (
+                                        <div key={campaign.id} className="bg-black/30 border border-white/10 rounded-xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                                            <div className="flex items-center gap-4">
+                                                <div className="bg-green-500/20 p-3 rounded-full text-green-500">
+                                                    <Send className="w-6 h-6" />
+                                                </div>
+                                                <div>
+                                                    <h3 className="text-white font-bold">{campaign.name}</h3>
+                                                    <p className="text-sm text-gray-400">
+                                                        Template: {campaign.email_templates?.name || 'Manual'} • Envíado el {new Date(campaign.sent_at || campaign.created_at).toLocaleDateString()}
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div className="grid grid-cols-3 gap-8">
+                                                <div className="text-center">
+                                                    <div className="text-xl font-bold text-white">{campaign.total_recipients}</div>
+                                                    <div className="text-xs text-gray-500 uppercase">Enviados</div>
+                                                </div>
+                                                <div className="text-center">
+                                                    <div className="text-xl font-bold text-primary">{campaign.emails_opened}</div>
+                                                    <div className="text-xs text-gray-500 uppercase">Abretoras</div>
+                                                </div>
+                                                <div className="text-center">
+                                                    <div className="text-xl font-bold text-blue-400">{campaign.emails_clicked}</div>
+                                                    <div className="text-xs text-gray-500 uppercase">Clicks</div>
+                                                </div>
+                                            </div>
+
+                                            <button className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-lg transition-all text-sm">
+                                                Ver Detalles
+                                            </button>
+                                        </div>
+                                    ))}
+                                    {campaigns.length === 0 && (
+                                        <div className="text-center py-12 text-gray-500 border-2 border-dashed border-white/5 rounded-2xl">
+                                            Aún no has enviado ninguna campaña.
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 )}
 
@@ -1030,6 +1873,18 @@ const AdminPanel = () => {
                                     className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none font-mono text-sm"
                                 />
                                 <p className="text-xs text-gray-500 mt-1">Webhook de N8N para recibir los formularios de contacto</p>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-400 mb-2">n8n Chat Embed URL</label>
+                                <input
+                                    type="text"
+                                    value={siteConfig.chat_embed_url}
+                                    onChange={(e) => setSiteConfig({ ...siteConfig, chat_embed_url: e.target.value })}
+                                    placeholder="https://tu-n8n.com/webhook/chat-id..."
+                                    className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none font-mono text-sm"
+                                />
+                                <p className="text-xs text-gray-500 mt-1">URL pública del chat envevido de n8n</p>
                             </div>
 
                             {/* SEO Meta Tags Section */}
@@ -1796,39 +2651,266 @@ const AdminPanel = () => {
                 )}
             </div>
 
-            {/* SEO Preview Modal */}
-            {
-                selectedLanding && (
-                    <SEOPreview
-                        isOpen={showSEOPreview}
-                        onClose={() => setShowSEOPreview(false)}
-                        metaTitle={selectedLanding.meta_title}
-                        metaDescription={selectedLanding.meta_description}
-                        ogImage={siteConfig.og_image_url}
-                        url={`engorilate.com/${selectedLanding.sector_slug}/${selectedLanding.location_slug}`}
-                    />
-                )
-            }
+            {/* CRM Modals Overlay */}
+            <AnimatePresence>
+                {isCRMModalOpen && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4"
+                    >
+                        <motion.div
+                            initial={{ scale: 0.9, y: 20 }}
+                            animate={{ scale: 1, y: 0 }}
+                            exit={{ scale: 0.9, y: 20 }}
+                            className="bg-[#1a1a1a] border border-white/20 rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl"
+                        >
+                            {/* Modal Header */}
+                            <div className="flex items-center justify-between p-6 border-b border-white/10 bg-white/5">
+                                <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+                                    {crmModalType === 'contact' && <Users className="w-6 h-6 text-primary" />}
+                                    {crmModalType === 'template' && <Mail className="w-6 h-6 text-primary" />}
+                                    {crmModalType === 'campaign' && <Send className="w-6 h-6 text-primary" />}
+                                    {crmModalType === 'contact' ? `Historial de ${currentCrmItem?.name}` :
+                                        crmModalType === 'template' ? (currentCrmItem?.id ? 'Editar Plantilla' : 'Nueva Plantilla') :
+                                            'Nueva Campaña de Email'}
+                                </h2>
+                                <button
+                                    onClick={() => {
+                                        setIsCRMModalOpen(false);
+                                        setCurrentCrmItem(null);
+                                    }}
+                                    className="p-2 hover:bg-white/10 rounded-full transition-all"
+                                >
+                                    <X className="w-6 h-6 text-gray-400" />
+                                </button>
+                            </div>
 
-            {/* Image Gallery Modal */}
-            <ImageGallery
-                isOpen={showImageGallery}
-                onClose={() => setShowImageGallery(false)}
-                onSelectImage={(url) => {
-                    setSiteConfig({ ...siteConfig, og_image_url: url });
-                }}
-                selectedUrl={siteConfig.og_image_url}
-            />
+                            {/* Modal Content */}
+                            <div className="flex-1 overflow-y-auto p-6">
+                                {crmModalType === 'contact' && currentCrmItem && (
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                        <div className="md:col-span-1 space-y-6">
+                                            <div className="bg-white/5 rounded-xl p-6 border border-white/10">
+                                                <h3 className="text-gray-400 text-xs font-bold uppercase tracking-wider mb-4">Información del Contacto</h3>
+                                                <div className="space-y-4">
+                                                    <div>
+                                                        <label className="block text-[10px] text-gray-500 uppercase">Email</label>
+                                                        <span className="text-white break-all">{currentCrmItem.email}</span>
+                                                    </div>
+                                                    <div>
+                                                        <label className="block text-[10px] text-gray-500 uppercase">Teléfono</label>
+                                                        <span className="text-white">{currentCrmItem.phone || 'No indicado'}</span>
+                                                    </div>
+                                                    <div>
+                                                        <label className="block text-[10px] text-gray-500 uppercase">Interés</label>
+                                                        <span className="text-white">{currentCrmItem.service_interest}</span>
+                                                    </div>
+                                                    <div>
+                                                        <label className="block text-[10px] text-gray-500 uppercase">Estado</label>
+                                                        <select
+                                                            value={currentCrmItem.status}
+                                                            onChange={(e) => handleUpdateContactStatus(currentCrmItem.id, e.target.value)}
+                                                            className="w-full mt-1 bg-black/30 border border-white/20 rounded-lg px-3 py-1.5 text-white text-sm focus:border-primary focus:outline-none"
+                                                        >
+                                                            <option value="new">Nuevo</option>
+                                                            <option value="contacted">Contactado</option>
+                                                            <option value="qualified">Cualificado</option>
+                                                            <option value="converted">Convertido</option>
+                                                            <option value="lost">Perdido</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-            {/* Blog Post Preview Modal */}
-            <BlogPostPreview
-                isOpen={showBlogPreview}
-                onClose={() => setShowBlogPreview(false)}
-                title={editedTitle}
-                content={editedContent}
-                category={editedCategory}
-                publishDate={editedPublishDate}
-            />
+                                            <div className="bg-white/5 rounded-xl p-6 border border-white/10">
+                                                <h3 className="text-gray-400 text-xs font-bold uppercase tracking-wider mb-4">Notas Internas</h3>
+                                                <textarea
+                                                    value={currentCrmItem.notes || ''}
+                                                    onChange={(e) => setCurrentCrmItem({ ...currentCrmItem, notes: e.target.value })}
+                                                    onBlur={() => handleUpdateContactNotes(currentCrmItem.id, currentCrmItem.notes)}
+                                                    className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-2 text-white text-sm focus:border-primary focus:outline-none resize-none"
+                                                    rows={6}
+                                                    placeholder="Añade notas sobre este contacto..."
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="md:col-span-2">
+                                            <h3 className="text-white font-bold mb-6 flex items-center gap-2">
+                                                <BarChart3 className="w-5 h-5 text-primary" />
+                                                Historial de Interacciones
+                                            </h3>
+
+                                            <div className="space-y-6">
+                                                {messages.map((msg, i) => (
+                                                    <div key={msg.id} className="relative pl-8 before:absolute before:left-0 before:top-2 before:bottom-0 before:w-0.5 before:bg-primary/20 last:before:hidden">
+                                                        <div className="absolute left-[-4px] top-2 w-2.5 h-2.5 bg-primary rounded-full shadow-[0_0_8px_rgba(255,184,0,0.5)]"></div>
+                                                        <div className="bg-white/5 border border-white/10 rounded-xl p-5">
+                                                            <div className="flex items-center justify-between mb-3 text-xs">
+                                                                <span className="text-primary font-bold">Mensaje de Formulario</span>
+                                                                <span className="text-gray-500">{new Date(msg.created_at).toLocaleString()}</span>
+                                                            </div>
+                                                            <p className="text-gray-300 leading-relaxed text-sm italic">"{msg.message}"</p>
+                                                            <div className="mt-3 flex items-center gap-2 text-xs text-gray-500">
+                                                                <Tag className="w-3 h-3" />
+                                                                Fuente: {msg.source || 'Directo'}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                                {messages.length === 0 && (
+                                                    <div className="text-center py-12 text-gray-500 border-2 border-dashed border-white/5 rounded-2xl">
+                                                        No hay mensajes registrados.
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {crmModalType === 'template' && currentCrmItem && (
+                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                        <div className="space-y-6">
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-400 mb-2">Nombre de Plantilla</label>
+                                                <input
+                                                    type="text"
+                                                    value={currentCrmItem.name}
+                                                    onChange={(e) => setCurrentCrmItem({ ...currentCrmItem, name: e.target.value })}
+                                                    className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                                    placeholder="Ej: Bienvenida Automatización"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-400 mb-2">Asunto del Email</label>
+                                                <input
+                                                    type="text"
+                                                    value={currentCrmItem.subject}
+                                                    onChange={(e) => setCurrentCrmItem({ ...currentCrmItem, subject: e.target.value })}
+                                                    className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                                    placeholder="Usa {{name}} para personalizar"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-400 mb-2">Cuerpo del Email (Markdown / HTML)</label>
+                                                <div className="flex gap-2 mb-2 flex-wrap">
+                                                    {['{{name}}', '{{email}}', '{{phone}}', '{{service_interest}}'].map(v => (
+                                                        <button
+                                                            key={v}
+                                                            onClick={() => {
+                                                                const body = currentCrmItem.body + v;
+                                                                setCurrentCrmItem({ ...currentCrmItem, body });
+                                                            }}
+                                                            className="text-[10px] bg-white/5 hover:bg-primary/20 hover:text-primary transition-all px-2 py-1 rounded border border-white/10 text-gray-400"
+                                                        >
+                                                            {v}
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                                <textarea
+                                                    value={currentCrmItem.body}
+                                                    onChange={(e) => setCurrentCrmItem({ ...currentCrmItem, body: e.target.value })}
+                                                    rows={12}
+                                                    className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white font-mono text-sm focus:border-primary focus:outline-none resize-none"
+                                                    placeholder="Hola {{name}}, ..."
+                                                />
+                                            </div>
+                                            <button
+                                                onClick={handleSaveTemplate}
+                                                className="w-full py-4 bg-primary hover:bg-white text-gray-900 font-bold rounded-xl transition-all shadow-[0_4px_20px_rgba(255,184,0,0.3)]"
+                                            >
+                                                {currentCrmItem.id ? 'Actualizar Plantilla' : 'Crear Plantilla'}
+                                            </button>
+                                        </div>
+
+                                        <div className="bg-white/5 rounded-2xl p-8 border border-white/10 hidden lg:block">
+                                            <h3 className="text-gray-400 text-xs font-bold uppercase tracking-wider mb-6 flex items-center gap-2">
+                                                <Eye className="w-4 h-4 text-primary" />
+                                                Vista Previa (Email Real)
+                                            </h3>
+                                            <div className="bg-white text-gray-900 rounded-xl overflow-hidden shadow-2xl">
+                                                <div className="bg-gray-100 p-4 border-b border-gray-200">
+                                                    <div className="text-xs text-gray-500 mb-1">Asunto:</div>
+                                                    <div className="text-sm font-bold">
+                                                        {(currentCrmItem.subject || '').replace('{{name}}', 'Rafael')}
+                                                    </div>
+                                                </div>
+                                                <div className="p-8 min-h-[300px] text-sm leading-relaxed whitespace-pre-wrap">
+                                                    {(currentCrmItem.body || '')
+                                                        .replace('{{name}}', 'Rafael')
+                                                        .replace('{{service_interest}}', 'Automatización de Negocios')}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {crmModalType === 'campaign' && (
+                                    <div className="max-w-2xl mx-auto space-y-8">
+                                        <div className="bg-primary/10 border border-primary/20 rounded-2xl p-6 flex flex-col items-center text-center">
+                                            <div className="bg-primary text-gray-900 p-4 rounded-full mb-4 shadow-lg">
+                                                <Users className="w-8 h-8" />
+                                            </div>
+                                            <h3 className="text-xl font-bold text-white mb-2">Enviar Email a {selectedContacts.length} Contactos</h3>
+                                            <p className="text-gray-400 text-sm max-w-md">Estás a punto de enviar una campaña a la selección manual que has realizado.</p>
+                                        </div>
+
+                                        <div className="space-y-6">
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-400 mb-2">Nombre de la Campaña (Interno)</label>
+                                                <input
+                                                    type="text"
+                                                    id="campaign-name"
+                                                    className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                                    placeholder="Ej: Seguimiento Automatización Enero"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-400 mb-2">Seleccionar Plantilla</label>
+                                                <select
+                                                    id="campaign-template"
+                                                    className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                                >
+                                                    <option value="">Selecciona una plantilla...</option>
+                                                    {templates.map(t => (
+                                                        <option key={t.id} value={t.id}>{t.name}</option>
+                                                    ))}
+                                                </select>
+                                            </div>
+
+                                            <div className="flex items-center gap-4 p-4 bg-white/5 rounded-xl border border-white/10">
+                                                <input
+                                                    type="checkbox"
+                                                    id="send-copy"
+                                                    defaultChecked
+                                                    className="w-5 h-5 rounded border-white/20 bg-transparent text-primary focus:ring-primary"
+                                                />
+                                                <label htmlFor="send-copy" className="text-sm text-gray-300">Enviar copia a r.alcalde@engorilate.com</label>
+                                            </div>
+
+                                            <button
+                                                onClick={() => {
+                                                    const name = document.getElementById('campaign-name').value;
+                                                    const templateId = document.getElementById('campaign-template').value;
+                                                    const sendCopy = document.getElementById('send-copy').checked;
+                                                    if (!name || !templateId) return alert('Por favor, indica un nombre y selecciona una plantilla');
+                                                    handleSendCampaign(name, templateId, sendCopy);
+                                                }}
+                                                className="w-full py-5 bg-primary hover:bg-white text-gray-900 font-bold rounded-2xl transition-all shadow-[0_10px_30px_rgba(255,184,0,0.4)] flex items-center justify-center gap-3 text-lg"
+                                            >
+                                                <Send className="w-5 h-5" />
+                                                Lanzar Campaña Ahora
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div >
     );
 };

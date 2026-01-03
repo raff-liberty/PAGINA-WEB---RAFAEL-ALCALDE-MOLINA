@@ -20,6 +20,7 @@ import SectorsDirectory from './pages/SectorsDirectory';
 import AdminPanel from './pages/AdminPanel';
 import CookieBanner from './components/CookieBanner';
 import ScrollToTop from './components/ScrollToTop';
+import FloatingChat from './components/FloatingChat';
 import { supabase } from './lib/supabaseClient';
 
 console.log('Supabase Client Initialized:', !!supabase);
@@ -52,6 +53,7 @@ function App() {
                     </main>
                     <Footer />
                     <CookieBanner />
+                    <FloatingChat />
                     <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden h-full w-full">
                         <div className="scanline"></div>
                     </div>
