@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Save, X, Eye, Edit, Plus, Trash2, Lock, Search, Filter, BookOpen, BarChart3, Copy, Upload, Download, Globe, MapPin, Briefcase, CheckCircle, AlertCircle, ExternalLink, Target, Bold, Quote, List, ListOrdered, CheckSquare, Table } from 'lucide-react';
 import BackgroundMesh from '../components/BackgroundMesh';
 import StrategicRoadmap from '../components/StrategicRoadmap';
+import SEOPreview from '../components/SEOPreview';
 
 const AdminPanel = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -25,7 +26,12 @@ const AdminPanel = () => {
         instagram_url: '',
         linkedin_url: '',
         contact_email: '',
-        n8n_webhook_url: ''
+        n8n_webhook_url: '',
+        og_image_url: 'https://engorilate.com/og-image.jpg',
+        twitter_handle: '@engorilate',
+        default_meta_title: 'Engorilate | Automatización de Negocios en Murcia',
+        default_meta_description: 'Automatiza los procesos repetitivos de tu empresa en Murcia. Recupera tu tiempo y deja de perder dinero en gestión manual.',
+        default_keywords: 'automatización negocios murcia, digitalización pymes, eficiencia operativa'
     });
     const [searchTerm, setSearchTerm] = useState('');
     const [filterCategory, setFilterCategory] = useState('all');
@@ -33,6 +39,7 @@ const AdminPanel = () => {
     const [loading, setLoading] = useState(false);
     const [saveStatus, setSaveStatus] = useState('');
     const [sitemapStatus, setSitemapStatus] = useState('');
+    const [showSEOPreview, setShowSEOPreview] = useState(false);
     const [selectedPostsForExport, setSelectedPostsForExport] = useState([]);
 
     // Editable fields
@@ -919,6 +926,75 @@ const AdminPanel = () => {
                                 <p className="text-xs text-gray-500 mt-1">Webhook de N8N para recibir los formularios de contacto</p>
                             </div>
 
+                            {/* SEO Meta Tags Section */}
+                            <div className="mt-8 pt-8 border-t border-white/10">
+                                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                                    <Search className="w-5 h-5 text-primary" />
+                                    SEO Global
+                                </h3>
+
+                                <div className="space-y-4">
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-400 mb-2">Open Graph Image URL</label>
+                                        <input
+                                            type="text"
+                                            value={siteConfig.og_image_url}
+                                            onChange={(e) => setSiteConfig({ ...siteConfig, og_image_url: e.target.value })}
+                                            placeholder="https://engorilate.com/og-image.jpg"
+                                            className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                        />
+                                        <p className="text-xs text-gray-500 mt-1">Imagen que se muestra al compartir en redes sociales (1200x630px)</p>
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-400 mb-2">Twitter Handle</label>
+                                        <input
+                                            type="text"
+                                            value={siteConfig.twitter_handle}
+                                            onChange={(e) => setSiteConfig({ ...siteConfig, twitter_handle: e.target.value })}
+                                            placeholder="@engorilate"
+                                            className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                        />
+                                        <p className="text-xs text-gray-500 mt-1">Usuario de Twitter/X para Twitter Cards</p>
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-400 mb-2">Meta Title por Defecto</label>
+                                        <input
+                                            type="text"
+                                            value={siteConfig.default_meta_title}
+                                            onChange={(e) => setSiteConfig({ ...siteConfig, default_meta_title: e.target.value })}
+                                            placeholder="Engorilate | Automatización de Negocios en Murcia"
+                                            className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                        />
+                                        <p className="text-xs text-gray-500 mt-1">Título que aparece en Google y pestañas del navegador</p>
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-400 mb-2">Meta Description por Defecto</label>
+                                        <textarea
+                                            value={siteConfig.default_meta_description}
+                                            onChange={(e) => setSiteConfig({ ...siteConfig, default_meta_description: e.target.value })}
+                                            placeholder="Automatiza los procesos repetitivos de tu empresa..."
+                                            className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none h-20"
+                                        />
+                                        <p className="text-xs text-gray-500 mt-1">Descripción que aparece en resultados de Google</p>
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-400 mb-2">Keywords por Defecto</label>
+                                        <input
+                                            type="text"
+                                            value={siteConfig.default_keywords}
+                                            onChange={(e) => setSiteConfig({ ...siteConfig, default_keywords: e.target.value })}
+                                            placeholder="automatización, negocios, murcia"
+                                            className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                        />
+                                        <p className="text-xs text-gray-500 mt-1">Palabras clave separadas por comas</p>
+                                    </div>
+                                </div>
+                            </div>
+
                             <button
                                 onClick={saveSiteConfig}
                                 disabled={loading}
@@ -1020,6 +1096,13 @@ const AdminPanel = () => {
                                         </div>
                                         <div className="flex items-center gap-3">
                                             {saveStatus && <span className="text-sm text-primary">{saveStatus}</span>}
+                                            <button
+                                                onClick={() => setShowSEOPreview(true)}
+                                                className="flex items-center gap-2 px-6 py-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold rounded-lg transition-all"
+                                            >
+                                                <Eye className="w-4 h-4" />
+                                                Preview SEO
+                                            </button>
                                             <button
                                                 onClick={handleSaveLanding}
                                                 disabled={loading}
@@ -1444,6 +1527,18 @@ const AdminPanel = () => {
                     </div>
                 )}
             </div>
+
+            {/* SEO Preview Modal */}
+            {selectedLanding && (
+                <SEOPreview
+                    isOpen={showSEOPreview}
+                    onClose={() => setShowSEOPreview(false)}
+                    metaTitle={selectedLanding.meta_title}
+                    metaDescription={selectedLanding.meta_description}
+                    ogImage={siteConfig.og_image_url}
+                    url={`engorilate.com/${selectedLanding.sector_slug}/${selectedLanding.location_slug}`}
+                />
+            )}
         </div>
     );
 };
