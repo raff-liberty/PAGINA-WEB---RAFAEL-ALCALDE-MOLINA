@@ -11,6 +11,18 @@ import BlogPostPreview from '../components/BlogPostPreview';
 import { useAuth } from '../contexts/AuthContext';
 
 const AdminPanel = () => {
+    const navigationTabs = [
+        { id: 'editor', label: 'Blog', icon: Edit },
+        { id: 'growth', label: 'Estrategia', icon: Target },
+        { id: 'landings', label: 'Landings SEO', icon: Globe },
+        { id: 'guidelines', label: 'Línea Editorial', icon: BookOpen },
+        { id: 'stats', label: 'Estadísticas', icon: BarChart3 },
+        { id: 'sectors', label: 'Sectores', icon: Briefcase },
+        { id: 'locations', label: 'Localizaciones', icon: MapPin },
+        { id: 'crm', label: 'CRM', icon: Users },
+        { id: 'config', label: 'Configuración', icon: Save },
+    ];
+
     const { user, loading: authLoading, signIn, signOut } = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -53,6 +65,7 @@ const AdminPanel = () => {
     const [showImageUploader, setShowImageUploader] = useState(false);
     const [showImageGallery, setShowImageGallery] = useState(false);
     const [showBlogPreview, setShowBlogPreview] = useState(false);
+    const [showTemplateImageGallery, setShowTemplateImageGallery] = useState(false);
     const [selectedPostsForExport, setSelectedPostsForExport] = useState([]);
 
     // CRM state
@@ -363,6 +376,12 @@ const AdminPanel = () => {
         } catch (error) {
             console.error('Error updating notes:', error);
         }
+    };
+
+    const handleSelectTemplateImage = (url) => {
+        const body = currentCrmItem.body + `\n\n<img src="${url}" alt="imagen" style="max-width: 100%; height: auto; border-radius: 8px;" />\n\n`;
+        setCurrentCrmItem({ ...currentCrmItem, body });
+        setShowTemplateImageGallery(false);
     };
 
     const handleSaveTemplate = async () => {
@@ -1138,80 +1157,31 @@ const AdminPanel = () => {
             <BackgroundMesh />
 
             <div className="relative z-10 max-w-7xl mx-auto px-6">
-                <div className="mb-8 flex items-center justify-between">
-                    <h1 className="text-4xl font-bold text-white">Admin Panel & SEO</h1>
-                    <div className="flex items-center gap-4">
-                        <button
-                            onClick={() => setActiveTab('editor')}
-                            className={`px-4 py-2 rounded-lg transition-all ${activeTab === 'editor' ? 'bg-primary text-gray-900' : 'bg-black/30 text-white border border-white/20'}`}
-                        >
-                            <Edit className="w-4 h-4 inline mr-2" />
-                            Blog
-                        </button>
-                        <button
-                            onClick={() => setActiveTab('growth')}
-                            className={`flex-1 flex flex-col items-center gap-2 p-3 rounded-xl border transition-all ${activeTab === 'growth'
-                                ? 'bg-primary text-gray-900 border-primary shadow-[0_0_20px_rgba(224,255,0,0.3)]'
-                                : 'bg-white/5 text-gray-400 border-transparent hover:bg-white/10 hover:border-white/20'
-                                }`}
-                        >
-                            <Target className="w-5 h-5" />
-                            <span className="text-sm font-bold">Estrategia</span>
-                        </button>
-                        <button
-                            onClick={() => setActiveTab('landings')}
-                            className={`px-4 py-2 rounded-lg transition-all ${activeTab === 'landings' ? 'bg-primary text-gray-900' : 'bg-black/30 text-white border border-white/20'}`}
-                        >
-                            <Globe className="w-4 h-4 inline mr-2" />
-                            Landings SEO
-                        </button>
-                        <button
-                            onClick={() => setActiveTab('guidelines')}
-                            className={`px-4 py-2 rounded-lg transition-all ${activeTab === 'guidelines' ? 'bg-primary text-gray-900' : 'bg-black/30 text-white border border-white/20'}`}
-                        >
-                            <BookOpen className="w-4 h-4 inline mr-2" />
-                            Línea Editorial
-                        </button>
-                        <button
-                            onClick={() => setActiveTab('stats')}
-                            className={`px-4 py-2 rounded-lg transition-all ${activeTab === 'stats' ? 'bg-primary text-gray-900' : 'bg-black/30 text-white border border-white/20'}`}
-                        >
-                            <BarChart3 className="w-4 h-4 inline mr-2" />
-                            Estadísticas
-                        </button>
-                        <button
-                            onClick={() => setActiveTab('sectors')}
-                            className={`px-4 py-2 rounded-lg transition-all ${activeTab === 'sectors' ? 'bg-primary text-gray-900' : 'bg-black/30 text-white border border-white/20'}`}
-                        >
-                            <Briefcase className="w-4 h-4 inline mr-2" />
-                            Sectores
-                        </button>
-                        <button
-                            onClick={() => setActiveTab('locations')}
-                            className={`px-4 py-2 rounded-lg transition-all ${activeTab === 'locations' ? 'bg-primary text-gray-900' : 'bg-black/30 text-white border border-white/20'}`}
-                        >
-                            <MapPin className="w-4 h-4 inline mr-2" />
-                            Localizaciones
-                        </button>
-                        <button
-                            onClick={() => setActiveTab('crm')}
-                            className={`px-4 py-2 rounded-lg transition-all ${activeTab === 'crm' ? 'bg-primary text-gray-900' : 'bg-black/30 text-white border border-white/20'}`}
-                        >
-                            <BarChart3 className="w-4 h-4 inline mr-2" />
-                            CRM
-                        </button>
-                        <button
-                            onClick={() => setActiveTab('config')}
-                            className={`px-4 py-2 rounded-lg transition-all ${activeTab === 'config' ? 'bg-primary text-gray-900' : 'bg-black/30 text-white border border-white/20'}`}
-                        >
-                            <Save className="w-4 h-4 inline mr-2" />
-                            Configuración
-                        </button>
+                <div className="mb-12 flex flex-col md:flex-row items-center justify-between gap-8">
+                    <h1 className="text-4xl font-black text-white uppercase italic tracking-tighter">Admin Panel & SEO</h1>
+                    <div className="grid grid-cols-3 sm:grid-cols-5 md:flex md:flex-wrap items-center justify-center gap-2 w-full md:w-auto">
+                        {navigationTabs.map((tab) => {
+                            const Icon = tab.icon;
+                            return (
+                                <button
+                                    key={tab.id}
+                                    onClick={() => setActiveTab(tab.id)}
+                                    className={`flex flex-col items-center justify-center gap-2 p-3 rounded-xl border transition-all min-w-[100px] aspect-square md:aspect-auto md:h-20 ${activeTab === tab.id
+                                        ? 'bg-primary text-gray-900 border-primary shadow-[0_0_20px_rgba(224,255,0,0.3)]'
+                                        : 'bg-white/5 text-gray-400 border-white/10 hover:bg-white/10 hover:border-white/20'
+                                        }`}
+                                >
+                                    <Icon className="w-5 h-5 flex-shrink-0" />
+                                    <span className="text-[10px] font-black uppercase tracking-tighter text-center leading-tight">{tab.label}</span>
+                                </button>
+                            );
+                        })}
                         <button
                             onClick={signOut}
-                            className="text-gray-400 hover:text-white transition-colors"
+                            className="flex flex-col items-center justify-center gap-2 p-3 rounded-xl border border-red-500/20 bg-red-500/5 text-red-400 hover:bg-red-500/10 transition-all min-w-[100px] aspect-square md:aspect-auto md:h-20"
                         >
-                            Cerrar sesión
+                            <Lock className="w-5 h-5 flex-shrink-0" />
+                            <span className="text-[10px] font-black uppercase tracking-tighter text-center leading-tight">Cerrar sesión</span>
                         </button>
                     </div>
                 </div>
@@ -2809,6 +2779,13 @@ const AdminPanel = () => {
                                                             {v}
                                                         </button>
                                                     ))}
+                                                    <button
+                                                        onClick={() => setShowTemplateImageGallery(true)}
+                                                        className="text-[10px] bg-primary/10 hover:bg-primary/20 text-primary transition-all px-2 py-1 rounded border border-primary/20 flex items-center gap-1"
+                                                    >
+                                                        <ImageIcon className="w-3 h-3" />
+                                                        Insertar Imagen
+                                                    </button>
                                                 </div>
                                                 <textarea
                                                     value={currentCrmItem.body}
@@ -2912,6 +2889,13 @@ const AdminPanel = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
+
+            {/* Template Image Gallery */}
+            <ImageGallery
+                isOpen={showTemplateImageGallery}
+                onClose={() => setShowTemplateImageGallery(false)}
+                onSelectImage={handleSelectTemplateImage}
+            />
 
             {/* Live Blog Preview Modal */}
             <BlogPostPreview

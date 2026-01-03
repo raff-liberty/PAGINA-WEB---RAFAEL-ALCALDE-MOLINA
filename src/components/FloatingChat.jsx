@@ -4,6 +4,7 @@ import { MessageCircle, X, Maximize2, Minimize2 } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
 
 const FloatingChat = () => {
+    return null;
     const [isOpen, setIsOpen] = useState(false);
     const [config, setConfig] = useState(null);
     const [isMinimized, setIsMinimized] = useState(false);
@@ -27,13 +28,11 @@ const FloatingChat = () => {
     const chatUrl = config?.chat_embed_url;
 
     const toggleChat = () => {
-        if (!chatUrl) {
-            alert('Configura el "n8n Chat Embed URL" en el Panel de Administración para activar el chat.');
-            return;
-        }
         setIsOpen(!isOpen);
         setIsMinimized(false);
     };
+
+    if (!chatUrl) return null;
 
     return (
         <div className="fixed bottom-8 right-8 z-[100] flex flex-col items-end gap-4">

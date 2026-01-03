@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { X, Trash2, Copy, CheckCircle, Image as ImageIcon } from 'lucide-react';
+import { X, Trash2, Copy, CheckCircle, Image as ImageIcon, Plus, Upload } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { listImages, deleteImage } from '../lib/supabaseStorage';
+import ImageUploader from './ImageUploader';
 
 const ImageGallery = ({ isOpen, onClose, onSelectImage, selectedUrl }) => {
     const [images, setImages] = useState([]);
     const [loading, setLoading] = useState(false);
     const [copiedUrl, setCopiedUrl] = useState('');
+    const [showUploader, setShowUploader] = useState(false);
 
     useEffect(() => {
         if (isOpen) {
@@ -77,16 +78,14 @@ const ImageGallery = ({ isOpen, onClose, onSelectImage, selectedUrl }) => {
                         </h2>
                         <div className="flex items-center gap-4">
                             <button
-                                onClick={() => {
-                                    // This button is just a reminder or can trigger the parent's uploader if we pass a prop
-                                    if (window.confirm('Para subir imágenes, usa el botón "Subir Nueva Imagen" en la pestaña de Configuración. ¿Quieres cerrar la galería para verlo?')) {
-                                        onClose();
-                                    }
-                                }}
-                                className="px-4 py-2 bg-primary/10 hover:bg-primary/20 border border-primary/20 text-primary rounded-lg text-sm font-bold transition-all flex items-center gap-2"
+                                onClick={() => setShowUploader(!showUploader)}
+                                className={`px-4 py-2 border rounded-lg text-sm font-bold transition-all flex items-center gap-2 ${showUploader
+                                    ? 'bg-primary text-gray-900 border-primary'
+                                    : 'bg-primary/10 hover:bg-primary/20 border-primary/20 text-primary'
+                                    }`}
                             >
-                                <Plus className="w-4 h-4" />
-                                ¿Cómo subir?
+                                <Upload className="w-4 h-4" />
+                                {showUploader ? 'Cerrar Subidor' : 'Subir Imagen'}
                             </button>
                             <button
                                 onClick={onClose}
@@ -96,6 +95,27 @@ const ImageGallery = ({ isOpen, onClose, onSelectImage, selectedUrl }) => {
                             </button>
                         </div>
                     </div>
+
+                    {/* Uploader Section */}
+                    <AnimatePresence>
+                        {showUploader && (
+                            <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                className="mb-8 overflow-hidden"
+                            >
+                                <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+                                    <ImageUploader
+                                        onUploadComplete={() => {
+                                            fetchImages();
+                                            setShowUploader(false);
+                                        }}
+                                    />
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
 
                     {/* Loading */}
                     {loading && (
