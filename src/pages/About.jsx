@@ -18,10 +18,10 @@ const About = () => {
                     <div className="lg:w-1/2 order-2 lg:order-1">
                         <div className="relative">
                             <div className="absolute -inset-4 bg-primary/20 rounded-full blur-3xl opacity-30"></div>
-                            <div className="relative aspect-square max-w-[420px] mx-auto rounded-full overflow-hidden border-2 border-primary/20 shadow-2xl group">
+                            <div className="relative aspect-square max-w-[280px] sm:max-w-[420px] mx-auto rounded-full overflow-hidden border-2 border-primary/20 shadow-2xl group">
                                 <img
                                     alt="Rafael Alcalde Molina"
-                                    className="w-full h-full object-cover object-[center_20%] grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                                    className="w-full h-full object-cover object-[center_5%] sm:object-[center_20%] grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                                     src="/rafael.png"
                                 />
                                 <div className="absolute inset-0 border-[1px] border-white/10 rounded-full pointer-events-none"></div>
@@ -30,7 +30,7 @@ const About = () => {
                         </div>
                     </div>
                     <div className="lg:w-1/2 order-1 lg:order-2">
-                        <h1 className="font-display text-4xl md:text-5xl lg:text-5xl font-bold leading-tight mb-6 text-white">
+                        <h1 className="font-display text-4xl sm:text-5xl lg:text-5xl font-bold leading-tight mb-6 text-white">
                             Sobre mí <br />
                             <span className="text-primary">Rafael Alcalde Molina</span>
                         </h1>

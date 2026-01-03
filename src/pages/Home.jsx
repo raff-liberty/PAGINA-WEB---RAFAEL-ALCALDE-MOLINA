@@ -267,7 +267,7 @@ const Home = () => {
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="font-display text-4xl md:text-5xl lg:text-5xl font-bold tracking-tight text-white mb-6 relative inline-block max-w-5xl"
+                        className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold tracking-tight text-white mb-6 relative inline-block max-w-5xl"
                     >
                         Si haces todos los días lo mismo, <br className="hidden md:block" />
                         no es trabajo. Es <span className="text-primary">castigo.</span>
@@ -364,7 +364,7 @@ const Home = () => {
                             Ejemplos
                         </span>
                     </motion.div>
-                    <h2 className="font-display text-4xl md:text-5xl font-bold leading-tight mb-6 text-white">
+                    <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-6 text-white">
                         Cómo funcionaría tu negocio <br />
                         <span className="text-primary">con un poco más de orden</span>
                     </h2>

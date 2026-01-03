@@ -72,7 +72,7 @@ const Blog = () => {
                         <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
                         Blog del Gorila
                     </div>
-                    <h1 className="font-display text-5xl md:text-8xl font-black leading-tight mb-8 text-white tracking-tighter uppercase italic">
+                    <h1 className="font-display text-4xl sm:text-5xl md:text-8xl font-black leading-tight mb-8 text-white tracking-tighter uppercase italic">
                         Automatización <br />
                         <span className="text-primary drop-shadow-[0_0_30px_rgba(110,231,183,0.3)]">Sin Humo</span>
                     </h1>
@@ -164,10 +164,10 @@ const Blog = () => {
                 </div>
 
                 {/* Categories */}
-                <div className="flex flex-wrap gap-3 mb-24">
+                <div className="flex overflow-x-auto md:flex-wrap gap-3 mb-24 pb-4 md:pb-0 scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0">
                     <button
                         onClick={() => setSelectedCategory('Todos')}
-                        className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${selectedCategory === 'Todos'
+                        className={`px-4 py-2 rounded-lg font-medium text-sm transition-all flex-shrink-0 ${selectedCategory === 'Todos'
                             ? 'bg-primary text-gray-900 shadow-[0_0_15px_rgba(110,231,183,0.3)]'
                             : 'bg-surface-dark/40 border border-white/5 text-gray-400 hover:text-white hover:border-white/20'
                             }`}
@@ -178,7 +178,7 @@ const Blog = () => {
                         <button
                             key={category}
                             onClick={() => setSelectedCategory(category)}
-                            className={`px-4 py-2 rounded-lg text-sm transition-all ${selectedCategory === category
+                            className={`px-4 py-2 rounded-lg text-sm transition-all flex-shrink-0 ${selectedCategory === category
                                 ? 'bg-primary text-gray-900 font-medium shadow-[0_0_15px_rgba(110,231,183,0.3)]'
                                 : 'bg-surface-dark/40 border border-white/5 text-gray-400 hover:text-white hover:border-white/20'
                                 }`}
