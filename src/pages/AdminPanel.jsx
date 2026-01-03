@@ -54,6 +54,14 @@ const AdminPanel = () => {
     const [showBlogPreview, setShowBlogPreview] = useState(false);
     const [selectedPostsForExport, setSelectedPostsForExport] = useState([]);
 
+    // Sectors & Locations state
+    const [sectors, setSectors] = useState([]);
+    const [locations, setLocations] = useState([]);
+    const [selectedSector, setSelectedSector] = useState(null);
+    const [selectedLocation, setSelectedLocation] = useState(null);
+    const [editingSector, setEditingSector] = useState(false);
+    const [editingLocation, setEditingLocation] = useState(false);
+
     // Editable fields
     const [editedTitle, setEditedTitle] = useState('');
     const [editedSlug, setEditedSlug] = useState('');
