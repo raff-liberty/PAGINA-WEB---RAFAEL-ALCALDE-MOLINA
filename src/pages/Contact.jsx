@@ -5,6 +5,7 @@ import { Mail, ArrowRight, MessageSquare, Send, Instagram, Linkedin, MapPin, Glo
 import { supabase } from '../lib/supabaseClient';
 import BackgroundMesh from '../components/BackgroundMesh';
 import ContactForm from '../components/ContactForm';
+import SEO from '../components/SEO';
 
 const Contact = () => {
     const [siteConfig, setSiteConfig] = useState({
@@ -32,6 +33,11 @@ const Contact = () => {
 
     return (
         <div className="relative pt-24 pb-12 min-h-screen bg-background-dark flex items-center justify-center">
+            <SEO
+                title="Contacto | Hablemos de tu Negocio | Engorilate"
+                description="Contacta con Engorilate en Cartagena, Murcia. Sin comerciales, hablas directamente con el técnico. WhatsApp, email o redes sociales."
+                keywords="contacto engorilate, automatización murcia, consultoría cartagena, whatsapp negocio"
+            />
             <BackgroundMesh />
 
             <div className="relative z-10 w-full max-w-6xl px-6">

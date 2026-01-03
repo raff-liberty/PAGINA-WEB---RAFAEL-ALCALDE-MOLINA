@@ -3,10 +3,16 @@ import { motion } from 'framer-motion';
 import { MemoryStick as Memory, CheckCircle, AlertTriangle, ArrowRight, XCircle, ShieldCheck, Zap, Globe, Laptop, MessageSquare, Database, CreditCard } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import BackgroundMesh from '../components/BackgroundMesh';
+import SEO from '../components/SEO';
 
 const WorkMethod = () => {
     return (
         <div className="relative pt-64 pb-48 min-h-screen">
+            <SEO
+                title="Cómo Trabajamos | Metodología de Automatización | Engorilate"
+                description="Nuestra metodología de automatización para pequeños negocios en Murcia. Orden antes que tecnología. Recupera horas de tu vida sin humo."
+                keywords="metodología automatización, procesos negocios, eficiencia operativa, consultoría murcia"
+            />
             <BackgroundMesh />
 
             <div className="relative z-10 max-w-7xl mx-auto px-6">

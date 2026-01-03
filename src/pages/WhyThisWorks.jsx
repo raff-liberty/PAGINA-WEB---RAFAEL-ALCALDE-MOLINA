@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Infinity as AllInclusive, ArrowRight, CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import BackgroundMesh from '../components/BackgroundMesh';
+import SEO from '../components/SEO';
 
 const WhyThisWorks = () => {
     const principles = [
@@ -40,6 +41,11 @@ const WhyThisWorks = () => {
 
     return (
         <div className="relative pt-64 pb-48 min-h-screen">
+            <SEO
+                title="Por Qué Funciona | Manifiesto de Eficiencia | Engorilate"
+                description="Los 6 principios innegociables que guían nuestro trabajo. Lógica de negocio aplicada al caos. El éxito es que el negocio te necesite menos."
+                keywords="eficiencia operativa, principios automatización, gestión negocios, libertad operativa"
+            />
             <BackgroundMesh />
 
             <div className="relative z-10 max-w-7xl mx-auto px-6">
