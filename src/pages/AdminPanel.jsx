@@ -5,6 +5,8 @@ import { Save, X, Eye, Edit, Plus, Trash2, Lock, Search, Filter, BookOpen, BarCh
 import BackgroundMesh from '../components/BackgroundMesh';
 import StrategicRoadmap from '../components/StrategicRoadmap';
 import SEOPreview from '../components/SEOPreview';
+import ImageUploader from '../components/ImageUploader';
+import ImageGallery from '../components/ImageGallery';
 import { useAuth } from '../contexts/AuthContext';
 
 const AdminPanel = () => {
@@ -46,6 +48,8 @@ const AdminPanel = () => {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [passwordChangeStatus, setPasswordChangeStatus] = useState('');
+    const [showImageUploader, setShowImageUploader] = useState(false);
+    const [showImageGallery, setShowImageGallery] = useState(false);
     const [selectedPostsForExport, setSelectedPostsForExport] = useState([]);
 
     // Editable fields
@@ -1014,13 +1018,23 @@ const AdminPanel = () => {
                                 <div className="space-y-4">
                                     <div>
                                         <label className="block text-sm font-medium text-gray-400 mb-2">Open Graph Image URL</label>
-                                        <input
-                                            type="text"
-                                            value={siteConfig.og_image_url}
-                                            onChange={(e) => setSiteConfig({ ...siteConfig, og_image_url: e.target.value })}
-                                            placeholder="https://engorilate.com/og-image.jpg"
-                                            className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
-                                        />
+                                        <div className="flex gap-2">
+                                            <input
+                                                type="text"
+                                                value={siteConfig.og_image_url}
+                                                onChange={(e) => setSiteConfig({ ...siteConfig, og_image_url: e.target.value })}
+                                                placeholder="https://engorilate.com/og-image.jpg"
+                                                className="flex-1 bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                            />
+                                            <button
+                                                onClick={() => setShowImageGallery(true)}
+                                                className="px-4 py-3 bg-primary/10 hover:bg-primary/20 border border-primary/20 text-primary rounded-lg transition-all flex items-center gap-2"
+                                                title="Seleccionar de galería"
+                                            >
+                                                <Eye className="w-5 h-5" />
+                                                Galería
+                                            </button>
+                                        </div>
                                         <p className="text-xs text-gray-500 mt-1">Imagen que se muestra al compartir en redes sociales (1200x630px)</p>
                                     </div>
 
@@ -1151,6 +1165,46 @@ const AdminPanel = () => {
                                     >
                                         <Lock className="w-5 h-5" />
                                         Cambiar Contraseña
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Image Management Section */}
+                            <div className="mt-8 pt-8 border-t border-white/10">
+                                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                                    <Upload className="w-5 h-5 text-primary" />
+                                    Gestión de Imágenes
+                                </h3>
+                                <p className="text-sm text-gray-400 mb-4">
+                                    Sube y gestiona imágenes para usar en meta tags, blog posts, etc.
+                                </p>
+
+                                <div className="space-y-4">
+                                    <button
+                                        onClick={() => setShowImageUploader(!showImageUploader)}
+                                        className="w-full flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold py-3 rounded-lg transition-all"
+                                    >
+                                        <Upload className="w-5 h-5" />
+                                        {showImageUploader ? 'Ocultar Subida' : 'Subir Nueva Imagen'}
+                                    </button>
+
+                                    {showImageUploader && (
+                                        <div className="p-4 bg-black/30 border border-white/10 rounded-lg">
+                                            <ImageUploader
+                                                onUploadComplete={(url) => {
+                                                    console.log('Image uploaded:', url);
+                                                    setShowImageUploader(false);
+                                                }}
+                                            />
+                                        </div>
+                                    )}
+
+                                    <button
+                                        onClick={() => setShowImageGallery(true)}
+                                        className="w-full flex items-center justify-center gap-2 bg-primary/10 hover:bg-primary/20 border border-primary/20 text-primary font-bold py-3 rounded-lg transition-all"
+                                    >
+                                        <Eye className="w-5 h-5" />
+                                        Ver Galería de Imágenes
                                     </button>
                                 </div>
                             </div>
@@ -1663,6 +1717,16 @@ const AdminPanel = () => {
                     url={`engorilate.com/${selectedLanding.sector_slug}/${selectedLanding.location_slug}`}
                 />
             )}
+
+            {/* Image Gallery Modal */}
+            <ImageGallery
+                isOpen={showImageGallery}
+                onClose={() => setShowImageGallery(false)}
+                onSelectImage={(url) => {
+                    setSiteConfig({ ...siteConfig, og_image_url: url });
+                }}
+                selectedUrl={siteConfig.og_image_url}
+            />
         </div>
     );
 };
