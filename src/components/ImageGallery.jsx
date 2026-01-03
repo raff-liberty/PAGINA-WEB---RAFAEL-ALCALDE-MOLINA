@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import { X, Trash2, Copy, CheckCircle, Image as ImageIcon, Plus, Upload } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { listImages, deleteImage } from '../lib/supabaseStorage';
