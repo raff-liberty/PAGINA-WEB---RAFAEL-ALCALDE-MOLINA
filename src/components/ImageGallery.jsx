@@ -75,12 +75,26 @@ const ImageGallery = ({ isOpen, onClose, onSelectImage, selectedUrl }) => {
                             <ImageIcon className="w-6 h-6 text-primary" />
                             Galería de Imágenes
                         </h2>
-                        <button
-                            onClick={onClose}
-                            className="text-gray-400 hover:text-white transition-colors"
-                        >
-                            <X className="w-6 h-6" />
-                        </button>
+                        <div className="flex items-center gap-4">
+                            <button
+                                onClick={() => {
+                                    // This button is just a reminder or can trigger the parent's uploader if we pass a prop
+                                    if (window.confirm('Para subir imágenes, usa el botón "Subir Nueva Imagen" en la pestaña de Configuración. ¿Quieres cerrar la galería para verlo?')) {
+                                        onClose();
+                                    }
+                                }}
+                                className="px-4 py-2 bg-primary/10 hover:bg-primary/20 border border-primary/20 text-primary rounded-lg text-sm font-bold transition-all flex items-center gap-2"
+                            >
+                                <Plus className="w-4 h-4" />
+                                ¿Cómo subir?
+                            </button>
+                            <button
+                                onClick={onClose}
+                                className="text-gray-400 hover:text-white transition-colors"
+                            >
+                                <X className="w-6 h-6" />
+                            </button>
+                        </div>
                     </div>
 
                     {/* Loading */}
@@ -106,8 +120,8 @@ const ImageGallery = ({ isOpen, onClose, onSelectImage, selectedUrl }) => {
                                 <div
                                     key={image.path}
                                     className={`relative group rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${selectedUrl === image.publicUrl
-                                            ? 'border-primary'
-                                            : 'border-white/10 hover:border-white/30'
+                                        ? 'border-primary'
+                                        : 'border-white/10 hover:border-white/30'
                                         }`}
                                     onClick={() => handleSelect(image.publicUrl)}
                                 >

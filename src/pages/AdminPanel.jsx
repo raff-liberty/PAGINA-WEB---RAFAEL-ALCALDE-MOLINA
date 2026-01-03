@@ -143,6 +143,7 @@ const AdminPanel = () => {
 - "La importancia de la automatización"
 - "5 trucos que cambiarán tu negocio"`;
 
+    // CRM Data Fetching Logic
     useEffect(() => {
         if (user) {
             fetchPosts();
@@ -2911,6 +2912,18 @@ const AdminPanel = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
+
+            {/* Live Blog Preview Modal */}
+            <BlogPostPreview
+                isOpen={showBlogPreview}
+                onClose={() => setShowBlogPreview(false)}
+                title={editedTitle}
+                content={editedContent}
+                category={editedCategory}
+                publishDate={editedPublishDate}
+                readTime={editedReadTime}
+                savings={editedSavings}
+            />
         </div >
     );
 };
