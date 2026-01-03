@@ -32,6 +32,7 @@ const AdminPanel = () => {
     const [showPreview, setShowPreview] = useState(false);
     const [loading, setLoading] = useState(false);
     const [saveStatus, setSaveStatus] = useState('');
+    const [sitemapStatus, setSitemapStatus] = useState('');
     const [selectedPostsForExport, setSelectedPostsForExport] = useState([]);
 
     // Editable fields
@@ -294,6 +295,109 @@ const AdminPanel = () => {
         } catch (error) {
             console.error('Error saving site config:', error);
             setSaveStatus('✗ Error al guardar configuración');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const regenerateSitemap = async () => {
+        setLoading(true);
+        setSitemapStatus('Generando sitemap...');
+
+        try {
+            // Fetch all necessary data
+            const [sectorsRes, locationsRes, postsRes] = await Promise.all([
+                supabase.from('sectors').select('slug'),
+                supabase.from('locations').select('slug'),
+                supabase.from('blog_posts').select('slug, publish_date')
+            ]);
+
+            const sectorsData = sectorsRes.data || [];
+            const locationsData = locationsRes.data || [];
+            const postsData = postsRes.data || [];
+
+            // Static routes
+            const staticRoutes = [
+                { path: '', priority: '1.0', changefreq: 'weekly' },
+                { path: '/como-trabajamos', priority: '0.9', changefreq: 'monthly' },
+                { path: '/por-que-funciona', priority: '0.9', changefreq: 'monthly' },
+                { path: '/sobre-mi', priority: '0.8', changefreq: 'monthly' },
+                { path: '/contact', priority: '0.9', changefreq: 'monthly' },
+                { path: '/servicios', priority: '0.8', changefreq: 'monthly' },
+                { path: '/sectores', priority: '0.8', changefreq: 'monthly' },
+                { path: '/blog', priority: '0.7', changefreq: 'weekly' },
+                { path: '/legal', priority: '0.3', changefreq: 'yearly' },
+                { path: '/privacidad', priority: '0.3', changefreq: 'yearly' },
+                { path: '/cookies', priority: '0.3', changefreq: 'yearly' }
+            ];
+
+            const BASE_URL = 'https://engorilate.com';
+            const today = new Date().toISOString().split('T')[0];
+
+            let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+            xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+
+            // Add static routes
+            staticRoutes.forEach(route => {
+                xml += `  <url>\n`;
+                xml += `    <loc>${BASE_URL}${route.path}</loc>\n`;
+                xml += `    <lastmod>${today}</lastmod>\n`;
+                xml += `    <changefreq>${route.changefreq}</changefreq>\n`;
+                xml += `    <priority>${route.priority}</priority>\n`;
+                xml += `  </url>\n`;
+            });
+
+            // Add location pages
+            locationsData.forEach(loc => {
+                xml += `  <url>\n`;
+                xml += `    <loc>${BASE_URL}/servicios/${loc.slug}</loc>\n`;
+                xml += `    <lastmod>${today}</lastmod>\n`;
+                xml += `    <changefreq>monthly</changefreq>\n`;
+                xml += `    <priority>0.7</priority>\n`;
+                xml += `  </url>\n`;
+            });
+
+            // Add sector-location pages
+            sectorsData.forEach(sector => {
+                locationsData.forEach(loc => {
+                    xml += `  <url>\n`;
+                    xml += `    <loc>${BASE_URL}/${sector.slug}/${loc.slug}</loc>\n`;
+                    xml += `    <lastmod>${today}</lastmod>\n`;
+                    xml += `    <changefreq>monthly</changefreq>\n`;
+                    xml += `    <priority>0.8</priority>\n`;
+                    xml += `  </url>\n`;
+                });
+            });
+
+            // Add blog posts
+            postsData.forEach(post => {
+                xml += `  <url>\n`;
+                xml += `    <loc>${BASE_URL}/blog/${post.slug}</loc>\n`;
+                xml += `    <lastmod>${post.publish_date}</lastmod>\n`;
+                xml += `    <changefreq>monthly</changefreq>\n`;
+                xml += `    <priority>0.6</priority>\n`;
+                xml += `  </url>\n`;
+            });
+
+            xml += '</urlset>';
+
+            // Create and download the sitemap
+            const blob = new Blob([xml], { type: 'application/xml' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'sitemap.xml';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+
+            const totalUrls = staticRoutes.length + locationsData.length + (sectorsData.length * locationsData.length) + postsData.length;
+            setSitemapStatus(`✓ Sitemap generado: ${totalUrls} URLs. Archivo descargado. Súbelo a /public/`);
+            setTimeout(() => setSitemapStatus(''), 8000);
+        } catch (error) {
+            console.error('Error generating sitemap:', error);
+            setSitemapStatus('✗ Error al generar sitemap');
         } finally {
             setLoading(false);
         }
@@ -823,6 +927,33 @@ const AdminPanel = () => {
                                 <Save className="w-5 h-5" />
                                 Guardar Configuración
                             </button>
+
+                            {/* Sitemap Section */}
+                            <div className="mt-8 pt-8 border-t border-white/10">
+                                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                                    <Globe className="w-5 h-5 text-primary" />
+                                    Sitemap SEO
+                                </h3>
+                                <p className="text-sm text-gray-400 mb-4">
+                                    Genera un nuevo sitemap.xml con todas las páginas actuales (estáticas, sector-ciudad, blog posts).
+                                </p>
+                                {sitemapStatus && (
+                                    <div className={`mb-4 p-3 rounded-lg text-sm ${sitemapStatus.startsWith('✓') ? 'bg-green-500/10 text-green-400 border border-green-500/20' : sitemapStatus.startsWith('✗') ? 'bg-red-500/10 text-red-400 border border-red-500/20' : 'bg-primary/10 text-primary border border-primary/20'}`}>
+                                        {sitemapStatus}
+                                    </div>
+                                )}
+                                <button
+                                    onClick={regenerateSitemap}
+                                    disabled={loading}
+                                    className="w-full flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold py-3 rounded-lg transition-all disabled:opacity-50"
+                                >
+                                    <Download className="w-5 h-5" />
+                                    Regenerar Sitemap
+                                </button>
+                                <p className="text-xs text-gray-500 mt-2">
+                                    El archivo se descargará automáticamente. Luego súbelo manualmente a <code className="bg-black/30 px-1 rounded">/public/sitemap.xml</code>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 )}
