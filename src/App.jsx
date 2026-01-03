@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -25,36 +26,38 @@ console.log('Supabase Client Initialized:', !!supabase);
 
 function App() {
     return (
-        <Router>
-            <ScrollToTop />
-            <div className="min-h-screen bg-background-dark">
-                <Navbar />
-                <main>
-                    <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/como-trabajamos" element={<WorkMethod />} />
-                        <Route path="/por-que-funciona" element={<WhyThisWorks />} />
-                        <Route path="/sobre-mi" element={<About />} />
-                        <Route path="/contact" element={<Contact />} />
-                        <Route path="/legal" element={<Legal />} />
-                        <Route path="/privacidad" element={<Privacy />} />
-                        <Route path="/cookies" element={<Cookies />} />
-                        <Route path="/servicios" element={<Locations />} />
-                        <Route path="/servicios/:location" element={<LocationPage />} />
-                        <Route path="/sectores" element={<SectorsDirectory />} />
-                        <Route path="/blog" element={<Blog />} />
-                        <Route path="/blog/:slug" element={<BlogPost />} />
-                        <Route path="/admin" element={<AdminPanel />} />
-                        <Route path="/:sector/:location" element={<SectorLocationPage />} />
-                    </Routes>
-                </main>
-                <Footer />
-                <CookieBanner />
-                <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden h-full w-full">
-                    <div className="scanline"></div>
+        <AuthProvider>
+            <Router>
+                <ScrollToTop />
+                <div className="min-h-screen bg-background-dark">
+                    <Navbar />
+                    <main>
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/como-trabajamos" element={<WorkMethod />} />
+                            <Route path="/por-que-funciona" element={<WhyThisWorks />} />
+                            <Route path="/sobre-mi" element={<About />} />
+                            <Route path="/contact" element={<Contact />} />
+                            <Route path="/legal" element={<Legal />} />
+                            <Route path="/privacidad" element={<Privacy />} />
+                            <Route path="/cookies" element={<Cookies />} />
+                            <Route path="/servicios" element={<Locations />} />
+                            <Route path="/servicios/:location" element={<LocationPage />} />
+                            <Route path="/sectores" element={<SectorsDirectory />} />
+                            <Route path="/blog" element={<Blog />} />
+                            <Route path="/blog/:slug" element={<BlogPost />} />
+                            <Route path="/admin" element={<AdminPanel />} />
+                            <Route path="/:sector/:location" element={<SectorLocationPage />} />
+                        </Routes>
+                    </main>
+                    <Footer />
+                    <CookieBanner />
+                    <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden h-full w-full">
+                        <div className="scanline"></div>
+                    </div>
                 </div>
-            </div>
-        </Router>
+            </Router>
+        </AuthProvider>
     );
 }
 

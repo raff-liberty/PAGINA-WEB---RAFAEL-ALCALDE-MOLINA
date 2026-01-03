@@ -5,10 +5,13 @@ import { Save, X, Eye, Edit, Plus, Trash2, Lock, Search, Filter, BookOpen, BarCh
 import BackgroundMesh from '../components/BackgroundMesh';
 import StrategicRoadmap from '../components/StrategicRoadmap';
 import SEOPreview from '../components/SEOPreview';
+import { useAuth } from '../contexts/AuthContext';
 
 const AdminPanel = () => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const { user, loading: authLoading, signIn, signOut } = useAuth();
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loginError, setLoginError] = useState('');
 
     // Blog State
     const [posts, setPosts] = useState([]);
@@ -40,6 +43,9 @@ const AdminPanel = () => {
     const [saveStatus, setSaveStatus] = useState('');
     const [sitemapStatus, setSitemapStatus] = useState('');
     const [showSEOPreview, setShowSEOPreview] = useState(false);
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [passwordChangeStatus, setPasswordChangeStatus] = useState('');
     const [selectedPostsForExport, setSelectedPostsForExport] = useState([]);
 
     // Editable fields
@@ -53,7 +59,7 @@ const AdminPanel = () => {
     const [editedPublishDate, setEditedPublishDate] = useState('');
     const [editedMetaDescription, setEditedMetaDescription] = useState('');
 
-    const ADMIN_PASSWORD = 'engorilate2025';
+    // Removed hardcoded password - now using Supabase Auth
 
     const categories = [
         "Pierdo tiempo",
@@ -111,12 +117,12 @@ const AdminPanel = () => {
 - "5 trucos que cambiarán tu negocio"`;
 
     useEffect(() => {
-        if (isAuthenticated) {
+        if (user) {
             fetchPosts();
             fetchSiteConfig();
             fetchSEOData();
         }
-    }, [isAuthenticated]);
+    }, [user]);
 
     const fetchPosts = async () => {
         setLoading(true);
@@ -410,12 +416,53 @@ const AdminPanel = () => {
         }
     };
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        if (password === ADMIN_PASSWORD) {
-            setIsAuthenticated(true);
-        } else {
-            alert('Contraseña incorrecta');
+        setLoginError('');
+
+        const { error } = await signIn(email, password);
+
+        if (error) {
+            setLoginError('Email o contraseña incorrectos');
+            console.error('Login error:', error);
+        }
+    };
+
+    const handleChangePassword = async () => {
+        if (!newPassword || !confirmPassword) {
+            setPasswordChangeStatus('✗ Por favor completa ambos campos');
+            return;
+        }
+
+        if (newPassword !== confirmPassword) {
+            setPasswordChangeStatus('✗ Las contraseñas no coinciden');
+            return;
+        }
+
+        if (newPassword.length < 8) {
+            setPasswordChangeStatus('✗ La contraseña debe tener al menos 8 caracteres');
+            return;
+        }
+
+        setLoading(true);
+        setPasswordChangeStatus('Cambiando contraseña...');
+
+        try {
+            const { error } = await supabase.auth.updateUser({
+                password: newPassword
+            });
+
+            if (error) throw error;
+
+            setPasswordChangeStatus('✓ Contraseña cambiada correctamente');
+            setNewPassword('');
+            setConfirmPassword('');
+            setTimeout(() => setPasswordChangeStatus(''), 3000);
+        } catch (error) {
+            console.error('Error changing password:', error);
+            setPasswordChangeStatus('✗ Error al cambiar contraseña');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -705,7 +752,18 @@ const AdminPanel = () => {
         }))
     };
 
-    if (!isAuthenticated) {
+    if (authLoading) {
+        return (
+            <div className="relative min-h-screen flex items-center justify-center">
+                <BackgroundMesh />
+                <div className="relative z-10">
+                    <div className="w-8 h-8 border-2 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+                </div>
+            </div>
+        );
+    }
+
+    if (!user) {
         return (
             <div className="relative min-h-screen flex items-center justify-center">
                 <BackgroundMesh />
@@ -720,13 +778,33 @@ const AdminPanel = () => {
                             <h1 className="text-2xl font-bold text-white">Admin Panel</h1>
                         </div>
                         <form onSubmit={handleLogin}>
-                            <input
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                placeholder="Contraseña"
-                                className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white mb-4 focus:border-primary focus:outline-none"
-                            />
+                            <div className="mb-4">
+                                <label className="block text-sm font-medium text-gray-400 mb-2">Email</label>
+                                <input
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="admin@engorilate.com"
+                                    className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                    required
+                                />
+                            </div>
+                            <div className="mb-4">
+                                <label className="block text-sm font-medium text-gray-400 mb-2">Contraseña</label>
+                                <input
+                                    type="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    placeholder="••••••••"
+                                    className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                    required
+                                />
+                            </div>
+                            {loginError && (
+                                <div className="mb-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
+                                    {loginError}
+                                </div>
+                            )}
                             <button
                                 type="submit"
                                 className="w-full bg-primary hover:bg-primary-hover text-gray-900 font-bold py-3 rounded-lg transition-all"
@@ -794,7 +872,7 @@ const AdminPanel = () => {
                             Configuración
                         </button>
                         <button
-                            onClick={() => setIsAuthenticated(false)}
+                            onClick={signOut}
                             className="text-gray-400 hover:text-white transition-colors"
                         >
                             Cerrar sesión
@@ -1029,6 +1107,52 @@ const AdminPanel = () => {
                                 <p className="text-xs text-gray-500 mt-2">
                                     El archivo se descargará automáticamente. Luego súbelo manualmente a <code className="bg-black/30 px-1 rounded">/public/sitemap.xml</code>
                                 </p>
+                            </div>
+
+                            {/* Password Change Section */}
+                            <div className="mt-8 pt-8 border-t border-white/10">
+                                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                                    <Lock className="w-5 h-5 text-primary" />
+                                    Cambiar Contraseña
+                                </h3>
+                                <p className="text-sm text-gray-400 mb-4">
+                                    Cambia tu contraseña de acceso al panel de administración.
+                                </p>
+                                <div className="space-y-4 max-w-md">
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-400 mb-2">Nueva Contraseña</label>
+                                        <input
+                                            type="password"
+                                            value={newPassword}
+                                            onChange={(e) => setNewPassword(e.target.value)}
+                                            placeholder="Mínimo 8 caracteres"
+                                            className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-400 mb-2">Confirmar Contraseña</label>
+                                        <input
+                                            type="password"
+                                            value={confirmPassword}
+                                            onChange={(e) => setConfirmPassword(e.target.value)}
+                                            placeholder="Repite la contraseña"
+                                            className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                        />
+                                    </div>
+                                    {passwordChangeStatus && (
+                                        <div className={`p-3 rounded-lg text-sm ${passwordChangeStatus.startsWith('✓') ? 'bg-green-500/10 text-green-400 border border-green-500/20' : 'bg-red-500/10 text-red-400 border border-red-500/20'}`}>
+                                            {passwordChangeStatus}
+                                        </div>
+                                    )}
+                                    <button
+                                        onClick={handleChangePassword}
+                                        disabled={loading}
+                                        className="w-full flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-gray-900 font-bold py-3 rounded-lg transition-all disabled:opacity-50"
+                                    >
+                                        <Lock className="w-5 h-5" />
+                                        Cambiar Contraseña
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
