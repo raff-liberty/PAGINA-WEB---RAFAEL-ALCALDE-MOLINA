@@ -47,21 +47,63 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
         setLoading(true);
 
         try {
-            const payload = {
-                ...formData,
-                submittedAt: new Date().toISOString(),
-                source: source, // Allow overriding source (e.g. "Home Investment Section")
-                adminEmail: siteConfig?.contact_email
-            };
+            // 1. SAVE TO SUPABASE FIRST (upsert contact)
+            const { data: contact, error: contactError } = await supabase
+                .from('contacts')
+                .upsert([{
+                    email: formData.email,
+                    name: formData.name,
+                    phone: formData.phone,
+                    service_interest: formData.service,
+                    source: source,
+                    last_contact_at: new Date().toISOString()
+                }], {
+                    onConflict: 'email',
+                    ignoreDuplicates: false
+                })
+                .select()
+                .single();
 
+            if (contactError) {
+                console.error('Contact save error:', contactError);
+                throw contactError;
+            }
+
+            // 2. SAVE MESSAGE
+            const { error: messageError } = await supabase
+                .from('contact_messages')
+                .insert([{
+                    contact_id: contact.id,
+                    message: formData.message,
+                    service_requested: formData.service,
+                    source: source
+                }]);
+
+            if (messageError) {
+                console.error('Message save error:', messageError);
+                throw messageError;
+            }
+
+            // 3. SEND TO N8N (notification)
             if (siteConfig?.n8n_webhook_url) {
                 await fetch(siteConfig.n8n_webhook_url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify({
+                        action: 'new_contact',
+                        contact_id: contact.id,
+                        name: formData.name,
+                        email: formData.email,
+                        phone: formData.phone,
+                        service: formData.service,
+                        message: formData.message,
+                        source: source,
+                        submittedAt: new Date().toISOString(),
+                        adminEmail: siteConfig?.contact_email
+                    })
                 });
             } else {
-                console.warn('No N8N Webhook configured. Data logged:', payload);
+                console.warn('No N8N Webhook configured. Contact saved in Supabase.');
             }
 
             setSubmitted(true);
