@@ -7,6 +7,7 @@ import StrategicRoadmap from '../components/StrategicRoadmap';
 import SEOPreview from '../components/SEOPreview';
 import ImageUploader from '../components/ImageUploader';
 import ImageGallery from '../components/ImageGallery';
+import BlogPostPreview from '../components/BlogPostPreview';
 import { useAuth } from '../contexts/AuthContext';
 
 const AdminPanel = () => {
@@ -50,6 +51,7 @@ const AdminPanel = () => {
     const [passwordChangeStatus, setPasswordChangeStatus] = useState('');
     const [showImageUploader, setShowImageUploader] = useState(false);
     const [showImageGallery, setShowImageGallery] = useState(false);
+    const [showBlogPreview, setShowBlogPreview] = useState(false);
     const [selectedPostsForExport, setSelectedPostsForExport] = useState([]);
 
     // Editable fields
@@ -1378,35 +1380,94 @@ const AdminPanel = () => {
                                             </div>
                                         </div>
 
-                                        {/* Advanced JSON Data */}
+                                        {/* Visual Editor for Problems & Solutions */}
                                         <div className="p-4 bg-black/20 rounded-xl border border-white/10">
                                             <h3 className="text-white font-bold mb-4 flex items-center gap-2">
                                                 <AlertCircle className="w-4 h-4 text-primary" />
-                                                Datos Avanzados (JSON)
+                                                Problemas y Soluciones
                                             </h3>
-                                            <div className="space-y-4">
-                                                <div>
-                                                    <label className="block text-sm font-medium text-gray-400 mb-1">Problemas (JSON Array)</label>
-                                                    <textarea
-                                                        value={JSON.stringify(selectedLanding.problems || [], null, 2)}
-                                                        onChange={(e) => {
-                                                            try {
-                                                                const parsed = JSON.parse(e.target.value);
-                                                                setSelectedLanding({ ...selectedLanding, problems: parsed });
-                                                            } catch (err) {
-                                                                // Allocating temporary state for invalid JSON could be complex, 
-                                                                // for now we just don't update state on invalid JSON or we could accept string and validate later.
-                                                                // A better approach for raw editing:
-                                                            }
+
+                                            {/* Problems Editor */}
+                                            <div className="mb-6">
+                                                <label className="block text-sm font-medium text-gray-400 mb-2">Problemas</label>
+                                                <div className="space-y-2">
+                                                    {(selectedLanding.problems || []).map((problem, index) => (
+                                                        <div key={index} className="flex gap-2">
+                                                            <input
+                                                                type="text"
+                                                                value={problem}
+                                                                onChange={(e) => {
+                                                                    const newProblems = [...(selectedLanding.problems || [])];
+                                                                    newProblems[index] = e.target.value;
+                                                                    setSelectedLanding({ ...selectedLanding, problems: newProblems });
+                                                                }}
+                                                                className="flex-1 bg-black/30 border border-white/20 rounded-lg px-4 py-2 text-white focus:border-primary focus:outline-none"
+                                                                placeholder="Describe un problema..."
+                                                            />
+                                                            <button
+                                                                onClick={() => {
+                                                                    const newProblems = selectedLanding.problems.filter((_, i) => i !== index);
+                                                                    setSelectedLanding({ ...selectedLanding, problems: newProblems });
+                                                                }}
+                                                                className="px-3 py-2 bg-red-500/20 hover:bg-red-500/30 border border-red-500/20 text-red-400 rounded-lg transition-all"
+                                                                title="Eliminar"
+                                                            >
+                                                                <X className="w-4 h-4" />
+                                                            </button>
+                                                        </div>
+                                                    ))}
+                                                    <button
+                                                        onClick={() => {
+                                                            const newProblems = [...(selectedLanding.problems || []), ''];
+                                                            setSelectedLanding({ ...selectedLanding, problems: newProblems });
                                                         }}
-                                                        // For a simple raw editor, usually we separate "text" state from "object" state, 
-                                                        // but to keep it simple let's just warn it's raw.
-                                                        // Actually, simplified: Read Only for now or strict JSON.
-                                                        readOnly={true}
-                                                        className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-2 text-gray-500 font-mono text-xs h-32 cursor-not-allowed"
-                                                        placeholder="Edición de JSON próximamente..."
-                                                    />
-                                                    <p className="text-xs text-gray-500 mt-1">La edición de estructuras complejas (Problemas/Soluciones) se habilitará en la v2.</p>
+                                                        className="w-full flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white py-2 rounded-lg transition-all"
+                                                    >
+                                                        <Plus className="w-4 h-4" />
+                                                        Añadir Problema
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            {/* Solutions Editor */}
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-400 mb-2">Soluciones</label>
+                                                <div className="space-y-2">
+                                                    {(selectedLanding.solutions || []).map((solution, index) => (
+                                                        <div key={index} className="flex gap-2">
+                                                            <input
+                                                                type="text"
+                                                                value={solution}
+                                                                onChange={(e) => {
+                                                                    const newSolutions = [...(selectedLanding.solutions || [])];
+                                                                    newSolutions[index] = e.target.value;
+                                                                    setSelectedLanding({ ...selectedLanding, solutions: newSolutions });
+                                                                }}
+                                                                className="flex-1 bg-black/30 border border-white/20 rounded-lg px-4 py-2 text-white focus:border-primary focus:outline-none"
+                                                                placeholder="Describe una solución..."
+                                                            />
+                                                            <button
+                                                                onClick={() => {
+                                                                    const newSolutions = selectedLanding.solutions.filter((_, i) => i !== index);
+                                                                    setSelectedLanding({ ...selectedLanding, solutions: newSolutions });
+                                                                }}
+                                                                className="px-3 py-2 bg-red-500/20 hover:bg-red-500/30 border border-red-500/20 text-red-400 rounded-lg transition-all"
+                                                                title="Eliminar"
+                                                            >
+                                                                <X className="w-4 h-4" />
+                                                            </button>
+                                                        </div>
+                                                    ))}
+                                                    <button
+                                                        onClick={() => {
+                                                            const newSolutions = [...(selectedLanding.solutions || []), ''];
+                                                            setSelectedLanding({ ...selectedLanding, solutions: newSolutions });
+                                                        }}
+                                                        className="w-full flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white py-2 rounded-lg transition-all"
+                                                    >
+                                                        <Plus className="w-4 h-4" />
+                                                        Añadir Solución
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -1547,8 +1608,15 @@ const AdminPanel = () => {
                                                 onClick={() => setShowPreview(!showPreview)}
                                                 className="flex items-center gap-2 px-4 py-2 bg-black/30 border border-white/20 rounded-lg text-white hover:border-primary/50 transition-all"
                                             >
-                                                {showPreview ? <Edit className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                                                {showPreview ? 'Editar' : 'Preview'}
+                                                <Eye className="w-4 h-4" />
+                                                {showPreview ? 'Ocultar' : 'Ver'} Markdown
+                                            </button>
+                                            <button
+                                                onClick={() => setShowBlogPreview(true)}
+                                                className="flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-lg text-primary hover:bg-primary/20 transition-all"
+                                            >
+                                                <Eye className="w-4 h-4" />
+                                                Preview en Vivo
                                             </button>
                                             <button
                                                 onClick={handleSave}
@@ -1726,6 +1794,16 @@ const AdminPanel = () => {
                     setSiteConfig({ ...siteConfig, og_image_url: url });
                 }}
                 selectedUrl={siteConfig.og_image_url}
+            />
+
+            {/* Blog Post Preview Modal */}
+            <BlogPostPreview
+                isOpen={showBlogPreview}
+                onClose={() => setShowBlogPreview(false)}
+                title={editedTitle}
+                content={editedContent}
+                category={editedCategory}
+                publishDate={editedPublishDate}
             />
         </div>
     );
