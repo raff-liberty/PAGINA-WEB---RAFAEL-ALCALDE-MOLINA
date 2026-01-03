@@ -871,6 +871,20 @@ const AdminPanel = () => {
                             Estadísticas
                         </button>
                         <button
+                            onClick={() => setActiveTab('sectors')}
+                            className={`px-4 py-2 rounded-lg transition-all ${activeTab === 'sectors' ? 'bg-primary text-gray-900' : 'bg-black/30 text-white border border-white/20'}`}
+                        >
+                            <Briefcase className="w-4 h-4 inline mr-2" />
+                            Sectores
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('locations')}
+                            className={`px-4 py-2 rounded-lg transition-all ${activeTab === 'locations' ? 'bg-primary text-gray-900' : 'bg-black/30 text-white border border-white/20'}`}
+                        >
+                            <MapPin className="w-4 h-4 inline mr-2" />
+                            Localizaciones
+                        </button>
+                        <button
                             onClick={() => setActiveTab('config')}
                             className={`px-4 py-2 rounded-lg transition-all ${activeTab === 'config' ? 'bg-primary text-gray-900' : 'bg-black/30 text-white border border-white/20'}`}
                         >
@@ -1775,16 +1789,18 @@ const AdminPanel = () => {
             </div>
 
             {/* SEO Preview Modal */}
-            {selectedLanding && (
-                <SEOPreview
-                    isOpen={showSEOPreview}
-                    onClose={() => setShowSEOPreview(false)}
-                    metaTitle={selectedLanding.meta_title}
-                    metaDescription={selectedLanding.meta_description}
-                    ogImage={siteConfig.og_image_url}
-                    url={`engorilate.com/${selectedLanding.sector_slug}/${selectedLanding.location_slug}`}
-                />
-            )}
+            {
+                selectedLanding && (
+                    <SEOPreview
+                        isOpen={showSEOPreview}
+                        onClose={() => setShowSEOPreview(false)}
+                        metaTitle={selectedLanding.meta_title}
+                        metaDescription={selectedLanding.meta_description}
+                        ogImage={siteConfig.og_image_url}
+                        url={`engorilate.com/${selectedLanding.sector_slug}/${selectedLanding.location_slug}`}
+                    />
+                )
+            }
 
             {/* Image Gallery Modal */}
             <ImageGallery
@@ -1805,7 +1821,7 @@ const AdminPanel = () => {
                 category={editedCategory}
                 publishDate={editedPublishDate}
             />
-        </div>
+        </div >
     );
 };
 
