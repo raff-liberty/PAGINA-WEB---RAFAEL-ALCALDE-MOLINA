@@ -153,11 +153,14 @@ const Navbar = () => {
             {/* BRAND NEW MOBILE MENU - FULL SCREEN OVERLAY */}
             {isMenuOpen && (
                 <div
-                    className="lg:hidden fixed inset-0 top-0 left-0 right-0 bottom-0 overflow-y-auto"
+                    className="lg:hidden fixed inset-0 top-0 left-0 right-0 bottom-0"
                     style={{
                         backgroundColor: '#000000',
                         zIndex: 99999,
-                        position: 'fixed'
+                        position: 'fixed',
+                        width: '100vw',
+                        height: '100vh',
+                        overflow: 'hidden'
                     }}
                 >
                     {/* Header with close button */}
@@ -172,7 +175,7 @@ const Navbar = () => {
                     </div>
 
                     {/* Menu Items */}
-                    <div className="p-8 space-y-8">
+                    <div className="p-8 space-y-8 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 80px)' }}>
                         {navLinks.map((link) => (
                             <div key={link.path}>
                                 {link.dropdown ? (
