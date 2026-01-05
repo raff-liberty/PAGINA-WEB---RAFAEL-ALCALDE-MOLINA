@@ -169,7 +169,8 @@ const Navbar = () => {
                             animate={{ x: 0 }}
                             exit={{ x: '100%' }}
                             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                            className="lg:hidden fixed right-0 top-0 bottom-0 w-[85%] max-w-sm bg-black border-l border-white/10 z-50 overflow-y-auto"
+                            className="lg:hidden fixed right-0 top-0 bottom-0 w-[85%] max-w-sm border-l border-white/10 z-50 overflow-y-auto"
+                            style={{ backgroundColor: 'rgb(10, 10, 10)' }}
                         >
                             {/* Close button */}
                             <div className="flex justify-end p-6 border-b border-white/10">
@@ -219,8 +220,8 @@ const Navbar = () => {
                                         ) : (
                                             <Link
                                                 className={`text-xl font-display font-bold transition-colors block ${location.pathname === link.path
-                                                        ? 'text-primary'
-                                                        : 'text-white hover:text-primary'
+                                                    ? 'text-primary'
+                                                    : 'text-white hover:text-primary'
                                                     }`}
                                                 to={link.path}
                                             >
