@@ -15,10 +15,19 @@ const staticRoutes = [
     { path: '/contact', priority: '0.9', changefreq: 'monthly' },
     { path: '/servicios', priority: '0.8', changefreq: 'monthly' },
     { path: '/sectores', priority: '0.8', changefreq: 'monthly' },
+    { path: '/donde-trabajamos', priority: '0.8', changefreq: 'monthly' },
     { path: '/blog', priority: '0.7', changefreq: 'weekly' },
     { path: '/legal', priority: '0.3', changefreq: 'yearly' },
     { path: '/privacidad', priority: '0.3', changefreq: 'yearly' },
     { path: '/cookies', priority: '0.3', changefreq: 'yearly' }
+];
+
+// Individual service detail pages - HIGH PRIORITY (conversion pages)
+const servicePages = [
+    { path: '/servicios/automatizacion-whatsapp', priority: '0.85', changefreq: 'monthly' },
+    { path: '/servicios/desarrollo-web-medida', priority: '0.85', changefreq: 'monthly' },
+    { path: '/servicios/seo-local-estrategia', priority: '0.85', changefreq: 'monthly' },
+    { path: '/servicios/sistemas-gestion-personalizados', priority: '0.85', changefreq: 'monthly' }
 ];
 
 // Generate XML content
@@ -37,7 +46,18 @@ const generateSitemap = () => {
         xml += `  </url>\n`;
     });
 
+    // Add individual service detail pages
+    servicePages.forEach(route => {
+        xml += `  <url>\n`;
+        xml += `    <loc>${BASE_URL}${route.path}</loc>\n`;
+        xml += `    <lastmod>${today}</lastmod>\n`;
+        xml += `    <changefreq>${route.changefreq}</changefreq>\n`;
+        xml += `    <priority>${route.priority}</priority>\n`;
+        xml += `  </url>\n`;
+    });
+
     // Add Location Pages (/servicios/:location)
+
     locations.forEach(loc => {
         xml += `  <url>\n`;
         xml += `    <loc>${BASE_URL}/servicios/${loc.slug}</loc>\n`;
@@ -85,6 +105,7 @@ console.log('✅ Sitemap generated successfully!');
 console.log(`📍 Location: public/sitemap.xml`);
 console.log(`📊 Total URLs: ${totalUrls}`);
 console.log(`   - Static pages: ${staticRoutes.length}`);
+console.log(`   - Service detail pages: ${servicePages.length}`);
 console.log(`   - Location pages: ${locations.length}`);
 console.log(`   - Sector-Location pages: ${sectorLocationPages}`);
 console.log(`   - Blog posts: ${blogPosts.length}`);

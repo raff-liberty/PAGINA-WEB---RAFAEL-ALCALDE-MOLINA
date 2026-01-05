@@ -157,7 +157,7 @@ const Navbar = () => {
                         initial={{ opacity: 0, x: '100%' }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: '100%' }}
-                        className="lg:hidden fixed inset-0 top-0 bg-[#0A0A0A] z-40 pt-24"
+                        className="lg:hidden fixed inset-0 top-0 bg-[#0A0A0A]/98 backdrop-blur-xl z-40 pt-24"
                     >
                         <div className="flex flex-col p-8 space-y-6 overflow-y-auto h-full pb-32">
                             {navLinks.map((link) => (
