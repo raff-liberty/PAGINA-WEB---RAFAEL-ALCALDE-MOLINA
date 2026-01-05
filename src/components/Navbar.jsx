@@ -169,8 +169,8 @@ const Navbar = () => {
                             animate={{ x: 0 }}
                             exit={{ x: '100%' }}
                             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                            className="lg:hidden fixed right-0 top-0 bottom-0 w-[85%] max-w-sm border-l border-white/10 z-50 overflow-y-auto"
-                            style={{ backgroundColor: 'rgb(10, 10, 10)' }}
+                            className="lg:hidden fixed right-0 top-0 bottom-0 w-[85%] max-w-sm border-l border-white/10 z-[9999] overflow-y-auto"
+                            style={{ backgroundColor: '#000000' }}
                         >
                             {/* Close button */}
                             <div className="flex justify-end p-6 border-b border-white/10">
