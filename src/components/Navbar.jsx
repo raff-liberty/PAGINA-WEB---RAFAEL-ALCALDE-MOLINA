@@ -177,6 +177,7 @@ const Navbar = () => {
                                 <button
                                     onClick={() => setIsMenuOpen(false)}
                                     className="text-white hover:text-primary transition-colors"
+                                    style={{ color: '#ffffff' }}
                                 >
                                     <X className="w-6 h-6" />
                                 </button>
@@ -191,6 +192,7 @@ const Navbar = () => {
                                                 <div
                                                     className="flex items-center justify-between text-xl font-display font-bold text-primary cursor-pointer"
                                                     onClick={() => setIsServicesOpen(!isServicesOpen)}
+                                                    style={{ color: '#6EE7B7' }}
                                                 >
                                                     <span>{link.name}</span>
                                                     <ChevronDown className={`w-5 h-5 transition-transform ${isServicesOpen ? 'rotate-180' : ''}`} />
@@ -208,6 +210,7 @@ const Navbar = () => {
                                                                     key={sub.path}
                                                                     to={sub.path}
                                                                     className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors"
+                                                                    style={{ color: '#d1d5db' }}
                                                                 >
                                                                     <sub.icon className="w-4 h-4 text-primary/60" />
                                                                     <span className="text-base">{sub.name}</span>
@@ -224,6 +227,7 @@ const Navbar = () => {
                                                     : 'text-white hover:text-primary'
                                                     }`}
                                                 to={link.path}
+                                                style={{ color: location.pathname === link.path ? '#6EE7B7' : '#ffffff' }}
                                             >
                                                 {link.name}
                                             </Link>
