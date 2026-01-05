@@ -15,10 +15,33 @@ const Privacy = () => {
                     <h1 className="text-4xl font-bold mb-8 text-white font-display">Política de Privacidad</h1>
 
                     <section className="mb-10 bg-white/[0.02] border border-white/5 p-8 rounded-3xl">
-                        <h2 className="text-2xl font-semibold mb-4 text-primary font-display tracking-tight">1. Protección de Datos</h2>
-                        <p className="text-gray-400 leading-relaxed">
-                            De conformidad con el Reglamento (UE) 2016/679 (RGPD) y la Ley Orgánica 3/2018 (LOPDGDD), le informamos que los datos de carácter personal facilitados a través de nuestros formularios o canales de contacto serán tratados bajo la responsabilidad de <strong>Rafael (Antes de Hacer)</strong>.
-                        </p>
+                        <h2 className="text-2xl font-semibold mb-4 text-primary font-display tracking-tight">1. Identificación del Responsable</h2>
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-sm text-left text-gray-400 border-collapse">
+                                <tbody>
+                                    <tr className="border-b border-white/10">
+                                        <td className="py-2 font-bold text-white w-1/3">Responsable:</td>
+                                        <td className="py-2">Rafael Alcalde Molina (Autónomo)</td>
+                                    </tr>
+                                    <tr className="border-b border-white/10">
+                                        <td className="py-2 font-bold text-white">NIF:</td>
+                                        <td className="py-2">48822622Q</td>
+                                    </tr>
+                                    <tr className="border-b border-white/10">
+                                        <td className="py-2 font-bold text-white">Dirección:</td>
+                                        <td className="py-2">Av Isla de Pascua 5 Bajo E, Isla Plana, 30868, Cartagena, Murcia</td>
+                                    </tr>
+                                    <tr className="border-b border-white/10">
+                                        <td className="py-2 font-bold text-white">Email:</td>
+                                        <td className="py-2">r.alcalde@engorilate.com</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="py-2 font-bold text-white">Actividad:</td>
+                                        <td className="py-2">Automatización y Sistemas de Negocio</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </section>
 
                     <section className="mb-10 bg-white/[0.02] border border-white/5 p-8 rounded-3xl">
@@ -43,14 +66,14 @@ const Privacy = () => {
                     <section className="mb-10 bg-white/[0.02] border border-white/5 p-8 rounded-3xl">
                         <h2 className="text-2xl font-semibold mb-4 text-primary font-display tracking-tight">4. Derechos del Interesado</h2>
                         <p className="text-gray-400 leading-relaxed">
-                            Usted tiene derecho a acceder, rectificar y suprimir sus datos, así como a la limitación u oposición a su tratamiento, portabilidad y a presentar una reclamación ante la autoridad de control (AEPD). Para ejercer estos derechos, puede dirigirse por escrito a: <span className="text-white font-mono">hola@antesdehacer.com</span>.
+                            Usted tiene derecho a acceder, rectificar y suprimir sus datos, así como a la limitación u oposición a su tratamiento, portabilidad y a presentar una reclamación ante la autoridad de control (AEPD). Para ejercer estos derechos, puede dirigirse por escrito a: <span className="text-white font-mono">r.alcalde@engorilate.com</span>.
                         </p>
                     </section>
 
                     <section className="mb-10 bg-white/[0.02] border border-white/5 p-8 rounded-3xl">
                         <h2 className="text-2xl font-semibold mb-4 text-primary font-display tracking-tight">5. Responsable</h2>
                         <p className="text-gray-400 leading-relaxed">
-                            Rafael (Antes de Hacer), con ubicación operativa en Cartagena, Murcia, España.
+                            Rafael Alcalde Molina (Engorilate), con ubicación operativa en Cartagena, Murcia, España.
                         </p>
                     </section>
                 </motion.div>

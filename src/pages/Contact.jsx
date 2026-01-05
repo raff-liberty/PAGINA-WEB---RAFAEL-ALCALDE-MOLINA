@@ -12,7 +12,7 @@ const Contact = () => {
         whatsapp_url: 'https://wa.me/34600000000',
         instagram_url: 'https://instagram.com/engorilate',
         linkedin_url: 'https://linkedin.com/in/engorilate',
-        contact_email: 'hola@antesdehacer.com'
+        contact_email: 'r.alcalde@engorilate.com'
     });
 
     useEffect(() => {

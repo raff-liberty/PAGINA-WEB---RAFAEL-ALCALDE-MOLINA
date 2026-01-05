@@ -7,6 +7,11 @@ import Home from './pages/Home';
 import WorkMethod from './pages/WorkMethod';
 import WhyThisWorks from './pages/WhyThisWorks';
 import About from './pages/About';
+import Services from './pages/Services';
+import WhatsAppBooking from './pages/WhatsAppBooking';
+import WebDevelopment from './pages/WebDevelopment';
+import LocalSeo from './pages/LocalSeo';
+import CustomManagement from './pages/CustomManagement';
 import Contact from './pages/Contact';
 import Legal from './pages/Legal';
 import Privacy from './pages/Privacy';
@@ -42,7 +47,12 @@ function App() {
                             <Route path="/legal" element={<Legal />} />
                             <Route path="/privacidad" element={<Privacy />} />
                             <Route path="/cookies" element={<Cookies />} />
-                            <Route path="/servicios" element={<Locations />} />
+                            <Route path="/servicios" element={<Services />} />
+                            <Route path="/servicios/automatizacion-whatsapp" element={<WhatsAppBooking />} />
+                            <Route path="/servicios/desarrollo-web-medida" element={<WebDevelopment />} />
+                            <Route path="/servicios/seo-local-estrategia" element={<LocalSeo />} />
+                            <Route path="/servicios/sistemas-gestion-personalizados" element={<CustomManagement />} />
+                            <Route path="/donde-trabajamos" element={<Locations />} />
                             <Route path="/servicios/:location" element={<LocationPage />} />
                             <Route path="/sectores" element={<SectorsDirectory />} />
                             <Route path="/blog" element={<Blog />} />

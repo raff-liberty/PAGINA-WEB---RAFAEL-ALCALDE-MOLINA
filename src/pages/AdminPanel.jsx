@@ -666,11 +666,16 @@ const AdminPanel = () => {
             // Static routes
             const staticRoutes = [
                 { path: '', priority: '1.0', changefreq: 'weekly' },
+                { path: '/servicios', priority: '1.0', changefreq: 'weekly' },
+                { path: '/servicios/automatizacion-whatsapp', priority: '0.9', changefreq: 'monthly' },
+                { path: '/servicios/desarrollo-web-medida', priority: '0.9', changefreq: 'monthly' },
+                { path: '/servicios/seo-local-estrategia', priority: '0.9', changefreq: 'monthly' },
+                { path: '/servicios/sistemas-gestion-personalizados', priority: '0.9', changefreq: 'monthly' },
+                { path: '/donde-trabajamos', priority: '0.8', changefreq: 'monthly' },
                 { path: '/como-trabajamos', priority: '0.9', changefreq: 'monthly' },
                 { path: '/por-que-funciona', priority: '0.9', changefreq: 'monthly' },
                 { path: '/sobre-mi', priority: '0.8', changefreq: 'monthly' },
                 { path: '/contact', priority: '0.9', changefreq: 'monthly' },
-                { path: '/servicios', priority: '0.8', changefreq: 'monthly' },
                 { path: '/sectores', priority: '0.8', changefreq: 'monthly' },
                 { path: '/blog', priority: '0.7', changefreq: 'weekly' },
                 { path: '/legal', priority: '0.3', changefreq: 'yearly' },
@@ -1157,16 +1162,16 @@ const AdminPanel = () => {
             <BackgroundMesh />
 
             <div className="relative z-10 max-w-7xl mx-auto px-6">
-                <div className="mb-12 flex flex-col md:flex-row items-center justify-between gap-8">
+                <div className="mb-12 flex flex-col lg:flex-row items-center justify-between gap-8">
                     <h1 className="text-4xl font-black text-white uppercase italic tracking-tighter">Admin Panel & SEO</h1>
-                    <div className="grid grid-cols-3 sm:grid-cols-5 md:flex md:flex-wrap items-center justify-center gap-2 w-full md:w-auto">
+                    <div className="flex flex-wrap items-center justify-center lg:justify-end gap-3 w-full lg:w-auto">
                         {navigationTabs.map((tab) => {
                             const Icon = tab.icon;
                             return (
                                 <button
                                     key={tab.id}
                                     onClick={() => setActiveTab(tab.id)}
-                                    className={`flex flex-col items-center justify-center gap-2 p-3 rounded-xl border transition-all min-w-[100px] aspect-square md:aspect-auto md:h-20 ${activeTab === tab.id
+                                    className={`flex flex-col items-center justify-center gap-2 p-3 rounded-xl border transition-all min-w-[90px] h-20 ${activeTab === tab.id
                                         ? 'bg-primary text-gray-900 border-primary shadow-[0_0_20px_rgba(224,255,0,0.3)]'
                                         : 'bg-white/5 text-gray-400 border-white/10 hover:bg-white/10 hover:border-white/20'
                                         }`}
@@ -1178,7 +1183,7 @@ const AdminPanel = () => {
                         })}
                         <button
                             onClick={signOut}
-                            className="flex flex-col items-center justify-center gap-2 p-3 rounded-xl border border-red-500/20 bg-red-500/5 text-red-400 hover:bg-red-500/10 transition-all min-w-[100px] aspect-square md:aspect-auto md:h-20"
+                            className="flex flex-col items-center justify-center gap-2 p-3 rounded-xl border border-red-500/20 bg-red-500/5 text-red-400 hover:bg-red-500/10 transition-all min-w-[90px] h-20"
                         >
                             <Lock className="w-5 h-5 flex-shrink-0" />
                             <span className="text-[10px] font-black uppercase tracking-tighter text-center leading-tight">Cerrar sesión</span>

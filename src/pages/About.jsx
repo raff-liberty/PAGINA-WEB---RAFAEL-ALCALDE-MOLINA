@@ -1,161 +1,227 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { History, Brain, ShieldCheck, ArrowRight } from 'lucide-react';
+import { History, Brain, ShieldCheck, ArrowRight, Zap, Quote, Target, Star } from 'lucide-react';
 import BackgroundMesh from '../components/BackgroundMesh';
 import SEO from '../components/SEO';
+import ContactForm from '../components/ContactForm';
 
 const About = () => {
     return (
-        <div className="relative pt-40 pb-16 min-h-screen">
+        <div className="relative pt-64 pb-32 min-h-screen selection:bg-primary selection:text-black">
             <SEO
-                title="Sobre mí | Rafael Alcalde Molina"
-                description="Economista y Business Controller. Ayudo a pequeños negocios a poner orden operativo antes de automatizar. Claridad antes que velocidad."
+                title="Sobre mí | Rafael Alcalde Molina | Engorilate"
+                description="Economista y Business Controller transformado en Arquitecto de Automatización. Ayudo a pequeños negocios a poner orden operativo antes de automatizar."
             />
             <BackgroundMesh />
 
             <div className="relative z-10 max-w-7xl mx-auto px-6">
-                <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center mb-24">
-                    <div className="lg:w-1/2 order-2 lg:order-1">
-                        <div className="relative">
-                            <div className="absolute -inset-4 bg-primary/20 rounded-full blur-3xl opacity-30"></div>
-                            <div className="relative aspect-square max-w-[280px] sm:max-w-[420px] mx-auto rounded-full overflow-hidden border-2 border-primary/20 shadow-2xl group">
-                                <img
-                                    alt="Rafael Alcalde Molina"
-                                    className="w-full h-full object-cover object-[center_5%] sm:object-[center_20%] grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
-                                    src="/rafael.png"
-                                />
-                                <div className="absolute inset-0 border-[1px] border-white/10 rounded-full pointer-events-none"></div>
-                                <div className="absolute inset-0 bg-gradient-to-t from-background-dark/40 to-transparent pointer-events-none"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="lg:w-1/2 order-1 lg:order-2">
-                        <h1 className="font-display text-4xl sm:text-5xl lg:text-5xl font-bold leading-tight mb-6 text-white">
-                            Sobre mí <br />
-                            <span className="text-primary">Rafael Alcalde Molina</span>
-                        </h1>
-                        <div className="h-1 w-20 bg-primary mb-8"></div>
-                        <h2 className="font-display text-2xl text-white font-semibold mb-6">
-                            No soy una agencia. <br />Tampoco una consultora.
-                        </h2>
-                        <p className="text-lg text-gray-400 font-light leading-relaxed mb-6">
-                            Soy una persona que ayuda a poner orden donde hay caos. Mi trabajo no consiste en venderte software, sino en darte claridad.
-                        </p>
-                        <div className="inline-flex gap-2 items-center text-sm font-mono text-primary/80 border border-primary/20 px-3 py-1 rounded-full bg-primary/5">
-                            <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
-                            Economista & Business Controller
-                        </div>
-                    </div>
-                </div>
+                {/* HERO SECTION / PROFILE */}
+                <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-center mb-48">
+                    <div className="lg:w-2/5 relative">
+                        {/* Ambient Glow behind photo */}
+                        <div className="absolute -inset-10 bg-primary/20 rounded-full blur-[120px] opacity-40 animate-pulse"></div>
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="relative aspect-[3/4] max-w-[400px] mx-auto rounded-[2rem] overflow-hidden border border-white/10 shadow-3xl group"
+                        >
+                            <img
+                                alt="Rafael Alcalde Molina"
+                                className="w-full h-full object-cover object-[center_15%] grayscale-[10%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
+                                src="/rafael.png"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
 
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-32">
-                    <div className="md:col-span-4 lg:col-span-3 hidden md:block relative">
-                        <div className="sticky top-32 border-l border-white/10 pl-6 space-y-4">
-                            <span className="text-xs uppercase tracking-widest text-gray-500 font-bold block mb-4">En esta página</span>
-                            <a className="block text-sm text-gray-400 hover:text-primary transition-colors" href="#origen">De dónde sale este enfoque</a>
-                            <a className="block text-sm text-gray-400 hover:text-primary transition-colors" href="#que-hago">Qué hago realmente</a>
-                            <a className="block text-sm text-gray-400 hover:text-primary transition-colors" href="#postura">Mi postura</a>
-                            <a className="block text-sm text-gray-400 hover:text-primary transition-colors" href="#valores">Antes de hacer</a>
-                        </div>
-                    </div>
-                    <div className="md:col-span-8 lg:col-span-8 space-y-24">
-                        <section className="group" id="origen">
-                            <div className="flex items-center gap-4 mb-6">
-                                <History className="text-primary w-8 h-8" />
-                                <h3 className="text-3xl font-display font-bold text-white">De dónde sale este enfoque</h3>
-                            </div>
-                            <div className="prose prose-invert prose-lg text-gray-400 leading-relaxed">
-                                <p>
-                                    Vengo del mundo de los números y el control de gestión. Durante años, trabajé analizando por qué las empresas perdían dinero o eficiencia. ¿La respuesta casi siempre? No era falta de ventas, era <strong>desorden operativo</strong>.
-                                </p>
-                                <p className="mt-4">
-                                    Vi a dueños de negocios brillantes ahogarse en tareas administrativas absurdas. Vi equipos quemados haciendo copy-paste en hojas de cálculo infinitas. Entendí que la tecnología, si se aplica sobre el caos, solo lo acelera. Primero hay que ordenar.
-                                </p>
-                            </div>
-                        </section>
-
-                        <section className="relative bg-surface-dark border border-white/5 p-8 md:p-10 rounded-xl hover:border-primary/20 transition-all duration-500" id="que-hago">
-                            <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-bl-full -z-10"></div>
-                            <h3 className="text-2xl font-display font-bold text-white mb-6">Qué hago realmente</h3>
-                            <ul className="space-y-6">
-                                {[
-                                    { title: "Entender:", text: "Me siento contigo a ver cómo funciona tu negocio hoy. Sin juzgar, solo observando la realidad de los datos y los flujos de trabajo." },
-                                    { title: "Decidir reglas:", text: "Establecemos protocolos. 'Si pasa A, hacemos B'. Eliminamos la fatiga de decisión diaria." },
-                                    { title: "Eliminar pasos:", text: "Solo cuando las reglas están claras, automatizo lo que sobra. Quito la grasa para que quede el músculo." }
-                                ].map((item, i) => (
-                                    <li key={i} className="flex gap-4">
-                                        <div className="mt-1 w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0"></div>
-                                        <p className="text-gray-300">
-                                            <strong>{item.title}</strong> {item.text}
-                                        </p>
-                                    </li>
-                                ))}
-                            </ul>
-                        </section>
-
-                        <section id="postura">
-                            <div className="flex items-center gap-4 mb-8">
-                                <Brain className="text-primary w-8 h-8" />
-                                <h3 className="text-3xl font-display font-bold text-white">Por qué trabajo así</h3>
-                            </div>
-                            <div className="grid md:grid-cols-2 gap-8">
-                                {[
-                                    { title: "Simplicidad radical", text: "Odio las complicaciones innecesarias. Si se puede hacer con un papel y un lápiz, no montemos un CRM de 500€ al mes.", primary: true },
-                                    { title: "Cero humo", text: "No uso palabras de moda. Hablamos claro, directo y al grano. Tu negocio no necesita 'sinergias', necesita facturar y entregar a tiempo." },
-                                    { title: "Pocos clientes", text: "Trabajo con un número limitado de proyectos a la vez. Necesito entender tu negocio casi tan bien como tú, y eso requiere tiempo y foco." },
-                                    { title: "Orden sostenible", text: "No busco soluciones parche. Busco sistemas que sigan funcionando cuando yo ya no esté mirando." }
-                                ].map((item, i) => (
-                                    <div key={i} className={`bg-surface-dark/50 p-6 rounded-lg border-l-2 ${item.primary ? 'border-primary' : 'border-gray-700 hover:border-primary'} transition-colors`}>
-                                        <h4 className="text-white font-bold mb-2">{item.title}</h4>
-                                        <p className="text-sm text-gray-400">{item.text}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </section>
-
-                        <section className="pt-8 border-t border-white/10" id="valores">
-                            <h3 className="text-2xl font-display font-bold text-white mb-8">Para quién tiene sentido esto</h3>
-                            <div className="flex flex-col md:flex-row gap-8 items-start">
-                                <p className="text-gray-400 leading-relaxed md:w-1/2">
-                                    Esto es para dueños de pequeños negocios que sienten que han perdido el control. Para los que saben que deberían estar haciendo estrategia pero se pasan el día apagando fuegos operativos. Si buscas a alguien que te instale un software y desaparezca, no soy yo.
-                                </p>
-                                <div className="md:w-1/2 bg-gradient-to-br from-surface-dark to-background-dark p-6 rounded-xl border border-white/5">
-                                    <h4 className="text-primary font-bold mb-4 flex items-center gap-2">
-                                        <ShieldCheck className="w-5 h-5" />
-                                        Mi postura
-                                    </h4>
-                                    <p className="text-white italic text-lg leading-relaxed">
-                                        "La tecnología debe ser invisible. El orden debe ser evidente."
-                                    </p>
+                            {/* Stats overlay */}
+                            <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+                                <div className="bg-black/60 backdrop-blur-md border border-white/10 p-3 rounded-xl">
+                                    <p className="text-[10px] uppercase tracking-widest text-primary font-bold mb-0.5">Perfil</p>
+                                    <p className="text-white text-sm font-display font-bold">Economista & Controller</p>
+                                </div>
+                                <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
+                                    <Zap className="w-5 h-5 text-black" />
                                 </div>
                             </div>
-                        </section>
+                        </motion.div>
+                    </div>
+
+                    <div className="lg:w-3/5">
+                        <motion.div
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            className="space-y-8"
+                        >
+                            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-mono tracking-widest uppercase">
+                                <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                                Economista de formación
+                            </div>
+
+                            <h1 className="font-display text-5xl md:text-8xl font-bold leading-[0.9] text-white tracking-tighter">
+                                Engorilao por <br />
+                                <span className="text-primary italic">vocación.</span>
+                            </h1>
+
+                            <p className="text-xl md:text-2xl text-gray-400 font-light leading-relaxed max-w-2xl italic">
+                                Ayudo a poner un orden industrial donde hay caos operativo. Mi trabajo no es venderte software, sino construir el motor que te devuelva tu tiempo.
+                            </p>
+
+                            <div className="flex flex-wrap gap-4 pt-4">
+                                <div className="px-6 py-4 bg-white/5 border border-white/10 rounded-2xl text-center">
+                                    <p className="text-2xl font-bold text-white mb-1">+5 años</p>
+                                    <p className="text-xs text-gray-500 uppercase tracking-widest">En Control de Gestión</p>
+                                </div>
+                                <div className="px-6 py-4 bg-white/5 border border-white/10 rounded-2xl text-center">
+                                    <p className="text-2xl font-bold text-white mb-1">Economista</p>
+                                    <p className="text-xs text-gray-500 uppercase tracking-widest">Colegiado & Especialista</p>
+                                </div>
+                            </div>
+                        </motion.div>
                     </div>
                 </div>
 
-                <div className="relative mt-20 mb-10">
-                    <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 rounded-3xl opacity-50"></div>
-                    <div className="relative bg-surface-dark border border-white/10 rounded-3xl p-12 text-center max-w-4xl mx-auto shadow-2xl overflow-hidden">
-                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50"></div>
-                        <h3 className="font-display text-3xl md:text-4xl font-bold text-white mb-6">
-                            Antes de hacer
-                        </h3>
-                        <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
-                            Si valoras la claridad y buscas resultados tangibles sin atajos mágicos, hablemos. Una conversación honesta para ver si encajamos.
-                        </p>
-                        <div className="flex flex-col items-center gap-4">
-                            <motion.a
-                                whileHover={{ y: -2 }}
-                                className="group relative inline-flex items-center gap-3 bg-primary hover:bg-primary-hover text-gray-900 font-bold text-lg px-10 py-4 rounded transition-all shadow-[0_0_25px_rgba(110,231,183,0.3)]"
-                                href="/contact"
-                            >
-                                <span>Contactar con Rafael</span>
-                                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                            </motion.a>
-                            <span className="text-sm text-gray-600 mt-2">Sin compromisos comerciales.</span>
+                {/* THE MANIFESTO / APPROACH */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 mb-48">
+                    <div className="lg:col-span-4">
+                        <div className="sticky top-32">
+                            <h2 className="font-display text-4xl font-bold text-white mb-8 tracking-tight">
+                                De dónde sale <br />
+                                <span className="text-primary italic">este enfoque</span>
+                            </h2>
+                            <Quote className="w-12 h-12 text-primary/20 mb-6" />
+                            <p className="text-gray-400 text-lg font-light leading-relaxed italic">
+                                "La tecnología aplicada al desorden solo lo acelera. Primero ordenamos, luego automatizamos. No hay otro camino."
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="lg:col-span-8 space-y-16">
+                        <section className="prose prose-invert prose-2xl text-gray-300 leading-relaxed font-light">
+                            <p>
+                                Vengo de los números. Durante años en el mundo del control de gestión, analicé por qué las empresas perdían dinero.
+                                <span className="text-white font-medium"> La respuesta nunca era falta de herramientas</span>, siempre era falta de claridad operativa.
+                            </p>
+                            <p className="mt-8">
+                                He visto a dueños de negocios brillantes quemarse en tareas de copiar y pegar. He visto el techo de cristal de "no puedo crecer sin explotar". Por eso creé Engorilate: para aplicar lógica industrial a negocios que quieren ser libres.
+                            </p>
+                        </section>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            {[
+                                {
+                                    title: "Simplicidad Radical",
+                                    text: "Si se puede hacer con un papel y un lápiz, no montemos un software complejo. Menos piezas = menos roturas.",
+                                    icon: Target,
+                                    color: "hover:border-blue-400/40"
+                                },
+                                {
+                                    title: "Cero Humo",
+                                    text: "Hablamos claro. Tu negocio no necesita sinergias, necesita que los pedidos salgan y no se pierdan leads.",
+                                    icon: ShieldCheck,
+                                    color: "hover:border-primary/40"
+                                },
+                                {
+                                    title: "Foco Exclusivo",
+                                    text: "Trabajo con proyectos limitados. Necesito entender tu negocio casi tan bien como tú para automatizarlo con éxito.",
+                                    icon: Brain,
+                                    color: "hover:border-purple-400/40"
+                                },
+                                {
+                                    title: "Garantía de Tiempo",
+                                    text: "Si no veo claro un ahorro de al menos 5-10 horas semanales para ti, no acepto el proyecto. Así de simple.",
+                                    icon: Star,
+                                    color: "hover:border-green-400/40"
+                                }
+                            ].map((item, i) => (
+                                <motion.div
+                                    key={i}
+                                    whileHover={{ y: -5 }}
+                                    className={`bg-[#0A0A0A] border border-white/5 p-8 rounded-[2rem] transition-all duration-500 ${item.color} group`}
+                                >
+                                    <item.icon className="w-8 h-8 text-gray-500 group-hover:text-white transition-colors mb-6" />
+                                    <h4 className="text-xl font-bold text-white mb-3 tracking-tight">{item.title}</h4>
+                                    <p className="text-gray-500 text-sm leading-relaxed font-light italic">{item.text}</p>
+                                </motion.div>
+                            ))}
                         </div>
                     </div>
                 </div>
+
+                {/* MISSION SECTION */}
+                <div className="mb-32 relative">
+                    <div className="absolute inset-0 bg-primary/5 blur-[100px] rounded-full opacity-20 -z-10"></div>
+                    <div className="max-w-4xl mx-auto bg-white/5 border border-white/10 rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden">
+                        <Star className="w-12 h-12 text-primary mx-auto mb-8 animate-pulse" />
+                        <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-8 tracking-tight italic">Mi Misión</h2>
+                        <p className="text-2xl md:text-3xl text-gray-300 font-light leading-relaxed italic">
+                            "Que dejes de ser el bombero de tu propio negocio. Mi misión es que recuperes tus tardes y que tu empresa funcione por fin como un reloj, para que vuelvas a mandar tú sobre tu tiempo y no al revés."
+                        </p>
+                    </div>
+                </div>
+
+                {/* VALUES SECTION */}
+                <div className="mb-48">
+                    <div className="text-center mb-16">
+                        <h2 className="font-display text-4xl font-bold text-white tracking-tight">Mis Valores</h2>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {[
+                            {
+                                title: "Honestidad Brutal",
+                                text: "Si algo no va a funcionar o no tiene sentido automatizarlo, te lo diré de frente. Prefiero perder un proyecto que perder mi reputación.",
+                                icon: ShieldCheck
+                            },
+                            {
+                                title: "Claridad",
+                                text: "Los números no mienten. Busco que entiendas exactamente qué pasa en tu negocio sin tecnicismos innecesarios.",
+                                icon: Target
+                            },
+                            {
+                                title: "Compromiso",
+                                text: "No soy de los que 'instalan y desaparecen'. Me involucro en el resultado porque tu éxito operativo es mi mejor carta de presentación.",
+                                icon: Zap
+                            }
+                        ].map((val, i) => (
+                            <div key={i} className="bg-white/5 border border-white/10 p-8 rounded-3xl text-center hover:border-primary/30 transition-colors">
+                                <val.icon className="w-10 h-10 text-primary mx-auto mb-6" />
+                                <h3 className="text-xl font-bold text-white mb-4">{val.title}</h3>
+                                <p className="text-gray-400 font-light italic text-sm leading-relaxed">{val.text}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* FINAL CTA BOX */}
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] border border-white/10 rounded-[3rem] p-10 md:p-20 overflow-hidden shadow-3xl text-center"
+                >
+                    <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 blur-[150px] rounded-full opacity-40"></div>
+                    <div className="absolute -bottom-20 -left-20 w-[400px] h-[400px] bg-primary/5 blur-[120px] rounded-full opacity-30"></div>
+
+                    <div className="relative z-10 max-w-3xl mx-auto">
+                        <h2 className="text-4xl md:text-7xl text-white font-bold mb-10 tracking-tight leading-[1.05]">
+                            ¿Hablamos de <br />
+                            <span className="text-primary italic text-shadow-glow">tu próximo nivel?</span>
+                        </h2>
+                        <p className="text-xl text-gray-400 mb-12 font-light italic">
+                            Si buscas una conversación honesta sobre eficiencia y resultados sin atajos mágicos, rellena este formulario y hablemos.
+                        </p>
+
+                        <div className="text-left">
+                            <ContactForm
+                                source="About Page"
+                                className="bg-[#111] p-10 rounded-[2.5rem] border border-white/5 shadow-2xl"
+                            />
+                        </div>
+
+                        <div className="mt-12 flex flex-col items-center gap-2">
+                            <span className="text-sm text-gray-600 font-medium">Rafael Alcalde Molina</span>
+                            <span className="text-[10px] uppercase tracking-[4px] text-primary font-bold">Economista & Business Controller</span>
+                        </div>
+                    </div>
+                </motion.div>
             </div>
         </div>
     );

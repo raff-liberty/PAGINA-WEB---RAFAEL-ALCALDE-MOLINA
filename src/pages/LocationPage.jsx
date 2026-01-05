@@ -252,7 +252,7 @@ const LocationPage = () => {
                             to="/contact"
                             className="group relative inline-flex items-center gap-3 bg-primary hover:bg-primary-hover text-gray-900 font-bold text-lg px-8 py-4 rounded transition-all transform hover:translate-y-[-2px] shadow-[0_0_20px_rgba(110,231,183,0.2)]"
                         >
-                            <span>Hablar antes de hacer</span>
+                            <span>Hablar con Engorilate</span>
                             <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                         </Link>
                         <span className="text-sm text-gray-600 mt-2">Sin compromisos comerciales. Solo evaluar si encajamos.</span>

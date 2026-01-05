@@ -5,6 +5,7 @@ import { Lightbulb, ArrowRight, MessageSquare, TrendingUp, FileText, Target, Dat
 import BackgroundMesh from '../components/BackgroundMesh';
 import SEO from '../components/SEO';
 import ContactForm from '../components/ContactForm';
+import { ShieldCheck, HelpCircle } from 'lucide-react';
 
 const businessTypes = [
     { id: 'hair', label: 'Peluquería / Estética' },
@@ -95,72 +96,117 @@ const contentMap = {
     ]
 };
 
-import { supabase } from '../lib/supabaseClient';
+const faqCategories = [
+    {
+        id: 'roi',
+        label: 'Rentabilidad / ROI',
+        icon: TrendingUp,
+        questions: [
+            {
+                q: "¿Esto es un gasto o una inversión real?",
+                a: "Es una inversión con retorno medible. La mayoría de nuestros clientes recuperan la inversión en menos de 4 meses solo eliminando horas muertas de gestión. Hemos visto reducciones de interrupciones de hasta el 80% desde el primer mes de uso."
+            },
+            {
+                q: "¿Para qué tamaño de negocio es esto?",
+                a: "Está diseñado para pymes de 1 a 20 empleados. No necesitas ser una multinacional para tener tecnología de élite. Si pierdes más de 1 hora al día en tareas repetitivas, eres el candidato perfecto."
+            }
+        ]
+    },
+    {
+        id: 'process',
+        label: 'Tiempos / Proceso',
+        icon: Zap,
+        questions: [
+            {
+                q: "¿Cuánto tiempo me va a quitar a mí?",
+                a: "Tu tiempo es lo que queremos salvar. Solo necesitamos una sesión inicial de diagnóstico. Nosotros nos encargamos del 90% del trabajo sucio: diseño, configuración e integración. El sistema se adapta a tu forma de trabajar, no al revés."
+            },
+            {
+                q: "¿En cuánto tiempo está funcionando?",
+                a: "Un Agente Virtual de WhatsApp puede estar captando clientes en menos de 10-12 días. Los sistemas de gestión a medida tardan entre 3 y 5 semanas dependiendo de la complejidad."
+            }
+        ]
+    },
+    {
+        id: 'tech',
+        label: 'Técnica / Propiedad',
+        icon: ShieldCheck,
+        questions: [
+            {
+                q: "¿El código y el sistema son míos?",
+                a: "Sí. Al 100%. No creemos en el 'secuestro tecnológico'. Una vez finalizado el proyecto, tú tienes las llaves. Si mañana decides no trabajar más con nosotros, tu sistema sigue funcionando en tu propia infraestructura."
+            },
+            {
+                q: "¿Se integra con lo que ya uso?",
+                a: "Hablamos con casi cualquier cosa: Holded, Shopify, Google Calendar, CRMs propios... Si tiene una API o una forma de conectar datos, nosotros lo unificamos."
+            }
+        ]
+    }
+];
 
 const solutionAreas = [
     {
-        title: 'Ventas y Comunicación Total',
+        title: 'Agente Virtual 24/7',
         icon: Target,
-        sectors: ['hair', 'tattoo', 'plumber', 'clinic', 'restaurant'],
+        sectors: ['hair', 'tattoo', 'plumber', 'clinic', 'restaurant', 'agency'],
         serviceId: 'automation',
+        path: '/servicios/automatizacion-whatsapp',
         badge: 'Crecimiento',
         roi: 'Alta',
+        color: '#6EE7B7',
+        desc: 'Atención instantánea y captación sin fricción para tu negocio.',
         items: [
-            'WhatsApp inteligente y generación de leads 24/7',
-            'Gestión de citas y recordatorios sin errores',
-            'Cierre de propuestas y notificaciones automáticas'
+            'Capta leads y agenda citas 24/7 por WhatsApp',
+            'Cobra señales de reserva automáticamente',
+            'Escala sin contratar a más personal de recepción'
         ]
     },
     {
-        title: 'Cerebro Financiero',
-        icon: FileText,
-        sectors: ['plumber', 'agency', 'clinic', 'restaurant'],
+        title: 'SEO Local Dominante',
+        icon: Search,
+        sectors: ['hair', 'tattoo', 'plumber', 'clinic', 'restaurant'],
+        serviceId: 'seo',
+        path: '/servicios/seo-local-estrategia',
+        badge: 'Visibilidad',
+        roi: 'Alta',
+        color: '#3B82F6',
+        desc: 'Domina las búsquedas locales y Google Maps en tu zona.',
+        items: [
+            'Posicionamiento orgánico en Google Maps',
+            'Auditoría estratégica de tu competencia local',
+            'Captación recurrente sin depender de ads'
+        ]
+    },
+    {
+        title: 'Cerebro Central / ERP',
+        icon: Database,
+        sectors: ['plumber', 'agency', 'clinic', 'restaurant', 'hair', 'tattoo'],
         serviceId: 'dashboard',
+        path: '/servicios/sistemas-gestion-personalizados',
         badge: 'Control',
         roi: 'Media',
+        color: '#A855F7',
+        desc: 'Control total de tu operativa desde un solo lugar.',
         items: [
-            'Integración automática de facturas',
-            'Conciliación bancaria sin Excel',
-            'Radiografía de tu negocio en tiempo real'
+            'Facturación y control de stock automatizado',
+            'Dashboards en tiempo real con tus KPIs críticos',
+            'Elimina el caos de papeles y Excels infinitos'
         ]
     },
     {
-        title: 'Inventario Inteligente',
-        icon: Database,
-        sectors: ['hair', 'tattoo', 'restaurant'],
-        serviceId: 'automation',
-        badge: 'Eficiencia',
-        roi: 'Alta',
-        items: [
-            'Stock bajo control en tiempo real',
-            'Pedidos a proveedores automatizados',
-            'Cero roturas de stock imprevistas'
-        ]
-    },
-    {
-        title: 'Maquinaria Operativa',
-        icon: Users,
-        sectors: ['agency', 'clinic', 'plumber'],
-        serviceId: 'automation',
-        badge: 'Estructura',
-        roi: 'Alta',
-        items: [
-            'Estandarización de procesos internos',
-            'Cuadros de mando de rendimiento (KPIs)',
-            'Oficina sin papeles ni caos diario'
-        ]
-    },
-    {
-        title: 'Web Diseñada y Conectada',
+        title: 'Web Corporativa Pro',
         icon: Globe,
         sectors: ['hair', 'tattoo', 'plumber', 'clinic', 'agency', 'restaurant'],
         serviceId: 'web',
+        path: '/servicios/desarrollo-web-medida',
         badge: 'Premium',
         roi: 'Inmediata',
+        color: '#F472B6',
+        desc: 'Tu activo tecnológico más potente. Sin cuotas mensuales.',
         items: [
-            'Diseño profesional de alto impacto',
-            'Conectada con tus herramientas de gestión',
-            'Optimizada para convertir visitas en clientes'
+            'Diseño de alto impacto enfocado 100% a conversión',
+            'Propiedad total del código y velocidad extrema',
+            'Integración completa con tus sistemas y APIs'
         ]
     }
 ];
@@ -168,6 +214,8 @@ const solutionAreas = [
 const Home = () => {
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('hair');
+    const [selectedSolutionIndex, setSelectedSolutionIndex] = useState(0);
+    const [activeFaqCategory, setActiveFaqCategory] = useState('roi');
     const [scrollIndex, setScrollIndex] = useState(0);
     const scrollRef = useRef(null);
     const content = contentMap[activeTab];
@@ -214,28 +262,28 @@ const Home = () => {
         }
     };
 
-    // Reset scroll when tab changes
+    // Reset selected solution when tab changes
     useEffect(() => {
-        if (scrollRef.current) {
-            scrollRef.current.scrollLeft = 0;
-            setScrollIndex(0);
-        }
+        setSelectedSolutionIndex(0);
     }, [activeTab]);
 
     // Get filtered solutions for the active sector
     const filteredSolutions = [
         ...solutionAreas.filter(area => area.sectors.includes(activeTab)),
         {
-            title: 'Arquitectura a Medida',
+            title: 'Arquitectura CRM / API',
             icon: Custom,
             isCustom: true,
             serviceId: 'other',
-            badge: 'Premium',
-            roi: 'Variable',
+            path: '/servicios/sistemas-gestion-personalizados',
+            badge: 'A Medida',
+            roi: 'Exponencial',
+            color: '#FB923C',
+            desc: 'Ingeniería sutil para resolver problemas complejos y cuellos de botella.',
             items: [
-                'Resolución de tu cuello de botella específico',
-                'Integración profunda con tus herramientas',
-                'Soporte estratégico y evolución continua'
+                'Resolución de cuellos de botella mediante código',
+                'Integraciones profundas (API) entre tus apps',
+                'Propiedad de tu stack técnico sin terceros'
             ]
         }
     ];
@@ -301,7 +349,7 @@ const Home = () => {
                                 icon: TrendingUp,
                                 step: '03',
                                 content: 'Consigo que el negocio no dependa de estar encima todo el día.',
-                                highlight: 'Tu negocio funciona, dedica tu tiempo a aquello que da rentabilidad a la empresa.'
+                                highlight: 'Tu negocio funciona solo. Dedica tu tiempo a aquello que realmente da rentabilidad a la empresa.'
                             }
                         ].map((item, i) => (
                             <motion.div
@@ -467,10 +515,8 @@ const Home = () => {
                         )}
                         {/* Specific Solutions Grid - Integrated */}
                         {/* Specific Solutions Grid - Integrated as a Product Showcase */}
+                        {/* NEW PREMIUM SHOWCASE NAVIGATOR */}
                         <div className="mt-16 relative">
-                            {/* Visual connector line from top */}
-                            <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-px h-12 bg-gradient-to-b from-white/0 to-primary/30"></div>
-
                             <div className="flex flex-col items-center text-center mb-16">
                                 <motion.div
                                     initial={{ opacity: 0, y: 10 }}
@@ -482,185 +528,191 @@ const Home = () => {
                                         Catálogo de Soluciones de Alto Impacto
                                     </span>
                                 </motion.div>
-                                <h3 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">
+                                <h3 className="font-display text-4xl md:text-6xl font-bold text-white mb-4 tracking-tight">
                                     Sistemas listos para <span className="text-primary">implementar</span>
                                 </h3>
-                                <p className="text-gray-400 max-w-xl text-sm md:text-base">
-                                    Productos diseñados para eliminar la fricción operativa y multiplicar la rentabilidad de tu pyme.
+                                <p className="text-gray-400 max-w-xl text-lg font-light italic">
+                                    Abre el capó de lo que podemos construir para tu pyme hoy mismo.
                                 </p>
                             </div>
 
-                            <motion.div
-                                layout
-                                className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto px-4"
-                            >
-                                <AnimatePresence mode="popLayout">
+                            <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 items-start min-h-[500px]">
+                                {/* LEFT MENU: TITLES */}
+                                <div className="lg:col-span-5 space-y-4">
                                     {filteredSolutions.map((area, idx) => (
-                                        <motion.div
-                                            layout
+                                        <button
                                             key={area.title}
-                                            initial={{ opacity: 0, y: 20 }}
-                                            whileInView={{ opacity: 1, y: 0 }}
-                                            viewport={{ once: true }}
-                                            exit={{ opacity: 0, y: -20 }}
-                                            transition={{ duration: 0.5, delay: idx * 0.1 }}
-                                            onClick={() => navigate(`/contact?service=${area.serviceId}`)}
-                                            className={`group relative p-6 md:p-8 rounded-3xl transition-all duration-700 overflow-hidden flex flex-col cursor-pointer border shadow-[0_8px_32px_rgba(0,0,0,0.9)] ${area.isCustom
-                                                ? 'bg-gradient-to-br from-primary/[0.15] to-[#222222] border-primary/60 hover:border-primary/80 hover:shadow-[0_8px_32px_rgba(110,231,183,0.3)]'
-                                                : 'bg-[#222222] border-white/30 hover:border-primary/50 hover:bg-[#282828]'
+                                            onClick={() => setSelectedSolutionIndex(idx)}
+                                            className={`w-full text-left p-6 rounded-2xl transition-all duration-500 border group ${selectedSolutionIndex === idx
+                                                ? 'bg-white/5 border-primary/50 shadow-[0_0_30px_rgba(110,231,183,0.1)]'
+                                                : 'border-transparent hover:bg-white/[0.02]'
                                                 }`}
                                         >
-                                            {/* Background glow effect */}
-                                            <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/10 blur-[80px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-
-                                            {/* Top Glass Highlight */}
-                                            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
-
-                                            {/* Badges Container */}
-                                            <div className="flex justify-between items-start mb-8 relative z-10">
-                                                <div className={`px-3 py-1 rounded-full text-[9px] font-mono font-bold uppercase tracking-widest border transition-colors ${area.isCustom
-                                                    ? 'bg-primary/20 border-primary/30 text-primary'
-                                                    : 'bg-white/5 border-white/10 text-gray-400 group-hover:border-primary/30 group-hover:text-primary'
-                                                    }`}>
-                                                    {area.badge}
-                                                </div>
-                                                <div className="text-[9px] font-mono text-gray-500 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
-                                                    <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
-                                                    Disponibilidad limitada
+                                            <div className="flex items-center gap-4">
+                                                <div className={`w-1 h-12 rounded-full transition-all duration-500 ${selectedSolutionIndex === idx ? 'bg-primary' : 'bg-white/10 group-hover:bg-white/30'
+                                                    }`} />
+                                                <div>
+                                                    <h4 className={`text-2xl md:text-3xl font-display font-bold tracking-tight transition-all duration-500 ${selectedSolutionIndex === idx ? 'text-white' : 'text-gray-600 group-hover:text-gray-400'
+                                                        }`}>
+                                                        {area.title}
+                                                    </h4>
+                                                    <p className={`text-xs font-mono uppercase tracking-[0.2em] mt-1 transition-all duration-500 ${selectedSolutionIndex === idx ? 'text-primary' : 'text-gray-700'
+                                                        }`}>
+                                                        {area.badge} — ROI {area.roi}
+                                                    </p>
                                                 </div>
                                             </div>
+                                        </button>
+                                    ))}
+                                </div>
 
-                                            <div className="relative z-10 flex-grow">
-                                                <div className="flex items-center gap-5 mb-8">
-                                                    <div className={`flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-white/5 text-gray-400 border border-white/10 transition-all duration-700 group-hover:scale-110 group-hover:bg-primary/10 group-hover:text-primary group-hover:border-primary/20 shadow-lg`}>
-                                                        <area.icon className="w-7 h-7 md:w-8 md:h-8" />
+                                {/* RIGHT: RICH PREVIEW CARD */}
+                                <div className="lg:col-span-7 relative">
+                                    <AnimatePresence mode="wait">
+                                        <motion.div
+                                            key={selectedSolutionIndex}
+                                            initial={{ opacity: 0, x: 20 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            exit={{ opacity: 0, x: -20 }}
+                                            transition={{ duration: 0.4, ease: "circOut" }}
+                                            className="relative bg-gradient-to-br from-[#181818] to-black border border-white/10 p-10 md:p-14 rounded-[3rem] overflow-hidden shadow-2xl min-h-[450px] flex flex-col justify-center"
+                                        >
+                                            {/* Dynamic Ambient Light */}
+                                            <div className="absolute -top-20 -right-20 w-80 h-80 blur-[130px] rounded-full opacity-30"
+                                                style={{ backgroundColor: filteredSolutions[selectedSolutionIndex].color || '#6EE7B7' }} />
+
+                                            <div className="relative z-10">
+                                                <div className="flex items-center gap-4 mb-8">
+                                                    <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-primary">
+                                                        {React.createElement(filteredSolutions[selectedSolutionIndex].icon, { className: "w-8 h-8" })}
                                                     </div>
                                                     <div>
-                                                        <h3 className="font-display text-2xl md:text-3xl font-bold text-white group-hover:text-primary transition-colors leading-tight">
-                                                            {area.title}
+                                                        <span className="text-primary font-mono text-[10px] uppercase tracking-[0.2em] block mb-2 opacity-60">Impacto de Negocio</span>
+                                                        <h3 className="text-3xl md:text-5xl font-display font-bold text-white tracking-tight">
+                                                            {filteredSolutions[selectedSolutionIndex].title}
                                                         </h3>
-                                                        <div className="mt-1 flex items-center gap-2 text-xs font-mono text-gray-500">
-                                                            <span>ROI Estimado:</span>
-                                                            <span className="text-primary/70">{area.roi}</span>
-                                                        </div>
                                                     </div>
                                                 </div>
 
-                                                <ul className="space-y-4 mb-10">
-                                                    {area.items.map((item, i) => (
-                                                        <li key={i} className="flex items-start gap-4 text-gray-300 text-sm md:text-base group/item">
-                                                            <CheckCircle className="w-5 h-5 text-primary/40 mt-0.5 flex-shrink-0 group-hover/item:text-primary group-hover/item:scale-110 transition-all" />
-                                                            <span className="leading-relaxed group-hover/item:text-white transition-colors">{item}</span>
+                                                <p className="text-gray-400 text-xl font-light italic leading-relaxed mb-10 max-w-2xl">
+                                                    "{filteredSolutions[selectedSolutionIndex].desc}"
+                                                </p>
+
+                                                <ul className="space-y-5 mb-12">
+                                                    {filteredSolutions[selectedSolutionIndex].items.map((item, i) => (
+                                                        <li key={i} className="flex items-start gap-4">
+                                                            <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
+                                                                <CheckCircle className="w-4 h-4 text-primary" />
+                                                            </div>
+                                                            <span className="text-gray-300 text-lg md:text-xl font-medium">{item}</span>
                                                         </li>
                                                     ))}
                                                 </ul>
 
-                                                {/* Price/Value Visual */}
-                                                <div className="mb-8 p-4 rounded-2xl bg-white/5 border border-white/5 group-hover:border-primary/20 group-hover:bg-primary/[0.02] transition-all">
-                                                    <div className="flex justify-between items-center">
-                                                        <span className="text-[10px] font-mono text-gray-500 uppercase">Consultoría inicial</span>
-                                                        <span className="text-white font-bold font-mono">GRATUITA</span>
+                                                <div className="flex flex-wrap items-center gap-6">
+                                                    <button
+                                                        onClick={() => {
+                                                            const sol = filteredSolutions[selectedSolutionIndex];
+                                                            sol.path ? navigate(sol.path) : navigate(`/contact?service=${sol.serviceId}`);
+                                                        }}
+                                                        className="bg-primary hover:bg-white text-black font-bold px-10 py-5 rounded-2xl uppercase tracking-wider flex items-center gap-3 transition-all transform hover:scale-105 shadow-[0_0_30px_rgba(110,231,183,0.3)] text-lg"
+                                                    >
+                                                        Saber más <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                                                    </button>
+
+                                                    <div className="px-6 py-4 rounded-2xl bg-white/5 border border-white/5 italic">
+                                                        <span className="text-gray-500 text-xs block uppercase font-mono tracking-widest mb-1">Consultoría Inicial</span>
+                                                        <span className="text-white font-black text-xl">GRATUITA</span>
                                                     </div>
                                                 </div>
-
-
                                             </div>
-
-                                            {/* Bottom accent glass line */}
-                                            <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                                         </motion.div>
-                                    ))}
-                                </AnimatePresence>
-                            </motion.div>
+                                    </AnimatePresence>
+
+                                    {/* Decoration / Status Floaties */}
+                                    <div className="absolute -bottom-6 -right-6 bg-primary/10 backdrop-blur-md border border-primary/20 p-4 rounded-2xl hidden md:block z-20">
+                                        <div className="flex items-center gap-2 text-[10px] font-mono font-bold text-primary uppercase tracking-widest">
+                                            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                                            Disponibilidad para Q1: Limitada
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    {/* Social Proof Wall - Infinite Marquee */}
-                    <div className="mt-40 mb-32 overflow-hidden">
-                        <div className="text-center mb-16">
+                    {/* FAQ EXPLORER - Replaces Testimonials Section */}
+                    <div className="mt-24 mb-24 px-4">
+                        <div className="flex flex-col items-center text-center mb-12">
                             <motion.div
                                 initial={{ opacity: 0, y: 10 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                className="mb-6 inline-block px-4 py-1.5 bg-primary/5 border border-primary/20 rounded-lg"
+                                className="mb-6 inline-block px-4 py-1.5 bg-primary/5 border border-primary/20 rounded-full"
                             >
-                                <span className="text-primary font-mono text-xs md:text-sm font-bold tracking-[0.3em] uppercase">
-                                    Evidencia Real
+                                <span className="text-primary font-mono text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase">
+                                    Evidencia & Dudas Reales
                                 </span>
                             </motion.div>
-                            <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">
-                                Pequeños negocios, <span className="text-primary">grandes resultados</span>
-                            </h2>
-                            <p className="text-gray-400 max-w-2xl mx-auto text-base md:text-lg">
-                                Recuperaron su tiempo, su cordura y su rentabilidad
+                            <h3 className="font-display text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">
+                                Resolvemos tus <span className="text-primary italic">dudas reales</span>
+                            </h3>
+                            <p className="text-gray-400 max-w-xl text-lg font-light italic">
+                                Sin filtros, sin rodeos y basándonos en resultados de clientes.
                             </p>
                         </div>
 
-                        {/* Infinite Marquee Container */}
-                        <div className="relative">
-                            {/* Fade gradients on edges */}
-                            <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background-dark to-transparent z-10 pointer-events-none"></div>
-                            <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background-dark to-transparent z-10 pointer-events-none"></div>
+                        <div className="max-w-5xl mx-auto">
+                            {/* Category Selector - Non-overloading approach */}
+                            <div className="flex flex-wrap justify-center gap-3 mb-10">
+                                {faqCategories.map((cat) => (
+                                    <button
+                                        key={cat.id}
+                                        onClick={() => setActiveFaqCategory(cat.id)}
+                                        className={`flex items-center gap-3 px-6 py-3 rounded-2xl border transition-all duration-300 text-sm md:text-base font-bold tracking-tight ${activeFaqCategory === cat.id
+                                            ? 'bg-primary text-gray-900 border-primary shadow-[0_0_20px_rgba(110,231,183,0.2)]'
+                                            : 'bg-white/5 border-white/10 text-gray-400 hover:text-white hover:border-white/20'
+                                            }`}
+                                    >
+                                        <cat.icon className="w-4 h-4" />
+                                        {cat.label}
+                                    </button>
+                                ))}
+                            </div>
 
-                            {/* Marquee Track - duplicated for seamless loop */}
-                            <div className="flex gap-6 animate-marquee">
-                                {[...Array(2)].map((_, setIndex) => (
-                                    <div key={setIndex} className="flex gap-6 flex-shrink-0">
-                                        {[
-                                            {
-                                                quote: "Pasé de 30% de ausencias a menos del 5% en 2 meses.",
-                                                author: "María González",
-                                                business: "Peluquería, Murcia",
-                                                metric: "↓ 25% pérdidas"
-                                            },
-                                            {
-                                                quote: "Recuperé 15 horas al mes que perdía facturando.",
-                                                author: "Juan Martínez",
-                                                business: "Taller Mecánico",
-                                                metric: "15h/mes ahorradas"
-                                            },
-                                            {
-                                                quote: "Ya no me interrumpen mientras atiendo pacientes.",
-                                                author: "Ana Ruiz",
-                                                business: "Clínica Dental",
-                                                metric: "↓ 80% interrupciones"
-                                            },
-                                            {
-                                                quote: "Antes perdía 2 horas cada viernes haciendo pedidos.",
-                                                author: "Pedro Sánchez",
-                                                business: "Restaurante",
-                                                metric: "Stock automático"
-                                            },
-                                            {
-                                                quote: "Mis clientes reservan solos. Cero llamadas.",
-                                                author: "Laura M.",
-                                                business: "Estudio Tatuajes",
-                                                metric: "Agenda llena sola"
-                                            }
-                                        ].map((testimonial, idx) => (
+                            {/* Q&A Panel */}
+                            <div className="grid gap-4">
+                                <AnimatePresence mode="wait">
+                                    <motion.div
+                                        key={activeFaqCategory}
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -10 }}
+                                        transition={{ duration: 0.3 }}
+                                        className="space-y-4"
+                                    >
+                                        {faqCategories.find(c => c.id === activeFaqCategory).questions.map((item, i) => (
                                             <div
-                                                key={`${setIndex}-${idx}`}
-                                                className="w-[240px] flex-shrink-0 bg-[#222222] border border-white/30 p-4 rounded-lg hover:border-primary/50 transition-all group relative overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.8)]"
+                                                key={i}
+                                                className="bg-[#181818] border border-white/10 p-6 md:p-8 rounded-3xl hover:border-primary/30 transition-all group"
                                             >
-                                                <div className="mb-3">
-                                                    <div className="text-primary/40 mb-2 group-hover:text-primary transition-colors">
-                                                        <MessageSquare className="w-4 h-4" />
+                                                <div className="flex items-start gap-4 mb-4">
+                                                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
+                                                        <HelpCircle className="w-5 h-5 text-primary opacity-50 group-hover:opacity-100 transition-opacity" />
                                                     </div>
-                                                    <p className="text-gray-300 leading-snug text-xs group-hover:text-white transition-colors">
-                                                        "{testimonial.quote}"
-                                                    </p>
+                                                    <h4 className="text-xl md:text-2xl font-display font-bold text-white tracking-tight group-hover:text-primary transition-colors">
+                                                        {item.q}
+                                                    </h4>
                                                 </div>
-                                                <div className="border-t border-white/5 pt-3">
-                                                    <p className="text-white font-semibold text-xs">{testimonial.author}</p>
-                                                    <p className="text-gray-500 text-[10px] mb-2">{testimonial.business}</p>
-                                                    <div className="inline-block px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-mono rounded border border-primary/20 group-hover:bg-primary group-hover:text-gray-900 transition-colors">
-                                                        {testimonial.metric}
-                                                    </div>
+                                                <div className="pl-12">
+                                                    <p className="text-gray-400 text-lg font-light leading-relaxed italic">
+                                                        "{item.a}"
+                                                    </p>
                                                 </div>
                                             </div>
                                         ))}
-                                    </div>
-                                ))}
+                                    </motion.div>
+                                </AnimatePresence>
                             </div>
                         </div>
                     </div>

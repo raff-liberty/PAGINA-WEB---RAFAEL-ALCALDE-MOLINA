@@ -55,7 +55,7 @@ const Footer = () => {
                                     {location.name}
                                 </Link>
                             ))}
-                            <Link className="text-primary hover:text-primary-hover transition-colors font-medium" to="/servicios">
+                            <Link className="text-primary hover:text-primary-hover transition-colors font-medium" to="/donde-trabajamos">
                                 Ver todas las localidades →
                             </Link>
                         </div>
