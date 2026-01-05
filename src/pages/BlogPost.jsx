@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Calendar, Clock } from 'lucide-react';
 import BlogRenderer from '../components/BlogRenderer';
 import { supabase } from '../lib/supabaseClient';
 import { blogPosts as localPosts } from '../data/blogPosts';
