@@ -153,64 +153,93 @@ const Navbar = () => {
             {/* Mobile Menu Overlay */}
             <AnimatePresence>
                 {isMenuOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, x: '100%' }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: '100%' }}
-                        className="lg:hidden fixed inset-0 top-0 bg-[#0A0A0A]/98 backdrop-blur-xl z-40 pt-24"
-                    >
-                        <div className="flex flex-col p-8 space-y-6 overflow-y-auto h-full pb-32">
-                            {navLinks.map((link) => (
-                                <div key={link.path}>
-                                    {link.dropdown ? (
-                                        <div className="space-y-4">
-                                            <div
-                                                className="flex items-center justify-between text-2xl font-display font-bold text-primary"
-                                                onClick={() => setIsServicesOpen(!isServicesOpen)}
-                                            >
-                                                <span>{link.name}</span>
-                                                <ChevronDown className={`w-6 h-6 transition-transform ${isServicesOpen ? 'rotate-180' : ''}`} />
+                    <>
+                        {/* Dark backdrop */}
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="lg:hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-40"
+                            onClick={() => setIsMenuOpen(false)}
+                        />
+
+                        {/* Menu panel */}
+                        <motion.div
+                            initial={{ x: '100%' }}
+                            animate={{ x: 0 }}
+                            exit={{ x: '100%' }}
+                            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                            className="lg:hidden fixed right-0 top-0 bottom-0 w-[85%] max-w-sm bg-black border-l border-white/10 z-50 overflow-y-auto"
+                        >
+                            {/* Close button */}
+                            <div className="flex justify-end p-6 border-b border-white/10">
+                                <button
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className="text-white hover:text-primary transition-colors"
+                                >
+                                    <X className="w-6 h-6" />
+                                </button>
+                            </div>
+
+                            {/* Menu content */}
+                            <div className="flex flex-col p-6 space-y-6">
+                                {navLinks.map((link) => (
+                                    <div key={link.path}>
+                                        {link.dropdown ? (
+                                            <div className="space-y-4">
+                                                <div
+                                                    className="flex items-center justify-between text-xl font-display font-bold text-primary cursor-pointer"
+                                                    onClick={() => setIsServicesOpen(!isServicesOpen)}
+                                                >
+                                                    <span>{link.name}</span>
+                                                    <ChevronDown className={`w-5 h-5 transition-transform ${isServicesOpen ? 'rotate-180' : ''}`} />
+                                                </div>
+                                                <AnimatePresence>
+                                                    {isServicesOpen && (
+                                                        <motion.div
+                                                            initial={{ height: 0, opacity: 0 }}
+                                                            animate={{ height: 'auto', opacity: 1 }}
+                                                            exit={{ height: 0, opacity: 0 }}
+                                                            className="pl-4 space-y-3 overflow-hidden"
+                                                        >
+                                                            {link.dropdown.map((sub) => (
+                                                                <Link
+                                                                    key={sub.path}
+                                                                    to={sub.path}
+                                                                    className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors"
+                                                                >
+                                                                    <sub.icon className="w-4 h-4 text-primary/60" />
+                                                                    <span className="text-base">{sub.name}</span>
+                                                                </Link>
+                                                            ))}
+                                                        </motion.div>
+                                                    )}
+                                                </AnimatePresence>
                                             </div>
-                                            <AnimatePresence>
-                                                {isServicesOpen && (
-                                                    <motion.div
-                                                        initial={{ height: 0, opacity: 0 }}
-                                                        animate={{ height: 'auto', opacity: 1 }}
-                                                        exit={{ height: 0, opacity: 0 }}
-                                                        className="pl-4 space-y-4 overflow-hidden"
-                                                    >
-                                                        {link.dropdown.map((sub) => (
-                                                            <Link
-                                                                key={sub.path}
-                                                                to={sub.path}
-                                                                className="flex items-center gap-4 text-gray-400 hover:text-white"
-                                                            >
-                                                                <sub.icon className="w-5 h-5 text-primary/50" />
-                                                                <span className="text-lg">{sub.name}</span>
-                                                            </Link>
-                                                        ))}
-                                                    </motion.div>
-                                                )}
-                                            </AnimatePresence>
-                                        </div>
-                                    ) : (
-                                        <Link
-                                            className={`text-2xl font-display font-bold transition-colors ${location.pathname === link.path
-                                                ? 'text-primary'
-                                                : 'text-white'
-                                                }`}
-                                            to={link.path}
-                                        >
-                                            {link.name}
-                                        </Link>
-                                    )}
-                                </div>
-                            ))}
-                            <Link className="bg-primary text-gray-900 text-xl font-bold px-6 py-4 rounded-xl text-center shadow-lg mt-4" to="/contact">
-                                Empezar ahora
-                            </Link>
-                        </div>
-                    </motion.div>
+                                        ) : (
+                                            <Link
+                                                className={`text-xl font-display font-bold transition-colors block ${location.pathname === link.path
+                                                        ? 'text-primary'
+                                                        : 'text-white hover:text-primary'
+                                                    }`}
+                                                to={link.path}
+                                            >
+                                                {link.name}
+                                            </Link>
+                                        )}
+                                    </div>
+                                ))}
+
+                                {/* CTA Button */}
+                                <Link
+                                    className="bg-primary text-gray-900 text-lg font-bold px-6 py-4 rounded-xl text-center shadow-lg mt-6 block hover:bg-primary-hover transition-colors"
+                                    to="/contact"
+                                >
+                                    Empezar ahora
+                                </Link>
+                            </div>
+                        </motion.div>
+                    </>
                 )}
             </AnimatePresence>
         </nav>
