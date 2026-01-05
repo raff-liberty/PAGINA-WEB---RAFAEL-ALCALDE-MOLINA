@@ -103,41 +103,7 @@ const BlogPost = () => {
                         <p className="text-gray-500 font-mono text-sm animate-pulse tracking-widest">CARGANDO ARTÍCULO...</p>
                     </div>
                 ) : (
-                    <article>
-                        <div className="mb-12 border-b border-white/5 pb-12">
-                            <div className="flex flex-wrap items-center gap-4 mb-8">
-                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-primary text-gray-900 text-xs font-black uppercase tracking-tighter shadow-[0_0_15px_rgba(110,231,183,0.3)]">
-                                    Zero Humo
-                                </div>
-                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded border border-primary/20 bg-primary/5 text-primary text-xs font-mono uppercase tracking-widest">
-                                    {post.category}
-                                </div>
-                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded border border-white/10 bg-white/5 text-gray-400 text-xs font-mono uppercase tracking-widest">
-                                    Ahorro: {post.savings || '10h/mes'}
-                                </div>
-                            </div>
-
-                            <h1 className="font-display text-4xl md:text-7xl font-black leading-[1.05] mb-8 text-white tracking-tighter uppercase italic">
-                                {post.title}
-                            </h1>
-
-                            <div className="flex flex-wrap items-center gap-6 text-xs text-gray-500 font-mono uppercase tracking-widest">
-                                <span className="flex items-center gap-2">
-                                    <Calendar className="w-3.5 h-3.5 text-primary" />
-                                    {new Date(post.publish_date).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}
-                                </span>
-                                <span className="flex items-center gap-2">
-                                    <Clock className="w-3.5 h-3.5 text-primary" />
-                                    {post.read_time} de lectura
-                                </span>
-                            </div>
-                        </div>
-
-                        {/* Article Content */}
-                        <div className="mb-20">
-                            <BlogRenderer post={post} />
-                        </div>
-                    </article>
+                    <BlogRenderer post={post} />
                 )}
 
                 {/* Related Posts */}
