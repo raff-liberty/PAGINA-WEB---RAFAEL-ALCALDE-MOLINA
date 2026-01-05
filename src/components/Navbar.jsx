@@ -23,6 +23,24 @@ const Navbar = () => {
         setIsServicesOpen(false);
     }, [location.pathname]);
 
+    // Lock body scroll when menu is open
+    useEffect(() => {
+        if (isMenuOpen) {
+            document.body.style.overflow = 'hidden';
+            document.body.style.position = 'fixed';
+            document.body.style.width = '100%';
+        } else {
+            document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.width = '';
+        }
+        return () => {
+            document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.width = '';
+        };
+    }, [isMenuOpen]);
+
     const navLinks = [
         { name: 'Problemas', path: '/' },
         {
@@ -156,7 +174,7 @@ const Navbar = () => {
                     className="lg:hidden fixed inset-0 top-0 left-0 right-0 bottom-0"
                     style={{
                         backgroundColor: '#000000',
-                        zIndex: 99999,
+                        zIndex: 999999,
                         position: 'fixed',
                         width: '100vw',
                         height: '100vh',
