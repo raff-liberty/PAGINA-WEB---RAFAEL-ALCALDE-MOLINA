@@ -150,103 +150,86 @@ const Navbar = () => {
                 </div>
             </div>
 
-            {/* Mobile Menu Overlay */}
-            <AnimatePresence>
-                {isMenuOpen && (
-                    <>
-                        {/* Dark backdrop */}
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            className="lg:hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-40"
+            {/* BRAND NEW MOBILE MENU - FULL SCREEN OVERLAY */}
+            {isMenuOpen && (
+                <div
+                    className="lg:hidden fixed inset-0 top-0 left-0 right-0 bottom-0 overflow-y-auto"
+                    style={{
+                        backgroundColor: '#000000',
+                        zIndex: 99999,
+                        position: 'fixed'
+                    }}
+                >
+                    {/* Header with close button */}
+                    <div className="flex justify-between items-center p-6 border-b" style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
+                        <span className="text-primary font-bold text-xl">MENÚ</span>
+                        <button
                             onClick={() => setIsMenuOpen(false)}
-                        />
-
-                        {/* Menu panel */}
-                        <motion.div
-                            initial={{ x: '100%' }}
-                            animate={{ x: 0 }}
-                            exit={{ x: '100%' }}
-                            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                            className="lg:hidden fixed right-0 top-0 bottom-0 w-[85%] max-w-sm border-l border-white/10 z-[9999] overflow-y-auto"
-                            style={{ backgroundColor: '#000000' }}
+                            style={{ color: '#ffffff' }}
                         >
-                            {/* Close button */}
-                            <div className="flex justify-end p-6 border-b border-white/10">
-                                <button
-                                    onClick={() => setIsMenuOpen(false)}
-                                    className="text-white hover:text-primary transition-colors"
-                                    style={{ color: '#ffffff' }}
-                                >
-                                    <X className="w-6 h-6" />
-                                </button>
-                            </div>
+                            <X className="w-8 h-8" />
+                        </button>
+                    </div>
 
-                            {/* Menu content */}
-                            <div className="flex flex-col p-6 space-y-6">
-                                {navLinks.map((link) => (
-                                    <div key={link.path}>
-                                        {link.dropdown ? (
-                                            <div className="space-y-4">
-                                                <div
-                                                    className="flex items-center justify-between text-xl font-display font-bold text-primary cursor-pointer"
-                                                    onClick={() => setIsServicesOpen(!isServicesOpen)}
-                                                    style={{ color: '#6EE7B7' }}
-                                                >
-                                                    <span>{link.name}</span>
-                                                    <ChevronDown className={`w-5 h-5 transition-transform ${isServicesOpen ? 'rotate-180' : ''}`} />
-                                                </div>
-                                                <AnimatePresence>
-                                                    {isServicesOpen && (
-                                                        <motion.div
-                                                            initial={{ height: 0, opacity: 0 }}
-                                                            animate={{ height: 'auto', opacity: 1 }}
-                                                            exit={{ height: 0, opacity: 0 }}
-                                                            className="pl-4 space-y-3 overflow-hidden"
-                                                        >
-                                                            {link.dropdown.map((sub) => (
-                                                                <Link
-                                                                    key={sub.path}
-                                                                    to={sub.path}
-                                                                    className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors"
-                                                                    style={{ color: '#d1d5db' }}
-                                                                >
-                                                                    <sub.icon className="w-4 h-4 text-primary/60" />
-                                                                    <span className="text-base">{sub.name}</span>
-                                                                </Link>
-                                                            ))}
-                                                        </motion.div>
-                                                    )}
-                                                </AnimatePresence>
+                    {/* Menu Items */}
+                    <div className="p-8 space-y-8">
+                        {navLinks.map((link) => (
+                            <div key={link.path}>
+                                {link.dropdown ? (
+                                    <div>
+                                        <button
+                                            onClick={() => setIsServicesOpen(!isServicesOpen)}
+                                            className="flex items-center justify-between w-full text-left text-2xl font-bold mb-4"
+                                            style={{ color: '#6EE7B7' }}
+                                        >
+                                            <span>{link.name}</span>
+                                            <ChevronDown
+                                                className={`w-6 h-6 transition-transform ${isServicesOpen ? 'rotate-180' : ''}`}
+                                                style={{ color: '#6EE7B7' }}
+                                            />
+                                        </button>
+                                        {isServicesOpen && (
+                                            <div className="pl-4 space-y-4 mb-4">
+                                                {link.dropdown.map((sub) => (
+                                                    <Link
+                                                        key={sub.path}
+                                                        to={sub.path}
+                                                        className="flex items-center gap-3 text-lg"
+                                                        style={{ color: '#d1d5db' }}
+                                                        onClick={() => setIsMenuOpen(false)}
+                                                    >
+                                                        <sub.icon className="w-5 h-5" style={{ color: '#6EE7B799' }} />
+                                                        <span>{sub.name}</span>
+                                                    </Link>
+                                                ))}
                                             </div>
-                                        ) : (
-                                            <Link
-                                                className={`text-xl font-display font-bold transition-colors block ${location.pathname === link.path
-                                                    ? 'text-primary'
-                                                    : 'text-white hover:text-primary'
-                                                    }`}
-                                                to={link.path}
-                                                style={{ color: location.pathname === link.path ? '#6EE7B7' : '#ffffff' }}
-                                            >
-                                                {link.name}
-                                            </Link>
                                         )}
                                     </div>
-                                ))}
-
-                                {/* CTA Button */}
-                                <Link
-                                    className="bg-primary text-gray-900 text-lg font-bold px-6 py-4 rounded-xl text-center shadow-lg mt-6 block hover:bg-primary-hover transition-colors"
-                                    to="/contact"
-                                >
-                                    Empezar ahora
-                                </Link>
+                                ) : (
+                                    <Link
+                                        to={link.path}
+                                        className="block text-2xl font-bold"
+                                        style={{ color: location.pathname === link.path ? '#6EE7B7' : '#ffffff' }}
+                                        onClick={() => setIsMenuOpen(false)}
+                                    >
+                                        {link.name}
+                                    </Link>
+                                )}
                             </div>
-                        </motion.div>
-                    </>
-                )}
-            </AnimatePresence>
+                        ))}
+
+                        {/* CTA Button */}
+                        <Link
+                            to="/contact"
+                            className="block text-center text-xl font-bold px-8 py-4 rounded-xl mt-12"
+                            style={{ backgroundColor: '#6EE7B7', color: '#000000' }}
+                            onClick={() => setIsMenuOpen(false)}
+                        >
+                            Empezar ahora
+                        </Link>
+                    </div>
+                </div>
+            )}
         </nav>
 
     );
