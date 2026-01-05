@@ -6,6 +6,7 @@ import BackgroundMesh from '../components/BackgroundMesh';
 import SEO from '../components/SEO';
 import ContactForm from '../components/ContactForm';
 import { ShieldCheck, HelpCircle } from 'lucide-react';
+import { supabase } from '../lib/supabaseClient';
 
 const businessTypes = [
     { id: 'hair', label: 'Peluquería / Estética' },
