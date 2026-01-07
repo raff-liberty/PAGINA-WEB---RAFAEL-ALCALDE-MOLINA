@@ -233,7 +233,7 @@ const Services = () => {
     ];
 
     return (
-        <div className="relative pt-32 pb-24 min-h-screen selection:bg-primary selection:text-black">
+        <div className="relative pt-24 pb-16 min-h-screen selection:bg-primary selection:text-black">
             <SEO
                 title="Servicios de Automatización y Desarrollo Web | Engorilate"
                 description="Automatizamos procesos reales y diseñamos herramientas a medida para que tu negocio funcione sin ti. n8n, Odoo, WhatsApp API y más."
@@ -247,35 +247,35 @@ const Services = () => {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mb-32 max-w-4xl"
+                    className="mb-16 max-w-4xl"
                 >
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-mono tracking-widest uppercase mb-6">
                         <Zap className="w-3 h-3" />
                         Catálogo de Soluciones
                     </div>
-                    <h1 className="font-display text-5xl md:text-7xl font-bold leading-tight mb-8 text-white tracking-tight">
-                        Soluciones de <span className="text-primary italic">automatización</span> real
+                    <h1 className="font-display text-5xl md:text-7xl font-black leading-[0.85] mb-8 text-white uppercase italic tracking-tighter">
+                        Soluciones de <span className="text-primary">automatización</span> real
                     </h1>
-                    <p className="text-xl md:text-2xl text-gray-400 font-light leading-relaxed mb-10 italic">
+                    <p className="text-lg md:text-xl text-gray-500 font-light leading-relaxed mb-10 italic">
                         No vendemos paquetes cerrados ni humo tecnológico. <br />
                         Diseñamos el motor que tu empresa necesita para recuperar el control.
                     </p>
                     <div className="flex flex-wrap gap-4">
-                        <Link to="/contact" className="bg-primary hover:bg-primary-hover text-gray-900 font-bold px-10 py-5 rounded-2xl transition-all transform hover:scale-105 shadow-[0_0_30px_rgba(110,231,183,0.3)]">
+                        <Link to="/contact" className="bg-primary hover:bg-primary-hover text-gray-900 font-bold px-8 py-4 rounded-2xl transition-all transform hover:scale-105 shadow-[0_0_30px_rgba(110,231,183,0.3)]">
                             Diagnóstico Gratuito
                         </Link>
                     </div>
                 </motion.div>
 
                 {/* AUTOMATION SECTION */}
-                <section className="mb-32">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <section className="mb-16">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                         <div>
-                            <h2 className="font-display text-3xl md:text-5xl font-bold text-white mb-8">
+                            <h2 className="font-display text-3xl md:text-5xl font-black text-white mb-6 uppercase italic tracking-tighter leading-tight">
                                 Cada negocio es distinto. <br />
                                 <span className="text-primary">No trabajamos con plantillas.</span>
                             </h2>
-                            <p className="text-gray-400 text-lg leading-relaxed mb-8">
+                            <p className="text-gray-500 text-lg leading-relaxed mb-8 italic">
                                 Analizamos cómo funciona tu empresa, dónde se pierde tiempo y dinero, y diseñamos
                                 <strong> automatizaciones a medida</strong> que se adaptan exactamente a tu forma de trabajar.
                             </p>
@@ -288,7 +288,7 @@ const Services = () => {
                                 ))}
                             </div>
                         </div>
-                        <div className="bg-[#383838] border-2 border-white/60 p-8 md:p-12 rounded-[2.5rem] relative overflow-hidden shadow-[0_20px_80px_rgba(0,0,0,1),0_0_0_2px_rgba(255,255,255,0.15)]">
+                        <div className="bg-[#111] border border-white/10 p-8 md:p-10 rounded-[2.5rem] relative overflow-hidden shadow-2xl">
                             <h3 className="text-white text-xl font-bold mb-8 flex items-center gap-3">
                                 <Layout className="text-primary w-6 h-6" />
                                 Cobertura del flujo operativo
@@ -311,12 +311,12 @@ const Services = () => {
                 </section>
 
                 {/* STAR SERVICES CAROUSEL */}
-                <section className="mb-32 relative">
-                    <div className="text-center max-w-3xl mx-auto mb-16">
-                        <h2 className="font-display text-3xl md:text-6xl font-bold text-white mb-6">
-                            Nuestros <span className="text-primary italic">Productos Estrella</span>
+                <section className="mb-16 relative">
+                    <div className="text-center max-w-3xl mx-auto mb-12">
+                        <h2 className="font-display text-3xl md:text-6xl font-black text-white mb-6 uppercase italic tracking-tighter">
+                            Nuestros <span className="text-primary">Productos Estrella</span>
                         </h2>
-                        <p className="text-gray-400 text-xl font-light">
+                        <p className="text-gray-500 text-lg font-light italic">
                             Soluciones de alto impacto diseñadas para escalar tu facturación de forma inmediata.
                         </p>
                     </div>
@@ -334,22 +334,22 @@ const Services = () => {
                                     x: { type: "spring", stiffness: 300, damping: 30 },
                                     opacity: { duration: 0.2 }
                                 }}
-                                className="bg-[#303030] border-2 border-white/60 rounded-[3rem] p-8 md:p-16 flex flex-col lg:flex-row items-center gap-12 lg:gap-20 shadow-[0_20px_80px_rgba(0,0,0,1),0_0_0_2px_rgba(255,255,255,0.15)]"
+                                className="bg-[#111] border border-white/10 rounded-[3rem] p-8 md:p-12 flex flex-col lg:flex-row items-center gap-12 lg:gap-16 shadow-2xl overflow-hidden"
                             >
                                 {/* Slide Content Left */}
                                 <div className="flex-1 text-center lg:text-left">
                                     <div className={`w-20 h-20 rounded-2xl ${starServices[activeService].bg} flex items-center justify-center mb-8 mx-auto lg:mx-0`}>
                                         {React.createElement(starServices[activeService].icon, { className: `w-10 h-10 ${starServices[activeService].color}` })}
                                     </div>
-                                    <h3 className="text-white text-3xl md:text-5xl font-display font-bold mb-6 leading-tight">
+                                    <h3 className="text-white text-3xl md:text-5xl font-display font-black mb-6 leading-tight uppercase italic tracking-tighter">
                                         {starServices[activeService].title}
                                     </h3>
-                                    <p className="text-gray-400 text-lg md:text-xl mb-10 leading-relaxed max-w-xl italic">
+                                    <p className="text-gray-500 text-lg mb-10 leading-relaxed max-w-xl italic">
                                         "{starServices[activeService].desc}"
                                     </p>
                                     <Link
                                         to={starServices[activeService].link}
-                                        className="inline-flex items-center gap-3 bg-primary text-black font-black px-10 py-5 rounded-2xl transition-all hover:scale-105 shadow-[0_0_30px_rgba(110,231,183,0.3)] group"
+                                        className="inline-flex items-center gap-3 bg-primary text-black font-black px-8 py-4 rounded-2xl transition-all hover:scale-105 shadow-[0_0_30px_rgba(110,231,183,0.3)] group"
                                     >
                                         VER DETALLES TÉCNICOS <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                                     </Link>
@@ -358,9 +358,9 @@ const Services = () => {
                                 {/* Slide Items Right (The Grid Info) */}
                                 <div className="w-full lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     {starServices[activeService].subItems.map((item, idx) => (
-                                        <div key={idx} className="bg-white/15 border-2 border-white/60 p-6 rounded-2xl hover:bg-white/20 transition-colors shadow-2xl">
-                                            <h4 className="text-white font-bold mb-2 text-sm uppercase tracking-wider text-primary">{item.title}</h4>
-                                            <p className="text-gray-500 text-[11px] leading-relaxed">{item.desc}</p>
+                                        <div key={idx} className="bg-white/5 border border-white/10 p-6 rounded-2xl hover:bg-white/10 transition-colors shadow-xl">
+                                            <h4 className="text-primary font-black mb-2 text-sm uppercase italic tracking-wider">{item.title}</h4>
+                                            <p className="text-gray-500 text-xs leading-relaxed italic">{item.desc}</p>
                                         </div>
                                     ))}
                                     {/* Placeholder to maintain grid shape if odd number */}
@@ -404,16 +404,16 @@ const Services = () => {
                 </section>
 
                 {/* INFRASTRUCTURE SECTION */}
-                <section className="mb-32 bg-gradient-to-br from-[#1a1a1a] to-black border border-white/10 rounded-[3rem] p-8 md:p-20 relative overflow-hidden">
+                <section className="mb-16 bg-[#111] border border-white/10 rounded-[3rem] p-8 md:p-12 relative overflow-hidden shadow-2xl">
                     <div className="absolute top-0 right-0 w-1/3 h-full bg-primary/5 blur-[120px] rounded-full"></div>
 
-                    <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-20">
+                    <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12">
                         <div>
-                            <h2 className="font-display text-3xl md:text-5xl font-bold text-white mb-8">
+                            <h2 className="font-display text-3xl md:text-5xl font-black text-white mb-6 uppercase italic tracking-tighter leading-tight">
                                 Infraestructura propia. <br />
                                 <span className="text-gray-500">Para que nada falle.</span>
                             </h2>
-                            <p className="text-gray-400 text-lg mb-12">
+                            <p className="text-gray-500 text-lg mb-8 italic">
                                 Nos encargamos de toda la base técnica: hosting, dominios, mantenimiento y seguridad.
                                 Trabajamos con <strong>VPS propios</strong> para darte independencia total.
                             </p>
@@ -440,8 +440,8 @@ const Services = () => {
                             </div>
                         </div>
 
-                        <div className="bg-black/50 backdrop-blur-xl border border-white/10 p-10 rounded-[2rem] flex flex-col h-full">
-                            <h4 className="text-white font-bold mb-6 uppercase tracking-widest text-xs opacity-50 text-center">Empieza el cambio hoy</h4>
+                        <div className="bg-[#1a1a1a] border border-white/10 p-8 rounded-[2rem] flex flex-col h-full shadow-2xl">
+                            <h4 className="text-white font-black mb-6 uppercase italic tracking-widest text-xs opacity-50 text-center">Empieza el cambio hoy</h4>
 
                             <form className="space-y-4 mb-10" onSubmit={(e) => e.preventDefault()}>
                                 <div>
@@ -455,7 +455,7 @@ const Services = () => {
                                     <input
                                         type="tel"
                                         placeholder="Tu WhatsApp"
-                                        className="w-full bg-white/10 border border-white/30 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-primary/50 transition-colors placeholder:text-gray-500"
+                                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-primary/50 transition-colors placeholder:text-gray-500"
                                     />
                                     <MessageSquare className="absolute right-4 top-3.5 w-4 h-4 text-primary/40" />
                                 </div>
@@ -484,16 +484,16 @@ const Services = () => {
                 </section>
 
                 {/* EXAMPLES SECTION */}
-                <section className="mb-32">
-                    <h2 className="font-display text-3xl md:text-5xl font-bold text-white mb-16 text-center">
-                        Casos Reales <br /> <span className="text-primary opacity-50 font-light text-2xl tracking-widest mt-2 block">CERO HUMO</span>
+                <section className="mb-16">
+                    <h2 className="font-display text-3xl md:text-5xl font-black text-white mb-12 text-center uppercase italic tracking-tighter">
+                        Casos Reales <br /> <span className="text-primary opacity-50 font-black text-xl tracking-[0.2em] mt-2 block italic">CERO HUMO</span>
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {examples.map((ex, i) => (
                             <Link
                                 key={i}
                                 to={ex.link}
-                                className="bg-[#303030] border-2 border-white/60 p-8 md:p-12 rounded-[2rem] hover:bg-[#353535] transition-colors relative overflow-hidden group block text-left shadow-[0_16px_64px_rgba(0,0,0,1)]"
+                                className="bg-[#111] border border-white/10 p-8 md:p-10 rounded-[2rem] hover:bg-[#151515] transition-colors relative overflow-hidden group block text-left shadow-2xl"
                             >
                                 <div className="absolute top-0 right-0 w-1 h-full bg-primary/20 group-hover:bg-primary transition-all"></div>
                                 <h3 className="text-white text-xl font-bold mb-6">{ex.title}</h3>
@@ -518,36 +518,36 @@ const Services = () => {
                 </section>
 
                 {/* FAQ SECTION */}
-                <section className="mb-32 max-w-4xl mx-auto">
-                    <div className="text-center mb-16">
+                <section className="mb-16 max-w-4xl mx-auto">
+                    <div className="text-center mb-10">
                         <HelpCircle className="w-12 h-12 text-primary mx-auto mb-4" />
-                        <h2 className="font-display text-4xl font-bold text-white">Preguntas Frecuentes</h2>
+                        <h2 className="font-display text-3xl md:text-4xl font-black text-white uppercase italic tracking-tighter">Preguntas Frecuentes</h2>
                     </div>
-                    <div className="space-y-4">
+                    <div className="grid gap-4">
                         {faqs.map((faq, i) => (
-                            <div key={i} className="bg-[#333333] border-2 border-white/60 p-8 rounded-3xl shadow-[0_16px_64px_rgba(0,0,0,1)]">
-                                <h3 className="text-white font-bold text-lg mb-4">{faq.q}</h3>
-                                <p className="text-gray-400 leading-relaxed">{faq.a}</p>
+                            <div key={i} className="bg-[#111] border border-white/10 p-6 rounded-2xl shadow-xl">
+                                <h3 className="text-primary font-black text-lg mb-4 uppercase italic tracking-tight">{faq.q}</h3>
+                                <p className="text-gray-500 leading-relaxed italic text-sm">{faq.a}</p>
                             </div>
                         ))}
                     </div>
                 </section>
 
                 {/* FINAL CTA */}
-                <section className="relative overflow-hidden rounded-[3.5rem] bg-primary p-12 md:p-24 text-center">
+                <section className="relative overflow-hidden rounded-[3rem] bg-primary p-12 md:p-16 text-center">
                     <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20 contrast-150"></div>
                     <div className="relative z-10">
-                        <h2 className="font-display text-4xl md:text-6xl font-black text-gray-900 mb-8 uppercase">
+                        <h2 className="font-display text-3xl md:text-6xl font-black text-gray-900 mb-6 uppercase italic tracking-tighter leading-tight">
                             Empieza con una <br /> auditoría gratuita
                         </h2>
-                        <p className="text-gray-900/70 text-xl md:text-2xl font-medium max-w-2xl mx-auto mb-12">
+                        <p className="text-gray-900/70 text-lg md:text-xl font-medium max-w-2xl mx-auto mb-10 italic">
                             Analizamos tu negocio y te decimos exactamente qué automatizar, cómo hacerlo y qué impacto tendrá. <strong>Sin compromiso.</strong>
                         </p>
                         <Link
                             to="/contact"
-                            className="inline-flex items-center gap-4 bg-gray-900 text-primary font-black text-2xl px-12 py-6 rounded-2xl hover:bg-black transition-all transform hover:scale-105 shadow-2xl"
+                            className="inline-flex items-center gap-4 bg-gray-900 text-primary font-black text-xl px-10 py-5 rounded-2xl hover:bg-black transition-all transform hover:scale-105 shadow-2xl"
                         >
-                            SOLICITAR AUDITORÍA <ArrowRight className="w-8 h-8" />
+                            SOLICITAR AUDITORÍA <ArrowRight className="w-6 h-6" />
                         </Link>
                     </div>
                 </section>
