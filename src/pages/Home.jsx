@@ -219,6 +219,7 @@ const Home = () => {
     const [activeFaqCategory, setActiveFaqCategory] = useState('roi');
     const [scrollIndex, setScrollIndex] = useState(0);
     const scrollRef = useRef(null);
+    const solutionPreviewRef = useRef(null);
     const content = contentMap[activeTab];
     const [siteConfig, setSiteConfig] = useState({
         whatsapp_url: 'https://wa.me/34600000000',
@@ -543,7 +544,18 @@ const Home = () => {
                                     {filteredSolutions.map((area, idx) => (
                                         <button
                                             key={area.title}
-                                            onClick={() => setSelectedSolutionIndex(idx)}
+                                            onClick={() => {
+                                                setSelectedSolutionIndex(idx);
+                                                // Auto-scroll to preview on mobile
+                                                if (window.innerWidth < 1024 && solutionPreviewRef.current) {
+                                                    setTimeout(() => {
+                                                        solutionPreviewRef.current?.scrollIntoView({
+                                                            behavior: 'smooth',
+                                                            block: 'start'
+                                                        });
+                                                    }, 100);
+                                                }
+                                            }}
                                             className={`w-full text-left p-6 rounded-2xl transition-all duration-500 border group ${selectedSolutionIndex === idx
                                                 ? 'bg-white/5 border-primary/50 shadow-[0_0_30px_rgba(110,231,183,0.1)]'
                                                 : 'border-transparent hover:bg-white/[0.02]'
@@ -568,7 +580,7 @@ const Home = () => {
                                 </div>
 
                                 {/* RIGHT: RICH PREVIEW CARD */}
-                                <div className="lg:col-span-7 relative">
+                                <div className="lg:col-span-7 relative" ref={solutionPreviewRef}>
                                     <AnimatePresence mode="wait">
                                         <motion.div
                                             key={selectedSolutionIndex}
