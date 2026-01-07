@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Send, CheckCircle2 } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
 
@@ -209,7 +210,7 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
                         required
                     />
                     <label htmlFor="privacyAccepted" className="text-[10px] text-gray-500 cursor-pointer">
-                        Acepto la <a href="/privacidad" className="text-primary hover:underline">política de privacidad</a>. (Cero SPAM, prometido).
+                        Acepto la <Link to="/privacidad" className="text-primary hover:underline">política de privacidad</Link>. (Cero SPAM, prometido).
                     </label>
                 </div>
 
