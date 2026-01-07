@@ -11,7 +11,7 @@ export const fetchContacts = async (filters = {}) => {
     try {
         let query = supabase
             .from('contacts')
-            .select('id, full_name, email, phone, company, sector, city, status, notes, service_interest, source, last_contact_at, last_contact_date, created_at')
+            .select('id, full_name, email, phone, service_interest, source, status, priority, first_contact_at, last_contact_at, notes, sector, city, province, company_size, created_at, updated_at, last_contact_date')
             .order('created_at', { ascending: false });
 
         // Aplicar filtros
@@ -87,7 +87,7 @@ export const upsertContact = async (contactData) => {
         const { data, error } = await supabase
             .from('contacts')
             .upsert(contactData, { onConflict: 'email' })
-            .select('id, full_name, email, phone, company, sector, city, status, notes, service_interest, source, last_contact_at, created_at')
+            .select('id, full_name, email, phone, service_interest, source, status, priority, first_contact_at, last_contact_at, notes, sector, city, province, company_size, created_at, updated_at')
             .single();
 
         if (error) throw error;
@@ -107,7 +107,7 @@ export const updateContact = async (contactId, updates) => {
             .from('contacts')
             .update(updates)
             .eq('id', contactId)
-            .select('id, full_name, email, phone, company, sector, city, status, notes, service_interest, source, last_contact_at, created_at')
+            .select('id, full_name, email, phone, service_interest, source, status, priority, first_contact_at, last_contact_at, notes, sector, city, province, company_size, created_at, updated_at')
             .single();
 
         if (error) throw error;
