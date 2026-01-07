@@ -256,7 +256,7 @@ const Services = () => {
                     <h1 className="font-display text-4xl md:text-6xl font-black leading-[0.85] mb-6 text-white uppercase italic tracking-tighter">
                         Soluciones de <span className="text-primary">automatización</span> real
                     </h1>
-                    <p className="text-base md:text-lg text-gray-500 font-light leading-relaxed mb-8 italic">
+                    <p className="text-base md:text-lg text-gray-400 font-light leading-relaxed mb-10 italic">
                         No vendemos paquetes cerrados ni humo tecnológico. <br />
                         Diseñamos el motor que tu empresa necesita para recuperar el control.
                     </p>
@@ -275,7 +275,7 @@ const Services = () => {
                                 Cada negocio es distinto. <br />
                                 <span className="text-primary">No trabajamos con plantillas.</span>
                             </h2>
-                            <p className="text-gray-500 text-base leading-relaxed mb-6 italic">
+                            <p className="text-gray-400 text-lg leading-relaxed mb-8 italic">
                                 Analizamos cómo funciona tu empresa, dónde se pierde tiempo y dinero, y diseñamos
                                 <strong> automatizaciones a medida</strong> que se adaptan exactamente a tu forma de trabajar.
                             </p>
@@ -288,7 +288,7 @@ const Services = () => {
                                 ))}
                             </div>
                         </div>
-                        <div className="bg-[#111] border border-white/10 p-8 md:p-10 rounded-[2.5rem] relative overflow-hidden shadow-2xl">
+                        <div className="bg-[#151515] border border-white/10 p-8 md:p-10 rounded-[2.5rem] relative overflow-hidden shadow-2xl">
                             <h3 className="text-white text-xl font-bold mb-8 flex items-center gap-3">
                                 <Layout className="text-primary w-6 h-6" />
                                 Cobertura del flujo operativo
@@ -316,7 +316,7 @@ const Services = () => {
                         <h2 className="font-display text-2xl md:text-5xl font-black text-white mb-4 uppercase italic tracking-tighter">
                             Nuestros <span className="text-primary">Productos Estrella</span>
                         </h2>
-                        <p className="text-gray-500 text-base font-light italic">
+                        <p className="text-gray-400 text-lg font-light italic">
                             Soluciones de alto impacto diseñadas para escalar tu facturación de forma inmediata.
                         </p>
                     </div>
@@ -334,7 +334,7 @@ const Services = () => {
                                     x: { type: "spring", stiffness: 300, damping: 30 },
                                     opacity: { duration: 0.2 }
                                 }}
-                                className="bg-[#111] border border-white/10 rounded-[3rem] p-6 md:p-10 flex flex-col lg:flex-row items-center gap-8 lg:gap-12 shadow-2xl overflow-hidden"
+                                className="bg-[#151515] border border-white/10 rounded-[3rem] p-8 md:p-12 flex flex-col lg:flex-row items-center gap-12 lg:gap-16 shadow-2xl overflow-hidden"
                             >
                                 {/* Slide Content Left */}
                                 <div className="flex-1 text-center lg:text-left">
@@ -344,12 +344,12 @@ const Services = () => {
                                     <h3 className="text-white text-2xl md:text-4xl font-display font-black mb-4 leading-tight uppercase italic tracking-tighter">
                                         {starServices[activeService].title}
                                     </h3>
-                                    <p className="text-gray-500 text-base mb-8 leading-relaxed max-w-xl italic">
+                                    <p className="text-gray-300 text-lg mb-10 leading-relaxed max-w-xl italic">
                                         "{starServices[activeService].desc}"
                                     </p>
                                     <Link
                                         to={starServices[activeService].link}
-                                        className="inline-flex items-center gap-3 bg-primary text-black font-black px-6 py-3 rounded-2xl transition-all hover:scale-105 shadow-[0_0_30px_rgba(110,231,183,0.3)] group"
+                                        className="inline-flex items-center gap-3 bg-primary text-black font-black px-8 py-4 rounded-2xl transition-all hover:scale-105 shadow-[0_0_30px_rgba(110,231,183,0.3)] group"
                                     >
                                         VER DETALLES TÉCNICOS <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                                     </Link>
@@ -360,7 +360,7 @@ const Services = () => {
                                     {starServices[activeService].subItems.map((item, idx) => (
                                         <div key={idx} className="bg-white/5 border border-white/10 p-6 rounded-2xl hover:bg-white/10 transition-colors shadow-xl">
                                             <h4 className="text-primary font-black mb-2 text-sm uppercase italic tracking-wider">{item.title}</h4>
-                                            <p className="text-gray-500 text-xs leading-relaxed italic">{item.desc}</p>
+                                            <p className="text-gray-400 text-sm leading-relaxed italic">{item.desc}</p>
                                         </div>
                                     ))}
                                     {/* Placeholder to maintain grid shape if odd number */}
@@ -404,7 +404,7 @@ const Services = () => {
                 </section>
 
                 {/* INFRASTRUCTURE SECTION */}
-                <section className="mb-12 bg-[#111] border border-white/10 rounded-[3rem] p-6 md:p-10 relative overflow-hidden shadow-2xl">
+                <section className="mb-16 bg-[#151515] border border-white/10 rounded-[3rem] p-8 md:p-12 relative overflow-hidden shadow-2xl">
                     <div className="absolute top-0 right-0 w-1/3 h-full bg-primary/5 blur-[120px] rounded-full"></div>
 
                     <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10">
@@ -413,7 +413,7 @@ const Services = () => {
                                 Infraestructura propia. <br />
                                 <span className="text-gray-500">Para que nada falle.</span>
                             </h2>
-                            <p className="text-gray-500 text-base mb-6 italic">
+                            <p className="text-gray-300 text-lg mb-8 italic">
                                 Nos encargamos de toda la base técnica: hosting, dominios, mantenimiento y seguridad.
                                 Trabajamos con <strong>VPS propios</strong> para darte independencia total.
                             </p>
@@ -459,7 +459,7 @@ const Services = () => {
                                     />
                                     <MessageSquare className="absolute right-4 top-3.5 w-4 h-4 text-primary/40" />
                                 </div>
-                                <button className="w-full bg-primary text-black font-black py-4 rounded-xl hover:scale-[1.02] transition-transform shadow-[0_0_20px_rgba(110,231,183,0.2)]">
+                                <button className="w-full bg-primary text-black font-black py-4 rounded-xl hover:scale-[1.02] transition-transform shadow-[0_0_20px_rgba(110,231,183,0.4)]">
                                     PEDIR AUDITORÍA RÁPIDA
                                 </button>
                                 <p className="text-[10px] text-center text-gray-500 italic opacity-60">Prometo cero spam. Solo soluciones.</p>
@@ -493,12 +493,12 @@ const Services = () => {
                             <Link
                                 key={i}
                                 to={ex.link}
-                                className="bg-[#111] border border-white/10 p-6 md:p-8 rounded-[2rem] hover:bg-[#151515] transition-colors relative overflow-hidden group block text-left shadow-2xl"
+                                className="bg-[#151515] border border-white/10 p-8 md:p-10 rounded-[2rem] hover:bg-[#1a1a1a] transition-colors relative overflow-hidden group block text-left shadow-2xl"
                             >
                                 <div className="absolute top-0 right-0 w-1 h-full bg-primary/20 group-hover:bg-primary transition-all"></div>
                                 <h3 className="text-white text-xl font-bold mb-6">{ex.title}</h3>
                                 <div className="space-y-4">
-                                    <div className="text-gray-400 text-sm leading-relaxed mb-4">
+                                    <div className="text-gray-300 text-sm leading-relaxed mb-4">
                                         <span className="text-primary/60 font-mono block mb-2 uppercase text-[10px]">Funcionamiento:</span>
                                         {ex.case}
                                     </div>
@@ -525,9 +525,9 @@ const Services = () => {
                     </div>
                     <div className="grid gap-4">
                         {faqs.map((faq, i) => (
-                            <div key={i} className="bg-[#111] border border-white/10 p-5 rounded-2xl shadow-xl">
-                                <h3 className="text-primary font-black text-base mb-3 uppercase italic tracking-tight">{faq.q}</h3>
-                                <p className="text-gray-500 leading-relaxed italic text-xs">{faq.a}</p>
+                            <div key={i} className="bg-[#151515] border border-white/10 p-6 rounded-2xl shadow-xl">
+                                <h3 className="text-primary font-black text-lg mb-4 uppercase italic tracking-tight">{faq.q}</h3>
+                                <p className="text-gray-200 leading-relaxed font-light text-sm italic">{faq.a}</p>
                             </div>
                         ))}
                     </div>
