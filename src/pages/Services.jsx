@@ -116,51 +116,59 @@ const Services = () => {
 
     const starServices = [
         {
-            title: "Agente Virtual 24/7",
-            desc: "Tu negocio en autopiloto 24/7. Citas confirmadas y recordatorios sin que muevas un dedo.",
+            title: "Reservas WhatsApp",
+            desc: "Tu negocio en autopiloto 24/7. Citas confirmadas, dudas resueltas y recordatorios sin que muevas un dedo.",
             icon: MessageSquare,
             link: "/servicios/automatizacion-whatsapp",
             color: "text-primary",
             bg: "bg-primary/10",
             subItems: [
-                { title: "Sistemas de Reservas", desc: "Online, sin comisiones y sincronizado." },
-                { title: "Recordatorios Automáticos", desc: "Reduce absentismo vía WhatsApp." }
+                { title: "Gestión de Citas", desc: "Reserva 24/7 sin intervención humana." },
+                { title: "Recordatorios Pro", desc: "Evita el 'no-show' con avisos automáticos." },
+                { title: "Dudas Frecuentes", desc: "IA que responde preguntas sobre tu servicio." },
+                { title: "Pagos Integrados", desc: "Cobra señales o servicios vía WhatsApp." }
             ]
         },
         {
             title: "Web Corporativa Pro",
-            desc: "Webs que son herramientas, no folletos. Velocidad extrema y enfoque total en conversión.",
+            desc: "Webs que son herramientas de venta, no simples folletos. Velocidad extrema y optimización total.",
             icon: Globe,
             link: "/servicios/desarrollo-web-medida",
             color: "text-blue-400",
             bg: "bg-blue-400/10",
             subItems: [
-                { title: "Webs de Alto Impacto", desc: "Diseño premium para captar clientes." },
-                { title: "Apps de Gestión", desc: "Control total desde cualquier dispositivo." }
+                { title: "Diseño Premium", desc: "Interfaz única pensada para convertir visitas en leads." },
+                { title: "Carga Ultra-Rápida", desc: "Puntuaciones máximas en Google Core Web Vitals." },
+                { title: "Auto-Gestionable", desc: "Cambia textos y precios sin depender de nadie." },
+                { title: "Apps de Gestión", desc: "Controla tu operativa interna desde el móvil." }
             ]
         },
         {
             title: "SEO Local Estratégico",
-            desc: "Domina Google Maps y capta clientes en tu ciudad. Si no te ven, no existes.",
+            desc: "Domina Google Maps y capta clientes en tu zona. Si no estás primero, no te están llamando.",
             icon: Target,
             link: "/servicios/seo-local-estrategia",
             color: "text-yellow-400",
             bg: "bg-yellow-400/10",
             subItems: [
-                { title: "Google My Business", desc: "Domina los 3 primeros puestos locales." },
-                { title: "Keywords de Compra", desc: "Aparece cuando alguien busca tu servicio." }
+                { title: "Google Maps", desc: "Optimización de perfil para salir en el 'Local Pack'." },
+                { title: "Keywords Locales", desc: "Aparece cuando busquen tu servicio en tu ciudad." },
+                { title: "Gestión de Reseñas", desc: "Estrategia para conseguir 5 estrellas reales." },
+                { title: "Landing Pages", desc: "Páginas específicas para cada zona o barrio." }
             ]
         },
         {
-            title: "Arquitectura CRM / API",
-            desc: "Control total de tu operativa. Centraliza facturación, stock y CRM en un solo lugar.",
+            title: "Arquitectura CRM",
+            desc: "Control total de tu operativa. Centraliza facturación, stock y CRM en un solo lugar conectado.",
             icon: Database,
             link: "/servicios/sistemas-gestion-personalizados",
             color: "text-purple-400",
             bg: "bg-purple-400/10",
             subItems: [
-                { title: "Hub de Inteligencia", desc: "Salud del negocio en tiempo real." },
-                { title: "Flujos Conectados", desc: "Automatización de entrada de datos." }
+                { title: "Hub de Inteligencia", desc: "Salud del negocio y KPIs en tiempo real." },
+                { title: "Flujos Conectados", desc: "Automatización total de entrada de datos." },
+                { title: "Integración APIs", desc: "Conectamos todas tus herramientas de trabajo." },
+                { title: "Seguridad Robusta", desc: "Protección total de tus datos y backups." }
             ]
         }
     ];
@@ -334,41 +342,35 @@ const Services = () => {
                                     x: { type: "spring", stiffness: 300, damping: 30 },
                                     opacity: { duration: 0.2 }
                                 }}
-                                className="bg-[#151515] border border-white/10 rounded-[3rem] p-8 md:p-12 flex flex-col lg:flex-row items-center gap-12 lg:gap-16 shadow-2xl overflow-hidden"
+                                className="bg-[#151515] border border-white/10 rounded-[2.5rem] p-6 md:p-8 flex flex-col lg:flex-row items-center gap-8 lg:gap-12 shadow-2xl overflow-hidden"
                             >
                                 {/* Slide Content Left */}
                                 <div className="flex-1 text-center lg:text-left">
-                                    <div className={`w-16 h-16 rounded-2xl ${starServices[activeService].bg} flex items-center justify-center mb-6 mx-auto lg:mx-0`}>
-                                        {React.createElement(starServices[activeService].icon, { className: `w-8 h-8 ${starServices[activeService].color}` })}
+                                    <div className={`w-14 h-14 rounded-2xl ${starServices[activeService].bg} flex items-center justify-center mb-6 mx-auto lg:mx-0`}>
+                                        {React.createElement(starServices[activeService].icon, { className: `w-7 h-7 ${starServices[activeService].color}` })}
                                     </div>
-                                    <h3 className="text-white text-2xl md:text-4xl font-display font-black mb-4 leading-tight uppercase italic tracking-tighter">
+                                    <h3 className="text-white text-2xl md:text-3xl font-display font-black mb-4 leading-tight uppercase italic tracking-tighter">
                                         {starServices[activeService].title}
                                     </h3>
-                                    <p className="text-gray-300 text-lg mb-10 leading-relaxed max-w-xl italic">
+                                    <p className="text-gray-300 text-base mb-8 leading-relaxed max-w-xl italic">
                                         "{starServices[activeService].desc}"
                                     </p>
                                     <Link
                                         to={starServices[activeService].link}
-                                        className="inline-flex items-center gap-3 bg-primary text-black font-black px-8 py-4 rounded-2xl transition-all hover:scale-105 shadow-[0_0_30px_rgba(110,231,183,0.3)] group"
+                                        className="inline-flex items-center gap-3 bg-primary text-black font-black px-6 py-3 rounded-2xl transition-all hover:scale-105 shadow-[0_0_30px_rgba(110,231,183,0.3)] group text-sm"
                                     >
-                                        VER DETALLES TÉCNICOS <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                                        VER DETALLES TÉCNICOS <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                     </Link>
                                 </div>
 
                                 {/* Slide Items Right (The Grid Info) */}
-                                <div className="w-full lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div className="w-full lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     {starServices[activeService].subItems.map((item, idx) => (
-                                        <div key={idx} className="bg-white/5 border border-white/10 p-6 rounded-2xl hover:bg-white/10 transition-colors shadow-xl">
-                                            <h4 className="text-primary font-black mb-2 text-sm uppercase italic tracking-wider">{item.title}</h4>
-                                            <p className="text-gray-400 text-sm leading-relaxed italic">{item.desc}</p>
+                                        <div key={idx} className="bg-white/5 border border-white/10 p-4 rounded-xl hover:bg-white/10 transition-colors shadow-lg">
+                                            <h4 className="text-primary font-black mb-1 text-[10px] uppercase italic tracking-wider">{item.title}</h4>
+                                            <p className="text-gray-400 text-[10px] leading-tight italic">{item.desc}</p>
                                         </div>
                                     ))}
-                                    {/* Placeholder to maintain grid shape if odd number */}
-                                    {starServices[activeService].subItems.length % 2 !== 0 && (
-                                        <div className="hidden sm:flex bg-primary/5 border border-primary/10 p-6 rounded-2xl items-center justify-center opacity-40 italic text-[10px] text-primary">
-                                            Solución 100% Personalizada
-                                        </div>
-                                    )}
                                 </div>
                             </motion.div>
                         </AnimatePresence>
