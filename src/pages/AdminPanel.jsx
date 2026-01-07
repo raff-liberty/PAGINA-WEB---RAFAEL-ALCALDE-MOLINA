@@ -47,9 +47,9 @@ const AdminPanel = () => {
         n8n_webhook_url: '',
         og_image_url: 'https://engorilate.com/og-image.jpg',
         twitter_handle: '@engorilate',
-        default_meta_title: 'Engorilate | Automatización de Negocios en Murcia',
-        default_meta_description: 'Automatiza los procesos repetitivos de tu empresa en Murcia. Recupera tu tiempo y deja de perder dinero en gestión manual.',
-        default_keywords: 'automatización negocios murcia, digitalización pymes, eficiencia operativa',
+        default_meta_title: 'Engorilate | Destruimos la Burocracia con Automatización Inteligente',
+        default_meta_description: 'Si tu negocio depende de procesos manuales, estás perdiendo dinero. En Engorilate diseñamos ecosistemas de automatización que trabajan por ti. Recupera tu tiempo ahora.',
+        default_keywords: 'automatización de negocios, eficiencia operativa, digitalización pymes, ahorro tiempo murcia, sistemas inteligentes',
         chat_embed_url: ''
     });
     const [searchTerm, setSearchTerm] = useState('');
@@ -110,51 +110,26 @@ const AdminPanel = () => {
         "Gestión"
     ];
 
-    const editorialGuidelines = `# Línea Editorial Engorilate - "Zero Humo"
+    const editorialGuidelines = `# Línea Editorial Engorilate - Framework \"Autoridad PAS\"
+1. **Directo a la Yugular**: El lector no viene a aprender teoría, viene a dejar de sufrir. Identifica el dolor (Problema) y clávale el aguijón (Agitación).
+2. **Autoridad Técnica**: Explica *por qué* técnicamente lo que hacen hoy es una basura (Webhooks vs Manual, APIs vs CSVs). Demuestra que sabes de lo que hablas.
+3. **Misión del Gorila**: Automatizar no es una opción, es una necesidad de supervivencia. Menos clics, más facturación.
 
-## Tono y Voz
-- **Directo y sin rodeos**: Nada de "quizás" o "podría ser". Si funciona, funciona. Si no, no.
-- **Guerrilla Marketing**: Agresivo, honesto, sin azúcar. Como un gorila que te dice las verdades que nadie más te dice.
-- **Orientado a resultados**: Cada artículo debe ahorrar al menos 10 horas al mes al lector.
+## El Framework PAS (Problem-Agitation-Solution)
+- **Problema**: Identifica la tarea manual específica que les roba vida.
+- **Agitación**: Traduce esa pérdida a euros y horas semanales. Haz que duela.
+- **Autoridad**: Explica la solución técnica (infraestructura, conectores, flujos).
+- **Solución Engorilada**: Cómo lo hacemos nosotros de forma ágil y rentable.
 
-## Fuentes y Veracidad (CRÍTICO)
-> 🚨 **CERO ALUCINACIONES**: Bajo ningún concepto te inventes datos, estadísticas o ejemplos.
-1. **Fuentes Reputadas**: Usa documentación oficial (n8n docs, Make docs), estudios de mercado reales (McKinsey, Deloitte para PYMEs) o casos de éxito verificables.
-2. **Si no lo sabes, no lo digas**: Es mejor decir "según nuestra experiencia" que inventarse un % falso.
-3. **Cita las fuentes**: Si das un dato ("el 90% de las PYMEs cierran..."), pon el enlace o la fuente.
+## Reglas de Oro \"Zero Humo\"
+- **Prohibido alucinar**: Cero estadísticas inventadas. Si no hay dato real, usa \"Según nuestra experiencia en el sector\".
+- **Markdown Obligatorio**: Usa tablas para comparar el \"Antes (Caos)\" vs \"Después (Orden)\". Usa blockquotes para frases de impacto.
+- **CTA Agresivo**: No pedimos \"por favor\". Ofrecemos una salida del bucle infinito de la burocracia.
 
-
-## Estructura de Posts
-1. **Hook brutal**: Primera frase que golpea el dolor del lector
-2. **El problema real**: Sin eufemismos, directo a la yugular
-3. **La solución práctica**: Paso a paso, sin humo
-4. **Plan de acción**: Qué hacer HOY, no "algún día"
-
-## Palabras Clave
-✅ Usar: "facturar", "libertad operativa", "dejar de trabajar como animal", "tiempo de vuelta"
-❌ Evitar: "quizás", "podría", "tal vez", "en el futuro", palabrería corporativa
-
-## Formato Markdown
-- Headers: ## para secciones principales, ### para subsecciones
-- **Negrita** para conceptos clave y números importantes
-- > Blockquotes para frases impactantes o advertencias
-- Tablas para comparaciones (Antes/Después, Herramienta/Coste)
-- Listas para pasos de acción
-
-## Métricas de Éxito
-- Tiempo de lectura: 5-10 minutos máximo
-- Ahorro estimado: Mínimo 10h/mes
-- Llamada a la acción: Siempre presente, nunca agresiva
-
-## Ejemplos de Títulos Buenos
-- "Cómo Automatizar WhatsApp para tu Negocio en 2025"
-- "ERP para Pequeños Negocios: ¿Lo Necesitas o es un Gasto Innecesario?"
-- "Deja de Perder 15 Horas a la Semana en Email"
-
-## Ejemplos de Títulos Malos
-- "Mejora tu productividad con estos consejos"
-- "La importancia de la automatización"
-- "5 trucos que cambiarán tu negocio"`;
+## Ejemplos de Títulos Engorilaos
+✅ \"La Trampa del ERP de 5.000€\"
+✅ \"El Robo Silencioso de tus Mañanas\"
+✅ \"Tu CRM es un Zombi (y te está costando dinero)\"`;
 
     // CRM Data Fetching Logic
     useEffect(() => {
@@ -540,13 +515,13 @@ const AdminPanel = () => {
                     metaTitle: `Gestión de Proyectos Agencia en ${location.name} (CRM + Facturas) | Engorilate`,
                     metaDesc: `Optimiza tu agencia en ${location.name}. Onboarding de clientes, facturación recurrente y gestión de proyectos unificada.`,
                     heroTitle: `Escala tu Agencia en ${location.name} sin morir de éxito`,
-                    heroSub: `CRM, Project Management y Facturación en un solo lugar. Adiós al caos.`
+                    heroSub: `Deja de hacer de administrativo y empieza a hacer de estratega. Automatizamos tu onboarding, CRM y facturación.`
                 },
                 'comercios': {
                     metaTitle: `TPV y Software Tienda ${location.name} (Stock Real) | Engorilate`,
                     metaDesc: `Software TPV para tiendas en ${location.name}. Control de stock en tiempo real, ventas y facturación simplificada.`,
                     heroTitle: `Tu Tienda en ${location.name}, bajo control total`,
-                    heroSub: `TPV, Inventario y Ventas sincronizadas. Sabe lo que ganas cada día.`
+                    heroSub: `No más "creo que queda". Inventario sincronizado y ventas bajo control total cada segundo.`
                 }
             };
 

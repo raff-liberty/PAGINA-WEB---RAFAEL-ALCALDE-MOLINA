@@ -102,9 +102,9 @@ const Blog = () => {
                                 className="overflow-hidden"
                             >
                                 <div className="mt-12 p-8 md:p-12 rounded-3xl bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] border-2 border-primary/30 relative overflow-hidden shadow-[0_0_50px_rgba(110,231,183,0.1)]">
-                                    {/* Danger Stripes Decor */}
-                                    <div className="absolute top-0 right-0 w-32 h-8 bg-primary/20 -rotate-45 translate-x-12 -translate-y-4 flex items-center justify-center">
-                                        <span className="text-[10px] font-black text-primary uppercase tracking-tighter">WARNING</span>
+                                    {/* Brand Seal Decor */}
+                                    <div className="absolute top-0 right-0 w-48 h-12 bg-primary text-gray-900 rotate-45 translate-x-16 translate-y-2 flex items-center justify-center shadow-[0_0_30px_rgba(224,255,0,0.4)]">
+                                        <span className="text-[10px] font-black uppercase tracking-[0.3em]">Cero Humo</span>
                                     </div>
 
                                     <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12">
