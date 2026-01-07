@@ -12,7 +12,7 @@ export const fetchContacts = async (filters = {}) => {
         let query = supabase
             .from('contacts')
             .select('*')
-            .order('created_at', { ascending: false });
+            .order('last_contact_date', { ascending: false });
 
         // Aplicar filtros
         if (filters.status && filters.status !== 'all') {
@@ -231,5 +231,42 @@ export const getContactStats = async () => {
     } catch (error) {
         console.error('Error getting contact stats:', error);
         return { data: null, error };
+    }
+};
+
+/**
+ * Obtener conteo de mensajes no leídos
+ */
+export const getUnreadMessageCount = async () => {
+    try {
+        const { count, error } = await supabase
+            .from('contact_messages')
+            .select('*', { count: 'exact', head: true })
+            .eq('is_read', false);
+
+        if (error) throw error;
+        return { count, error: null };
+    } catch (error) {
+        console.error('Error getting unread count:', error);
+        return { count: 0, error };
+    }
+};
+
+/**
+ * Marcar mensajes de un contacto como leídos
+ */
+export const markMessagesAsRead = async (contactId) => {
+    try {
+        const { error } = await supabase
+            .from('contact_messages')
+            .update({ is_read: true })
+            .eq('contact_id', contactId)
+            .eq('is_read', false);
+
+        if (error) throw error;
+        return { error: null };
+    } catch (error) {
+        console.error('Error marking messages as read:', error);
+        return { error };
     }
 };

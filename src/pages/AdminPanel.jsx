@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Save, X, Eye, Edit, Plus, Trash2, Lock, Search, Filter, BookOpen, BarChart3, Copy, Upload, Download, Globe, MapPin, Briefcase, CheckCircle, AlertCircle, ExternalLink, Target, Bold, Quote, List, ListOrdered, CheckSquare, Table, Users, Mail, FileText, Send, Calendar, Tag, MoreHorizontal } from 'lucide-react';
+import { Save, X, Eye, Edit, Plus, Trash2, Lock, Search, Filter, BookOpen, BarChart3, Copy, Upload, Download, Globe, MapPin, Briefcase, CheckCircle, AlertCircle, ExternalLink, Target, Bold, Quote, List, ListOrdered, CheckSquare, Table, Users, Mail, FileText, Send, Calendar, Tag, MoreHorizontal, Bell } from 'lucide-react';
+import { fetchContacts, deleteContact, getContactStats, getUnreadMessageCount } from '../lib/crm/contacts';
 import BackgroundMesh from '../components/BackgroundMesh';
 import StrategicRoadmap from '../components/StrategicRoadmap';
 import SEOPreview from '../components/SEOPreview';
@@ -73,6 +74,7 @@ const AdminPanel = () => {
     const [crmTab, setCrmTab] = useState('contacts'); // 'contacts', 'templates', 'campaigns'
     const [selectedContact, setSelectedContact] = useState(null);
     const [selectedProject, setSelectedProject] = useState(null);
+    const [unreadCount, setUnreadCount] = useState(0);
 
     // Sectors & Locations state
     const [selectedSector, setSelectedSector] = useState(null);
@@ -129,6 +131,7 @@ const AdminPanel = () => {
             fetchPosts();
             fetchSiteConfig();
             fetchSEOData();
+            fetchUnreadCount();
             if (activeTab === 'sectors') {
                 fetchSectors();
             }
@@ -137,6 +140,11 @@ const AdminPanel = () => {
             }
         }
     }, [user, activeTab]);
+
+    const fetchUnreadCount = async () => {
+        const { count } = await getUnreadMessageCount();
+        setUnreadCount(count || 0);
+    };
 
     const fetchSectors = async () => {
         try {
@@ -949,6 +957,19 @@ const AdminPanel = () => {
                 <div className="mb-12 flex flex-col lg:flex-row items-center justify-between gap-8">
                     <h1 className="text-4xl font-black text-white uppercase italic tracking-tighter">Admin Panel & SEO</h1>
                     <div className="flex flex-wrap items-center justify-center lg:justify-end gap-3 w-full lg:w-auto">
+                        {/* Notifications Bell */}
+                        <button
+                            onClick={() => { setActiveTab('crm'); setCrmTab('contacts'); }}
+                            className="relative flex flex-col items-center justify-center gap-2 p-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all min-w-[70px] h-20 mr-2 group"
+                        >
+                            <Bell className={`w-5 h-5 flex-shrink-0 ${unreadCount > 0 ? 'text-yellow-400' : 'text-gray-400 group-hover:text-white'}`} />
+                            <span className="text-[10px] font-black uppercase tracking-tighter text-center leading-tight text-gray-400 group-hover:text-white">Avisos</span>
+                            {unreadCount > 0 && (
+                                <span className="absolute top-2 right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white shadow-lg animate-pulse">
+                                    {unreadCount}
+                                </span>
+                            )}
+                        </button>
                         {navigationTabs.map((tab) => {
                             const Icon = tab.icon;
                             return (

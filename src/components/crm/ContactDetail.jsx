@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, Mail, Phone, Building2, MapPin, Calendar, Tag, MessageSquare, Briefcase, Edit, Save } from 'lucide-react';
-import { fetchContactById, updateContact, upsertContact } from '../../lib/crm/contacts';
+import { fetchContactById, updateContact, upsertContact, markMessagesAsRead } from '../../lib/crm/contacts';
 
 const ContactDetail = ({ contactId, onClose, onUpdate }) => {
     const [contact, setContact] = useState(null);
@@ -21,6 +21,10 @@ const ContactDetail = ({ contactId, onClose, onUpdate }) => {
 
     useEffect(() => {
         loadContact();
+        // Mark messages as read when opening detail
+        if (contactId !== 'new') {
+            markMessagesAsRead(contactId);
+        }
     }, [contactId]);
 
     const loadContact = async () => {

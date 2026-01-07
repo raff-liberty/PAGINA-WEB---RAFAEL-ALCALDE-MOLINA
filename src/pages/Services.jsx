@@ -530,7 +530,7 @@ const Services = () => {
                                             <input
                                                 type="tel"
                                                 required
-                                                placeholder="WhatsApp (600 000 000)"
+                                                placeholder="WhatsApp (611 469 469)"
                                                 value={miniForm.whatsapp}
                                                 onChange={(e) => setMiniForm({ ...miniForm, whatsapp: e.target.value })}
                                                 className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-primary/50 transition-colors placeholder:text-gray-500"
