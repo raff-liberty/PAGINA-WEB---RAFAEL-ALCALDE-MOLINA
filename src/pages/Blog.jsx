@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Clock, Calendar, AlertTriangle, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
-import { blogPosts as localPosts } from '../data/blogPosts';
 import BackgroundMesh from '../components/BackgroundMesh';
 import SEO from '../components/SEO';
 
@@ -19,6 +18,7 @@ const Blog = () => {
 
     const [selectedCategory, setSelectedCategory] = useState('Todos');
     const [posts, setPosts] = useState([]);
+    const [sortBy, setSortBy] = useState('newest'); // 'newest' or 'oldest'
     const [loading, setLoading] = useState(true);
     const [showManifesto, setShowManifesto] = useState(false);
 
@@ -26,25 +26,15 @@ const Blog = () => {
         const fetchPosts = async () => {
             setLoading(true);
             try {
-                // Initialize with local posts first
-                let combinedPosts = [...localPosts];
-
                 const { data, error } = await supabase
                     .from('blog_posts')
                     .select('*')
                     .order('publish_date', { ascending: false });
 
-                if (!error && data && data.length > 0) {
-                    // Filter out local posts if they already exist in Supabase by slug
-                    const supabaseSlugs = data.map(p => p.slug);
-                    const uniqueLocal = localPosts.filter(p => !supabaseSlugs.includes(p.slug));
-                    combinedPosts = [...uniqueLocal, ...data];
-                }
-
-                setPosts(combinedPosts);
+                if (error) throw error;
+                setPosts(data || []);
             } catch (error) {
                 console.error('Error fetching posts:', error.message);
-                setPosts(localPosts); // Fallback to local on error
             } finally {
                 setLoading(false);
             }
@@ -53,9 +43,15 @@ const Blog = () => {
         fetchPosts();
     }, []);
 
-    const filteredPosts = selectedCategory === 'Todos'
+    const filteredPosts = (selectedCategory === 'Todos'
         ? posts
-        : posts.filter(post => post.category === selectedCategory || post.pain_point === selectedCategory);
+        : posts.filter(post => post.category === selectedCategory || post.pain_point === selectedCategory))
+        .sort((a, b) => {
+            if (sortBy === 'newest') {
+                return new Date(b.publish_date) - new Date(a.publish_date);
+            }
+            return new Date(a.publish_date) - new Date(b.publish_date);
+        });
 
     return (
         <div className="relative pt-32 pb-24 min-h-screen">
@@ -164,28 +160,53 @@ const Blog = () => {
                 </div>
 
                 {/* Categories */}
-                <div className="flex overflow-x-auto md:flex-wrap gap-3 mb-12 pb-4 md:pb-0 scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0">
-                    <button
-                        onClick={() => setSelectedCategory('Todos')}
-                        className={`px-4 py-2 rounded-lg font-medium text-sm transition-all flex-shrink-0 ${selectedCategory === 'Todos'
-                            ? 'bg-primary text-gray-900 shadow-[0_0_15px_rgba(110,231,183,0.3)]'
-                            : 'bg-surface-dark/40 border border-white/5 text-gray-400 hover:text-white hover:border-white/20'
-                            }`}
-                    >
-                        Todos
-                    </button>
-                    {categories.map((category) => (
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+                    {/* Categories */}
+                    <div className="flex overflow-x-auto md:flex-wrap gap-3 pb-4 md:pb-0 scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0">
                         <button
-                            key={category}
-                            onClick={() => setSelectedCategory(category)}
-                            className={`px-4 py-2 rounded-lg text-sm transition-all flex-shrink-0 ${selectedCategory === category
-                                ? 'bg-primary text-gray-900 font-medium shadow-[0_0_15px_rgba(110,231,183,0.3)]'
+                            onClick={() => setSelectedCategory('Todos')}
+                            className={`px-4 py-2 rounded-lg font-medium text-sm transition-all flex-shrink-0 ${selectedCategory === 'Todos'
+                                ? 'bg-primary text-gray-900 shadow-[0_0_15px_rgba(110,231,183,0.3)]'
                                 : 'bg-surface-dark/40 border border-white/5 text-gray-400 hover:text-white hover:border-white/20'
                                 }`}
                         >
-                            {category}
+                            Todos
                         </button>
-                    ))}
+                        {categories.map((category) => (
+                            <button
+                                key={category}
+                                onClick={() => setSelectedCategory(category)}
+                                className={`px-4 py-2 rounded-lg text-sm transition-all flex-shrink-0 ${selectedCategory === category
+                                    ? 'bg-primary text-gray-900 font-medium shadow-[0_0_15px_rgba(110,231,183,0.3)]'
+                                    : 'bg-surface-dark/40 border border-white/5 text-gray-400 hover:text-white hover:border-white/20'
+                                    }`}
+                            >
+                                {category}
+                            </button>
+                        ))}
+                    </div>
+
+                    {/* Sorting */}
+                    <div className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl p-1 self-start">
+                        <button
+                            onClick={() => setSortBy('newest')}
+                            className={`px-4 py-1.5 rounded-lg text-xs font-mono tracking-widest uppercase transition-all ${sortBy === 'newest'
+                                ? 'bg-primary text-gray-900 font-bold'
+                                : 'text-gray-400 hover:text-white'
+                                }`}
+                        >
+                            Recientes
+                        </button>
+                        <button
+                            onClick={() => setSortBy('oldest')}
+                            className={`px-4 py-1.5 rounded-lg text-xs font-mono tracking-widest uppercase transition-all ${sortBy === 'oldest'
+                                ? 'bg-primary text-gray-900 font-bold'
+                                : 'text-gray-400 hover:text-white'
+                                }`}
+                        >
+                            Antiguos
+                        </button>
+                    </div>
                 </div>
 
                 {/* Blog Posts Grid */}

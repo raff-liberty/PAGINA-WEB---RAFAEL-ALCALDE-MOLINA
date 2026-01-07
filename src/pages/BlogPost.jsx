@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Calendar, Clock } from 'lucide-react';
 import BlogRenderer from '../components/BlogRenderer';
 import { supabase } from '../lib/supabaseClient';
-import { blogPosts as localPosts } from '../data/blogPosts';
 import BackgroundMesh from '../components/BackgroundMesh';
 import SEO from '../components/SEO';
 
@@ -18,47 +17,25 @@ const BlogPost = () => {
         const fetchPostData = async () => {
             setLoading(true);
             try {
-                // Check local posts first
-                const localPost = localPosts.find(p => p.slug === slug);
+                // Fetch from Supabase directly
+                const { data: postData, error: postError } = await supabase
+                    .from('blog_posts')
+                    .select('*')
+                    .eq('slug', slug)
+                    .single();
 
-                if (localPost) {
-                    setPost(localPost);
+                if (postError) throw postError;
+                setPost(postData);
 
-                    // Set related posts from local if possible
-                    const related = localPosts.filter(p => p.category === localPost.category && p.slug !== slug).slice(0, 3);
-                    setRelatedPosts(related);
+                // Fetch related posts
+                const { data: relatedData } = await supabase
+                    .from('blog_posts')
+                    .select('id, slug, title, category, excerpt')
+                    .eq('category', postData.category)
+                    .neq('slug', slug)
+                    .limit(3);
 
-                    // We still try to fetch related from Supabase if local is empty
-                    if (related.length === 0) {
-                        const { data: relatedData } = await supabase
-                            .from('blog_posts')
-                            .select('id, slug, title, category, excerpt')
-                            .eq('category', localPost.category)
-                            .neq('slug', slug)
-                            .limit(3);
-                        if (relatedData) setRelatedPosts(relatedData);
-                    }
-                } else {
-                    // Fallback to Supabase
-                    const { data: postData, error: postError } = await supabase
-                        .from('blog_posts')
-                        .select('*')
-                        .eq('slug', slug)
-                        .single();
-
-                    if (postError) throw postError;
-                    setPost(postData);
-
-                    // Fetch related posts
-                    const { data: relatedData } = await supabase
-                        .from('blog_posts')
-                        .select('id, slug, title, category, excerpt')
-                        .eq('category', postData.category)
-                        .neq('slug', slug)
-                        .limit(3);
-
-                    setRelatedPosts(relatedData || []);
-                }
+                setRelatedPosts(relatedData || []);
             } catch (error) {
                 console.error('Error fetching post:', error.message);
             } finally {
