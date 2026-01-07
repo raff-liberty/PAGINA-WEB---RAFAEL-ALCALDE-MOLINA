@@ -54,7 +54,7 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
                 .from('contacts')
                 .upsert([{
                     email: formData.email,
-                    name: formData.name,
+                    full_name: formData.name,
                     phone: formData.phone,
                     company: formData.company,
                     service_interest: formData.service,
