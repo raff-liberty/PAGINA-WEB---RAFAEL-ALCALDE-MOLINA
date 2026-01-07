@@ -123,11 +123,11 @@ const BlogRenderer = ({ post }) => {
 
             // Regular paragraph
             elements.push(
-                <p key={i} className="leading-[1.6] tracking-wide text-gray-300">
+                <p key={i} className="leading-[1.6] tracking-wide text-gray-100/95 font-normal">
                     {line.split(/(\[.*?\]\(.*?\))/g).map((part, pidx) => {
                         const linkMatch = part.match(/\[(.*?)\]\((.*?)\)/);
                         if (linkMatch) {
-                            return <Link key={pidx} to={linkMatch[2]} className="text-primary hover:underline font-bold">{linkMatch[1]}</Link>;
+                            return <Link key={pidx} to={linkMatch[2]} className="text-primary hover:underline font-bold text-white lg:text-primary">{linkMatch[1]}</Link>;
                         }
                         return part.split('**').map((subpart, spidx) =>
                             spidx % 2 === 1 ? <strong key={spidx} className="text-white font-bold bg-primary/10 px-1.5 py-0.5 rounded-md border border-primary/20">{subpart}</strong> : subpart
@@ -154,7 +154,7 @@ const BlogRenderer = ({ post }) => {
                     </div>
                 </div>
 
-                <h1 className="font-display text-4xl md:text-7xl font-black leading-[1.05] mb-8 text-white tracking-tighter uppercase italic">
+                <h1 className="font-display text-4xl md:text-7xl font-black leading-[1.05] mb-8 text-gray-200 tracking-tighter uppercase italic drop-shadow-2xl">
                     {post.title}
                 </h1>
 
@@ -171,9 +171,12 @@ const BlogRenderer = ({ post }) => {
             </div>
 
             <div className="max-w-none mb-20">
-                <div className="bg-[#1A1A1A] border-2 border-white/20 p-8 md:p-16 rounded-[2.5rem] shadow-[0_32px_120px_rgba(0,0,0,0.5)] relative overflow-hidden">
+                <div className="bg-[#1A1A1A] border-2 border-white/20 p-8 md:p-16 rounded-[2.5rem] shadow-[0_32px_120px_rgba(0,0,0,0.8)] relative overflow-hidden group/article">
+                    {/* Radial highlight for reading comfort */}
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(110,231,183,0.03),transparent_70%)] pointer-events-none"></div>
+
                     <div className="absolute top-0 right-0 p-8 opacity-5">
-                        <div className="w-32 h-32 border-8 border-primary rounded-full"></div>
+                        <div className="w-32 h-32 border-8 border-primary/30 rounded-full"></div>
                     </div>
 
                     <div className="relative z-10 space-y-6 blog-content text-lg font-normal">

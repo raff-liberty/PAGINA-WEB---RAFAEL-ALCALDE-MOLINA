@@ -432,7 +432,7 @@ const Home = () => {
                                 onClick={() => setActiveTab(type.id)}
                                 className={`px-6 py-3 rounded-lg text-sm md:text-base border transition-all duration-300 select-none cursor-pointer ${activeTab === type.id
                                     ? 'bg-primary text-gray-900 border-primary font-bold shadow-[0_0_15px_rgba(110,231,183,0.3)]'
-                                    : 'bg-surface-dark/40 border-white/5 text-gray-400 hover:text-white hover:border-white/20 hover:bg-surface-dark/60'
+                                    : 'bg-white/10 border-white/20 text-gray-300 hover:text-white hover:border-white/40 hover:bg-white/20'
                                     }`}
                             >
                                 {type.label}
