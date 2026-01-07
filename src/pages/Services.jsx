@@ -448,14 +448,14 @@ const Services = () => {
                                     <input
                                         type="text"
                                         placeholder="Nombre o Negocio"
-                                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary/50 transition-colors"
+                                        className="w-full bg-white/10 border border-white/30 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-primary/50 transition-colors placeholder:text-gray-500"
                                     />
                                 </div>
                                 <div className="relative">
                                     <input
                                         type="tel"
                                         placeholder="Tu WhatsApp"
-                                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary/50 transition-colors"
+                                        className="w-full bg-white/10 border border-white/30 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-primary/50 transition-colors placeholder:text-gray-500"
                                     />
                                     <MessageSquare className="absolute right-4 top-3.5 w-4 h-4 text-primary/40" />
                                 </div>

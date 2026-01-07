@@ -134,7 +134,7 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
                 <div>
                     <input
                         id="name"
-                        className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white focus:border-primary outline-none transition-colors placeholder:text-gray-600"
+                        className="w-full bg-white/10 border border-white/30 rounded-lg px-4 py-2.5 text-sm text-white focus:border-primary outline-none transition-colors placeholder:text-gray-500"
                         placeholder="Tu Nombre"
                         type="text"
                         value={formData.name}
@@ -145,7 +145,7 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
                 <div>
                     <input
                         id="phone"
-                        className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white focus:border-primary outline-none transition-colors placeholder:text-gray-600"
+                        className="w-full bg-white/10 border border-white/30 rounded-lg px-4 py-2.5 text-sm text-white focus:border-primary outline-none transition-colors placeholder:text-gray-500"
                         placeholder="+34 WhatsApp"
                         type="tel"
                         value={formData.phone}
@@ -159,7 +159,7 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
                 <div>
                     <input
                         id="email"
-                        className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white focus:border-primary outline-none transition-colors placeholder:text-gray-600"
+                        className="w-full bg-white/10 border border-white/30 rounded-lg px-4 py-2.5 text-sm text-white focus:border-primary outline-none transition-colors placeholder:text-gray-500"
                         placeholder="tu@email.com"
                         type="email"
                         value={formData.email}
@@ -173,7 +173,7 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
                             id="service"
                             value={formData.service}
                             onChange={handleChange}
-                            className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white focus:border-primary outline-none appearance-none cursor-pointer"
+                            className="w-full bg-white/10 border border-white/30 rounded-lg px-4 py-2.5 text-sm text-white focus:border-primary outline-none appearance-none cursor-pointer"
                         >
                             {serviceOptions.map(opt => (
                                 <option key={opt.value} value={opt.value} className="bg-gray-900">{opt.label}</option>
@@ -189,7 +189,7 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
             <div>
                 <textarea
                     id="message"
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm text-white focus:border-primary outline-none resize-none placeholder:text-gray-600"
+                    className="w-full bg-white/10 border border-white/30 rounded-lg px-4 py-3 text-sm text-white focus:border-primary outline-none resize-none placeholder:text-gray-500"
                     placeholder="¿Qué quieres automatizar? Sé breve y directo."
                     rows={3}
                     value={formData.message}
