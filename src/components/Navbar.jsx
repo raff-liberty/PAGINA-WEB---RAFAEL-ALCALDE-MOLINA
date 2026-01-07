@@ -171,13 +171,13 @@ const Navbar = () => {
             {/* BRAND NEW MOBILE MENU - FULL SCREEN OVERLAY */}
             {isMenuOpen && (
                 <div
-                    className="lg:hidden fixed inset-0 top-0 left-0 right-0 bottom-0"
+                    className="lg:hidden fixed top-0 left-0 right-0"
                     style={{
                         backgroundColor: '#000000',
                         zIndex: 999999,
                         position: 'fixed',
                         width: '100vw',
-                        height: '100vh',
+                        maxHeight: '100vh',
                         overflow: 'hidden'
                     }}
                 >
@@ -193,7 +193,7 @@ const Navbar = () => {
                     </div>
 
                     {/* Menu Items */}
-                    <div className="p-8 space-y-8 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 80px)' }}>
+                    <div className="p-8 space-y-8">
                         {navLinks.map((link) => (
                             <div key={link.path}>
                                 {link.dropdown ? (
@@ -246,7 +246,7 @@ const Navbar = () => {
                             style={{ backgroundColor: '#6EE7B7', color: '#000000' }}
                             onClick={() => setIsMenuOpen(false)}
                         >
-                            Empezar ahora
+                            Hablamos
                         </Link>
                     </div>
                 </div>
