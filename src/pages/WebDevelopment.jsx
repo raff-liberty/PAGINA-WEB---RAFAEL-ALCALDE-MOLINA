@@ -115,13 +115,13 @@ const WebDevelopment = () => {
 
             {/* THE "WHY CUSTOM" SECTION */}
             <section className="px-6 py-16 max-w-7xl mx-auto">
-                <div className="grid lg:grid-cols-2 gap-20 items-center">
+                <div className="grid lg:grid-cols-2 gap-12 items-center">
                     <div>
-                        <h2 className="text-3xl md:text-5xl font-display font-black mb-8 leading-tight uppercase italic underline decoration-primary/50 underline-offset-[12px]">
+                        <h2 className="text-3xl md:text-5xl font-display font-black mb-6 leading-tight uppercase italic underline decoration-primary/50 underline-offset-[12px]">
                             Por qué ir <br />
                             <span className="text-primary italic">A Medida</span>
                         </h2>
-                        <div className="space-y-12">
+                        <div className="space-y-6">
                             {coreValues.map((v, i) => (
                                 <div key={i} className="flex gap-8 group">
                                     <div className="w-16 h-16 shrink-0 rounded-2xl bg-[#111] border border-white/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-black transition-all">
