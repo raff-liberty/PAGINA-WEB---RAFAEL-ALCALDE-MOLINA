@@ -129,19 +129,19 @@ const WorkMethod = () => {
                         {/* Step 1 */}
                         <motion.div
                             whileHover={{ y: -5 }}
-                            className="bg-[#1a1a1a] border border-white/10 p-10 rounded-[2.5rem] relative overflow-hidden group hover:border-primary/40 transition-all duration-500 shadow-xl"
+                            className="bg-[#1A1A1A] border-2 border-white/20 p-8 rounded-[2rem] relative overflow-hidden group hover:border-primary/40 transition-all duration-700 shadow-[0_32px_120px_rgba(0,0,0,1)]"
                         >
-                            <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary/5 blur-[80px] rounded-full group-hover:bg-primary/10 transition-all"></div>
-                            <div className="text-primary font-mono text-xs uppercase tracking-[3px] mb-6 font-bold flex items-center gap-2">
+                            <div className="absolute -top-24 -right-24 w-64 h-64 bg-primary/10 blur-[100px] rounded-full group-hover:bg-primary/20 transition-all duration-700"></div>
+                            <div className="relative z-10 text-primary font-mono text-xs uppercase tracking-[3px] mb-6 font-bold flex items-center gap-2">
                                 <span className="w-8 h-px bg-primary/30"></span> 01. Auditoría Real
                             </div>
-                            <h3 className="font-display text-2xl font-bold text-white mb-4 tracking-tight">Analizar antes de tocar</h3>
-                            <p className="text-gray-400 font-light italic leading-relaxed mb-8">
+                            <h3 className="relative z-10 font-display text-2xl font-bold text-white mb-4 tracking-tight">Analizar antes de tocar</h3>
+                            <p className="relative z-10 text-gray-400 font-light italic leading-relaxed mb-8">
                                 "Identificamos dónde se te escapa el tiempo hoy. No suponemos, medimos fugas reales en tu operativa diaria."
                             </p>
-                            <div className="bg-black/40 p-6 rounded-2xl border border-white/5">
-                                <p className="text-primary text-[10px] uppercase font-bold tracking-widest mb-3 italic">Impacto Inmediato:</p>
-                                <ul className="text-sm text-gray-500 space-y-2">
+                            <div className="relative z-10 bg-black/60 p-6 rounded-2xl border border-white/10 shadow-inner">
+                                <p className="text-primary text-xs uppercase font-black tracking-widest mb-3 italic">Impacto Inmediato:</p>
+                                <ul className="text-sm text-gray-300 space-y-2 italic font-light">
                                     <li>• Mapa de 'fugas industriales'</li>
                                     <li>• Checklist prioritario de ahorro</li>
                                 </ul>
@@ -151,19 +151,19 @@ const WorkMethod = () => {
                         {/* Step 2 */}
                         <motion.div
                             whileHover={{ y: -5 }}
-                            className="bg-[#1a1a1a] border border-white/10 p-10 rounded-[2.5rem] relative overflow-hidden group hover:border-blue-400/40 transition-all duration-500 shadow-xl"
+                            className="bg-[#1A1A1A] border-2 border-white/20 p-8 rounded-[2rem] relative overflow-hidden group hover:border-blue-400/40 transition-all duration-700 shadow-[0_32px_120px_rgba(0,0,0,1)]"
                         >
-                            <div className="absolute -top-24 -left-24 w-48 h-48 bg-blue-400/5 blur-[80px] rounded-full group-hover:bg-blue-400/10 transition-all"></div>
-                            <div className="text-blue-400 font-mono text-xs uppercase tracking-[3px] mb-6 font-bold flex items-center gap-2">
+                            <div className="absolute -top-24 -left-24 w-64 h-64 bg-blue-400/10 blur-[100px] rounded-full group-hover:bg-blue-400/20 transition-all duration-700"></div>
+                            <div className="relative z-10 text-blue-400 font-mono text-xs uppercase tracking-[3px] mb-6 font-bold flex items-center gap-2">
                                 <span className="w-8 h-px bg-blue-400/30"></span> 02. Simplificación
                             </div>
-                            <h3 className="font-display text-2xl font-bold text-white mb-4 tracking-tight">Las Reglas del Juego</h3>
-                            <p className="text-gray-400 font-light italic leading-relaxed mb-8">
+                            <h3 className="relative z-10 font-display text-2xl font-bold text-white mb-4 tracking-tight">Las Reglas del Juego</h3>
+                            <p className="relative z-10 text-gray-400 font-light italic leading-relaxed mb-8">
                                 "Simplificamos tus procesos antes de meter tecnología. Si el proceso está roto, automatizarlo solo lo acelera."
                             </p>
-                            <div className="bg-black/40 p-6 rounded-2xl border border-white/5">
-                                <p className="text-blue-400 text-[10px] uppercase font-bold tracking-widest mb-3 italic">Entregable:</p>
-                                <ul className="text-sm text-gray-500 space-y-2">
+                            <div className="relative z-10 bg-black/60 p-6 rounded-2xl border border-white/10 shadow-inner">
+                                <p className="text-blue-400 text-xs uppercase font-black tracking-widest mb-3 italic">Entregable:</p>
+                                <ul className="text-sm text-gray-300 space-y-2 italic font-light">
                                     <li>• Workflow operativo documentado</li>
                                     <li>• Lógica de negocio blindada</li>
                                 </ul>
@@ -173,19 +173,19 @@ const WorkMethod = () => {
                         {/* Step 3 */}
                         <motion.div
                             whileHover={{ y: -5 }}
-                            className="bg-[#1a1a1a] border border-white/10 p-10 rounded-[2.5rem] relative overflow-hidden group hover:border-purple-400/40 transition-all duration-500 shadow-xl"
+                            className="bg-[#1A1A1A] border-2 border-white/20 p-8 rounded-[2rem] relative overflow-hidden group hover:border-purple-400/40 transition-all duration-700 shadow-[0_32px_120px_rgba(0,0,0,1)]"
                         >
-                            <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-purple-400/5 blur-[80px] rounded-full group-hover:bg-purple-400/10 transition-all"></div>
-                            <div className="text-purple-400 font-mono text-xs uppercase tracking-[3px] mb-6 font-bold flex items-center gap-2">
+                            <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-purple-400/10 blur-[100px] rounded-full group-hover:bg-purple-400/20 transition-all duration-700"></div>
+                            <div className="relative z-10 text-purple-400 font-mono text-xs uppercase tracking-[3px] mb-6 font-bold flex items-center gap-2">
                                 <span className="w-8 h-px bg-purple-400/30"></span> 03. Construcción
                             </div>
-                            <h3 className="font-display text-2xl font-bold text-white mb-4 tracking-tight">El Smart Hub Central</h3>
-                            <p className="text-gray-400 font-light italic leading-relaxed mb-8">
+                            <h3 className="relative z-10 font-display text-2xl font-bold text-white mb-4 tracking-tight">El Smart Hub Central</h3>
+                            <p className="relative z-10 text-gray-400 font-light italic leading-relaxed mb-8">
                                 "Conectamos tus sistemas y construimos el motor (CRM/API) que ejecuta el trabajo sucio por ti."
                             </p>
-                            <div className="bg-black/40 p-6 rounded-2xl border border-white/5">
-                                <p className="text-purple-400 text-[10px] uppercase font-bold tracking-widest mb-3 italic">Corazón Técnico:</p>
-                                <ul className="text-sm text-gray-500 space-y-2">
+                            <div className="relative z-10 bg-black/60 p-6 rounded-2xl border border-white/10 shadow-inner">
+                                <p className="text-purple-400 text-xs uppercase font-black tracking-widest mb-3 italic">Corazón Técnico:</p>
+                                <ul className="text-sm text-gray-300 space-y-2 italic font-light">
                                     <li>• Arquitectura CRM conectada</li>
                                     <li>• Agente Virtual configurado</li>
                                 </ul>
@@ -195,19 +195,19 @@ const WorkMethod = () => {
                         {/* Step 4 */}
                         <motion.div
                             whileHover={{ y: -5 }}
-                            className="bg-[#1a1a1a] border border-white/10 p-10 rounded-[2.5rem] relative overflow-hidden group hover:border-primary/40 transition-all duration-500 shadow-xl"
+                            className="bg-[#1A1A1A] border-2 border-white/20 p-8 rounded-[2rem] relative overflow-hidden group hover:border-primary/40 transition-all duration-700 shadow-[0_32px_120px_rgba(0,0,0,1)]"
                         >
-                            <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-primary/5 blur-[80px] rounded-full group-hover:bg-primary/10 transition-all"></div>
-                            <div className="text-primary font-mono text-xs uppercase tracking-[3px] mb-6 font-bold flex items-center gap-2">
+                            <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-primary/10 blur-[100px] rounded-full group-hover:bg-primary/20 transition-all duration-700"></div>
+                            <div className="relative z-10 text-primary font-mono text-xs uppercase tracking-[3px] mb-6 font-bold flex items-center gap-2">
                                 <span className="w-8 h-px bg-primary/30"></span> 04. Escala Real
                             </div>
-                            <h3 className="font-display text-2xl font-bold text-white mb-4 tracking-tight">Despegue y Seguimiento</h3>
-                            <p className="text-gray-400 font-light italic leading-relaxed mb-8">
+                            <h3 className="relative z-10 font-display text-2xl font-bold text-white mb-4 tracking-tight">Despegue y Seguimiento</h3>
+                            <p className="relative z-10 text-gray-400 font-light italic leading-relaxed mb-8">
                                 "Lanzamos al mundo, probamos al límite y te acompañamos durante el primer mes de vida real del sistema."
                             </p>
-                            <div className="bg-black/40 p-6 rounded-2xl border border-white/5">
-                                <p className="text-primary text-[10px] uppercase font-bold tracking-widest mb-3 italic">Seguridad:</p>
-                                <ul className="text-sm text-gray-500 space-y-2">
+                            <div className="relative z-10 bg-black/60 p-6 rounded-2xl border border-white/10 shadow-inner">
+                                <p className="text-primary text-xs uppercase font-black tracking-widest mb-3 italic">Seguridad:</p>
+                                <ul className="text-sm text-gray-300 space-y-2 italic font-light">
                                     <li>• 100% Autopiloto verificado</li>
                                     <li>• 30 días de soporte preferente</li>
                                 </ul>
