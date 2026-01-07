@@ -288,7 +288,7 @@ const Services = () => {
                                 ))}
                             </div>
                         </div>
-                        <div className="bg-[#1a1a1a] border border-white/10 p-8 md:p-12 rounded-[2.5rem] relative overflow-hidden">
+                        <div className="bg-[#1a1a1a] border border-white/20 p-8 md:p-12 rounded-[2.5rem] relative overflow-hidden">
                             <h3 className="text-white text-xl font-bold mb-8 flex items-center gap-3">
                                 <Layout className="text-primary w-6 h-6" />
                                 Cobertura del flujo operativo
@@ -334,7 +334,7 @@ const Services = () => {
                                     x: { type: "spring", stiffness: 300, damping: 30 },
                                     opacity: { duration: 0.2 }
                                 }}
-                                className="bg-[#111] border border-white/5 rounded-[3rem] p-8 md:p-16 flex flex-col lg:flex-row items-center gap-12 lg:gap-20"
+                                className="bg-[#111] border border-white/20 rounded-[3rem] p-8 md:p-16 flex flex-col lg:flex-row items-center gap-12 lg:gap-20"
                             >
                                 {/* Slide Content Left */}
                                 <div className="flex-1 text-center lg:text-left">
@@ -358,7 +358,7 @@ const Services = () => {
                                 {/* Slide Items Right (The Grid Info) */}
                                 <div className="w-full lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     {starServices[activeService].subItems.map((item, idx) => (
-                                        <div key={idx} className="bg-white/5 border border-white/5 p-6 rounded-2xl hover:bg-white/10 transition-colors">
+                                        <div key={idx} className="bg-white/5 border border-white/20 p-6 rounded-2xl hover:bg-white/10 transition-colors">
                                             <h4 className="text-white font-bold mb-2 text-sm uppercase tracking-wider text-primary">{item.title}</h4>
                                             <p className="text-gray-500 text-[11px] leading-relaxed">{item.desc}</p>
                                         </div>
@@ -493,7 +493,7 @@ const Services = () => {
                             <Link
                                 key={i}
                                 to={ex.link}
-                                className="bg-[#111111] border border-white/5 p-8 md:p-12 rounded-[2rem] hover:bg-[#161616] transition-colors relative overflow-hidden group block text-left"
+                                className="bg-[#111111] border border-white/20 p-8 md:p-12 rounded-[2rem] hover:bg-[#161616] transition-colors relative overflow-hidden group block text-left"
                             >
                                 <div className="absolute top-0 right-0 w-1 h-full bg-primary/20 group-hover:bg-primary transition-all"></div>
                                 <h3 className="text-white text-xl font-bold mb-6">{ex.title}</h3>
@@ -525,7 +525,7 @@ const Services = () => {
                     </div>
                     <div className="space-y-4">
                         {faqs.map((faq, i) => (
-                            <div key={i} className="bg-[#151515] border border-white/5 p-8 rounded-3xl">
+                            <div key={i} className="bg-[#151515] border border-white/20 p-8 rounded-3xl">
                                 <h3 className="text-white font-bold text-lg mb-4">{faq.q}</h3>
                                 <p className="text-gray-400 leading-relaxed">{faq.a}</p>
                             </div>
