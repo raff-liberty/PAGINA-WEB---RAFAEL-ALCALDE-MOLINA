@@ -1,75 +1,64 @@
-// =====================================================
-// CRM - Funciones Helper para Contactos
-// =====================================================
-
 import { supabase } from '../supabaseClient';
 
 /**
- * Obtener todos los contactos con filtros
+ * Obtener todos los contactos con filtros opcionales
  */
 export const fetchContacts = async (filters = {}) => {
     try {
         let query = supabase
             .from('contacts')
-            .select('id, full_name, email, phone, service_interest, source, status, priority, first_contact_at, last_contact_at, notes, sector, city, province, company_size, created_at, updated_at, last_contact_date')
+            .select('*')
             .order('created_at', { ascending: false });
 
         // Aplicar filtros
         if (filters.status && filters.status !== 'all') {
             query = query.eq('status', filters.status);
         }
+
+        if (filters.search) {
+            query = query.or(`full_name.ilike.%${filters.search}%,email.ilike.%${filters.search}%`);
+        }
+
         if (filters.sector && filters.sector !== 'all') {
             query = query.eq('sector', filters.sector);
         }
+
         if (filters.city && filters.city !== 'all') {
             query = query.eq('city', filters.city);
         }
-        if (filters.search) {
-            query = query.or(`full_name.ilike.%${filters.search}%,email.ilike.%${filters.search}%,company.ilike.%${filters.search}%`);
-        }
 
         const { data, error } = await query;
+
         if (error) throw error;
         return { data, error: null };
     } catch (error) {
         console.error('Error fetching contacts:', error);
-        return { data: null, error };
+        return { data: [], error };
     }
 };
 
 /**
- * Obtener un contacto por ID con sus mensajes y proyectos
+ * Obtener un contacto por ID
  */
 export const fetchContactById = async (contactId) => {
     try {
-        // Obtener contacto
-        const { data: contact, error: contactError } = await supabase
+        const { data: contact, error } = await supabase
             .from('contacts')
-            .select('id, full_name, email, phone, service_interest, source, status, priority, first_contact_at, last_contact_at, notes, sector, city, province, company_size, created_at, updated_at, last_contact_date, message')
+            .select('*')
             .eq('id', contactId)
             .single();
 
-        if (contactError) throw contactError;
+        if (error) throw error;
 
-        // Obtener proyectos del contacto
-        const { data: projects, error: projectsError } = await supabase
-            .from('projects')
-            .select('*')
-            .eq('contact_id', contactId)
-            .order('created_at', { ascending: false });
-
-        if (projectsError) throw projectsError;
-
-        // Convertir message a formato de array para compatibilidad
+        // Convertir message a array para compatibilidad
         const messages = contact.message ? [{
             message: contact.message,
             created_at: contact.created_at,
-            source: contact.source,
-            service_requested: contact.service_interest
+            source: contact.source
         }] : [];
 
         return {
-            data: { ...contact, messages, projects },
+            data: { ...contact, messages, projects: [] },
             error: null
         };
     } catch (error) {
@@ -86,7 +75,7 @@ export const upsertContact = async (contactData) => {
         const { data, error } = await supabase
             .from('contacts')
             .upsert(contactData, { onConflict: 'email' })
-            .select('id, full_name, email, phone, service_interest, source, status, priority, first_contact_at, last_contact_at, notes, sector, city, province, company_size, created_at, updated_at')
+            .select('*')
             .single();
 
         if (error) throw error;
@@ -106,7 +95,7 @@ export const updateContact = async (contactId, updates) => {
             .from('contacts')
             .update(updates)
             .eq('id', contactId)
-            .select('id, full_name, email, phone, service_interest, source, status, priority, first_contact_at, last_contact_at, notes, sector, city, province, company_size, created_at, updated_at')
+            .select('*')
             .single();
 
         if (error) throw error;
@@ -136,79 +125,6 @@ export const deleteContact = async (contactId) => {
 };
 
 /**
- * Unificar contacto por email (para formularios)
- * Si existe un contacto con ese email, lo actualiza y añade el mensaje
- * Si no existe, crea el contacto y añade el mensaje
- */
-export const handleFormSubmission = async (formData) => {
-    try {
-        const { email, name, message, source, phone, company } = formData;
-
-        // Buscar contacto existente por email
-        const { data: existingContact } = await supabase
-            .from('contacts')
-            .select('id, full_name, email, phone, company, sector, city, status, notes, service_interest, source, last_contact_at, created_at')
-            .eq('email', email)
-            .single();
-
-        let contactId;
-
-        if (existingContact) {
-            // Actualizar contacto existente
-            const { data: updatedContact, error: updateError } = await supabase
-                .from('contacts')
-                .update({
-                    last_contact_date: new Date().toISOString(),
-                    // Actualizar nombre si viene y no existe
-                    full_name: existingContact.full_name || name,
-                    phone: existingContact.phone || phone,
-                    company: existingContact.company || company,
-                })
-                .eq('id', existingContact.id)
-                .select('id, full_name, email, phone, company, sector, city, status, notes, service_interest, source, last_contact_at, created_at')
-                .single();
-
-            if (updateError) throw updateError;
-            contactId = updatedContact.id;
-        } else {
-            // Crear nuevo contacto
-            const { data: newContact, error: createError } = await supabase
-                .from('contacts')
-                .insert({
-                    email,
-                    full_name: name,
-                    phone,
-                    company,
-                    source,
-                    status: 'lead',
-                    last_contact_date: new Date().toISOString(),
-                })
-                .select('id, full_name, email, phone, company, sector, city, status, notes, service_interest, source, last_contact_at, created_at')
-                .single();
-
-            if (createError) throw createError;
-            contactId = newContact.id;
-        }
-
-        // Añadir mensaje
-        const { error: messageError } = await supabase
-            .from('contact_messages')
-            .insert({
-                contact_id: contactId,
-                message,
-                source,
-            });
-
-        if (messageError) throw messageError;
-
-        return { success: true, contactId, error: null };
-    } catch (error) {
-        console.error('Error handling form submission:', error);
-        return { success: false, contactId: null, error };
-    }
-};
-
-/**
  * Obtener estadísticas de contactos
  */
 export const getContactStats = async () => {
@@ -223,49 +139,12 @@ export const getContactStats = async () => {
             total: contacts.length,
             leads: contacts.filter(c => c.status === 'lead').length,
             clientes: contacts.filter(c => c.status === 'cliente').length,
-            inactivos: contacts.filter(c => c.status === 'inactivo').length,
+            inactivos: contacts.filter(c => c.status === 'inactivo').length
         };
 
         return { data: stats, error: null };
     } catch (error) {
-        console.error('Error getting contact stats:', error);
-        return { data: null, error };
-    }
-};
-
-/**
- * Obtener conteo de mensajes no leídos
- */
-export const getUnreadMessageCount = async () => {
-    try {
-        const { count, error } = await supabase
-            .from('contact_messages')
-            .select('*', { count: 'exact', head: true })
-            .eq('is_read', false);
-
-        if (error) throw error;
-        return { count, error: null };
-    } catch (error) {
-        console.error('Error getting unread count:', error);
-        return { count: 0, error };
-    }
-};
-
-/**
- * Marcar mensajes de un contacto como leídos
- */
-export const markMessagesAsRead = async (contactId) => {
-    try {
-        const { error } = await supabase
-            .from('contact_messages')
-            .update({ is_read: true })
-            .eq('contact_id', contactId)
-            .eq('is_read', false);
-
-        if (error) throw error;
-        return { error: null };
-    } catch (error) {
-        console.error('Error marking messages as read:', error);
-        return { error };
+        console.error('Error fetching stats:', error);
+        return { data: { total: 0, leads: 0, clientes: 0, inactivos: 0 }, error };
     }
 };
