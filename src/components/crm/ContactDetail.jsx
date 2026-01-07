@@ -56,11 +56,14 @@ const ContactDetail = ({ contactId, onClose, onUpdate }) => {
     const handleSave = async () => {
         if (!editData.email) return alert('El email es obligatorio');
 
+        // Remove messages and projects arrays before saving
+        const { messages, projects, ...dataToSave } = editData;
+
         let result;
         if (contactId === 'new') {
-            result = await upsertContact(editData);
+            result = await upsertContact(dataToSave);
         } else {
-            result = await updateContact(contactId, editData);
+            result = await updateContact(contactId, dataToSave);
         }
 
         const { error, data } = result;
