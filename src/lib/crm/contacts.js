@@ -45,20 +45,11 @@ export const fetchContactById = async (contactId) => {
         // Obtener contacto
         const { data: contact, error: contactError } = await supabase
             .from('contacts')
-            .select('id, full_name, email, phone, company, sector, city, status, notes, service_interest, source, last_contact_at, created_at')
+            .select('id, full_name, email, phone, service_interest, source, status, priority, first_contact_at, last_contact_at, notes, sector, city, province, company_size, created_at, updated_at, last_contact_date, message')
             .eq('id', contactId)
             .single();
 
         if (contactError) throw contactError;
-
-        // Obtener mensajes del contacto
-        const { data: messages, error: messagesError } = await supabase
-            .from('contact_messages')
-            .select('*')
-            .eq('contact_id', contactId)
-            .order('created_at', { ascending: false });
-
-        if (messagesError) throw messagesError;
 
         // Obtener proyectos del contacto
         const { data: projects, error: projectsError } = await supabase
@@ -68,6 +59,14 @@ export const fetchContactById = async (contactId) => {
             .order('created_at', { ascending: false });
 
         if (projectsError) throw projectsError;
+
+        // Convertir message a formato de array para compatibilidad
+        const messages = contact.message ? [{
+            message: contact.message,
+            created_at: contact.created_at,
+            source: contact.source,
+            service_requested: contact.service_interest
+        }] : [];
 
         return {
             data: { ...contact, messages, projects },
