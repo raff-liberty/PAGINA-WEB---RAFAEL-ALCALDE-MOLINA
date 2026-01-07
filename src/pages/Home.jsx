@@ -317,7 +317,7 @@ const Home = () => {
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold tracking-tight text-white mb-6 relative inline-block max-w-5xl"
+                        className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold tracking-tight text-gray-200 mb-6 relative inline-block max-w-5xl"
                     >
                         Si haces todos los días lo mismo, <br className="hidden md:block" />
                         no es trabajo. Es <span className="text-primary">castigo.</span>
@@ -375,14 +375,14 @@ const Home = () => {
                                         <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-500 border border-primary/20">
                                             <item.icon className="w-5 h-5 text-primary" />
                                         </div>
-                                        <h3 className="font-display text-lg font-bold text-white group-hover:text-primary transition-colors uppercase tracking-wider">
+                                        <h3 className="font-display text-lg font-bold text-gray-200 group-hover:text-primary transition-colors uppercase tracking-wider">
                                             {item.title}
                                         </h3>
                                     </div>
 
                                     {/* Content with strategic line breaks */}
                                     <div className="text-gray-300 text-sm leading-relaxed flex-grow space-y-3">
-                                        <p className="text-lg md:text-xl font-medium text-white group-hover:text-primary transition-colors leading-snug min-h-[5.5rem] lg:min-h-[6rem]">
+                                        <p className="text-lg md:text-xl font-medium text-gray-100 group-hover:text-primary transition-colors leading-snug min-h-[5.5rem] lg:min-h-[6rem]">
                                             {item.content}
                                         </p>
 
@@ -414,7 +414,7 @@ const Home = () => {
                             Ejemplos
                         </span>
                     </motion.div>
-                    <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-6 text-white">
+                    <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-6 text-gray-200">
                         Cómo funcionaría tu negocio <br />
                         <span className="text-primary">con un poco más de orden</span>
                     </h2>
@@ -446,13 +446,13 @@ const Home = () => {
                             <>
                                 <button
                                     onClick={() => scrollToIndex(Math.max(0, scrollIndex - 1))}
-                                    className={`absolute -left-4 md:-left-12 top-[200px] z-20 w-10 h-10 rounded-full bg-surface-dark/80 border border-white/10 flex items-center justify-center text-white backdrop-blur-sm transition-all hover:bg-primary hover:text-gray-900 shadow-xl ${scrollIndex === 0 ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+                                    className={`absolute -left-4 md:-left-12 top-[200px] z-20 w-10 h-10 rounded-full bg-surface-dark/80 border border-white/10 flex items-center justify-center text-gray-100 backdrop-blur-sm transition-all hover:bg-primary hover:text-gray-900 shadow-xl ${scrollIndex === 0 ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
                                 >
                                     <ChevronLeft className="w-6 h-6" />
                                 </button>
                                 <button
                                     onClick={() => scrollToIndex(Math.min(content.length - 1, scrollIndex + 1))}
-                                    className={`absolute -right-4 md:-right-12 top-[200px] z-20 w-10 h-10 rounded-full bg-surface-dark/80 border border-white/10 flex items-center justify-center text-white backdrop-blur-sm transition-all hover:bg-primary hover:text-gray-900 shadow-xl ${scrollIndex === content.length - 1 ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+                                    className={`absolute -right-4 md:-right-12 top-[200px] z-20 w-10 h-10 rounded-full bg-surface-dark/80 border border-white/10 flex items-center justify-center text-gray-100 backdrop-blur-sm transition-all hover:bg-primary hover:text-gray-900 shadow-xl ${scrollIndex === content.length - 1 ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
                                 >
                                     <ChevronRight className="w-6 h-6" />
                                 </button>
@@ -488,7 +488,7 @@ const Home = () => {
                                                 <div className="flex items-center gap-3 mb-4">
                                                     <span className="text-[10px] font-mono text-primary/60 uppercase tracking-[0.2em] px-2 py-1 bg-primary/5 rounded">Qué se hace</span>
                                                 </div>
-                                                <p className="text-white font-medium text-lg md:text-xl leading-snug">{item.solution}</p>
+                                                <p className="text-gray-100 font-medium text-lg md:text-xl leading-snug">{item.solution}</p>
                                             </div>
 
                                             <div className="col-span-12 md:col-span-4 relative md:border-l md:border-white/10 md:pl-10">
@@ -530,7 +530,7 @@ const Home = () => {
                                         Catálogo de Soluciones de Alto Impacto
                                     </span>
                                 </motion.div>
-                                <h3 className="font-display text-4xl md:text-6xl font-bold text-white mb-4 tracking-tight">
+                                <h3 className="font-display text-4xl md:text-6xl font-bold text-gray-200 mb-4 tracking-tight">
                                     Sistemas listos para <span className="text-primary">implementar</span>
                                 </h3>
                                 <p className="text-gray-400 max-w-xl text-lg font-light italic">
@@ -565,7 +565,7 @@ const Home = () => {
                                                 <div className={`w-1 h-12 rounded-full transition-all duration-500 ${selectedSolutionIndex === idx ? 'bg-primary' : 'bg-white/10 group-hover:bg-white/30'
                                                     }`} />
                                                 <div>
-                                                    <h4 className={`text-xl md:text-2xl font-display font-bold tracking-tight transition-all duration-500 ${selectedSolutionIndex === idx ? 'text-white' : 'text-gray-600 group-hover:text-gray-400'
+                                                    <h4 className={`text-xl md:text-2xl font-display font-bold tracking-tight transition-all duration-500 ${selectedSolutionIndex === idx ? 'text-gray-100' : 'text-gray-600 group-hover:text-gray-400'
                                                         }`}>
                                                         {area.title}
                                                     </h4>
@@ -605,7 +605,7 @@ const Home = () => {
                                                     </div>
                                                     <div>
                                                         <span className="text-primary font-mono text-[10px] uppercase tracking-[0.2em] block mb-2 opacity-60">Impacto de Negocio</span>
-                                                        <h3 className="text-3xl md:text-5xl font-display font-bold text-white tracking-tight">
+                                                        <h3 className="text-3xl md:text-5xl font-display font-bold text-gray-100 tracking-tight">
                                                             {filteredSolutions[selectedSolutionIndex].title}
                                                         </h3>
                                                     </div>
@@ -639,7 +639,7 @@ const Home = () => {
 
                                                     <div className="px-6 py-4 rounded-2xl bg-white/5 border border-white/5 italic">
                                                         <span className="text-gray-500 text-xs block uppercase font-mono tracking-widest mb-1">Consultoría Inicial</span>
-                                                        <span className="text-white font-black text-xl">GRATUITA</span>
+                                                        <span className="text-gray-100 font-black text-xl">GRATUITA</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -671,7 +671,7 @@ const Home = () => {
                                     Evidencia & Dudas Reales
                                 </span>
                             </motion.div>
-                            <h3 className="font-display text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">
+                            <h3 className="font-display text-4xl md:text-5xl font-bold text-gray-200 mb-4 tracking-tight">
                                 Resolvemos tus <span className="text-primary italic">dudas reales</span>
                             </h3>
                             <p className="text-gray-400 max-w-xl text-lg font-light italic">
@@ -717,7 +717,7 @@ const Home = () => {
                                                     <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
                                                         <HelpCircle className="w-5 h-5 text-primary opacity-50 group-hover:opacity-100 transition-opacity" />
                                                     </div>
-                                                    <h4 className="text-xl md:text-2xl font-display font-bold text-white tracking-tight group-hover:text-primary transition-colors">
+                                                    <h4 className="text-xl md:text-2xl font-display font-bold text-gray-200 tracking-tight group-hover:text-primary transition-colors">
                                                         {item.q}
                                                     </h4>
                                                 </div>
@@ -754,7 +754,7 @@ const Home = () => {
                                             <Euro className="w-5 h-5" />
                                         </div>
                                         <div>
-                                            <h3 className="font-display text-xl md:text-2xl font-bold text-white mb-1">
+                                            <h3 className="font-display text-xl md:text-2xl font-bold text-gray-200 mb-1">
                                                 La inversión
                                             </h3>
                                             <p className="text-gray-500 text-xs italic">
@@ -778,7 +778,7 @@ const Home = () => {
 
                                     {/* ROI Routes */}
                                     <div className="mb-5">
-                                        <p className="text-white font-semibold text-base mb-3">
+                                        <p className="text-gray-100 font-semibold text-base mb-3">
                                             El retorno viene por tres vías:
                                         </p>
                                         <ul className="space-y-3">
