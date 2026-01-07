@@ -218,7 +218,7 @@ const WebDevelopment = () => {
             {/* THE "PROCESS" SECTION */}
             <section className="px-6 py-12 bg-[#0A0A0A]">
                 <div className="max-w-7xl mx-auto text-center mb-8">
-                    <h2 className="text-3xl md:text-4xl font-display font-black uppercase italic tracking-tighter opacity-10">THE WORKFLOW</h2>
+                    <h2 className="text-3xl md:text-4xl font-display font-black uppercase italic tracking-tighter text-primary/20">THE WORKFLOW</h2>
                 </div>
                 <div className="max-w-4xl mx-auto space-y-4">
                     {[
