@@ -1,0 +1,362 @@
+{
+    "meta": {
+        "version": "1.0",
+        "last_updated": "2026-01-07",
+        "purpose": "Contexto completo de Engorilate para IA (ChatGPT, Gemini, etc.) para entender la web y crear campañas publicitarias coherentes"
+    },
+    "brand": {
+        "name": "Engorilate",
+        "tagline": "Automatización de Negocios",
+        "slogan_principal": "Si haces todos los días lo mismo, no es trabajo. Es castigo.",
+        "descripcion": "Automatiza los procesos repetitivos de tu empresa en Murcia. Recupera tu tiempo y deja de perder dinero en gestión manual.",
+        "ubicacion": "Región de Murcia, España",
+        "telefono": "611 469 469",
+        "website": "https://engorilate.com"
+    },
+    "brand_voice": {
+        "estilo": "Directo, sin rodeos, orientado a resultados",
+        "tono": "Profesional pero cercano, sin jerga técnica innecesaria",
+        "filosofia": "Cero humo - Sin filtros, sin rodeos, basándonos en resultados de clientes",
+        "caracteristicas": [
+            "Habla de problemas reales, no de características técnicas",
+            "Usa ejemplos concretos del día a día",
+            "Enfoque en ROI y resultados medibles",
+            "Lenguaje claro y accesible para PYMEs",
+            "Tono guerrilla: agresivo en hooks, orientado a ventas"
+        ],
+        "palabras_clave_marca": [
+            "Automatización",
+            "Sin humo",
+            "Cero rodeos",
+            "Resultados reales",
+            "Tranquilidad operativa",
+            "Control total",
+            "Propiedad tecnológica"
+        ]
+    },
+    "visual_style": {
+        "paleta_colores": {
+            "primario": "#6EE7B7 (verde menta vibrante)",
+            "fondo_oscuro": "#0A0A0A, #0F0F0F, #1A1A1A",
+            "superficie": "#404040, #454545",
+            "texto_principal": "#F3F4F6 (gris claro)",
+            "texto_secundario": "#9CA3AF (gris medio)",
+            "acentos": "#3B82F6 (azul), #A855F7 (morado), #F472B6 (rosa), #FB923C (naranja)"
+        },
+        "tipografia": {
+            "display": "Space Grotesk (títulos, headers)",
+            "body": "Inter (cuerpo de texto)"
+        },
+        "estetica": {
+            "modo": "Dark mode premium",
+            "efectos": [
+                "Glassmorphism (fondos translúcidos con blur)",
+                "Gradientes sutiles",
+                "Sombras profundas (shadow-2xl)",
+                "Bordes con glow en hover",
+                "Animaciones suaves con Framer Motion"
+            ],
+            "elementos_visuales": [
+                "Tarjetas con bordes blancos semi-transparentes (border-white/10)",
+                "Efectos de hover con escala y cambio de color",
+                "Iconos de Lucide React",
+                "Scanline effect de fondo (efecto retro sutil)"
+            ]
+        }
+    },
+    "navegacion": {
+        "menu_principal": [
+            {
+                "nombre": "Problemas",
+                "path": "/",
+                "descripcion": "Página principal con ejemplos de problemas operativos por sector"
+            },
+            {
+                "nombre": "Servicios",
+                "path": "/servicios",
+                "descripcion": "Vista general de servicios",
+                "submenu": [
+                    {
+                        "nombre": "Vista General",
+                        "path": "/servicios",
+                        "icono": "Layout",
+                        "descripcion": "Nuestra oferta completa"
+                    },
+                    {
+                        "nombre": "Reservas WhatsApp",
+                        "path": "/servicios/automatizacion-whatsapp",
+                        "icono": "Zap",
+                        "descripcion": "Motor de citas automático"
+                    },
+                    {
+                        "nombre": "Web y Apps a Medida",
+                        "path": "/servicios/desarrollo-web-medida",
+                        "icono": "Globe",
+                        "descripcion": "Herramientas potentes"
+                    },
+                    {
+                        "nombre": "Estrategia SEO Local",
+                        "path": "/servicios/seo-local-estrategia",
+                        "icono": "Search",
+                        "descripcion": "Domina Google Maps"
+                    },
+                    {
+                        "nombre": "Sistemas Gestión / ERP",
+                        "path": "/servicios/sistemas-gestion-personalizados",
+                        "icono": "Database",
+                        "descripcion": "Control total operativo"
+                    }
+                ]
+            },
+            {
+                "nombre": "Cómo Trabajamos",
+                "path": "/como-trabajamos",
+                "descripcion": "Metodología y proceso de trabajo"
+            },
+            {
+                "nombre": "Blog",
+                "path": "/blog",
+                "descripcion": "Artículos sobre automatización y gestión de negocios"
+            },
+            {
+                "nombre": "Sobre mí",
+                "path": "/sobre-mi",
+                "descripcion": "Información sobre el fundador y el equipo"
+            }
+        ],
+        "cta_principal": {
+            "texto": "Hablar",
+            "path": "/contact",
+            "estilo": "Botón verde brillante con glow effect"
+        }
+    },
+    "servicios": {
+        "catalogo": [
+            {
+                "nombre": "Agente Virtual 24/7",
+                "categoria": "Crecimiento",
+                "roi": "Alta",
+                "color": "#6EE7B7",
+                "descripcion": "Atención instantánea y captación sin fricción para tu negocio",
+                "beneficios": [
+                    "Capta leads y agenda citas 24/7 por WhatsApp",
+                    "Cobra señales de reserva automáticamente",
+                    "Escala sin contratar a más personal de recepción"
+                ],
+                "sectores": [
+                    "Peluquería",
+                    "Tatuajes",
+                    "Fontanería",
+                    "Clínicas",
+                    "Restaurantes",
+                    "Agencias"
+                ]
+            },
+            {
+                "nombre": "SEO Local Dominante",
+                "categoria": "Visibilidad",
+                "roi": "Alta",
+                "color": "#3B82F6",
+                "descripcion": "Domina las búsquedas locales y Google Maps en tu zona",
+                "beneficios": [
+                    "Posicionamiento orgánico en Google Maps",
+                    "Auditoría estratégica de tu competencia local",
+                    "Captación recurrente sin depender de ads"
+                ],
+                "sectores": [
+                    "Peluquería",
+                    "Tatuajes",
+                    "Fontanería",
+                    "Clínicas",
+                    "Restaurantes"
+                ]
+            },
+            {
+                "nombre": "Cerebro Central / ERP",
+                "categoria": "Control",
+                "roi": "Media",
+                "color": "#A855F7",
+                "descripcion": "Control total de tu operativa desde un solo lugar",
+                "beneficios": [
+                    "Facturación y control de stock automatizado",
+                    "Dashboards en tiempo real con tus KPIs críticos",
+                    "Elimina el caos de papeles y Excels infinitos"
+                ],
+                "sectores": [
+                    "Fontanería",
+                    "Agencias",
+                    "Clínicas",
+                    "Restaurantes",
+                    "Peluquería",
+                    "Tatuajes"
+                ]
+            },
+            {
+                "nombre": "Web Corporativa Pro",
+                "categoria": "Premium",
+                "roi": "Inmediata",
+                "color": "#F472B6",
+                "descripcion": "Tu activo tecnológico más potente. Sin cuotas mensuales",
+                "beneficios": [
+                    "Diseño de alto impacto enfocado 100% a conversión",
+                    "Propiedad total del código y velocidad extrema",
+                    "Integración completa con tus sistemas y APIs"
+                ],
+                "sectores": [
+                    "Todos"
+                ]
+            },
+            {
+                "nombre": "Arquitectura CRM / API",
+                "categoria": "A Medida",
+                "roi": "Exponencial",
+                "color": "#FB923C",
+                "descripcion": "Ingeniería sutil para resolver problemas complejos y cuellos de botella",
+                "beneficios": [
+                    "Resolución de cuellos de botella mediante código",
+                    "Integraciones profundas (API) entre tus apps",
+                    "Propiedad de tu stack técnico sin terceros"
+                ],
+                "sectores": [
+                    "Todos"
+                ]
+            }
+        ]
+    },
+    "metodologia": {
+        "proceso": [
+            {
+                "paso": "01 - DETECCIÓN",
+                "titulo": "Identifico tareas que el dueño no debería estar haciendo",
+                "ejemplo": "Te tiras 5 horas diarias contestando WhatsApps de clientes curiosos"
+            },
+            {
+                "paso": "02 - AUTOMATIZACIÓN",
+                "titulo": "Diseño automatizaciones para que esas tareas funcionen solas",
+                "ejemplo": "Diseñamos un embudo de automatización que responde a todos los mensajes como tú responderías de manera natural"
+            },
+            {
+                "paso": "03 - AUTONOMÍA",
+                "titulo": "Consigo que el negocio no dependa de estar encima todo el día",
+                "ejemplo": "Tu negocio funciona solo. Dedica tu tiempo a aquello que realmente da rentabilidad a la empresa"
+            }
+        ]
+    },
+    "publico_objetivo": {
+        "tamano_empresa": "PYMEs de 1 a 20 empleados",
+        "sectores_principales": [
+            "Peluquerías y Estética",
+            "Estudios de Tatuajes",
+            "Fontaneros y Servicios",
+            "Clínicas de Salud",
+            "Agencias Pequeñas",
+            "Restaurantes"
+        ],
+        "perfil_ideal": "Dueño de negocio que pierde más de 1 hora al día en tareas repetitivas y gestión manual",
+        "pain_points": [
+            "Interrupciones constantes por WhatsApp fuera de horario",
+            "Clientes que no aparecen a citas (no-shows)",
+            "Facturas olvidadas y cobros retrasados",
+            "Caos de papeles y Excels desorganizados",
+            "Falta de control sobre stock e inventario",
+            "Dependencia total del dueño para operaciones básicas"
+        ]
+    },
+    "propuesta_valor": {
+        "diferenciadores": [
+            "Propiedad total del código y sistemas (sin secuestro tecnológico)",
+            "Integración con herramientas existentes (Holded, Shopify, Google Calendar, etc.)",
+            "ROI medible: recuperación de inversión en menos de 4 meses",
+            "Consultoría inicial gratuita",
+            "Amortización típica: menos de 2 meses"
+        ],
+        "rango_inversion": "600 - 2.500€ (depende de complejidad y sector)",
+        "tiempo_implementacion": {
+            "agente_whatsapp": "10-12 días",
+            "sistemas_gestion": "3-5 semanas"
+        }
+    },
+    "ejemplos_casos_uso": {
+        "peluqueria": {
+            "problema": "El cliente te escribe por WhatsApp a las 23:00 para pedir cita. Al día siguiente, entre secadores y tintes, se te olvida contestar.",
+            "solucion": "Un agente virtual se conecta a tu calendario y CRM para entender quién es el cliente y de manera natural responde, agenda y cobra la cita si se desea.",
+            "resultado": "Te levantas con la agenda llena. No has usado el móvil fuera de tu horario."
+        },
+        "tatuajes": {
+            "problema": "Pasas horas diseñando bocetos para clientes que luego cambian de idea o no pagan el depósito.",
+            "solucion": "No se empieza ningún diseño sin un formulario de ideas previo y el pago de una señal.",
+            "resultado": "Solo diseñas para quien paga. Valoran más tu tiempo y tu arte."
+        },
+        "fontanero": {
+            "problema": "Terminas la reparación y dices 'luego te paso la factura'. Llegas a casa reventado y se te olvida.",
+            "solucion": "La factura se genera en el móvil antes de arrancar la furgoneta. Un clic y enviada.",
+            "resultado": "Cobras mucho antes. Duermes tranquilo sin 'deber' emails."
+        }
+    },
+    "faq_categorias": [
+        {
+            "categoria": "Rentabilidad / ROI",
+            "preguntas": [
+                {
+                    "pregunta": "¿Esto es un gasto o una inversión real?",
+                    "respuesta": "Es una inversión con retorno medible. La mayoría de nuestros clientes recuperan la inversión en menos de 4 meses solo eliminando horas muertas de gestión. Hemos visto reducciones de interrupciones de hasta el 80% desde el primer mes de uso."
+                },
+                {
+                    "pregunta": "¿Para qué tamaño de negocio es esto?",
+                    "respuesta": "Está diseñado para pymes de 1 a 20 empleados. No necesitas ser una multinacional para tener tecnología de élite. Si pierdes más de 1 hora al día en tareas repetitivas, eres el candidato perfecto."
+                }
+            ]
+        },
+        {
+            "categoria": "Tiempos / Proceso",
+            "preguntas": [
+                {
+                    "pregunta": "¿Cuánto tiempo me va a quitar a mí?",
+                    "respuesta": "Tu tiempo es lo que queremos salvar. Solo necesitamos una sesión inicial de diagnóstico. Nosotros nos encargamos del 90% del trabajo sucio: diseño, configuración e integración. El sistema se adapta a tu forma de trabajar, no al revés."
+                },
+                {
+                    "pregunta": "¿En cuánto tiempo está funcionando?",
+                    "respuesta": "Un Agente Virtual de WhatsApp puede estar captando clientes en menos de 10-12 días. Los sistemas de gestión a medida tardan entre 3 y 5 semanas dependiendo de la complejidad."
+                }
+            ]
+        },
+        {
+            "categoria": "Técnica / Propiedad",
+            "preguntas": [
+                {
+                    "pregunta": "¿El código y el sistema son míos?",
+                    "respuesta": "Sí. Al 100%. No creemos en el 'secuestro tecnológico'. Una vez finalizado el proyecto, tú tienes las llaves. Si mañana decides no trabajar más con nosotros, tu sistema sigue funcionando en tu propia infraestructura."
+                },
+                {
+                    "pregunta": "¿Se integra con lo que ya uso?",
+                    "respuesta": "Hablamos con casi cualquier cosa: Holded, Shopify, Google Calendar, CRMs propios... Si tiene una API o una forma de conectar datos, nosotros lo unificamos."
+                }
+            ]
+        }
+    ],
+    "redes_sociales": {
+        "whatsapp": "611 469 469",
+        "instagram": "@engorilate",
+        "linkedin": "Rafael Alcalde Molina / Engorilate"
+    },
+    "instrucciones_para_ia": {
+        "al_crear_campañas": [
+            "Usa el tono directo y sin rodeos de la marca 'Engorilate'",
+            "Enfócate en problemas reales del día a día, no en características técnicas",
+            "Menciona ROI y resultados medibles siempre que sea posible",
+            "Usa ejemplos concretos de los casos de uso por sector",
+            "Mantén el lenguaje accesible para dueños de PYMEs (sin jerga técnica)",
+            "Destaca la propiedad total del código (sin secuestro tecnológico)",
+            "Incluye el color primario #6EE7B7 en diseños visuales",
+            "Usa tipografía Space Grotesk para títulos e Inter para cuerpo",
+            "Aplica estética dark mode premium con efectos glassmorphism"
+        ],
+        "hooks_efectivos": [
+            "¿Cuántas horas pierdes al día contestando WhatsApps?",
+            "Si haces todos los días lo mismo, no es trabajo. Es castigo.",
+            "Deja de perder dinero en gestión manual",
+            "Tu negocio no debería depender de que estés encima todo el día",
+            "Cero humo. Solo resultados."
+        ]
+    }
+}

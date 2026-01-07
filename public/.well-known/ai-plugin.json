@@ -1,0 +1,17 @@
+{
+    "schema_version": "v1",
+    "name_for_model": "engorilate_context",
+    "name_for_human": "Engorilate Business Context",
+    "description_for_model": "Complete context about Engorilate - a business automation service in Murcia, Spain. Includes brand voice, visual style, services catalog, navigation structure, and real use cases. Use this to understand the brand when creating marketing campaigns, content, or answering questions about the business.",
+    "description_for_human": "Provides complete brand context for Engorilate including services, brand voice, and visual identity.",
+    "api": {
+        "type": "openapi",
+        "url": "https://engorilate.com/ai-context.json"
+    },
+    "auth": {
+        "type": "none"
+    },
+    "logo_url": "https://engorilate.com/favicon.png",
+    "contact_email": "info@engorilate.com",
+    "legal_info_url": "https://engorilate.com/legal"
+}

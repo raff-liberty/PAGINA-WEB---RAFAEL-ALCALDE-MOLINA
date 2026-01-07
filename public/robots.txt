@@ -1,5 +1,32 @@
+# robots.txt for Engorilate
 User-agent: *
 Allow: /
-Disallow: /admin
 
+# AI Context for LLMs
+# This file contains complete brand context for AI assistants
+Allow: /ai-context.json
+
+# Sitemaps
 Sitemap: https://engorilate.com/sitemap.xml
+
+# AI-specific directives
+# For ChatGPT, Gemini, Claude, and other LLMs
+User-agent: GPTBot
+Allow: /
+Allow: /ai-context.json
+
+User-agent: Google-Extended
+Allow: /
+Allow: /ai-context.json
+
+User-agent: ChatGPT-User
+Allow: /
+Allow: /ai-context.json
+
+User-agent: anthropic-ai
+Allow: /
+Allow: /ai-context.json
+
+User-agent: Claude-Web
+Allow: /
+Allow: /ai-context.json

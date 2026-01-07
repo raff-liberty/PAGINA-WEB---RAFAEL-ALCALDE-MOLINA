@@ -35,6 +35,12 @@
     content="Automatiza los procesos repetitivos de tu empresa en Murcia. Recupera tu tiempo y deja de perder dinero en gestión manual." />
   <meta property="twitter:image" content="https://engorilate.com/og-image.jpg" />
 
+  <!-- AI Context for LLMs (ChatGPT, Gemini, etc.) -->
+  <meta name="ai-context" content="/ai-context.json" />
+  <link rel="ai-context" type="application/json" href="/ai-context.json" />
+  <meta name="description:ai"
+    content="Complete brand context including navigation, services, brand voice, visual style, and use cases for AI assistants" />
+
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
   {
@@ -59,7 +65,15 @@
       "geoRadius": "50000"
     },
     "serviceType": ["Automatización de Negocios", "Digitalización de Procesos", "Consultoría Operativa"],
-    "priceRange": "€€"
+    "priceRange": "€€",
+    "potentialAction": {
+      "@type": "ReadAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://engorilate.com/ai-context.json",
+        "description": "AI Context File for LLM Understanding"
+      }
+    }
   }
   </script>
 
