@@ -848,7 +848,7 @@ const Home = () => {
                                         <div className="flex gap-3">
                                             <a href={siteConfig.whatsapp_url} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 p-2 rounded-lg bg-white/5 hover:bg-[#25D366]/20 border border-transparent hover:border-[#25D366]/50 transition-all group">
                                                 <MessageSquare className="w-4 h-4 text-[#25D366]" />
-                                                <span className="text-xs text-gray-400 group-hover:text-[#25D366]">WhatsApp</span>
+                                                <span className="text-xs text-gray-400 group-hover:text-[#25D366]">WhatsApp (611 469 469)</span>
                                             </a>
                                             <a href={siteConfig.instagram_url} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 p-2 rounded-lg bg-white/5 hover:bg-[#E1306C]/20 border border-transparent hover:border-[#E1306C]/50 transition-all group">
                                                 <Instagram className="w-4 h-4 text-[#E1306C]" />
