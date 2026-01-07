@@ -202,10 +202,10 @@ const CustomManagement = () => {
             </section>
 
             {/* INTEGRATIONS MARQUEE */}
-            <section className="py-12 overflow-hidden whitespace-nowrap opacity-30 border-y border-white/5 bg-white/5">
+            <section className="py-10 overflow-hidden whitespace-nowrap opacity-30 border-y border-white/5 bg-white/5">
                 <div className="inline-block animate-marquee-fast">
                     {[...integrations, ...integrations].map((int, i) => (
-                        <span key={i} className="text-white text-5xl md:text-7xl font-display font-black mx-16 uppercase italic tracking-widest">{int}</span>
+                        <span key={i} className="text-white text-4xl md:text-5xl font-display font-black mx-16 uppercase italic tracking-widest">{int}</span>
                     ))}
                 </div>
             </section>
