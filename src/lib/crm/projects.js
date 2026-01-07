@@ -74,14 +74,28 @@ export const fetchProjectById = async (projectId) => {
  */
 export const upsertProject = async (projectData) => {
     try {
-        const { data, error } = await supabase
-            .from('projects')
-            .upsert(projectData)
-            .select()
-            .single();
+        // Si tiene id, es una actualización
+        if (projectData.id) {
+            const { data, error } = await supabase
+                .from('projects')
+                .update(projectData)
+                .eq('id', projectData.id)
+                .select()
+                .single();
 
-        if (error) throw error;
-        return { data, error: null };
+            if (error) throw error;
+            return { data, error: null };
+        } else {
+            // Si no tiene id, es una creación
+            const { data, error } = await supabase
+                .from('projects')
+                .insert(projectData)
+                .select()
+                .single();
+
+            if (error) throw error;
+            return { data, error: null };
+        }
     } catch (error) {
         console.error('Error upserting project:', error);
         return { data: null, error };

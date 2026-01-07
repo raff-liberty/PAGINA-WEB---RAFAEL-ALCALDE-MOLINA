@@ -9,6 +9,7 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
         name: '',
         email: '',
         phone: '',
+        company: '',
         message: '',
         privacyAccepted: false
     });
@@ -55,6 +56,7 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
                     email: formData.email,
                     name: formData.name,
                     phone: formData.phone,
+                    company: formData.company,
                     service_interest: formData.service,
                     source: source,
                     last_contact_at: new Date().toISOString()
@@ -158,6 +160,17 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
                         required
                     />
                 </div>
+            </div>
+
+            <div>
+                <input
+                    id="company"
+                    className="w-full bg-white/10 border border-white/30 rounded-lg px-4 py-2.5 text-sm text-white focus:border-primary outline-none transition-colors placeholder:text-gray-500"
+                    placeholder="Empresa (opcional)"
+                    type="text"
+                    value={formData.company}
+                    onChange={handleChange}
+                />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
