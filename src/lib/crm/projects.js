@@ -80,7 +80,7 @@ export const upsertProject = async (projectData) => {
                 .from('projects')
                 .update(projectData)
                 .eq('id', projectData.id)
-                .select()
+                .select('id, title, description, status, budget, start_date, end_date, contact_id, created_at, updated_at')
                 .single();
 
             if (error) throw error;
@@ -90,7 +90,7 @@ export const upsertProject = async (projectData) => {
             const { data, error } = await supabase
                 .from('projects')
                 .insert(projectData)
-                .select()
+                .select('id, title, description, status, budget, start_date, end_date, contact_id, created_at, updated_at')
                 .single();
 
             if (error) throw error;

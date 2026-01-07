@@ -11,7 +11,7 @@ export const fetchContacts = async (filters = {}) => {
     try {
         let query = supabase
             .from('contacts')
-            .select('*')
+            .select('id, full_name, email, phone, company, sector, city, status, notes, service_interest, source, last_contact_at, created_at')
             .order('last_contact_date', { ascending: false });
 
         // Aplicar filtros
@@ -45,7 +45,7 @@ export const fetchContactById = async (contactId) => {
         // Obtener contacto
         const { data: contact, error: contactError } = await supabase
             .from('contacts')
-            .select('*')
+            .select('id, full_name, email, phone, company, sector, city, status, notes, service_interest, source, last_contact_at, created_at')
             .eq('id', contactId)
             .single();
 
@@ -148,7 +148,7 @@ export const handleFormSubmission = async (formData) => {
         // Buscar contacto existente por email
         const { data: existingContact } = await supabase
             .from('contacts')
-            .select('*')
+            .select('id, full_name, email, phone, company, sector, city, status, notes, service_interest, source, last_contact_at, created_at')
             .eq('email', email)
             .single();
 
@@ -166,7 +166,7 @@ export const handleFormSubmission = async (formData) => {
                     company: existingContact.company || company,
                 })
                 .eq('id', existingContact.id)
-                .select()
+                .select('id, full_name, email, phone, company, sector, city, status, notes, service_interest, source, last_contact_at, created_at')
                 .single();
 
             if (updateError) throw updateError;
@@ -184,7 +184,7 @@ export const handleFormSubmission = async (formData) => {
                     status: 'lead',
                     last_contact_date: new Date().toISOString(),
                 })
-                .select()
+                .select('id, full_name, email, phone, company, sector, city, status, notes, service_interest, source, last_contact_at, created_at')
                 .single();
 
             if (createError) throw createError;
