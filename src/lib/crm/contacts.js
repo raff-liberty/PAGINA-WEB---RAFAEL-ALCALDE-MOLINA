@@ -87,7 +87,7 @@ export const upsertContact = async (contactData) => {
         const { data, error } = await supabase
             .from('contacts')
             .upsert(contactData, { onConflict: 'email' })
-            .select()
+            .select('id, full_name, email, phone, company, sector, city, status, notes, service_interest, source, last_contact_at, created_at')
             .single();
 
         if (error) throw error;
