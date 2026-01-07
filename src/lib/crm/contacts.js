@@ -107,7 +107,7 @@ export const updateContact = async (contactId, updates) => {
             .from('contacts')
             .update(updates)
             .eq('id', contactId)
-            .select()
+            .select('id, full_name, email, phone, company, sector, city, status, notes, service_interest, source, last_contact_at, created_at')
             .single();
 
         if (error) throw error;
