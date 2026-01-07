@@ -556,7 +556,7 @@ const Home = () => {
                                                     }, 100);
                                                 }
                                             }}
-                                            className={`w-full text-left p-6 rounded-2xl transition-all duration-500 border group ${selectedSolutionIndex === idx
+                                            className={`w-full text-left p-4 rounded-2xl transition-all duration-500 border group ${selectedSolutionIndex === idx
                                                 ? 'bg-white/5 border-primary/50 shadow-[0_0_30px_rgba(110,231,183,0.1)]'
                                                 : 'border-transparent hover:bg-white/[0.02]'
                                                 }`}
@@ -565,7 +565,7 @@ const Home = () => {
                                                 <div className={`w-1 h-12 rounded-full transition-all duration-500 ${selectedSolutionIndex === idx ? 'bg-primary' : 'bg-white/10 group-hover:bg-white/30'
                                                     }`} />
                                                 <div>
-                                                    <h4 className={`text-2xl md:text-3xl font-display font-bold tracking-tight transition-all duration-500 ${selectedSolutionIndex === idx ? 'text-white' : 'text-gray-600 group-hover:text-gray-400'
+                                                    <h4 className={`text-xl md:text-2xl font-display font-bold tracking-tight transition-all duration-500 ${selectedSolutionIndex === idx ? 'text-white' : 'text-gray-600 group-hover:text-gray-400'
                                                         }`}>
                                                         {area.title}
                                                     </h4>
