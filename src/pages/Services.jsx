@@ -336,8 +336,11 @@ const Services = () => {
                                 ))}
                             </div>
                         </div>
-                        <div className="bg-[#151515] border border-white/10 p-8 md:p-10 rounded-[2.5rem] relative overflow-hidden shadow-2xl">
-                            <h3 className="text-white text-xl font-bold mb-8 flex items-center gap-3">
+                        <div className="bg-[#1A1A1A] border-2 border-white/20 p-8 md:p-10 rounded-[2.5rem] relative overflow-hidden shadow-[0_32px_120px_rgba(0,0,0,1)] transition-all duration-700 hover:border-primary/40 group/card">
+                            {/* Intensified Ambient Glow */}
+                            <div className="absolute -top-20 -right-20 w-[400px] h-[400px] bg-primary/20 blur-[130px] rounded-full opacity-60 pointer-events-none"></div>
+
+                            <h3 className="relative z-10 text-white text-xl font-bold mb-8 flex items-center gap-3">
                                 <Layout className="text-primary w-6 h-6" />
                                 Cobertura del flujo operativo
                             </h3>
@@ -482,8 +485,11 @@ const Services = () => {
                             </div>
                         </div>
 
-                        <div className="bg-[#1a1a1a] border border-white/10 p-8 rounded-[2rem] flex flex-col h-full shadow-2xl">
-                            <h4 className="text-white font-black mb-6 uppercase italic tracking-widest text-xs opacity-50 text-center">Empieza el cambio hoy</h4>
+                        <div className="relative group/mini bg-[#1A1A1A] border-2 border-white/20 p-8 rounded-[2rem] flex flex-col h-full shadow-[0_32px_120px_rgba(0,0,0,1)] transition-all duration-700 hover:border-primary/40">
+                            {/* Intensified Ambient Glow for form */}
+                            <div className="absolute -top-10 -right-10 w-[250px] h-[250px] bg-primary/20 blur-[100px] rounded-full opacity-40 pointer-events-none transition-all duration-700 group-hover/mini:opacity-60"></div>
+
+                            <h4 className="relative z-10 text-white font-black mb-6 uppercase italic tracking-widest text-xs opacity-50 text-center">Empieza el cambio hoy</h4>
 
                             <AnimatePresence mode="wait">
                                 {submitted ? (
