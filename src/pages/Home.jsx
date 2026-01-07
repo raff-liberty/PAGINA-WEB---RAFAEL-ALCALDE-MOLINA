@@ -588,11 +588,15 @@ const Home = () => {
                                             animate={{ opacity: 1, x: 0 }}
                                             exit={{ opacity: 0, x: -20 }}
                                             transition={{ duration: 0.4, ease: "circOut" }}
-                                            className="relative bg-gradient-to-br from-[#181818] to-black border border-white/10 p-10 md:p-14 rounded-[3rem] overflow-hidden shadow-2xl min-h-[450px] flex flex-col justify-center"
+                                            className="relative bg-[#1A1A1A] border-2 border-white/20 p-10 md:p-14 rounded-[3rem] overflow-hidden shadow-[0_32px_120px_rgba(0,0,0,1)] min-h-[450px] flex flex-col justify-center transition-all duration-700 hover:border-primary/40 group/card"
                                         >
-                                            {/* Dynamic Ambient Light */}
-                                            <div className="absolute -top-20 -right-20 w-80 h-80 blur-[130px] rounded-full opacity-30"
+                                            {/* Dynamic Ambient Light - Intensified */}
+                                            <div className="absolute -top-20 -right-20 w-[400px] h-[400px] blur-[150px] rounded-full opacity-60 transition-all duration-1000"
                                                 style={{ backgroundColor: filteredSolutions[selectedSolutionIndex].color || '#6EE7B7' }} />
+
+                                            {/* Decorative Border Glow */}
+                                            <div className="absolute inset-0 rounded-[3rem] opacity-0 group-hover/card:opacity-100 transition-opacity duration-700 pointer-events-none"
+                                                style={{ boxShadow: `inset 0 0 40px ${filteredSolutions[selectedSolutionIndex].color}20` }} />
 
                                             <div className="relative z-10">
                                                 <div className="flex items-center gap-4 mb-8">
