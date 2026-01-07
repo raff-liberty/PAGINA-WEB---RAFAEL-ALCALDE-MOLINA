@@ -59,11 +59,11 @@ const BlogRenderer = ({ post }) => {
 
             // Headers
             if (line.startsWith('## ')) {
-                elements.push(<h2 key={i} className="text-3xl font-display font-black text-white mt-8 mb-4 uppercase tracking-tight italic border-b border-primary/20 pb-4">{line.replace('## ', '')}</h2>);
+                elements.push(<h2 key={i} className="text-3xl font-display font-black text-primary mt-8 mb-4 uppercase tracking-tight italic border-b border-primary/20 pb-4">{line.replace('## ', '')}</h2>);
                 continue;
             }
             if (line.startsWith('### ')) {
-                elements.push(<h3 key={i} className="text-2xl font-display font-black text-white/90 mt-6 mb-3 uppercase tracking-tight italic">{line.replace('### ', '')}</h3>);
+                elements.push(<h3 key={i} className="text-2xl font-display font-black text-primary/90 mt-6 mb-3 uppercase tracking-tight italic">{line.replace('### ', '')}</h3>);
                 continue;
             }
 
