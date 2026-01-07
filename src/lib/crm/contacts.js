@@ -11,7 +11,7 @@ export const fetchContacts = async (filters = {}) => {
     try {
         let query = supabase
             .from('contacts')
-            .select('id, full_name, email, phone, company, sector, city, status, notes, service_interest, source, last_contact_at, created_at')
+            .select('id, full_name, email, phone, company, sector, city, status, notes, service_interest, source, last_contact_at, last_contact_date, created_at')
             .order('last_contact_date', { ascending: false });
 
         // Aplicar filtros
