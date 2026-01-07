@@ -105,10 +105,10 @@ const WebDevelopment = () => {
             </section>
 
             {/* TECH STACK MARQUEE */}
-            <section className="py-12 border-y border-white/5 bg-white/20 backdrop-blur-sm overflow-hidden whitespace-nowrap">
+            <section className="py-8 border-y border-white/5 bg-white/20 backdrop-blur-sm overflow-hidden whitespace-nowrap">
                 <div className="inline-block animate-marquee">
                     {[...techStack, ...techStack].map((tech, i) => (
-                        <span key={i} className="text-white/20 text-4xl md:text-6xl font-display font-black mx-12 uppercase italic">{tech}</span>
+                        <span key={i} className="text-white/20 text-3xl md:text-4xl font-display font-black mx-12 uppercase italic">{tech}</span>
                     ))}
                 </div>
             </section>
