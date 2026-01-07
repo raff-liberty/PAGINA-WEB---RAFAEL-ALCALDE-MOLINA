@@ -58,7 +58,7 @@ const Blog = () => {
         : posts.filter(post => post.category === selectedCategory || post.pain_point === selectedCategory);
 
     return (
-        <div className="relative pt-64 pb-48 min-h-screen">
+        <div className="relative pt-32 pb-24 min-h-screen">
             <SEO
                 title="Blog | El Coste del Caos"
                 description="Artículos sin humo sobre automatización. Si no te ahorra tiempo o dinero, no lo escribimos."
@@ -67,7 +67,7 @@ const Blog = () => {
 
             <div className="relative z-10 max-w-7xl mx-auto px-6">
                 {/* Header */}
-                <div className="mb-40 max-w-5xl">
+                <div className="mb-20 max-w-5xl">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-mono tracking-widest uppercase mb-6 shadow-[0_0_15px_rgba(110,231,183,0.1)]">
                         <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
                         Blog del Gorila
@@ -164,7 +164,7 @@ const Blog = () => {
                 </div>
 
                 {/* Categories */}
-                <div className="flex overflow-x-auto md:flex-wrap gap-3 mb-24 pb-4 md:pb-0 scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0">
+                <div className="flex overflow-x-auto md:flex-wrap gap-3 mb-12 pb-4 md:pb-0 scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0">
                     <button
                         onClick={() => setSelectedCategory('Todos')}
                         className={`px-4 py-2 rounded-lg font-medium text-sm transition-all flex-shrink-0 ${selectedCategory === 'Todos'
@@ -197,7 +197,7 @@ const Blog = () => {
                 ) : (
                     <motion.div
                         layout
-                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16"
                     >
                         <AnimatePresence mode='popLayout'>
                             {filteredPosts.length > 0 ? (
@@ -212,7 +212,7 @@ const Blog = () => {
                                     >
                                         <Link
                                             to={`/blog/${post.slug}`}
-                                            className="group relative block bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] border border-white/10 rounded-3xl overflow-hidden hover:border-primary/50 transition-all duration-500 hover:shadow-[0_0_40px_rgba(110,231,183,0.15)] h-full flex flex-col"
+                                            className="group relative block bg-[#1A1A1A] border-2 border-white/20 rounded-3xl overflow-hidden hover:border-primary/50 transition-all duration-700 hover:shadow-[0_32px_120px_rgba(0,0,0,0.4)] h-full flex flex-col"
                                         >
                                             {/* Top indicators */}
                                             <div className="absolute top-4 right-4 z-20 flex gap-2">
