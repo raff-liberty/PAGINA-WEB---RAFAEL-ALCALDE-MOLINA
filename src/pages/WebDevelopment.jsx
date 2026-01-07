@@ -218,16 +218,16 @@ const WebDevelopment = () => {
 
             {/* THE "PROCESS" SECTION */}
             <section className="px-6 py-12 bg-[#0A0A0A]">
-                <div className="max-w-7xl mx-auto text-center mb-20">
-                    <h2 className="text-4xl md:text-6xl font-display font-black uppercase italic tracking-tighter opacity-10">THE WORKFLOW</h2>
+                <div className="max-w-7xl mx-auto text-center mb-8">
+                    <h2 className="text-3xl md:text-4xl font-display font-black uppercase italic tracking-tighter opacity-10">THE WORKFLOW</h2>
                 </div>
-                <div className="max-w-4xl mx-auto space-y-8">
+                <div className="max-w-4xl mx-auto space-y-4">
                     {[
                         { step: "01", title: "Auditoría Operativa", desc: "No empezamos a programar hasta que no entendemos al 100% tu negocio." },
                         { step: "02", title: "Diseño Basado en Conversión", desc: "Prototipado rápido enfocado en que el cliente compre o contacte." },
                         { step: "03", title: "Desarrollo de Élite", desc: "Programación pura sin dependencias de terceros. Limpio y rápido." }
                     ].map((item, i) => (
-                        <div key={i} className="flex items-center gap-8 bg-[#111] p-8 rounded-[2.5rem] border border-white/5 hover:border-primary/20 transition-all">
+                        <div key={i} className="flex items-center gap-6 bg-[#111] p-6 rounded-[2.5rem] border border-white/5 hover:border-primary/20 transition-all">
                             <span className="text-6xl font-display font-black text-white/5 group-hover:text-primary/10 transition-colors">{item.step}</span>
                             <div>
                                 <h3 className="text-2xl font-display font-black uppercase italic tracking-tighter mb-2">{item.title}</h3>
