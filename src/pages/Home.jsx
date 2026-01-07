@@ -540,7 +540,7 @@ const Home = () => {
 
                             <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 items-start min-h-[500px]">
                                 {/* LEFT MENU: TITLES */}
-                                <div className="lg:col-span-5 space-y-4">
+                                <div className="lg:col-span-4 space-y-4">
                                     {filteredSolutions.map((area, idx) => (
                                         <button
                                             key={area.title}
@@ -580,7 +580,7 @@ const Home = () => {
                                 </div>
 
                                 {/* RIGHT: RICH PREVIEW CARD */}
-                                <div className="lg:col-span-7 relative" ref={solutionPreviewRef}>
+                                <div className="lg:col-span-8 relative" ref={solutionPreviewRef}>
                                     <AnimatePresence mode="wait">
                                         <motion.div
                                             key={selectedSolutionIndex}
