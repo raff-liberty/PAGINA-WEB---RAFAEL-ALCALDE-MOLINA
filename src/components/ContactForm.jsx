@@ -56,10 +56,10 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
                     email: formData.email,
                     full_name: formData.name,
                     phone: formData.phone,
-                    company: formData.company,
+                    message: formData.message,
                     service_interest: formData.service,
                     source: source,
-                    last_contact_at: new Date().toISOString()
+                    status: 'lead'
                 }], {
                     onConflict: 'email',
                     ignoreDuplicates: false
@@ -76,22 +76,7 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
                 throw new Error('No se pudo guardar el contacto. Inténtalo de nuevo.');
             }
 
-            // 2. SAVE MESSAGE
-            const { error: messageError } = await supabase
-                .from('contact_messages')
-                .insert([{
-                    contact_id: contact.id,
-                    message: formData.message,
-                    service_requested: formData.service,
-                    source: source
-                }]);
-
-            if (messageError) {
-                console.error('Message save error:', messageError);
-                throw messageError;
-            }
-
-            // 3. SEND TO N8N (notification)
+            // 2. SEND TO N8N (notification)
             if (siteConfig?.n8n_webhook_url) {
                 await fetch(siteConfig.n8n_webhook_url, {
                     method: 'POST',
