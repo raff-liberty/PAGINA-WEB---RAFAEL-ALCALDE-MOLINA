@@ -118,8 +118,7 @@ const WebDevelopment = () => {
                 <div className="grid lg:grid-cols-2 gap-12 items-center">
                     <div>
                         <h2 className="text-3xl md:text-5xl font-display font-black mb-6 leading-tight uppercase italic underline decoration-primary/50 underline-offset-[12px]">
-                            Por qué ir <br />
-                            <span className="text-primary italic">A Medida</span>
+                            Por qué ir <span className="text-primary italic">A Medida</span>
                         </h2>
                         <div className="space-y-6">
                             {coreValues.map((v, i) => (
