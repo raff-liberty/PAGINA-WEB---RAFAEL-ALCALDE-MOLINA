@@ -27,7 +27,7 @@ const BlogRenderer = ({ post }) => {
                 // Check if next line is not a table line
                 if (i + 1 >= lines.length || !lines[i + 1].trim().startsWith('|')) {
                     elements.push(
-                        <div key={`table-${i}`} className="overflow-x-auto my-12 -mx-4 md:mx-0">
+                        <div key={`table-${i}`} className="overflow-x-auto my-8 -mx-4 md:mx-0">
                             <table className="w-full border-collapse bg-white/5 rounded-2xl overflow-hidden border border-white/10 backdrop-blur-sm">
                                 <thead>
                                     <tr className="bg-primary/10 border-b border-white/10">
@@ -59,18 +59,18 @@ const BlogRenderer = ({ post }) => {
 
             // Headers
             if (line.startsWith('## ')) {
-                elements.push(<h2 key={i} className="text-3xl font-display font-black text-white mt-12 mb-6 uppercase tracking-tight italic border-b border-primary/20 pb-4">{line.replace('## ', '')}</h2>);
+                elements.push(<h2 key={i} className="text-3xl font-display font-black text-white mt-8 mb-4 uppercase tracking-tight italic border-b border-primary/20 pb-4">{line.replace('## ', '')}</h2>);
                 continue;
             }
             if (line.startsWith('### ')) {
-                elements.push(<h3 key={i} className="text-2xl font-display font-black text-white/90 mt-10 mb-4 uppercase tracking-tight italic">{line.replace('### ', '')}</h3>);
+                elements.push(<h3 key={i} className="text-2xl font-display font-black text-white/90 mt-6 mb-3 uppercase tracking-tight italic">{line.replace('### ', '')}</h3>);
                 continue;
             }
 
             // Blockquotes
             if (line.startsWith('> ')) {
                 elements.push(
-                    <blockquote key={i} className="border-l-4 border-primary bg-primary/5 p-6 rounded-r-2xl my-8 italic text-xl text-white font-light leading-relaxed">
+                    <blockquote key={i} className="border-l-4 border-primary bg-primary/5 p-6 rounded-r-2xl my-6 italic text-xl text-white font-light leading-relaxed">
                         {line.replace('> ', '').split('**').map((part, pidx) => pidx % 2 === 1 ? <strong key={pidx} className="text-primary font-bold">{part}</strong> : part)}
                     </blockquote>
                 );
@@ -79,13 +79,12 @@ const BlogRenderer = ({ post }) => {
 
             // Horizontal rule
             if (line === '---') {
-                elements.push(<hr key={i} className="border-white/5 my-12" />);
+                elements.push(<hr key={i} className="border-white/5 my-8" />);
                 continue;
             }
 
-            // Empty line
+            // Empty line - skip explicit h-4 to let space-y handle it
             if (line === '') {
-                elements.push(<div key={i} className="h-4" />);
                 continue;
             }
 
@@ -124,7 +123,7 @@ const BlogRenderer = ({ post }) => {
 
             // Regular paragraph
             elements.push(
-                <p key={i} className="leading-relaxed">
+                <p key={i} className="leading-[1.6] tracking-wide text-gray-300">
                     {line.split(/(\[.*?\]\(.*?\))/g).map((part, pidx) => {
                         const linkMatch = part.match(/\[(.*?)\]\((.*?)\)/);
                         if (linkMatch) {
@@ -171,13 +170,13 @@ const BlogRenderer = ({ post }) => {
                 </div>
             </div>
 
-            <div className="prose prose-invert prose-lg max-w-none mb-20">
-                <div className="bg-gradient-to-b from-[#1a1a1a] to-[#0f0f0f] border border-white/10 p-8 md:p-16 rounded-[2rem] shadow-2xl relative overflow-hidden">
+            <div className="max-w-none mb-20">
+                <div className="bg-[#1A1A1A] border-2 border-white/20 p-8 md:p-16 rounded-[2.5rem] shadow-[0_32px_120px_rgba(0,0,0,0.5)] relative overflow-hidden">
                     <div className="absolute top-0 right-0 p-8 opacity-5">
                         <div className="w-32 h-32 border-8 border-primary rounded-full"></div>
                     </div>
 
-                    <div className="relative z-10 text-gray-300 leading-relaxed space-y-8 blog-content text-lg font-light">
+                    <div className="relative z-10 space-y-6 blog-content text-lg font-normal">
                         {renderContent(post.content || post.excerpt)}
                     </div>
                 </div>

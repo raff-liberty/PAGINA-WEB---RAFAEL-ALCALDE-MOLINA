@@ -120,7 +120,7 @@ const BlogPost = () => {
                                 <Link
                                     key={relatedPost.id}
                                     to={`/blog/${relatedPost.slug}`}
-                                    className="group block bg-[#1a1a1a] border border-white/10 p-8 rounded-2xl hover:border-primary/50 transition-all duration-300 hover:-translate-y-1 hover:bg-[#1f1f1f]"
+                                    className="group block bg-[#1A1A1A] border-2 border-white/20 p-8 rounded-2xl hover:border-primary/50 transition-all duration-500 hover:-translate-y-1 shadow-[0_20px_50px_rgba(0,0,0,0.3)]"
                                 >
                                     <div className="text-[10px] font-mono text-primary uppercase tracking-widest mb-4 flex items-center gap-2">
                                         <div className="w-1 h-1 rounded-full bg-primary"></div>
