@@ -240,14 +240,14 @@ const WebDevelopment = () => {
             {/* FAQ SECTION */}
             <section className="px-6 py-12 bg-white/5">
                 <div className="max-w-4xl mx-auto">
-                    <div className="text-center mb-16">
+                    <div className="text-center mb-8">
                         <HelpCircle className="w-12 h-12 text-primary mx-auto mb-4" />
                         <h2 className="text-3xl md:text-5xl font-display font-black uppercase italic text-white">Preguntas <span className="text-primary italic">Frecuentes</span></h2>
                     </div>
-                    <div className="grid gap-6">
+                    <div className="grid gap-4">
                         {faqs.map((faq, i) => (
-                            <div key={i} className="bg-[#111] p-8 rounded-3xl border border-white/5">
-                                <h3 className="text-xl font-bold text-white mb-4 uppercase italic tracking-tight">{faq.q}</h3>
+                            <div key={i} className="bg-[#111] p-6 rounded-2xl border border-white/5">
+                                <h3 className="text-lg font-bold text-white mb-2 uppercase italic tracking-tight">{faq.q}</h3>
                                 <p className="text-gray-400 leading-relaxed font-light">{faq.a}</p>
                             </div>
                         ))}
