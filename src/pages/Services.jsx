@@ -247,20 +247,20 @@ const Services = () => {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mb-10 max-w-4xl"
+                    className="mb-20 max-w-4xl mx-auto text-center"
                 >
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-mono tracking-widest uppercase mb-6">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-mono tracking-widest uppercase mb-8">
                         <Zap className="w-3 h-3" />
                         Catálogo de Soluciones
                     </div>
-                    <h1 className="font-display text-4xl md:text-6xl font-black leading-[0.85] mb-6 text-white uppercase italic tracking-tighter">
+                    <h1 className="font-display text-4xl md:text-7xl font-black leading-[0.85] mb-8 text-white uppercase italic tracking-tighter">
                         Soluciones de <span className="text-primary">automatización</span> real
                     </h1>
-                    <p className="text-base md:text-lg text-gray-400 font-light leading-relaxed mb-10 italic">
+                    <p className="text-base md:text-lg text-gray-400 font-light leading-relaxed mb-10 italic max-w-2xl mx-auto">
                         No vendemos paquetes cerrados ni humo tecnológico. <br />
                         Diseñamos el motor que tu empresa necesita para recuperar el control.
                     </p>
-                    <div className="flex flex-wrap gap-4">
+                    <div className="flex flex-wrap gap-4 justify-center">
                         <Link to="/contact" className="bg-primary hover:bg-primary-hover text-gray-900 font-bold px-8 py-4 rounded-2xl transition-all transform hover:scale-105 shadow-[0_0_30px_rgba(110,231,183,0.3)]">
                             Diagnóstico Gratuito
                         </Link>
@@ -268,10 +268,10 @@ const Services = () => {
                 </motion.div>
 
                 {/* AUTOMATION SECTION */}
-                <section className="mb-12">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <section className="mb-20">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                         <div>
-                            <h2 className="font-display text-2xl md:text-4xl font-black text-white mb-4 uppercase italic tracking-tighter leading-tight">
+                            <h2 className="font-display text-2xl md:text-5xl font-black text-white mb-6 uppercase italic tracking-tighter leading-tight">
                                 Cada negocio es distinto. <br />
                                 <span className="text-primary">No trabajamos con plantillas.</span>
                             </h2>
