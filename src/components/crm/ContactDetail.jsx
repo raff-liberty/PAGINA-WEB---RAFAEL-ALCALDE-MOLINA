@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, Mail, Phone, Building2, MapPin, Calendar, Tag, MessageSquare, Briefcase, Edit, Save } from 'lucide-react';
-import { fetchContactById, updateContact } from '../../lib/crm/contacts';
+import { fetchContactById, updateContact, upsertContact } from '../../lib/crm/contacts';
 
 const ContactDetail = ({ contactId, onClose, onUpdate }) => {
     const [contact, setContact] = useState(null);
@@ -10,25 +10,64 @@ const ContactDetail = ({ contactId, onClose, onUpdate }) => {
     const [activeTab, setActiveTab] = useState('info'); // 'info', 'messages', 'projects'
 
     useEffect(() => {
+        // Lock body scroll
+        document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = 'unset';
+            document.documentElement.style.overflow = 'unset';
+        };
+    }, []);
+
+    useEffect(() => {
         loadContact();
     }, [contactId]);
 
     const loadContact = async () => {
         setLoading(true);
-        const { data } = await fetchContactById(contactId);
-        if (data) {
-            setContact(data);
-            setEditData(data);
+        if (contactId === 'new') {
+            const newContact = {
+                full_name: 'Nuevo Contacto',
+                email: '',
+                status: 'lead',
+                phone: '',
+                company: '',
+                sector: '',
+                city: '',
+                notes: ''
+            };
+            setContact(newContact);
+            setEditData(newContact);
+            setEditing(true);
+        } else {
+            const { data } = await fetchContactById(contactId);
+            if (data) {
+                setContact(data);
+                setEditData(data);
+            }
         }
         setLoading(false);
     };
 
     const handleSave = async () => {
-        const { error } = await updateContact(contactId, editData);
+        if (!editData.email) return alert('El email es obligatorio');
+
+        let result;
+        if (contactId === 'new') {
+            result = await upsertContact(editData);
+        } else {
+            result = await updateContact(contactId, editData);
+        }
+
+        const { error, data } = result;
+
         if (!error) {
-            setContact(editData);
+            setContact(data || editData);
             setEditing(false);
             if (onUpdate) onUpdate();
+            if (contactId === 'new') onClose();
+        } else {
+            alert('Error al guardar: ' + error.message);
         }
     };
 
@@ -52,22 +91,43 @@ const ContactDetail = ({ contactId, onClose, onUpdate }) => {
     if (!contact) return null;
 
     return (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
-            <div className="bg-[#1a1a1a] border border-white/20 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl">
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[50000] flex items-start justify-center pt-28 p-4 overflow-y-auto">
+            <div className="bg-[#1a1a1a] border border-white/20 rounded-2xl max-w-4xl w-full shadow-2xl mb-20">
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-white/10">
-                    <div className="flex items-center gap-4">
-                        <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center">
+                    <div className="flex items-center gap-4 flex-1">
+                        <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
                             <span className="text-primary font-bold text-2xl">
                                 {contact.full_name?.charAt(0).toUpperCase()}
                             </span>
                         </div>
-                        <div>
-                            <h2 className="text-2xl font-bold text-white">{contact.full_name}</h2>
-                            <p className="text-gray-400">{contact.email}</p>
+                        <div className="flex-1">
+                            {editing ? (
+                                <div className="space-y-2">
+                                    <input
+                                        type="text"
+                                        value={editData.full_name}
+                                        onChange={(e) => setEditData({ ...editData, full_name: e.target.value })}
+                                        className="text-2xl font-bold text-white bg-black/30 border border-white/20 rounded px-2 w-full focus:border-primary focus:outline-none"
+                                        placeholder="Nombre completo"
+                                    />
+                                    <input
+                                        type="email"
+                                        value={editData.email}
+                                        onChange={(e) => setEditData({ ...editData, email: e.target.value })}
+                                        className="text-gray-400 bg-black/30 border border-white/20 rounded px-2 w-full focus:border-primary focus:outline-none"
+                                        placeholder="Email"
+                                    />
+                                </div>
+                            ) : (
+                                <>
+                                    <h2 className="text-2xl font-bold text-white">{contact.full_name}</h2>
+                                    <p className="text-gray-400">{contact.email}</p>
+                                </>
+                            )}
                         </div>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 ml-4">
                         {editing ? (
                             <button
                                 onClick={handleSave}
@@ -105,8 +165,8 @@ const ContactDetail = ({ contactId, onClose, onUpdate }) => {
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
                             className={`flex items-center gap-2 px-4 py-3 border-b-2 transition-all ${activeTab === tab.id
-                                    ? 'border-primary text-primary'
-                                    : 'border-transparent text-gray-400 hover:text-white'
+                                ? 'border-primary text-primary'
+                                : 'border-transparent text-gray-400 hover:text-white'
                                 }`}
                         >
                             <tab.icon className="w-4 h-4" />

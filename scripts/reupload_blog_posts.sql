@@ -1,30 +1,21 @@
-import { createClient } from '@supabase/supabase-js';
-import dotenv from 'dotenv';
-import path from 'path';
+-- SQL para re-subir todos los posts del blog actualizados a las normas del Gorila (Sin Humo)
+-- Fecha unificada para todos: 07/01/2026
+-- Ejecutar en el Editor SQL de Supabase después de borrar los actuales
 
-// Load .env from the project root
-dotenv.config({ path: path.resolve('d:/ANTES DE HACER - RAFAEL web/stitch_homepage/.env') });
-
-const supabaseUrl = process.env.VITE_SUPABASE_URL;
-const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY;
-
-if (!supabaseUrl || !supabaseKey) {
-    console.error('Error: Faltan las credenciales de Supabase en el archivo .env');
-    process.exit(1);
-}
-
-const supabase = createClient(supabaseUrl, supabaseKey);
-
-const postsToUpdate = [
-    {
-        slug: 'facturacion-automatica-autonomos',
-        title: 'La Trampa del \"Luego lo Facturo\": Por qué estás perdiendo el 15% de tu tiempo',
-        excerpt: 'Hacer facturas a mano no es trabajo de gestión, es un impuesto de lujo que pagas por no tener sistemas.',
-        savings: '12h/mes',
-        content: `
-# La Trampa del "Luego lo Facturo"
-
-Terminas el trabajo, cierras el portátil y piensas: "Mañana hago la factura". Mañana se convierte en la semana que viene. Y la semana que viene en un domingo por la tarde peleando con un Excel y buscando correos antiguos.
+INSERT INTO blog_posts (slug, title, category, read_time, publish_date, savings, excerpt, meta_description, keywords, image, content)
+VALUES 
+(
+  'facturacion-automatica-autonomos',
+  'La Trampa del "Luego lo Facturo": Por qué estás perdiendo el 15% de tu tiempo',
+  'Pierdo tiempo',
+  '7 min',
+  '2026-01-07',
+  '12h/mes',
+  'Hacer facturas a mano no es trabajo de gestión, es un impuesto de lujo que pagas por no tener sistemas.',
+  'Descubre cómo automatizar la facturación si eres autónomo y recupera horas de tu vida.',
+  'facturacion automatica, programa facturacion autonomos, automatizacion finanzas',
+  '/images/blog/invoicing.jpg',
+  'Terminas el trabajo, cierras el portátil y piensas: "Mañana hago la factura". Mañana se convierte en la semana que viene. Y la semana que viene en un domingo por la tarde peleando con un Excel y buscando correos antiguos.
 
 **Si facturas a mano, no eres un gestor. Eres un administrativo mal pagado de ti mismo.**
 
@@ -54,25 +45,26 @@ No se trata de comprar un programa de facturación y ya. Se trata de **conectar*
 Nosotros no instalamos software. Diseñamos flujos. Conectamos tu CRM o tu calendario directamente con la herramienta de facturación. 
 - **Cero clics**: El sistema detecta el trabajo realizado, genera el documento y lo envía. Tú solo ves el dinero entrar.
 
-**[Paso a paso Engorilao]**
 [ ] Deja de usar plantillas de Word hoy mismo.
 [ ] Elige una herramienta de facturación con API (FacturaDirecta, Holded, Quaderno).
 [ ] [Contáctanos](/contact) para conectar tu flujo de trabajo y que la factura sea una consecuencia, no una tarea.
 
 > "¿Quieres ser el que hace el trabajo o el que persigue facturas?"
 
-[Automatizar mi facturación](/contact)
-`
-    },
-    {
-        slug: 'integracion-sistemas-negocio',
-        title: 'Tu Empresa es una Isla (y te está costando dinero)',
-        excerpt: 'Si tienes 5 programas que no se hablan entre ellos, tienes un problema de duplicación de datos y errores constante.',
-        savings: '20h/mes',
-        content: `
-# Tu Empresa es una Isla
-
-Tienes un CRM para los clientes, un Excel para el stock, WhatsApp para las ventas y un programa para las facturas. El problema no son las herramientas. El problema es que **actúan como islas aisladas**.
+[Automatizar mi facturación](/contact)'
+),
+(
+  'integracion-sistemas-negocio',
+  'Tu Empresa es una Isla (y te está costando dinero)',
+  'Automatización',
+  '12 min',
+  '2026-01-07',
+  '20h/mes',
+  'Si tienes 5 programas que no se hablan entre ellos, tienes un problema de duplicación de datos y errores constante.',
+  'Conecta tu CRM, facturación, inventario y más para crear un ecosistema autónomo.',
+  'integracion sistemas, conectar software negocio, n8n, zapier, automatizacion',
+  '/images/blog/integration.jpg',
+  'Tienes 5 programas. Ninguno habla con el otro. Copias datos manualmente todos los días.
 
 Cada vez que copias un nombre de WhatsApp a tu CRM, estás destruyendo tu rentabilidad.
 
@@ -103,23 +95,24 @@ Creamos un "Cerebro Central" (usando n8n o Python) que orquesta todas tus aplica
 - Si entra un lead en la web, aparece en CRM y se crea una carpeta en Drive automáticamente.
 - Si se cierra una venta, se descuenta stock y se avisa por Slack/WhatsApp al equipo.
 
-**[Paso a paso Engorilao]**
 [ ] Haz una lista de todos los programas que usas.
 [ ] Dibuja una línea entre los que compartan los mismos datos. Donde no haya línea, tienes una fuga de dinero.
 [ ] [Solicita una auditoría](/contact) y deja que nosotros construyamos los puentes.
 
-[Quiero conectar mi negocio](/contact)
-`
-    },
-    {
-        slug: 'control-inventario-automatico',
-        title: 'El Fantasma del Stock Agotado: Cómo dejar de perder ventas por falta de previsión',
-        excerpt: 'Si tienes que ir al almacén para saber si puedes aceptar un pedido, tu sistema está roto.',
-        savings: '15h/mes',
-        content: `
-# El Fantasma del Stock Agotado
-
-"¿Nos quedan de los grandes?" "Creo que sí... espera que voy a mirar". Tres minutos después vuelves: "No, se acabaron ayer". El cliente ya está mirando en Amazon. Has perdido la venta.
+[Quiero conectar mi negocio](/contact)'
+),
+(
+  'control-inventario-automatico',
+  'El Fantasma del Stock Agotado: Cómo dejar de perder ventas por falta de previsión',
+  'Gestión',
+  '8 min',
+  '2026-01-07',
+  '15h/mes',
+  'Si tienes que ir al almacén para saber si puedes aceptar un pedido, tu sistema está roto.',
+  'Deja de perder ventas por falta de stock. Implementa un sistema de control de inventario automático.',
+  'control inventario, gestion stock automatica, inventario pyme',
+  '/images/blog/inventory.jpg',
+  '"¿Nos quedan de los grandes?" "Creo que sí... espera que voy a mirar". Tres minutos después vuelves: "No, se acabaron ayer". El cliente ya está mirando en Amazon. Has perdido la venta.
 
 **El stock no se gestiona con los ojos, se gestiona con datos.**
 
@@ -150,23 +143,24 @@ Conectamos tu TPV o tienda online con un sistema de gestión de inventario liger
 - **Sincronización real**: Si vendes en la tienda física, el stock online se actualiza al segundo.
 - **Pedidos automáticos**: Podemos automatizar el envío de pedidos a proveedores cuando el sistema detecte necesidad.
 
-**[Paso a paso Engorilao]**
 [ ] Identifica tus 5 productos más vendidos.
 [ ] Establece un nivel crítico para cada uno.
 [ ] [Hablemos](/contact) para poner un vigilante automático que no duerma.
 
-[Controlar mi stock](/contact)
-`
-    },
-    {
-        slug: 'crm-pequenos-negocios',
-        title: 'Por qué tu CRM es solo una lista de contactos cara (y cómo arreglarlo)',
-        excerpt: 'Tener un CRM y no automatizar el seguimiento es como tener un Ferrari para ir a comprar el pan: un desperdicio de recursos.',
-        savings: '18h/mes',
-        content: `
-# Tu CRM es un Zombi
-
-Tienes un CRM. Pagas 100€ al mes. Y lo único que haces es apuntar nombres y emails. Para eso, te bastaba con una libreta de 2€.
+[Controlar mi stock](/contact)'
+),
+(
+  'crm-pequenos-negocios',
+  'Por qué tu CRM es solo una lista de contactos cara (y cómo arreglarlo)',
+  'Pierdo clientes',
+  '9 min',
+  '2026-01-07',
+  '18h/mes',
+  'Tener un CRM y no automatizar el seguimiento es como tener un Ferrari para ir a comprar el pan: un desperdicio de recursos.',
+  'Optimiza tu CRM para que trabaje por ti y no al revés. Deja de perder clientes por falta de seguimiento.',
+  'crm pequeños negocios, gestion clientes, automatizacion ventas',
+  '/images/blog/crm.jpg',
+  'Tienes un CRM. Pagas 100€ al mes. Y lo único que haces es apuntar nombres y emails. Para eso, te bastaba con una libreta de 2€.
 
 **Un CRM que no trabaja por ti es un gasto, no una inversión.**
 
@@ -197,23 +191,24 @@ Configuramos tu CRM (Pipedrive, HubSpot, GoHighLevel) para que sea proactivo.
 - **Notificaciones inteligentes**: El sistema te avisa cuando un cliente VIP vuelve a tu web.
 - **Tareas automáticas**: El CRM asigna tareas de seguimiento al equipo sin que nadie tenga que pedírselo.
 
-**[Paso a paso Engorilao]**
 [ ] Revisa tu CRM: ¿Cuántos contactos tienes sin una "próxima acción" programada? Estos están muertos.
 [ ] Automatiza una respuesta inmediata para cada lead que entre por la web.
 [ ] [Pide cita](/contact) y te enseñaremos cómo hacer que tu CRM se pague solo.
 
-[Activar mi CRM](/contact)
-`
-    },
-    {
-        slug: 'reducir-no-shows-restaurante',
-        title: 'Mesas Vacías, Bolsillos Rotos: La ciencia de acabar con los No-Shows',
-        excerpt: 'Un no-show no es un imprevisto, es una falta de sistema. Aprende a cobrar por tu tiempo y tu espacio.',
-        savings: '25% facturación extra',
-        content: `
-# Mesas Vacías, Bolsillos Rotos
-
-Viernes por la noche. Servicio completo. Tienes 4 mesas de 4 personas reservadas. Preparas el género, el personal está listo... y 3 mesas no aparecen. Perder 12 comensales un viernes te cuesta el margen de toda la semana.
+[Activar mi CRM](/contact)'
+),
+(
+  'reducir-no-shows-restaurante',
+  'Mesas Vacías, Bolsillos Rotos: La ciencia de acabar con los No-Shows',
+  'Pierdo dinero',
+  '8 min',
+  '2026-01-07',
+  '25% facturación extra',
+  'Un no-show no es un imprevisto, es una falta de sistema. Aprende a cobrar por tu tiempo y tu espacio.',
+  'Estrategias probadas para acabar con los no-shows en tu restaurante usando automatización.',
+  'no shows restaurante, reservas automaticas, hosteleria',
+  '/images/blog/no-shows.jpg',
+  'Viernes por la noche. Servicio completo. Tienes 4 mesas de 4 personas reservadas. Preparas el género, el personal está listo... y 3 mesas no aparecen. Perder 12 comensales un viernes te cuesta el margen de toda la semana.
 
 **El cliente que no paga por reservar, no tiene compromiso.**
 
@@ -243,23 +238,24 @@ Integramos sistemas de reservas (TheFork, CoverManager o soluciones a medida) qu
 - **Filtro de Fiabilidad**: Identifica clientes que ya han fallado antes y bloquéalos o exígeles pago previo.
 - **Automatización de Confirmación**: Que el cliente tenga que hacer clic para confirmar. Si no lo hace, la mesa se libera sola.
 
-**[Paso a paso Engorilao]**
 [ ] Calcula cuánto dinero has perdido este último mes por mesas vacías.
 [ ] Empieza a pedir tarjeta en las reservas de más de 6 personas.
 [ ] [Consultanos](/contact) para blindar tu restaurante y que cada silla genere dinero.
 
-[Stop No-Shows](/contact)
-`
-    },
-    {
-        slug: 'reportes-automaticos-negocio',
-        title: 'Navegar a Ciegas: El peligro de no tener datos (y cómo automatizarlos)',
-        excerpt: 'Si para saber tu beneficio neto tienes que esperar a que el contable te mande el Excel el día 20, estás gestionando en el pasado.',
-        savings: '10h/mes',
-        content: `
-# Navegar a Ciegas
-
-Dirigir una empresa sin datos en tiempo real es como pilotar un avión mirando por el retrovisor. Sabes dónde estuviste hace un mes, pero no tienes ni idea de si te vas a estrellar mañana.
+[Stop No-Shows](/contact)'
+),
+(
+  'reportes-automaticos-negocio',
+  'Navegar a Ciegas: El peligro de no tener datos (y cómo automatizarlos)',
+  'Gestión',
+  '10 min',
+  '2026-01-07',
+  '10h/mes',
+  'Si para saber tu beneficio neto tienes que esperar a que el contable te mande el Excel el día 20, estás gestionando en el pasado.',
+  'Cómo crear reportes automáticos de ventas, gastos e inventario para tomar mejores decisiones.',
+  'reportes automaticos, business intelligence, dashboards',
+  '/images/blog/reports.jpg',
+  'Dirigir una empresa sin datos en tiempo real es como pilotar un avión mirando por el retrovisor. Sabes dónde estuviste hace un mes, pero no tienes ni idea de si te vas a estrellar mañana.
 
 **La intuición es para el arte; los datos son para la facturación.**
 
@@ -289,23 +285,24 @@ No necesitas un departamento de data science. Necesitas conectores.
 Creamos paneles visuales (usando Looker Studio o soluciones custom) que extraen la verdad de tu negocio sin que tú muevas un dedo.
 - **Claridad total**: Dejamos de lado las métricas de vanidad y nos centramos en lo que importa: El beneficio.
 
-**[Paso a paso Engorilao]**
 [ ] Identifica tus 3 métricas sagradas (ej: Ventas diarias, Gastos fijos, leads nuevos).
 [ ] Intenta obtener esos datos hoy mismo. ¿Cuánto tiempo has tardado?
 [ ] [Déjanos hacerlo automático](/contact) y dedica ese tiempo a pensar cómo doblar esas métricas.
 
-[Ver mis datos](/contact)
-`
-    },
-    {
-        slug: 'base-datos-clientes-simple',
-        title: 'Tu Mina de Oro Dormida: Cómo monetizar tu base de datos',
-        excerpt: 'Conseguir un cliente nuevo cuesta 7 veces más que venderle a uno que ya tienes. Si no tienes sus datos, estás tirando dinero.',
-        savings: 'Aumento 20% LTV',
-        content: `
-# Tu Mina de Oro Dormida
-
-Tienes cientos de clientes que ya han confiado en ti una vez. El problema es que **no sabes quiénes son**. Están en tickets antiguos, en hilos de WhatsApp o en tu memoria.
+[Ver mis datos](/contact)'
+),
+(
+  'base-datos-clientes-simple',
+  'Tu Mina de Oro Dormida: Cómo monetizar tu base de datos',
+  'Pierdo clientes',
+  '7 min',
+  '2026-01-07',
+  'Aumento 20% LTV',
+  'Conseguir un cliente nuevo cuesta 7 veces más que venderle a uno que ya tienes. Si no tienes sus datos, estás tirando dinero.',
+  'Aprende a monetizar tu base de datos de clientes con automatización y marketing segmentado.',
+  'base datos clientes, fidelizacion, marketing automatizado',
+  '/images/blog/customer-database.jpg',
+  'Tienes cientos de clientes que ya han confiado en ti una vez. El problema es que **no sabes quiénes son**. Están en tickets antiguos, en hilos de WhatsApp o en tu memoria.
 
 **Un cliente que no está en una base de datos, es un cliente que no existe.**
 
@@ -336,23 +333,24 @@ Transformamos tus "ventas sueltas" en una base de datos de activos.
 - **Captura automática**: Cada ticket de TPV o pedido web alimenta tu base de datos central.
 - **Campañas con 1 clic**: Segmentamos y lanzamos comunicaciones para llenar los días flojos del negocio.
 
-**[Paso a paso Engorilao]**
 [ ] Reúne todos los emails y teléfonos que tengas dispersos. Pónlos en un solo sitio.
 [ ] Identifica a tus 20 mejores clientes del año pasado.
 [ ] [Contáctanos](/contact) para crear una máquina de fidelización que facture mientras duermes.
 
-[Explotar mi base de datos](/contact)
-`
-    },
-    {
-        slug: 'erp-la-trampa-innecesaria',
-        title: 'La Falacia del \"Todo en Uno\": Por qué tu ERP de 5.000€ es un ancla',
-        excerpt: 'Te vendieron la solución definitiva, pero te han dado un laberinto gris que nadie en tu equipo sabe usar.',
-        savings: '300€/mes + 100h formación',
-        content: `
-# La Falacia del "Todo en Uno"
-
-Entró un comercial, te enseñó 200 funciones y te prometió que tu empresa sería una multinacional. Pagaste la implementación, pagaste la cuota... y 6 meses después, tu equipo sigue usando Excel \"por fuera\" porque el ERP es insufrible.
+[Explotar mi base de datos](/contact)'
+),
+(
+  'erp-la-trampa-innecesaria',
+  'La Falacia del "Todo en Uno": Por qué tu ERP de 5.000€ es un ancla',
+  'Pierdo dinero',
+  '7 min',
+  '2026-01-07',
+  '300€/mes + 100h formación',
+  'Te vendieron la solución definitiva, pero te han dado un laberinto gris que nadie en tu equipo sabe usar.',
+  'Por qué los ERPs tradicionales son la forma más cara de complicarse la vida y qué alternativas tienes.',
+  'erp, gestion pyme, software empresarial, eficiencia',
+  null,
+  'Entró un comercial, te enseñó 200 funciones y te prometió que tu empresa sería una multinacional. Pagaste la implementación, pagaste la cuota... y 6 meses después, tu equipo sigue usando Excel "por fuera" porque el ERP es insufrible.
 
 **Los ERPs tradicionales son la forma más cara de complicarse la vida.**
 
@@ -383,23 +381,24 @@ Nosotros sustituimos esos dinosaurios por ecosistemas ágiles.
 - **Integración Nativa**: Hacemos que tus apps hablen entre ellas como si fueran una sola.
 - **Libertad Total**: Tú eres el dueño de tus datos y tus herramientas, no el esclavo del contrato de mantenimiento.
 
-**[Paso a paso Engorilao]**
 [ ] Haz una lista de cuántas funciones de tu software actual *realmente* usas cada día.
 [ ] Calcula cuánto pagas al año por mantenimiento.
 [ ] [Pásate a lo ágil](/contact). Destruye el ancla y empieza a navegar rápido.
 
-[Liberar mi negocio](/contact)
-`
-    },
-    {
-        slug: 'hemorragia-dinero-procesos',
-        title: 'La Rentabilidad del Orden: Cómo tapar las fugas invisibles de tu negocio',
-        excerpt: 'Si tu cuenta corriente no refleja el esfuerzo que haces, tienes una hemorragia de procesos. Aprende a cauterizarla.',
-        savings: '1.200€/mes',
-        content: `
-# La Rentabilidad del Orden
-
-Miras la facturación: récord. Miras el beneficio: ridículo. ¿Dónde está el dinero? Se ha quedado por el camino. En el tiempo que pierdes persiguiendo una factura, en el margen que se come un error de gestión o en el coste de oportunidad de no haber contestado a ese lead a tiempo.
+[Liberar mi negocio](/contact)'
+),
+(
+  'hemorragia-dinero-procesos',
+  'La Rentabilidad del Orden: Cómo tapar las fugas invisibles de tu negocio',
+  'Pierdo dinero',
+  '6 min',
+  '2026-01-07',
+  '1.200€/mes',
+  'Si tu cuenta corriente no refleja el esfuerzo que haces, tienes una hemorragia de procesos. Aprende a cauterizarla.',
+  'Identifica y sella las fugas de dinero en tu operativa diaria con automatizacion inteligente.',
+  'pierdo dinero, rentabilidad, eficiencia operativa, sistemas',
+  null,
+  'Miras la facturación: récord. Miras el beneficio: ridículo. ¿Dónde está el dinero? Se ha quedado por el camino. En el tiempo que pierdes persiguiendo una factura, en el margen que se come un error de gestión o en el coste de oportunidad de no haber contestado a ese lead a tiempo.
 
 **El caos es un impuesto de lujo que pagas por no tener sistemas.**
 
@@ -430,30 +429,31 @@ Analizamos tus flujos de trabajo, detectamos las fugas y las sellamos con tecnol
 - **Cero improvisación**: Creamos sistemas que guían al equipo y aseguran que nada se caiga.
 - **Orden Visual**: Paneles de gestión que te dan paz mental porque sabes que todo está bajo control.
 
-**[Paso a paso Engorilao]**
 [ ] Anota las 3 cosas que más te han interrumpido hoy.
 [ ] Clasifícalas: ¿Se podrían haber evitado con un proceso claro?
 [ ] [Sana tu negocio](/contact). Cauteriza las fugas y quédate con el beneficio que te mereces.
 
-[Tapar mis fugas](/contact)
-`
-    },
-    {
-        slug: 'sistema-reservas-online',
-        title: 'El Teléfono que no deja de sonar: Cómo recuperar tu paz (y tus clientes)',
-        excerpt: 'Atender reservas por teléfono es ineficiente, interrumpe el servicio y molesta al cliente moderno que quiere reservar en pijama a las 2 AM.',
-        savings: '20h/mes',
-        content: `
-# El Teléfono que no deja de Sonar
-
-Estás atendiendo a un cliente importante. El teléfono suena. Lo ignoras. Vuelve a sonar. Lo coges. "Hola, quería reservar para el jueves...". Mientras apuntas, el cliente que tienes delante espera. El de la línea se desespera. Y tú pierdes el hilo.
+[Tapar mis fugas](/contact)'
+),
+(
+  'sistema-reservas-online',
+  'El Teléfono que no deja de sonar: Cómo recuperar tu paz (y tus clientes)',
+  'Pierdo tiempo',
+  '10 min',
+  '2026-01-07',
+  '20h/mes',
+  'Atender reservas por teléfono es ineficiente, interrumpe el servicio y molesta al cliente moderno que quiere reservar en pijama a las 2 AM.',
+  'Guía para automatizar las reservas de tu negocio y recuperar tu tiempo.',
+  'sistema reservas online, reservas automaticas, eficiencia',
+  '/images/blog/booking-system.jpg',
+  'Estás atendiendo a un cliente importante. El teléfono suena. Lo ignoras. Vuelve a sonar. Lo coges. "Hola, quería reservar para el jueves...". Mientras apuntas, el cliente que tienes delante espera. El de la línea se desespera. Y tú pierdes el hilo.
 
 **Gestionar reservas a mano es una falta de respeto a tu tiempo y al de tu equipo.**
 
 ---
 
 ## 1. El Problema: Barreras de entrada absurdas
-El cliente de 2025 odia llamar por teléfono. Si para darte dinero (reservar) tiene que esperar a que abras y que tengas un hueco para coger el móvil, se irá al vecino que tiene un botón de \"Reservar ahora\".
+El cliente de 2025 odia llamar por teléfono. Si para darte dinero (reservar) tiene que esperar a que abras y que tengas un hueco para coger el móvil, se irá al vecino que tiene un botón de "Reservar ahora".
 - **Interrupción sistemática**: Cada llamada corta la concentración y baja la calidad del servicio actual.
 
 ---
@@ -475,23 +475,24 @@ La tecnología permite que tu negocio venda mientras tú descansas.
 Instalamos y configuramos sistemas de reservas que se integran en tu Web, Facebook, Instagram y Google Maps.
 - **Cero gestión**: Tú solo miras la agenda por la mañana para saber a quién vas a atender.
 
-**[Paso a paso Engorilao]**
 [ ] Mira tu registro de llamadas perdidas fuera de horario. Cada una era una venta.
 [ ] Pon un enlace de reserva en tu perfil de Instagram.
 [ ] [Digitaliza tu agenda](/contact) y vuelve a disfrutar de un servicio sin interrupciones.
 
-[Automatizar reservas](/contact)
-`
-    },
-    {
-        slug: 'automatizar-whatsapp-negocio',
-        title: 'WhatsApp como Herramienta de Guerra (Comercial)',
-        excerpt: 'Si usas WhatsApp solo para chatear, estás perdiendo el canal de ventas más potente del mundo. Aprende a convertirlo en tu mejor comercial.',
-        savings: '30% aumento conversión',
-        content: `
-# WhatsApp como Herramienta de Guerra
-
-WhatsApp no es para mandar memes. Es la herramienta de ventas más letal si sabes cómo usarla. Tiene una tasa de apertura del 98%. Compáralo con el 15% del email. Si no estás vendiendo por WhatsApp de forma profesional, estás regalando el mercado.
+[Automatizar reservas](/contact)'
+),
+(
+  'automatizar-whatsapp-negocio',
+  'WhatsApp como Herramienta de Guerra (Comercial)',
+  'Pierdo clientes',
+  '8 min',
+  '2026-01-07',
+  '30% aumento conversión',
+  'Si usas WhatsApp solo para chatear, estás perdiendo el canal de ventas más potente del mundo. Aprende a convertirlo en tu mejor comercial.',
+  'Convierte WhatsApp en tu mejor aliado de ventas con agentes virtuales y automatizacion.',
+  'automatizar whatsapp, whatsapp business, agente virtual, ventas',
+  '/images/blog/whatsapp-automation.jpg',
+  'WhatsApp no es para mandar memes. Es la herramienta de ventas más letal si sabes cómo usarla. Tiene una tasa de apertura del 98%. Compáralo con el 15% del email. Si no estás vendiendo por WhatsApp de forma profesional, estás regalando el mercado.
 
 **El cliente está en WhatsApp. Tú deberías estar dominándolo.**
 
@@ -523,23 +524,24 @@ Convertimos tu línea verde en un embudo de ventas imparable.
 - **Cierre automático**: El bot presenta el servicio y manda el link de pago/reserva.
 - **Integración CRM**: Todo lo hablado por WhatsApp se guarda solo en tu ficha de cliente.
 
-**[Paso a paso Engorilao]**
 [ ] Pásate a WhatsApp Business (es gratis y tiene herramientas básicas).
 [ ] Configura mensajes de ausencia y bienvenida profesionales.
 [ ] [Pide un Agente Virtual](/contact) y deja de ser tú el que escribe "Hola, ¿en qué puedo ayudarte?".
 
-[Dominar WhatsApp](/contact)
-`
-    },
-    {
-        slug: 'dashboard-negocio-tiempo-real',
-        title: 'El Cuadro de Mando del Siglo XXI: Tu Negocio en la Palma de tu Mano',
-        excerpt: '¿Sabes cuánto has facturado hoy respecto al mismo día del año pasado? Si no puedes verlo en tu móvil ahora mismo, no tienes el control.',
-        savings: 'Paz mental total',
-        content: `
-# El Cuadro de Mando del Siglo XXI
-
-¿Sabes cuál es el margen exacto de lo que has vendido hoy? ¿Sabes cuánto dinero te debe tu cliente más moroso sin abrir un armario de carpetas? Si la respuesta es "tengo que mirarlo", vas tarde.
+[Dominar WhatsApp](/contact)'
+),
+(
+  'dashboard-negocio-tiempo-real',
+  'El Cuadro de Mando del Siglo XXI: Tu Negocio en la Palma de tu Mano',
+  'Gestión',
+  '9 min',
+  '2026-01-07',
+  'Paz mental total',
+  '¿Sabes cuánto has facturado hoy respecto al mismo día del año pasado? Si no puedes verlo en tu móvil ahora mismo, no tienes el control.',
+  'Aprende a crear dashboards en tiempo real para tu negocio y toma el control de tus numeros.',
+  'dashboard, business intelligence, control de gestion, pyme',
+  '/images/blog/dashboard-business.jpg',
+  '¿Sabes cuál es el margen exacto de lo que has vendido hoy? ¿Sabes cuánto dinero te debe tu cliente más moroso sin abrir un armario de carpetas? Si la respuesta es "tengo que mirarlo", vas tarde.
 
 **La información es poder, pero solo si la tienes delante cuando la necesitas.**
 
@@ -570,23 +572,24 @@ Diseñamos el "Cockpit" de tu empresa.
 - **Métricas Críticas**: Nos saltamos el ruido y te ponemos los 5 números que de verdad te hacen ganar más dinero.
 - **Automatización de carga**: Los datos se extraen y se pintan solos. Tu único trabajo es mirar y decidir.
 
-**[Paso a paso Engorilao]**
 [ ] Dibuja en un papel los 4 números que te harían dormir tranquilo si los vieras cada noche.
 [ ] Intenta conseguirlos ahora. Si tardas más de 1 minuto, necesitas un dashboard.
 [ ] [Solicita tu panel](/contact). Toma el control total y deja de adivinar.
 
-[Ver mi futuro](/contact)
-`
-    },
-    {
-        slug: 'automatizar-excel-google-sheets',
-        title: 'Esclavos del Excel: Cómo romper las cadenas de las hojas de cálculo manuales',
-        excerpt: 'Si tu equipo pasa más tiempo pegando celdas que analizando resultados, tienes un problema de eficiencia grave.',
-        savings: '15h/semana',
-        content: `
-# Esclavos del Excel
-
-Llegas un lunes a las 9. Abres el "Excel Maestro". Descargas el CSV del programa A. Lo limpias. Copias. Pegas en la pestaña B. Arrastras fórmulas. Recetas tres padres nuestros para que nada se rompa. Son las 11 y todavía no has hecho nada productivo.
+[Ver mi futuro](/contact)'
+),
+(
+  'automatizar-excel-google-sheets',
+  'Esclavos del Excel: Cómo romper las cadenas de las hojas de cálculo manuales',
+  'Pierdo tiempo',
+  '11 min',
+  '2026-01-07',
+  '15h/semana',
+  'Si tu equipo pasa más tiempo pegando celdas que analizando resultados, tienes un problema de eficiencia grave.',
+  'Convierte tus excels manuales en motores de accion automatizados en la nube.',
+  'automatizar excel, google sheets, eficiencia, productivity',
+  '/images/blog/excel-automation.jpg',
+  'Llegas un lunes a las 9. Abres el "Excel Maestro". Descargas el CSV del programa A. Lo limpias. Copias. Pegas en la pestaña B. Arrastras fórmulas. Recetas tres padres nuestros para que nada se rompa. Son las 11 y todavía no has hecho nada productivo.
 
 **Excel es una calculadora potente, no una base de datos para humanos esclavizados.**
 
@@ -617,23 +620,24 @@ Optimizamos tus excels para que sean automáticos.
 - **De estático a dinámico**: Tus hojas dejan de ser depósitos de datos y pasan a ser motores de acción.
 - **Cero manual**: Todo se actualiza solo cada hora o cada día. Tú solo entras para ver el resultado.
 
-**[Paso a paso Engorilao]**
 [ ] Identifica ese archivo que "solo Fulano sabe cómo rellenar". Es tu mayor debilidad.
 [ ] Calcula cuántas horas al mes se van en actualizarlo.
 [ ] [Automatiza tu Excel](/contact). Libérate del trabajo de mono y recupera tu cerebro para la estrategia.
 
-[Automatizar Hojas](/contact)
-`
-    },
-    {
-        slug: 'pierdo-tiempo-automatizacion',
-        title: 'El Robo Silencioso: Cómo la burocracia interna está matando tu PYME',
-        excerpt: 'Si sientes que trabajas 12 horas pero no avanzas, no es que te falte esfuerzo, es que te sobran procesos manuales.',
-        savings: '100h/año',
-        content: `
-# El Robo Silencioso
-
-No es un atraco con pistolas. Es un robo de 15 minutos aquí, 10 minutos allá.
+[Automatizar Hojas](/contact)'
+),
+(
+  'pierdo-tiempo-automatizacion',
+  'El Robo Silencioso: Cómo la burocracia interna está matando tu PYME',
+  'Pierdo tiempo',
+  '6 min',
+  '2026-01-07',
+  '100h/año',
+  'Si sientes que trabajas 12 horas pero no avanzas, no es que te falte esfuerzo, es que te sobran procesos manuales.',
+  'Identifica los ladrones de tiempo en tu negocio y eliminalos con automatizacion.',
+  'pierdo tiempo, eficiencia, burocracia, pyme',
+  null,
+  'No es un atraco con pistolas. Es un robo de 15 minutos aquí, 10 minutos allá.
 - Abres un mail.
 - Descargas un archivo.
 - Lo guardas en Drive.
@@ -669,23 +673,24 @@ Entramos en tu oficina, detectamos los ladrones de tiempo y los eliminamos sin p
 - **Enfoque en ROI**: Solo automatizamos lo que te va a devolver más de lo que cuesta implementar.
 - **Simplicidad ante todo**: Si un proceso se puede eliminar, se elimina. Si no, se automatiza.
 
-**[Paso a paso Engorilao]**
 [ ] Mañana, cada vez que hagas algo repetitivo, haz una marca en un papel.
 [ ] Al final del día, mira cuántas marcas tienes. Cada marca es un robo a tu libertad.
 [ ] [Escríbenos](/contact). Vamos a detectar y destruir a esos ladrones.
 
-[Detener el robo](/contact)
-`
-    },
-    {
-        slug: 'erp-pequenos-negocios',
-        title: 'El Mito del ERP para PYMES: Por qué menos es (casi siempre) mucho más',
-        excerpt: 'No te hace falta una nave espacial para ir a la esquina. Aprende por qué la simplicidad gana a la complejidad en la gestión.',
-        savings: 'Agilidad inmediata',
-        content: `
-# El Mito del ERP para PYMES
-
-"Necesitamos un ERP para ser una empresa seria". Esta frase ha arruinado más PYMES que la propia crisis. Seriedad no es tener un software complicado; seriedad es dar un servicio impecable y ser rentable.
+[Detener el robo](/contact)'
+),
+(
+  'erp-pequenos-negocios',
+  'El Mito del ERP para PYMES: Por qué menos es (casi siempre) mucho más',
+  'Gestión',
+  '10 min',
+  '2026-01-07',
+  'Agilidad inmediata',
+  'No te hace falta una nave espacial para ir a la esquina. Aprende por qué la simplicidad gana a la complejidad en la gestión.',
+  'Por qué un ERP puede ser el mayor error de tu pyme y que arquitectura modular usar en su lugar.',
+  'erp, pyme, gestion modular, agilidad',
+  '/images/blog/erp-business.jpg',
+  '"Necesitamos un ERP para ser una empresa seria". Esta frase ha arruinado más PYMES que la propia crisis. Seriedad no es tener un software complicado; seriedad es dar un servicio impecable y ser rentable.
 
 **Un ERP no arregla un proceso roto, solo lo hace más caro.**
 
@@ -716,43 +721,9 @@ Nosotros no vendemos software. Construimos **Sistemas de Libertad**.
 - **Soluciones a medida**: Usamos herramientas estándar que configuramos y conectamos para que funcionen exactamente como tu negocio necesita.
 - **Transferencia de Poder**: Te enseñamos a manejarlo tú. Sin depender de nosotros de por vida.
 
-**[Paso a paso Engorilao]**
 [ ] ¿Tu software actual te ayuda a vender más o te quita tiempo para vender?
 [ ] Si hoy quisieras cambiar un proceso interno, ¿puedes hacerlo tú solo?
 [ ] [Consúltanos](/contact). Te enseñaremos cómo gestionar como un gigante con la agilidad de un gorila.
 
-[Simplicar mi gestión](/contact)
-`
-    }
-];
-
-const overhaulPosts = async () => {
-    console.log(`Iniciando overhaul de ${postsToUpdate.length} posts...`);
-
-    for (const post of postsToUpdate) {
-        console.log(`Actualizando: ${post.slug}...`);
-
-        const { data, error, count } = await supabase
-            .from('blog_posts')
-            .update({
-                title: post.title,
-                excerpt: post.excerpt,
-                content: post.content,
-                savings: post.savings,
-                publish_date: '2026-01-07'
-            }, { count: 'exact' })
-            .eq('slug', post.slug);
-
-        if (error) {
-            console.error(`Error actualizando ${post.slug}:`, error.message);
-        } else if (count === 0) {
-            console.warn(`[!] Advertencia: No se encontró ningún post con el slug "${post.slug}". No se actualizó nada.`);
-        } else {
-            console.log(`[OK] ${post.slug} actualizado (${count} fila/s).`);
-        }
-    }
-
-    console.log('Overhaul completado.');
-};
-
-overhaulPosts();
+[Simplicar mi gestión](/contact)'
+);

@@ -68,7 +68,7 @@ const Contact = () => {
                                 <a href={siteConfig.whatsapp_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 p-3 rounded-xl bg-white/5 hover:bg-[#25D366]/20 hover:border-[#25D366]/50 border border-transparent transition-all group">
                                     <MessageSquare className="w-5 h-5 text-[#25D366]" />
                                     <div>
-                                        <div className="text-white text-sm font-bold group-hover:text-[#25D366] transition-colors">WhatsApp</div>
+                                        <div className="text-white text-sm font-bold group-hover:text-[#25D366] transition-colors">WhatsApp (611 469 469)</div>
                                         <div className="text-[10px] text-gray-500">Respuesta inmediata</div>
                                     </div>
                                     <ArrowRight className="w-4 h-4 text-gray-600 ml-auto group-hover:text-[#25D366] group-hover:translate-x-1 transition-all" />

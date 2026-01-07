@@ -70,6 +70,10 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
                 throw contactError;
             }
 
+            if (!contact) {
+                throw new Error('No se pudo guardar el contacto. Inténtalo de nuevo.');
+            }
+
             // 2. SAVE MESSAGE
             const { error: messageError } = await supabase
                 .from('contact_messages')
@@ -110,7 +114,7 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
             setSubmitted(true);
         } catch (error) {
             console.error('Submission Error:', error);
-            alert('Error al enviar. Inténtalo por WhatsApp.');
+            alert(`Error al enviar: ${error.message || 'Error desconocido'}. Inténtalo por WhatsApp.`);
         } finally {
             setLoading(false);
         }
