@@ -409,9 +409,9 @@ const Services = () => {
                                 {/* Slide Items Right (The Grid Info) */}
                                 <div className="w-full lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     {starServices[activeService].subItems.map((item, idx) => (
-                                        <div key={idx} className="bg-white/5 border border-white/10 p-4 rounded-xl hover:bg-white/10 transition-colors shadow-lg">
-                                            <h4 className="text-primary font-black mb-1 text-[10px] uppercase italic tracking-wider">{item.title}</h4>
-                                            <p className="text-gray-400 text-[10px] leading-tight italic">{item.desc}</p>
+                                        <div key={idx} className="bg-white/5 border border-white/10 p-5 rounded-xl hover:bg-white/10 transition-colors shadow-lg">
+                                            <h4 className="text-primary font-black mb-2 text-xs md:text-sm uppercase italic tracking-wider">{item.title}</h4>
+                                            <p className="text-gray-400 text-xs md:text-sm leading-relaxed italic">{item.desc}</p>
                                         </div>
                                     ))}
                                 </div>
