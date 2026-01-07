@@ -1,10 +1,30 @@
 -- =====================================================
--- CRM PROFESIONAL - SCHEMA COMPLETO
+-- CRM PROFESIONAL - SCHEMA COMPLETO (LIMPIO)
+-- =====================================================
+-- IMPORTANTE: Este script eliminará las tablas existentes
+-- Asegúrate de hacer backup si tienes datos importantes
+
+-- Eliminar tablas en orden inverso (por dependencias)
+DROP TABLE IF EXISTS invoice_items CASCADE;
+DROP TABLE IF EXISTS invoices CASCADE;
+DROP TABLE IF EXISTS budget_items CASCADE;
+DROP TABLE IF EXISTS budgets CASCADE;
+DROP TABLE IF EXISTS project_items CASCADE;
+DROP TABLE IF EXISTS projects CASCADE;
+DROP TABLE IF EXISTS contact_messages CASCADE;
+DROP TABLE IF EXISTS contacts CASCADE;
+
+-- Eliminar funciones
+DROP FUNCTION IF EXISTS generate_budget_number();
+DROP FUNCTION IF EXISTS generate_invoice_number();
+DROP FUNCTION IF EXISTS update_updated_at_column() CASCADE;
+
+-- =====================================================
+-- CREAR TABLAS NUEVAS
 -- =====================================================
 
--- 1. TABLA CONTACTS (Mejorada)
--- =====================================================
-CREATE TABLE IF NOT EXISTS contacts (
+-- 1. TABLA CONTACTS
+CREATE TABLE contacts (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   email TEXT UNIQUE NOT NULL,
   full_name TEXT NOT NULL,
@@ -41,21 +61,24 @@ CREATE TABLE IF NOT EXISTS contacts (
   last_contact_date TIMESTAMPTZ
 );
 
-CREATE INDEX IF NOT EXISTS idx_contacts_email ON contacts(email);
-CREATE INDEX IF NOT EXISTS idx_contacts_status ON contacts(status);
-CREATE INDEX IF NOT EXISTS idx_contacts_sector ON contacts(sector);
-CREATE INDEX IF NOT EXISTS idx_contacts_city ON contacts(city);
+CREATE INDEX idx_contacts_email ON contacts(email);
+CREATE INDEX idx_contacts_status ON contacts(status);
+CREATE INDEX idx_contacts_sector ON contacts(sector);
+CREATE INDEX idx_contacts_city ON contacts(city);
 
--- 2. MEJORAR CONTACT_MESSAGES (si no existe contact_id)
--- =====================================================
-ALTER TABLE contact_messages 
-ADD COLUMN IF NOT EXISTS contact_id UUID REFERENCES contacts(id) ON DELETE CASCADE;
+-- 2. TABLA CONTACT_MESSAGES
+CREATE TABLE contact_messages (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  contact_id UUID REFERENCES contacts(id) ON DELETE CASCADE,
+  message TEXT,
+  source TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
 
-CREATE INDEX IF NOT EXISTS idx_messages_contact ON contact_messages(contact_id);
+CREATE INDEX idx_messages_contact ON contact_messages(contact_id);
 
 -- 3. TABLA PROJECTS
--- =====================================================
-CREATE TABLE IF NOT EXISTS projects (
+CREATE TABLE projects (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   contact_id UUID REFERENCES contacts(id) ON DELETE CASCADE,
   
@@ -88,13 +111,12 @@ CREATE TABLE IF NOT EXISTS projects (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE INDEX IF NOT EXISTS idx_projects_contact ON projects(contact_id);
-CREATE INDEX IF NOT EXISTS idx_projects_status ON projects(status);
-CREATE INDEX IF NOT EXISTS idx_projects_service ON projects(service_type);
+CREATE INDEX idx_projects_contact ON projects(contact_id);
+CREATE INDEX idx_projects_status ON projects(status);
+CREATE INDEX idx_projects_service ON projects(service_type);
 
 -- 4. TABLA PROJECT_ITEMS (Partidas facturables)
--- =====================================================
-CREATE TABLE IF NOT EXISTS project_items (
+CREATE TABLE project_items (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   project_id UUID REFERENCES projects(id) ON DELETE CASCADE,
   
@@ -119,11 +141,10 @@ CREATE TABLE IF NOT EXISTS project_items (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE INDEX IF NOT EXISTS idx_items_project ON project_items(project_id);
+CREATE INDEX idx_items_project ON project_items(project_id);
 
 -- 5. TABLA BUDGETS (Presupuestos)
--- =====================================================
-CREATE TABLE IF NOT EXISTS budgets (
+CREATE TABLE budgets (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   project_id UUID REFERENCES projects(id) ON DELETE CASCADE,
   
@@ -158,13 +179,12 @@ CREATE TABLE IF NOT EXISTS budgets (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE INDEX IF NOT EXISTS idx_budgets_project ON budgets(project_id);
-CREATE INDEX IF NOT EXISTS idx_budgets_number ON budgets(budget_number);
-CREATE INDEX IF NOT EXISTS idx_budgets_status ON budgets(status);
+CREATE INDEX idx_budgets_project ON budgets(project_id);
+CREATE INDEX idx_budgets_number ON budgets(budget_number);
+CREATE INDEX idx_budgets_status ON budgets(status);
 
 -- 6. TABLA BUDGET_ITEMS
--- =====================================================
-CREATE TABLE IF NOT EXISTS budget_items (
+CREATE TABLE budget_items (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   budget_id UUID REFERENCES budgets(id) ON DELETE CASCADE,
   project_item_id UUID REFERENCES project_items(id),
@@ -179,11 +199,10 @@ CREATE TABLE IF NOT EXISTS budget_items (
   order_index INTEGER
 );
 
-CREATE INDEX IF NOT EXISTS idx_budget_items_budget ON budget_items(budget_id);
+CREATE INDEX idx_budget_items_budget ON budget_items(budget_id);
 
 -- 7. TABLA INVOICES (Facturas)
--- =====================================================
-CREATE TABLE IF NOT EXISTS invoices (
+CREATE TABLE invoices (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   project_id UUID REFERENCES projects(id) ON DELETE CASCADE,
   budget_id UUID REFERENCES budgets(id),
@@ -214,14 +233,13 @@ CREATE TABLE IF NOT EXISTS invoices (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE INDEX IF NOT EXISTS idx_invoices_project ON invoices(project_id);
-CREATE INDEX IF NOT EXISTS idx_invoices_number ON invoices(invoice_number);
-CREATE INDEX IF NOT EXISTS idx_invoices_status ON invoices(status);
-CREATE INDEX IF NOT EXISTS idx_invoices_due_date ON invoices(due_date);
+CREATE INDEX idx_invoices_project ON invoices(project_id);
+CREATE INDEX idx_invoices_number ON invoices(invoice_number);
+CREATE INDEX idx_invoices_status ON invoices(status);
+CREATE INDEX idx_invoices_due_date ON invoices(due_date);
 
 -- 8. TABLA INVOICE_ITEMS
--- =====================================================
-CREATE TABLE IF NOT EXISTS invoice_items (
+CREATE TABLE invoice_items (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   invoice_id UUID REFERENCES invoices(id) ON DELETE CASCADE,
   project_item_id UUID REFERENCES project_items(id),
@@ -236,7 +254,7 @@ CREATE TABLE IF NOT EXISTS invoice_items (
   order_index INTEGER
 );
 
-CREATE INDEX IF NOT EXISTS idx_invoice_items_invoice ON invoice_items(invoice_id);
+CREATE INDEX idx_invoice_items_invoice ON invoice_items(invoice_id);
 
 -- =====================================================
 -- TRIGGERS PARA UPDATED_AT
