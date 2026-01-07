@@ -59,7 +59,7 @@ const CustomManagement = () => {
             />
 
             {/* HERO: TACTICAL CONTROL */}
-            <section className="relative px-6 py-20 max-w-7xl mx-auto">
+            <section className="relative px-6 py-12 max-w-7xl mx-auto">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
 
                 <div className="grid lg:grid-cols-12 gap-16 items-center">
@@ -71,14 +71,14 @@ const CustomManagement = () => {
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold mb-8 tracking-widest uppercase">
                             <Cpu className="w-3 h-3" /> Arquitectura Operativa
                         </div>
-                        <h1 className="text-6xl md:text-[8rem] font-display font-black mb-10 leading-[0.8] italic uppercase tracking-tighter">
+                        <h1 className="text-5xl md:text-6xl font-display font-black mb-8 leading-[0.8] italic uppercase tracking-tighter">
                             Toma el <br />
                             <span className="text-primary italic italic">Mando</span> Total.
                         </h1>
-                        <p className="text-xl text-gray-400 mb-12 max-w-xl leading-relaxed font-light italic">
+                        <p className="text-lg text-gray-400 mb-10 max-w-xl leading-relaxed font-light italic">
                             Si tu empresa depende de 15 Excels y de que alguien no se olvide de apuntar un dato, no tienes una empresa, tienes una bomba de relojería. Construimos tu <strong>Cerebro Central</strong>.
                         </p>
-                        <Link to="/contact" className="bg-primary text-black font-black px-12 py-6 rounded-2xl hover:scale-105 transition-transform flex items-center gap-4 shadow-[0_0_50px_rgba(110,231,183,0.3)] text-xl italic uppercase">
+                        <Link to="/contact" className="bg-primary text-black font-black px-10 py-5 rounded-2xl hover:scale-105 transition-transform flex items-center gap-4 shadow-[0_0_50px_rgba(110,231,183,0.3)] text-lg italic uppercase">
                             DISEÑAR MI SISTEMA <ArrowRight className="w-8 h-8 text-black" />
                         </Link>
                     </motion.div>
@@ -126,10 +126,10 @@ const CustomManagement = () => {
             </section>
 
             {/* MODULAR ARCHITECTURE */}
-            <section className="px-6 py-24 bg-white/5 border-y border-white/5">
+            <section className="px-6 py-12 bg-white/5 border-y border-white/5">
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-20 max-w-3xl mx-auto">
-                        <h2 className="text-4xl md:text-7xl font-display font-black mb-6 uppercase italic tracking-tighter">
+                        <h2 className="text-3xl md:text-5xl font-display font-black mb-4 uppercase italic tracking-tighter">
                             Estructura <span className="text-primary italic">Modular</span>
                         </h2>
                         <p className="text-gray-500">No adaptas tu negocio a un software cerrado como SAP u Odoo. Nosotros adaptamos el código a la forma exacta en la que tú ganas dinero.</p>
@@ -149,7 +149,7 @@ const CustomManagement = () => {
             </section>
 
             {/* DASHBOARD EMPHASIS */}
-            <section className="px-6 py-24 bg-[#0A0A0A]">
+            <section className="px-6 py-12 bg-[#0A0A0A]">
                 <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
                     <div className="order-2 lg:order-1 relative">
                         <div className="bg-gradient-to-br from-[#111] to-black border border-white/10 rounded-[3rem] p-8 md:p-12 shadow-2xl relative z-10">
@@ -179,7 +179,7 @@ const CustomManagement = () => {
                     </div>
 
                     <div className="order-1 lg:order-2">
-                        <h2 className="text-4xl md:text-6xl font-display font-black mb-10 uppercase italic leading-tight">
+                        <h2 className="text-3xl md:text-5xl font-display font-black mb-8 uppercase italic leading-tight">
                             Visualización y <br />
                             <span className="text-primary">Business Intelligence</span>
                         </h2>
@@ -202,7 +202,7 @@ const CustomManagement = () => {
             </section>
 
             {/* INTEGRATIONS MARQUEE */}
-            <section className="py-20 overflow-hidden whitespace-nowrap opacity-30 border-y border-white/5 bg-white/5">
+            <section className="py-12 overflow-hidden whitespace-nowrap opacity-30 border-y border-white/5 bg-white/5">
                 <div className="inline-block animate-marquee-fast">
                     {[...integrations, ...integrations].map((int, i) => (
                         <span key={i} className="text-white text-5xl md:text-7xl font-display font-black mx-16 uppercase italic tracking-widest">{int}</span>
@@ -211,11 +211,11 @@ const CustomManagement = () => {
             </section>
 
             {/* FAQ SECTION */}
-            <section className="px-6 py-24 bg-white/5">
+            <section className="px-6 py-12 bg-white/5">
                 <div className="max-w-4xl mx-auto">
                     <div className="text-center mb-16">
                         <HelpCircle className="w-12 h-12 text-primary mx-auto mb-4" />
-                        <h2 className="text-4xl md:text-6xl font-display font-black uppercase italic text-white">Preguntas <span className="text-primary italic">Frecuentes</span></h2>
+                        <h2 className="text-3xl md:text-5xl font-display font-black uppercase italic text-white">Preguntas <span className="text-primary italic">Frecuentes</span></h2>
                     </div>
                     <div className="grid gap-6">
                         {faqs.map((faq, i) => (
@@ -229,7 +229,7 @@ const CustomManagement = () => {
             </section>
 
             {/* FINAL CTA: THE FORM */}
-            <section className="px-6 py-32">
+            <section className="px-6 py-16">
                 <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center bg-gradient-to-br from-[#111] to-black border border-white/10 p-8 md:p-16 rounded-[4rem] relative overflow-hidden shadow-2xl">
                     <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 blur-[120px] rounded-full" />
 

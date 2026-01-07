@@ -57,7 +57,7 @@ const LocalSeo = () => {
             />
 
             {/* HERO: BRUTAL HONESTY */}
-            <section className="relative px-6 py-24 max-w-7xl mx-auto overflow-hidden">
+            <section className="relative px-6 py-12 max-w-7xl mx-auto overflow-hidden">
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 blur-[150px] rounded-full pointer-events-none" />
 
                 <div className="relative z-10 text-center max-w-5xl mx-auto">
@@ -68,14 +68,14 @@ const LocalSeo = () => {
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold mb-8 tracking-widest uppercase">
                             <Target className="w-3 h-3" /> Visibilidad Radical
                         </div>
-                        <h1 className="text-6xl md:text-[10rem] font-display font-black mb-10 leading-[0.8] italic uppercase tracking-tighter">
+                        <h1 className="text-5xl md:text-6xl font-display font-black mb-8 leading-[0.8] italic uppercase tracking-tighter">
                             Si no te <span className="text-white/20">Ven</span> <br />
                             <span className="text-primary italic">No existes</span>.
                         </h1>
-                        <p className="text-xl md:text-3xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed font-light italic">
+                        <p className="text-lg md:text-xl text-gray-400 mb-10 max-w-3xl mx-auto leading-relaxed font-light italic">
                             El 46% de las búsquedas en Google tienen intención local. Si no sales en el <span className="text-white border-b border-primary/50">Top 3 de Maps</span>, estás trabajando para tu competencia.
                         </p>
-                        <Link to="/contact" className="bg-primary text-black font-black px-12 py-6 rounded-2xl hover:scale-105 transition-transform inline-flex items-center gap-4 shadow-[0_0_50px_rgba(110,231,183,0.3)] text-xl italic uppercase">
+                        <Link to="/contact" className="bg-primary text-black font-black px-10 py-5 rounded-2xl hover:scale-105 transition-transform inline-flex items-center gap-4 shadow-[0_0_50px_rgba(110,231,183,0.3)] text-lg italic uppercase">
                             DOMINAR MI CÓDIGO POSTAL <ArrowRight className="w-8 h-8 text-black" />
                         </Link>
                     </motion.div>
@@ -83,7 +83,7 @@ const LocalSeo = () => {
             </section>
 
             {/* STATS: THE HARSH REALITY */}
-            <section className="px-6 py-20 bg-white/5 border-y border-white/5">
+            <section className="px-6 py-12 bg-white/5 border-y border-white/5">
                 <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-12 text-center uppercase italic font-display">
                     <div>
                         <div className="text-7xl font-black text-primary mb-2 tracking-tighter">70%</div>
@@ -101,10 +101,10 @@ const LocalSeo = () => {
             </section>
 
             {/* VISUAL COMPARISON: MAPS DOMINATION */}
-            <section className="px-6 py-32 max-w-7xl mx-auto">
+            <section className="px-6 py-16 max-w-7xl mx-auto">
                 <div className="grid lg:grid-cols-2 gap-20 items-center">
                     <div>
-                        <h2 className="text-5xl md:text-8xl font-display font-black mb-10 leading-[0.85] uppercase italic tracking-tighter">
+                        <h2 className="text-4xl md:text-6xl font-display font-black mb-8 leading-[0.85] uppercase italic tracking-tighter">
                             Guerra <br />
                             <span className="text-primary italic">En el Mapa</span>
                         </h2>
@@ -162,7 +162,7 @@ const LocalSeo = () => {
             </section>
 
             {/* PILLARS GRID */}
-            <section className="px-6 py-24 bg-[#111]">
+            <section className="px-6 py-12 bg-[#111]">
                 <div className="max-w-7xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {pillars.map((p, i) => (
                         <div key={i} className="bg-black/40 p-10 rounded-3xl border border-white/5 hover:border-primary/20 transition-all text-center group">
@@ -177,11 +177,11 @@ const LocalSeo = () => {
             </section>
 
             {/* FAQ SECTION */}
-            <section className="px-6 py-24 bg-white/5">
+            <section className="px-6 py-12 bg-white/5">
                 <div className="max-w-4xl mx-auto">
                     <div className="text-center mb-16">
                         <HelpCircle className="w-12 h-12 text-primary mx-auto mb-4" />
-                        <h2 className="text-4xl md:text-6xl font-display font-black uppercase italic text-white">Preguntas <span className="text-primary italic">Frecuentes</span></h2>
+                        <h2 className="text-3xl md:text-5xl font-display font-black uppercase italic text-white">Preguntas <span className="text-primary italic">Frecuentes</span></h2>
                     </div>
                     <div className="grid gap-6">
                         {faqs.map((faq, i) => (
@@ -195,7 +195,7 @@ const LocalSeo = () => {
             </section>
 
             {/* FINAL CTA: THE FORM */}
-            <section className="px-6 py-32">
+            <section className="px-6 py-16">
                 <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center bg-gradient-to-br from-[#111] to-black border border-white/10 p-8 md:p-16 rounded-[4rem] relative overflow-hidden shadow-2xl">
                     <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 blur-[120px] rounded-full" />
 
