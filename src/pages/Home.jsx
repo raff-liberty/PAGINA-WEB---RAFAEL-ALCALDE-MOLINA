@@ -359,7 +359,7 @@ const Home = () => {
                                 initial={{ opacity: 0, y: 30 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.2 + i * 0.1, duration: 0.8, ease: "easeOut" }}
-                                className="group relative bg-[#353535] backdrop-blur-md border-2 border-white/70 p-6 rounded-xl hover:border-primary/50 transition-all duration-500 hover:bg-[#3a3a3a] flex flex-col shadow-[0_16px_64px_rgba(0,0,0,1),0_0_0_1px_rgba(255,255,255,0.1)] overflow-hidden h-full"
+                                className="group relative bg-[#404040] backdrop-blur-md border-2 border-white/90 p-6 rounded-xl hover:border-primary/50 transition-all duration-500 hover:bg-[#454545] flex flex-col shadow-[0_20px_80px_rgba(0,0,0,1),0_0_0_2px_rgba(255,255,255,0.15)] overflow-hidden h-full"
                             >
                                 {/* Background step number */}
                                 <span className="absolute -top-4 -right-4 text-8xl font-bold text-white/[0.02] group-hover:text-primary/[0.05] transition-colors pointer-events-none font-mono">
@@ -473,7 +473,7 @@ const Home = () => {
                                         {/* Ambient glow on hover */}
                                         <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-primary/5 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
 
-                                        <div className="relative grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 bg-[#353535] border-2 border-white/80 p-6 md:p-12 rounded-2xl transition-all duration-300 items-start shadow-[0_16px_64px_rgba(0,0,0,1),0_0_0_1px_rgba(255,255,255,0.1)] overflow-hidden group-hover:border-primary/50">
+                                        <div className="relative grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 bg-[#404040] border-2 border-white/90 p-6 md:p-12 rounded-2xl transition-all duration-300 items-start shadow-[0_20px_80px_rgba(0,0,0,1),0_0_0_2px_rgba(255,255,255,0.15)] overflow-hidden group-hover:border-primary/50">
                                             {/* Subtle glass effect border on top */}
                                             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
 
