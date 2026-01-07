@@ -137,11 +137,11 @@ const WebDevelopment = () => {
                     </div>
 
                     <div className="relative">
-                        <div className="bg-[#111] border border-white/10 rounded-[3rem] p-10 md:p-16 relative z-10 overflow-hidden">
+                        <div className="bg-[#111] border border-white/10 rounded-[3rem] p-6 md:p-10 relative z-10 overflow-hidden">
                             <div className="absolute top-0 right-0 w-40 h-40 bg-primary/10 blur-3xl"></div>
-                            <h3 className="text-white text-3xl font-display font-black mb-12 uppercase italic text-center">Rendimiento Real</h3>
+                            <h3 className="text-white text-2xl font-display font-black mb-6 uppercase italic text-center">Rendimiento Real</h3>
 
-                            <div className="space-y-10">
+                            <div className="space-y-6">
                                 <div className="space-y-3">
                                     <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-gray-500">
                                         <span>Mobile Score</span>
