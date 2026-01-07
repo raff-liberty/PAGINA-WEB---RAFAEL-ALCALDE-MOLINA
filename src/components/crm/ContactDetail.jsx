@@ -66,7 +66,12 @@ const ContactDetail = ({ contactId, onClose, onUpdate }) => {
         const { error, data } = result;
 
         if (!error) {
-            setContact(data || editData);
+            // Reload full contact data (with messages and projects)
+            if (contactId !== 'new') {
+                await loadContact();
+            } else {
+                setContact(data || editData);
+            }
             setEditing(false);
             if (onUpdate) onUpdate();
             if (contactId === 'new') onClose();
