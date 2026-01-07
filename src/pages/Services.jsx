@@ -29,13 +29,13 @@ import ContactForm from '../components/ContactForm';
 import { supabase } from '../lib/supabaseClient';
 
 const Services = () => {
-    const [miniForm, setMiniForm] = React.useState({ name: '', email: '', whatsapp: '' });
+    const [miniForm, setMiniForm] = React.useState({ name: '', email: '', whatsapp: '', privacy: false });
     const [loading, setLoading] = React.useState(false);
     const [submitted, setSubmitted] = React.useState(false);
 
     const handleMiniSubmit = async (e) => {
         e.preventDefault();
-        if (!miniForm.email) return;
+        if (!miniForm.email || !miniForm.privacy) return;
         setLoading(true);
         try {
             const { error } = await supabase
@@ -52,7 +52,7 @@ const Services = () => {
 
             if (error) throw error;
             setSubmitted(true);
-            setMiniForm({ name: '', email: '', whatsapp: '' });
+            setMiniForm({ name: '', email: '', whatsapp: '', privacy: false });
         } catch (error) {
             console.error('Error:', error);
             alert('Error al enviar. Inténtalo por WhatsApp.');
@@ -493,9 +493,27 @@ const Services = () => {
                                             />
                                             <MessageSquare className="absolute right-4 top-3.5 w-4 h-4 text-primary/40" />
                                         </div>
+                                        <div className="flex items-start gap-3 mt-4 mb-2 px-1">
+                                            <div className="flex items-center h-5">
+                                                <input
+                                                    id="privacy-mini"
+                                                    name="privacy-mini"
+                                                    type="checkbox"
+                                                    required
+                                                    checked={miniForm.privacy}
+                                                    onChange={(e) => setMiniForm({ ...miniForm, privacy: e.target.checked })}
+                                                    className="w-4 h-4 rounded border-white/20 bg-white/5 text-primary focus:ring-primary focus:ring-offset-0 transition-all cursor-pointer"
+                                                />
+                                            </div>
+                                            <div className="text-xs">
+                                                <label htmlFor="privacy-mini" className="text-gray-400 font-light italic cursor-pointer">
+                                                    Acepto la <Link to="/privacy" className="text-primary hover:underline">política de privacidad</Link> y el tratamiento de mis datos.
+                                                </label>
+                                            </div>
+                                        </div>
                                         <button
                                             type="submit"
-                                            disabled={loading}
+                                            disabled={loading || !miniForm.privacy}
                                             className="w-full bg-primary text-black font-black py-4 rounded-xl hover:scale-[1.02] transition-transform shadow-[0_0_20px_rgba(110,231,183,0.4)] disabled:opacity-50 disabled:cursor-not-allowed mt-2"
                                         >
                                             {loading ? 'ENVIANDO...' : 'PEDIR AUDITORÍA RÁPIDA'}
