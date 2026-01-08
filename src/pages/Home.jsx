@@ -658,6 +658,7 @@ const Home = () => {
                         </div>
                     </div>
 
+
                     {/* FAQ EXPLORER - Replaces Testimonials Section */}
                     <div className="mt-24 mb-24 px-4">
                         <div className="flex flex-col items-center text-center mb-12">

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Save, X, Eye, Edit, Plus, Trash2, Lock, Search, Filter, BookOpen, BarChart3, Copy, Upload, Download, Globe, MapPin, Briefcase, CheckCircle, AlertCircle, ExternalLink, Target, Bold, Quote, List, ListOrdered, CheckSquare, Table, Users, Mail, FileText, Send, Calendar, Tag, MoreHorizontal, Bell } from 'lucide-react';
+import { Save, X, Eye, Edit, Plus, Trash2, Lock, Search, Filter, BookOpen, BarChart3, Copy, Upload, Download, Globe, MapPin, Briefcase, CheckCircle, AlertCircle, ExternalLink, Target, Bold, Quote, List, ListOrdered, CheckSquare, Table, Users, Mail, FileText, Send, Calendar, Tag, MoreHorizontal, Bell, ClipboardList } from 'lucide-react';
 import { fetchContacts, deleteContact, getContactStats } from '../lib/crm/contacts';
+import { fetchDiagnoses } from '../lib/diagnoses';
 import BackgroundMesh from '../components/BackgroundMesh';
 import StrategicRoadmap from '../components/StrategicRoadmap';
 import SEOPreview from '../components/SEOPreview';
@@ -14,17 +15,19 @@ import ContactList from '../components/crm/ContactList';
 import ContactDetail from '../components/crm/ContactDetail';
 import ProjectList from '../components/crm/ProjectList';
 import ProjectDetail from '../components/crm/ProjectDetail';
+import DiagnosisList from '../components/crm/DiagnosisList';
+import DiagnosisDetail from '../components/crm/DiagnosisDetail';
 
 const AdminPanel = () => {
     const navigationTabs = [
         { id: 'editor', label: 'Blog', icon: Edit },
-        { id: 'growth', label: 'Estrategia', icon: Target },
+        { id: 'diagnoses', label: 'Diagnósticos', icon: ClipboardList },
+        { id: 'crm', label: 'CRM', icon: Users },
         { id: 'landings', label: 'Landings SEO', icon: Globe },
-        { id: 'guidelines', label: 'Línea Editorial', icon: BookOpen },
-        { id: 'stats', label: 'Estadísticas', icon: BarChart3 },
         { id: 'sectors', label: 'Sectores', icon: Briefcase },
         { id: 'locations', label: 'Localizaciones', icon: MapPin },
-        { id: 'crm', label: 'CRM', icon: Users },
+        { id: 'guidelines', label: 'Línea Editorial', icon: BookOpen },
+        { id: 'stats', label: 'Estadísticas', icon: BarChart3 },
         { id: 'config', label: 'Configuración', icon: Save },
     ];
 
@@ -50,6 +53,7 @@ const AdminPanel = () => {
         linkedin_url: '',
         contact_email: '',
         n8n_webhook_url: '',
+        n8n_diagnosis_webhook: '',
         og_image_url: 'https://engorilate.com/og-image.jpg',
         twitter_handle: '@engorilate',
         default_meta_title: 'Engorilate | Destruimos la Burocracia con Automatización Inteligente',
@@ -75,6 +79,13 @@ const AdminPanel = () => {
     const [selectedContact, setSelectedContact] = useState(null);
     const [selectedProject, setSelectedProject] = useState(null);
     const [unreadCount, setUnreadCount] = useState(0);
+
+    // Diagnosis State
+    const [diagnoses, setDiagnoses] = useState([]);
+    const [selectedDiagnosis, setSelectedDiagnosis] = useState(null);
+
+    // Landing View State
+    const [landingView, setLandingView] = useState('active'); // 'active' or 'explorer'
 
     // Sectors & Locations state
     const [selectedSector, setSelectedSector] = useState(null);
@@ -138,8 +149,18 @@ const AdminPanel = () => {
             if (activeTab === 'locations') {
                 fetchLocations();
             }
+            if (activeTab === 'diagnoses') {
+                getDiagnoses();
+            }
         }
     }, [user, activeTab]);
+
+    const getDiagnoses = async () => {
+        setLoading(true);
+        const { data } = await fetchDiagnoses();
+        setDiagnoses(data || []);
+        setLoading(false);
+    };
 
     const fetchUnreadCount = async () => {
         // Ya no usamos contador de mensajes no leídos (ahora son interacciones)
@@ -1288,6 +1309,28 @@ const AdminPanel = () => {
                     </div>
                 )}
 
+                {activeTab === 'diagnoses' && (
+                    <div className="flex gap-6 h-[calc(100vh-200px)]">
+                        <div className="flex-1 min-w-0">
+                            <DiagnosisList
+                                diagnoses={diagnoses}
+                                onSelect={(d) => setSelectedDiagnosis(d)}
+                                selectedId={selectedDiagnosis?.id}
+                            />
+                        </div>
+                        <AnimatePresence>
+                            {selectedDiagnosis && (
+                                <div className="fixed inset-y-0 right-0 z-[100] w-full md:w-auto">
+                                    <DiagnosisDetail
+                                        diagnosis={selectedDiagnosis}
+                                        onClose={() => setSelectedDiagnosis(null)}
+                                    />
+                                </div>
+                            )}
+                        </AnimatePresence>
+                    </div>
+                )}
+
                 {activeTab === 'crm' && (
                     <div className="space-y-6">
                         {/* CRM Sub-tabs */}
@@ -1436,6 +1479,18 @@ const AdminPanel = () => {
                                     className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none font-mono text-sm"
                                 />
                                 <p className="text-xs text-gray-500 mt-1">Webhook de N8N para recibir los formularios de contacto</p>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-400 mb-2">n8n Diagnosis Webhook (Autopsia)</label>
+                                <input
+                                    type="text"
+                                    value={siteConfig.n8n_diagnosis_webhook}
+                                    onChange={(e) => setSiteConfig({ ...siteConfig, n8n_diagnosis_webhook: e.target.value })}
+                                    placeholder="https://tu-n8n.com/webhook/..."
+                                    className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none font-mono text-sm"
+                                />
+                                <p className="text-xs text-gray-500 mt-1">Webhook específico para procesar los Diagnósticos de la Autopsia con IA</p>
                             </div>
 
                             <div>
@@ -1659,45 +1714,87 @@ const AdminPanel = () => {
                 )}
 
                 {activeTab === 'landings' && (
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
                         {/* Sidebar: List of Pages */}
                         <div className="lg:col-span-1">
                             <div className="bg-[#222222] border border-white/30 rounded-2xl p-6 shadow-[0_8px_32px_rgba(0,0,0,0.9)] h-[80vh] flex flex-col">
-                                <h2 className="text-xl font-bold text-white mb-4">Páginas de Aterrizaje</h2>
-                                <div className="flex-1 overflow-y-auto pr-2 space-y-4">
-                                    {sectors.map(sector => (
-                                        <div key={sector.id} className="mb-4">
-                                            <h3 className="text-primary font-bold mb-2 uppercase text-xs tracking-wider">{sector.name}</h3>
-                                            <div className="space-y-1">
-                                                {locations.map(location => {
-                                                    const hasContent = getLandingStatus(sector.slug, location.slug);
-                                                    const isSelected = selectedLanding?.sector_slug === sector.slug && selectedLanding?.location_slug === location.slug;
+                                <div className="flex items-center justify-between mb-6">
+                                    <h2 className="text-xl font-bold text-white">Landings</h2>
+                                    <div className="flex bg-black/40 rounded-lg p-1 border border-white/5">
+                                        <button
+                                            onClick={() => setLandingView('active')}
+                                            className={`px-3 py-1.5 rounded-md text-[10px] font-black uppercase tracking-tighter transition-all ${landingView === 'active' ? 'bg-primary text-gray-900' : 'text-gray-500 hover:text-white'}`}
+                                        >
+                                            Activas
+                                        </button>
+                                        <button
+                                            onClick={() => setLandingView('explorer')}
+                                            className={`px-3 py-1.5 rounded-md text-[10px] font-black uppercase tracking-tighter transition-all ${landingView === 'explorer' ? 'bg-primary text-gray-900' : 'text-gray-500 hover:text-white'}`}
+                                        >
+                                            Explorar
+                                        </button>
+                                    </div>
+                                </div>
 
-                                                    return (
-                                                        <button
-                                                            key={location.id}
-                                                            onClick={() => handleSelectLanding(sector, location)}
-                                                            className={`w-full flex items-center justify-between px-3 py-2 rounded text-sm transition-all ${isSelected ? 'bg-primary/20 text-white border border-primary/50' : 'text-gray-400 hover:bg-white/5'
-                                                                }`}
-                                                        >
-                                                            <span>{location.name}</span>
-                                                            {hasContent ? (
-                                                                <CheckCircle className="w-3 h-3 text-green-500" />
-                                                            ) : (
-                                                                <div className="w-1.5 h-1.5 rounded-full bg-gray-600" />
-                                                            )}
-                                                        </button>
-                                                    );
-                                                })}
-                                            </div>
+                                <div className="flex-1 overflow-y-auto pr-2 space-y-4">
+                                    {landingView === 'active' ? (
+                                        <div className="space-y-2">
+                                            {landingPages.length === 0 ? (
+                                                <p className="text-gray-500 text-sm italic text-center py-8">No hay landings publicadas aún</p>
+                                            ) : (
+                                                landingPages.map(page => (
+                                                    <button
+                                                        key={page.id}
+                                                        onClick={() => setSelectedLanding(page)}
+                                                        className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-left transition-all ${selectedLanding?.id === page.id ? 'bg-primary text-gray-900 border border-primary shadow-[0_4px_12px_rgba(224,255,0,0.2)]' : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white border border-transparent'}`}
+                                                    >
+                                                        <div>
+                                                            <div className="text-[10px] font-black uppercase tracking-tight opacity-70 mb-0.5">{page.sector_slug}</div>
+                                                            <div className="text-sm font-bold truncate max-w-[120px]">{page.location_slug}</div>
+                                                        </div>
+                                                        <ExternalLink className={`w-3 h-3 ${selectedLanding?.id === page.id ? 'text-gray-900' : 'text-gray-600'}`} />
+                                                    </button>
+                                                ))
+                                            )}
                                         </div>
-                                    ))}
+                                    ) : (
+                                        sectors.map(sector => (
+                                            <div key={sector.id} className="mb-4">
+                                                <h3 className="text-primary font-bold mb-2 uppercase text-[10px] tracking-widest flex items-center gap-2">
+                                                    <Briefcase className="w-3 h-3" />
+                                                    {sector.name}
+                                                </h3>
+                                                <div className="space-y-1 pl-2 border-l border-white/5 ml-1">
+                                                    {locations.map(location => {
+                                                        const hasContent = getLandingStatus(sector.slug, location.slug);
+                                                        const isSelected = selectedLanding?.sector_slug === sector.slug && selectedLanding?.location_slug === location.slug;
+
+                                                        return (
+                                                            <button
+                                                                key={location.id}
+                                                                onClick={() => handleSelectLanding(sector, location)}
+                                                                className={`w-full flex items-center justify-between px-3 py-2 rounded text-xs transition-all ${isSelected ? 'bg-primary/20 text-white border border-primary/50' : 'text-gray-500 hover:bg-white/5 hover:text-gray-300'
+                                                                    }`}
+                                                            >
+                                                                <span>{location.name}</span>
+                                                                {hasContent ? (
+                                                                    <CheckCircle className="w-3 h-3 text-green-500" />
+                                                                ) : (
+                                                                    <div className="w-1 h-1 rounded-full bg-gray-700" />
+                                                                )}
+                                                            </button>
+                                                        );
+                                                    })}
+                                                </div>
+                                            </div>
+                                        ))
+                                    )}
                                 </div>
                             </div>
                         </div>
 
                         {/* Editor: Form */}
-                        <div className="lg:col-span-2">
+                        <div className="lg:col-span-3">
                             {selectedLanding ? (
                                 <div className="bg-[#222222] border border-white/30 rounded-2xl p-6 shadow-[0_8px_32px_rgba(0,0,0,0.9)] h-[80vh] overflow-y-auto">
                                     <div className="flex items-center justify-between mb-6 sticky top-0 bg-[#222222] z-10 py-2 border-b border-white/10">

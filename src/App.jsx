@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -23,9 +23,11 @@ import BlogPost from './pages/BlogPost';
 import SectorLocationPage from './pages/SectorLocationPage_v2';
 import SectorsDirectory from './pages/SectorsDirectory';
 import AdminPanel from './pages/AdminPanel';
+import Diagnosis from './pages/Diagnosis';
 import CookieBanner from './components/CookieBanner';
 import ScrollToTop from './components/ScrollToTop';
 import FloatingChat from './components/FloatingChat';
+import DiagnosisCTA from './components/diagnosis/DiagnosisCTA';
 import { supabase } from './lib/supabaseClient';
 
 console.log('Supabase Client Initialized:', !!supabase);
@@ -58,9 +60,11 @@ function App() {
                             <Route path="/blog" element={<Blog />} />
                             <Route path="/blog/:slug" element={<BlogPost />} />
                             <Route path="/admin" element={<AdminPanel />} />
+                            <Route path="/autopsia" element={<Diagnosis />} />
                             <Route path="/:sector/:location" element={<SectorLocationPage />} />
                         </Routes>
                     </main>
+                    <DiagnosisCTAWrapper />
                     <Footer />
                     <CookieBanner />
                     <FloatingChat />
@@ -71,6 +75,17 @@ function App() {
             </Router>
         </AuthProvider>
     );
+}
+
+function DiagnosisCTAWrapper() {
+    const location = useLocation();
+    const hideCTAOn = ['/autopsia', '/admin'];
+
+    if (hideCTAOn.includes(location.pathname)) {
+        return null;
+    }
+
+    return <DiagnosisCTA />;
 }
 
 export default App;
