@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { X, Mail, Phone, Building2, Calendar, Tag, MessageSquare, Edit, Save, Globe, Link2, Clock, User, FileText, PhoneCall, Send } from 'lucide-react';
+import { X, Mail, Phone, Building2, Calendar, Tag, MessageSquare, Edit, Save, Globe, Link2, Clock, User, FileText, PhoneCall, Send, Briefcase, Plus } from 'lucide-react';
 import { fetchContactById, updateContact, changeOperationalStatus, changeContactType } from '../../lib/crm/contacts';
 import { addNoteToContact } from '../../lib/crm/interactions';
+import { fetchProjectsByContact, createProject } from '../../lib/crm/projects';
+import ProjectDetail from './ProjectDetail';
 
 const ContactDetail = ({ contactId, onClose, onUpdate }) => {
     const [contact, setContact] = useState(null);
     const [loading, setLoading] = useState(true);
     const [editing, setEditing] = useState(false);
     const [editData, setEditData] = useState({});
-    const [activeTab, setActiveTab] = useState('info'); // 'info', 'origin', 'interactions'
+    const [activeTab, setActiveTab] = useState('info'); // 'info', 'origin', 'interactions', 'projects'
     const [newNote, setNewNote] = useState('');
     const [addingNote, setAddingNote] = useState(false);
+    const [projects, setProjects] = useState([]);
+    const [selectedProject, setSelectedProject] = useState(null);
+    const [creatingProject, setCreatingProject] = useState(false);
 
     useEffect(() => {
         // Lock body scroll
@@ -55,8 +60,26 @@ const ContactDetail = ({ contactId, onClose, onUpdate }) => {
         if (data) {
             setContact(data);
             setEditData(data);
+            // Cargar proyectos del contacto
+            await loadProjects(contactId);
         }
         setLoading(false);
+    };
+
+    const loadProjects = async (id) => {
+        const { data } = await fetchProjectsByContact(id || contactId);
+        if (data) setProjects(data);
+    };
+
+    const handleCreateProject = async () => {
+        if (!contact?.id) return;
+        setCreatingProject(true);
+        const { data } = await createProject(contact.id, { name: `Proyecto - ${contact.full_name}` });
+        if (data) {
+            await loadProjects();
+            setSelectedProject(data.id);
+        }
+        setCreatingProject(false);
     };
 
     const handleSave = async () => {
@@ -244,7 +267,8 @@ const ContactDetail = ({ contactId, onClose, onUpdate }) => {
                     {[
                         { id: 'info', label: 'Información', icon: User },
                         { id: 'origin', label: 'Origen', icon: Globe },
-                        { id: 'interactions', label: `Interacciones (${contact.interactions?.length || 0})`, icon: MessageSquare }
+                        { id: 'interactions', label: `Interacciones (${contact.interactions?.length || 0})`, icon: MessageSquare },
+                        { id: 'projects', label: `Proyectos (${projects.length})`, icon: Briefcase }
                     ].map(tab => (
                         <button
                             key={tab.id}
@@ -287,8 +311,8 @@ const ContactDetail = ({ contactId, onClose, onUpdate }) => {
                                                     key={type}
                                                     onClick={() => handleTypeChange(type)}
                                                     className={`px-3 py-1 rounded-full text-sm font-medium border transition-all ${contact.contact_type === type
-                                                            ? 'bg-primary/20 text-primary border-primary/40'
-                                                            : 'bg-white/5 text-gray-400 border-white/10 hover:border-white/30'
+                                                        ? 'bg-primary/20 text-primary border-primary/40'
+                                                        : 'bg-white/5 text-gray-400 border-white/10 hover:border-white/30'
                                                         }`}
                                                 >
                                                     {type.charAt(0).toUpperCase() + type.slice(1)}
@@ -548,8 +572,63 @@ const ContactDetail = ({ contactId, onClose, onUpdate }) => {
                             )}
                         </div>
                     )}
+
+                    {activeTab === 'projects' && (
+                        <div className="space-y-4">
+                            {/* Crear Proyecto */}
+                            {contactId !== 'new' && (
+                                <button
+                                    onClick={handleCreateProject}
+                                    disabled={creatingProject}
+                                    className="w-full flex items-center justify-center gap-2 bg-primary/10 hover:bg-primary/20 border border-primary/30 text-primary font-bold py-3 rounded-xl transition-all"
+                                >
+                                    <Plus className="w-4 h-4" />
+                                    {creatingProject ? 'Creando...' : 'Nuevo Proyecto'}
+                                </button>
+                            )}
+
+                            {/* Lista de Proyectos */}
+                            {projects.length === 0 ? (
+                                <p className="text-center text-gray-400 py-8">No hay proyectos asociados</p>
+                            ) : (
+                                <div className="space-y-3">
+                                    {projects.map((project) => (
+                                        <div
+                                            key={project.id}
+                                            onClick={() => setSelectedProject(project.id)}
+                                            className="bg-white/5 border border-white/10 rounded-lg p-4 hover:border-primary/40 cursor-pointer transition-all"
+                                        >
+                                            <div className="flex items-center justify-between mb-2">
+                                                <h4 className="font-bold text-white">{project.name}</h4>
+                                                <span className={`px-2 py-0.5 rounded-full text-xs font-medium border ${project.status === 'propuesta' ? 'bg-gray-500/10 text-gray-400 border-gray-500/20' :
+                                                        project.status === 'aceptado' ? 'bg-green-500/10 text-green-400 border-green-500/20' :
+                                                            project.status === 'en_ejecucion' ? 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20' :
+                                                                'bg-blue-500/10 text-blue-400 border-blue-500/20'
+                                                    }`}>
+                                                    {project.status === 'en_ejecucion' ? 'En Ejecución' : project.status?.charAt(0).toUpperCase() + project.status?.slice(1)}
+                                                </span>
+                                            </div>
+                                            <div className="flex items-center justify-between text-xs text-gray-500">
+                                                <span>{new Date(project.created_at).toLocaleDateString('es-ES')}</span>
+                                                <span>{project.quotes?.length || 0} presupuesto(s)</span>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    )}
                 </div>
             </div>
+
+            {/* Modal ProjectDetail */}
+            {selectedProject && (
+                <ProjectDetail
+                    projectId={selectedProject}
+                    onClose={() => { setSelectedProject(null); loadProjects(); }}
+                    onUpdate={() => { loadProjects(); if (onUpdate) onUpdate(); }}
+                />
+            )}
         </div>
     );
 };
