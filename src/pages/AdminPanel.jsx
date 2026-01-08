@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Save, X, Eye, Edit, Plus, Trash2, Lock, Search, Filter, BookOpen, BarChart3, Copy, Upload, Download, Globe, MapPin, Briefcase, CheckCircle, AlertCircle, ExternalLink, Target, Bold, Quote, List, ListOrdered, CheckSquare, Table, Users, Mail, FileText, Send, Calendar, Tag, MoreHorizontal, Bell } from 'lucide-react';
-import { fetchContacts, deleteContact, getContactStats, getUnreadMessageCount } from '../lib/crm/contacts';
+import { fetchContacts, deleteContact, getContactStats } from '../lib/crm/contacts';
 import BackgroundMesh from '../components/BackgroundMesh';
 import StrategicRoadmap from '../components/StrategicRoadmap';
 import SEOPreview from '../components/SEOPreview';
@@ -142,8 +142,8 @@ const AdminPanel = () => {
     }, [user, activeTab]);
 
     const fetchUnreadCount = async () => {
-        const { count } = await getUnreadMessageCount();
-        setUnreadCount(count || 0);
+        // Ya no usamos contador de mensajes no leídos (ahora son interacciones)
+        setUnreadCount(0);
     };
 
     const fetchSectors = async () => {
