@@ -1,6 +1,33 @@
 import { supabase } from '../supabaseClient';
 
 /**
+ * Obtener todos los proyectos con filtros opcionales
+ */
+export const fetchProjects = async (filters = {}) => {
+    try {
+        let query = supabase
+            .from('projects')
+            .select('*, contacts(id, full_name, company, email)')
+            .order('created_at', { ascending: false });
+
+        if (filters.status && filters.status !== 'all') {
+            query = query.eq('status', filters.status);
+        }
+
+        if (filters.search) {
+            query = query.or(`name.ilike.%${filters.search}%,description.ilike.%${filters.search}%`);
+        }
+
+        const { data, error } = await query;
+        if (error) throw error;
+        return { data, error: null };
+    } catch (error) {
+        console.error('Error fetching projects:', error);
+        return { data: [], error };
+    }
+};
+
+/**
  * Obtener proyectos de un contacto
  */
 export const fetchProjectsByContact = async (contactId) => {
@@ -136,7 +163,11 @@ export const getProjectStats = async () => {
             aceptado: data.filter(p => p.status === 'aceptado').length,
             en_ejecucion: data.filter(p => p.status === 'en_ejecucion').length,
             cerrado: data.filter(p => p.status === 'cerrado').length,
-            cancelado: data.filter(p => p.status === 'cancelado').length
+            cancelado: data.filter(p => p.status === 'cancelado').length,
+            // Compatibilidad con ProjectList.jsx
+            active: data.filter(p => ['propuesta', 'presupuestado', 'aceptado', 'en_ejecucion'].includes(p.status)).length,
+            completed: data.filter(p => p.status === 'cerrado').length,
+            total_budget: 0
         };
 
         return { data: stats, error: null };
