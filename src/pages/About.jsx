@@ -1,11 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { History, Brain, ShieldCheck, ArrowRight, Zap, Quote, Target, Star } from 'lucide-react';
+import { History, Brain, ShieldCheck, ArrowRight, Zap, Quote, Target, Star, Linkedin } from 'lucide-react';
 import BackgroundMesh from '../components/BackgroundMesh';
 import SEO from '../components/SEO';
 import ContactForm from '../components/ContactForm';
+import { supabase } from '../lib/supabaseClient';
 
 const About = () => {
+    const [siteConfig, setSiteConfig] = useState({ linkedin_url: 'https://linkedin.com/in/engorilate' });
+
+    useEffect(() => {
+        const fetchConfig = async () => {
+            try {
+                const { data } = await supabase.from('site_config').select('key, value');
+                if (data) {
+                    const config = {};
+                    data.forEach(item => { config[item.key] = item.value || ''; });
+                    setSiteConfig(prev => ({ ...prev, ...config }));
+                }
+            } catch (e) { console.error(e); }
+        };
+        fetchConfig();
+    }, []);
+
     return (
         <div className="relative pt-64 pb-32 min-h-screen selection:bg-primary selection:text-black">
             <SEO
@@ -16,7 +33,7 @@ const About = () => {
 
             <div className="relative z-10 max-w-7xl mx-auto px-6">
                 {/* HERO SECTION / PROFILE */}
-                <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-center mb-48">
+                <div className="flex flex-col-reverse lg:flex-row gap-12 lg:gap-24 items-center mb-32 lg:mb-48">
                     <div className="lg:w-2/5 relative">
                         {/* Ambient Glow behind photo */}
                         <div className="absolute -inset-10 bg-primary/20 rounded-full blur-[120px] opacity-40 animate-pulse"></div>
@@ -80,7 +97,7 @@ const About = () => {
                 </div>
 
                 {/* THE MANIFESTO / APPROACH */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 mb-48">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-24">
                     <div className="lg:col-span-4">
                         <div className="sticky top-32">
                             <h2 className="font-display text-4xl font-bold text-white mb-8 tracking-tight">
@@ -135,7 +152,7 @@ const About = () => {
                                 <motion.div
                                     key={i}
                                     whileHover={{ y: -5 }}
-                                    className={`bg-[#0A0A0A] border border-white/5 p-8 rounded-[2rem] transition-all duration-500 ${item.color} group`}
+                                    className={`bg-[#141414] border border-white/10 p-8 rounded-[2rem] transition-all duration-500 ${item.color} group`}
                                 >
                                     <item.icon className="w-8 h-8 text-gray-500 group-hover:text-white transition-colors mb-6" />
                                     <h4 className="text-xl font-bold text-white mb-3 tracking-tight">{item.title}</h4>
@@ -147,19 +164,19 @@ const About = () => {
                 </div>
 
                 {/* MISSION SECTION */}
-                <div className="mb-32 relative">
+                <div className="mb-20 relative">
                     <div className="absolute inset-0 bg-primary/5 blur-[100px] rounded-full opacity-20 -z-10"></div>
-                    <div className="max-w-4xl mx-auto bg-white/5 border border-white/10 rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden">
-                        <Star className="w-12 h-12 text-primary mx-auto mb-8 animate-pulse" />
-                        <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-8 tracking-tight italic">Mi Misión</h2>
-                        <p className="text-2xl md:text-3xl text-gray-300 font-light leading-relaxed italic">
-                            "Que dejes de ser el bombero de tu propio negocio. Mi misión es que recuperes tus tardes y que tu empresa funcione por fin como un reloj, para que vuelvas a mandar tú sobre tu tiempo y no al revés."
+                    <div className="max-w-4xl mx-auto bg-[#141414] border border-white/15 rounded-[3rem] p-10 md:p-16 text-center relative overflow-hidden">
+                        <Star className="w-10 h-10 text-primary mx-auto mb-6 animate-pulse" />
+                        <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-6 tracking-tight italic">Mi Misión</h2>
+                        <p className="text-xl md:text-2xl text-gray-300 font-light leading-relaxed italic">
+                            "Que dejes de ser el bombero de tu propio negocio. Mi misión es que recuperes tus tardes y que tu empresa funcione por fin como un reloj."
                         </p>
                     </div>
                 </div>
 
                 {/* VALUES SECTION */}
-                <div className="mb-48">
+                <div className="mb-24">
                     <div className="text-center mb-16">
                         <h2 className="font-display text-4xl font-bold text-white tracking-tight">Mis Valores</h2>
                     </div>
@@ -181,7 +198,7 @@ const About = () => {
                                 icon: Zap
                             }
                         ].map((val, i) => (
-                            <div key={i} className="bg-white/5 border border-white/10 p-8 rounded-3xl text-center hover:border-primary/30 transition-colors">
+                            <div key={i} className="bg-[#141414] border border-white/15 p-8 rounded-3xl text-center hover:border-primary/30 transition-colors">
                                 <val.icon className="w-10 h-10 text-primary mx-auto mb-6" />
                                 <h3 className="text-xl font-bold text-white mb-4">{val.title}</h3>
                                 <p className="text-gray-400 font-light italic text-sm leading-relaxed">{val.text}</p>
@@ -216,9 +233,18 @@ const About = () => {
                             />
                         </div>
 
-                        <div className="mt-12 flex flex-col items-center gap-2">
-                            <span className="text-sm text-gray-600 font-medium">Rafael Alcalde Molina</span>
+                        <div className="mt-10 flex flex-col items-center gap-3">
+                            <span className="text-sm text-gray-500 font-medium">Rafael Alcalde Molina</span>
                             <span className="text-[10px] uppercase tracking-[4px] text-primary font-bold">Economista & Business Controller</span>
+                            <a
+                                href={siteConfig.linkedin_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-2 mt-2 px-4 py-2 rounded-full bg-[#0077B5]/10 border border-[#0077B5]/30 hover:bg-[#0077B5]/20 transition-all group"
+                            >
+                                <Linkedin className="w-4 h-4 text-[#0077B5]" />
+                                <span className="text-xs text-[#0077B5] font-medium group-hover:underline">Conóceme en LinkedIn</span>
+                            </a>
                         </div>
                     </div>
                 </motion.div>
