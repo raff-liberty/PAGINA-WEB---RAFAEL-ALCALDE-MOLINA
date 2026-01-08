@@ -29,37 +29,7 @@ import ContactForm from '../components/ContactForm';
 import { supabase } from '../lib/supabaseClient';
 
 const Services = () => {
-    const [miniForm, setMiniForm] = React.useState({ name: '', email: '', whatsapp: '', privacy: false });
-    const [loading, setLoading] = React.useState(false);
-    const [submitted, setSubmitted] = React.useState(false);
 
-    const handleMiniSubmit = async (e) => {
-        e.preventDefault();
-        if (!miniForm.email || !miniForm.privacy) return;
-        setLoading(true);
-        try {
-            const { error } = await supabase
-                .from('contacts')
-                .upsert([{
-                    email: miniForm.email,
-                    name: miniForm.name,
-                    phone: miniForm.whatsapp,
-                    source: 'Services Audit Form',
-                    last_contact_at: new Date().toISOString()
-                }], {
-                    onConflict: 'email'
-                });
-
-            if (error) throw error;
-            setSubmitted(true);
-            setMiniForm({ name: '', email: '', whatsapp: '', privacy: false });
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Error al enviar. Inténtalo por WhatsApp.');
-        } finally {
-            setLoading(false);
-        }
-    };
 
     const [activeService, setActiveService] = React.useState(0);
     const [direction, setDirection] = React.useState(0);
@@ -491,81 +461,7 @@ const Services = () => {
 
                             <h4 className="relative z-10 text-white font-black mb-6 uppercase italic tracking-widest text-xs opacity-50 text-center">Empieza el cambio hoy</h4>
 
-                            <AnimatePresence mode="wait">
-                                {submitted ? (
-                                    <motion.div
-                                        initial={{ opacity: 0, scale: 0.9 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        className="py-12 text-center"
-                                    >
-                                        <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4 text-primary">
-                                            <CheckCircle2 className="w-8 h-8" />
-                                        </div>
-                                        <h4 className="text-white font-bold text-xl mb-2">¡Solicitud Enviada!</h4>
-                                        <p className="text-gray-400 text-sm italic">Te contactaré por WhatsApp en breve.</p>
-                                    </motion.div>
-                                ) : (
-                                    <form className="space-y-3 mb-10" onSubmit={handleMiniSubmit}>
-                                        <div>
-                                            <input
-                                                type="text"
-                                                required
-                                                placeholder="Nombre o Negocio"
-                                                value={miniForm.name}
-                                                onChange={(e) => setMiniForm({ ...miniForm, name: e.target.value })}
-                                                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-primary/50 transition-colors placeholder:text-gray-500"
-                                            />
-                                        </div>
-                                        <div>
-                                            <input
-                                                type="email"
-                                                required
-                                                placeholder="Tu Email"
-                                                value={miniForm.email}
-                                                onChange={(e) => setMiniForm({ ...miniForm, email: e.target.value })}
-                                                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-primary/50 transition-colors placeholder:text-gray-500"
-                                            />
-                                        </div>
-                                        <div className="relative">
-                                            <input
-                                                type="tel"
-                                                required
-                                                placeholder="WhatsApp (611 469 469)"
-                                                value={miniForm.whatsapp}
-                                                onChange={(e) => setMiniForm({ ...miniForm, whatsapp: e.target.value })}
-                                                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-primary/50 transition-colors placeholder:text-gray-500"
-                                            />
-                                            <MessageSquare className="absolute right-4 top-3.5 w-4 h-4 text-primary/40" />
-                                        </div>
-                                        <div className="flex items-start gap-3 mt-4 mb-2 px-1">
-                                            <div className="flex items-center h-5">
-                                                <input
-                                                    id="privacy-mini"
-                                                    name="privacy-mini"
-                                                    type="checkbox"
-                                                    required
-                                                    checked={miniForm.privacy}
-                                                    onChange={(e) => setMiniForm({ ...miniForm, privacy: e.target.checked })}
-                                                    className="w-4 h-4 rounded border-white/20 bg-white/5 text-primary focus:ring-primary focus:ring-offset-0 transition-all cursor-pointer"
-                                                />
-                                            </div>
-                                            <div className="text-xs">
-                                                <label htmlFor="privacy-mini" className="text-gray-400 font-light italic cursor-pointer">
-                                                    Acepto la <Link to="/privacidad" className="text-primary hover:underline">política de privacidad</Link> y el tratamiento de mis datos.
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <button
-                                            type="submit"
-                                            disabled={loading || !miniForm.privacy}
-                                            className="w-full bg-primary text-black font-black py-4 rounded-xl hover:scale-[1.02] transition-transform shadow-[0_0_20px_rgba(110,231,183,0.4)] disabled:opacity-50 disabled:cursor-not-allowed mt-2"
-                                        >
-                                            {loading ? 'ENVIANDO...' : 'PEDIR AUDITORÍA RÁPIDA'}
-                                        </button>
-                                        <p className="text-[10px] text-center text-gray-500 italic opacity-60">Prometo cero spam. Solo soluciones.</p>
-                                    </form>
-                                )}
-                            </AnimatePresence>
+                            <ContactForm source="Services Audit Form" />
 
                             <div className="mt-auto border-t border-white/5 pt-8">
                                 <p className="text-center text-[10px] uppercase tracking-widest text-gray-500 mb-6 font-bold">O sígueme en la red</p>
