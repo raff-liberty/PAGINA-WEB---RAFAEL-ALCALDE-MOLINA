@@ -2,6 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Send, CheckCircle2 } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
+import { processFormSubmission } from '../lib/crm/contacts';
+
+/**
+ * Captura automática de datos de origen
+ */
+const captureOriginData = () => {
+    const params = new URLSearchParams(window.location.search);
+    return {
+        entry_channel: 'web_form',
+        entry_url: window.location.href,
+        utm_source: params.get('utm_source') || null,
+        utm_medium: params.get('utm_medium') || null,
+        utm_campaign: params.get('utm_campaign') || null
+    };
+};
 
 const ContactForm = ({ className = "", source = "Contact Page" }) => {
     const [formData, setFormData] = useState({
@@ -49,23 +64,20 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
         setLoading(true);
 
         try {
-            // 1. SAVE TO SUPABASE FIRST (upsert contact)
-            const { data: contact, error: contactError } = await supabase
-                .from('contacts')
-                .upsert([{
-                    email: formData.email,
-                    full_name: formData.name,
-                    phone: formData.phone,
-                    message: formData.message,
-                    service_interest: formData.service,
-                    source: source,
-                    status: 'lead'
-                }], {
-                    onConflict: 'email',
-                    ignoreDuplicates: false
-                })
-                .select()
-                .single();
+            // Capturar datos de origen automáticamente
+            const originData = captureOriginData();
+
+            // Procesar envío del formulario (gestiona duplicados automáticamente)
+            const { data: contact, error: contactError } = await processFormSubmission({
+                email: formData.email,
+                full_name: formData.name,
+                phone: formData.phone,
+                company: formData.company,
+                message: formData.message,
+                service_interest: formData.service,
+                source: source,
+                ...originData
+            });
 
             if (contactError) {
                 console.error('Contact save error:', contactError);
@@ -76,7 +88,7 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
                 throw new Error('No se pudo guardar el contacto. Inténtalo de nuevo.');
             }
 
-            // 2. SEND TO N8N (notification)
+            // Enviar notificación a n8n si está configurado
             if (siteConfig?.n8n_webhook_url) {
                 await fetch(siteConfig.n8n_webhook_url, {
                     method: 'POST',
@@ -91,7 +103,12 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
                         message: formData.message,
                         source: source,
                         submittedAt: new Date().toISOString(),
-                        adminEmail: siteConfig?.contact_email
+                        adminEmail: siteConfig?.contact_email,
+                        // Datos de origen
+                        entry_url: originData.entry_url,
+                        utm_source: originData.utm_source,
+                        utm_medium: originData.utm_medium,
+                        utm_campaign: originData.utm_campaign
                     })
                 });
             } else {
