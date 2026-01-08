@@ -1,6 +1,13 @@
 import { supabase } from '../supabaseClient';
 import { changeProjectStatus } from './projects';
-import { changeContactType } from './contacts';
+
+// Función local para evitar dependencia circular con contacts.js
+const updateContactType = async (contactId, newType) => {
+    return supabase
+        .from('contacts')
+        .update({ contact_type: newType })
+        .eq('id', contactId);
+};
 
 /**
  * Obtener presupuestos de un proyecto
@@ -177,7 +184,7 @@ export const acceptQuote = async (quoteId) => {
 
         // Actualizar contacto a "cliente"
         if (quote.project.contact_id) {
-            await changeContactType(quote.project.contact_id, 'cliente');
+            await updateContactType(quote.project.contact_id, 'cliente');
         }
 
         return { data: quote, error: null };
