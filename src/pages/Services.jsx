@@ -26,6 +26,7 @@ import { Link } from 'react-router-dom';
 import BackgroundMesh from '../components/BackgroundMesh';
 import SEO from '../components/SEO';
 import ContactForm from '../components/ContactForm';
+import DiagnosisCTA from '../components/diagnosis/DiagnosisCTA';
 import { supabase } from '../lib/supabaseClient';
 
 const Services = () => {
@@ -419,6 +420,7 @@ const Services = () => {
                 </section>
 
                 {/* INFRASTRUCTURE SECTION */}
+                <DiagnosisCTA className="mb-20" />
                 <section className="mb-16 bg-[#151515] border border-white/10 rounded-[3rem] p-8 md:p-12 relative overflow-hidden shadow-2xl">
                     <div className="absolute top-0 right-0 w-1/3 h-full bg-primary/5 blur-[120px] rounded-full"></div>
 

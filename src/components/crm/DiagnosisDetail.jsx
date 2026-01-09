@@ -16,6 +16,14 @@ const DiagnosisDetail = ({ diagnosis, onClose }) => {
 
     const levelData = getChaosLevelData(diagnosis.chaos_level);
 
+    React.useEffect(() => {
+        const handleEsc = (e) => {
+            if (e.key === 'Escape') onClose();
+        };
+        window.addEventListener('keydown', handleEsc);
+        return () => window.removeEventListener('keydown', handleEsc);
+    }, [onClose]);
+
     return (
         <motion.div
             initial={{ opacity: 0, x: 20 }}

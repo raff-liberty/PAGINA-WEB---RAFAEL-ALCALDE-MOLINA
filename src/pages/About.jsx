@@ -4,6 +4,7 @@ import { History, Brain, ShieldCheck, ArrowRight, Zap, Quote, Target, Star, Link
 import BackgroundMesh from '../components/BackgroundMesh';
 import SEO from '../components/SEO';
 import ContactForm from '../components/ContactForm';
+import DiagnosisCTA from '../components/diagnosis/DiagnosisCTA';
 import { supabase } from '../lib/supabaseClient';
 
 const About = () => {
@@ -207,6 +208,7 @@ const About = () => {
                     </div>
                 </div>
 
+                <DiagnosisCTA className="mb-20" />
                 {/* FINAL CTA BOX */}
                 <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
@@ -225,6 +227,7 @@ const About = () => {
                         <p className="text-xl text-gray-400 mb-12 font-light italic">
                             Si buscas una conversación honesta sobre eficiencia y resultados sin atajos mágicos, rellena este formulario y hablemos.
                         </p>
+
 
                         <div className="text-left">
                             <ContactForm

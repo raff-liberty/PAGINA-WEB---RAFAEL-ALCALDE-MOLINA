@@ -48,6 +48,11 @@ const SectorLocationPage = () => {
                     .single();
 
                 if (contentData) {
+                    // Check if landing is active
+                    if (contentData.is_active === false) {
+                        setLoading(false);
+                        return; // Will trigger 404 redirect below
+                    }
                     setPageContent(contentData);
                 } else {
                     // Fallback content strategy
@@ -78,9 +83,9 @@ const SectorLocationPage = () => {
         fetchData();
     }, [sectorSlug, locationSlug]);
 
-    // Redirect ONLY if core data is missing
-    if (!loading && (!sector || !location)) {
-        return <Navigate to="/sectores" replace />;
+    // Redirect if core data is missing OR if landing is inactive
+    if (!loading && (!sector || !location || !pageContent)) {
+        return <Navigate to="/404" replace />;
     }
 
     // Build schema and SEO props

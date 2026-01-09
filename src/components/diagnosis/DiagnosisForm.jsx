@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { diagnosisQuestions } from '../../data/diagnosisQuestions';
 import { submitDiagnosis } from '../../lib/diagnoses';
 import { Check, ArrowRight, Loader2, AlertCircle } from 'lucide-react';
+import { analytics } from '../../lib/analytics';
 
 const DiagnosisForm = () => {
     const [step, setStep] = useState(1); // Start directly at common questions
@@ -12,6 +13,18 @@ const DiagnosisForm = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
     const [contactInfo, setContactInfo] = useState({ full_name: '', email: '', phone: '' });
+
+    useEffect(() => {
+        if (step === 1 && currentQuestionIdx === 0) {
+            analytics.trackEvent('diagnosis_start');
+        }
+    }, []);
+
+    useEffect(() => {
+        if (step === 4) {
+            analytics.trackEvent('diagnosis_leads_view');
+        }
+    }, [step]);
 
     const currentQuestions =
         step === 1 ? diagnosisQuestions.common :
@@ -39,6 +52,7 @@ const DiagnosisForm = () => {
     };
 
     const handleModuleComplete = () => {
+        analytics.trackEvent('diagnosis_module_complete', { module: step });
         setCurrentQuestionIdx(0);
         setStep(prev => prev + 1);
     };
@@ -71,6 +85,7 @@ const DiagnosisForm = () => {
             setError('Hubo un problema al procesar tu diagnóstico. Por favor, inténtalo de nuevo.');
             setIsSubmitting(false);
         } else {
+            analytics.trackEvent('diagnosis_complete', { branch });
             setStep(5); // Show result/confirmation
             setIsSubmitting(false);
         }

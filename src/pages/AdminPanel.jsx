@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Save, X, Eye, Edit, Plus, Trash2, Lock, Search, Filter, BookOpen, BarChart3, Copy, Upload, Download, Globe, MapPin, Briefcase, CheckCircle, AlertCircle, ExternalLink, Target, Bold, Quote, List, ListOrdered, CheckSquare, Table, Users, Mail, FileText, Send, Calendar, Tag, MoreHorizontal, Bell, ClipboardList } from 'lucide-react';
+import { Save, X, Eye, Edit, Plus, Trash2, Lock, Search, Filter, BookOpen, BarChart3, Copy, Upload, Download, Globe, MapPin, Briefcase, CheckCircle, AlertCircle, ExternalLink, Target, Bold, Quote, List, ListOrdered, CheckSquare, Table, Users, User, Mail, FileText, Send, Calendar, Tag, MoreHorizontal, Bell, ClipboardList } from 'lucide-react';
 import { fetchContacts, deleteContact, getContactStats } from '../lib/crm/contacts';
 import { fetchDiagnoses } from '../lib/diagnoses';
 import BackgroundMesh from '../components/BackgroundMesh';
@@ -26,8 +26,9 @@ const AdminPanel = () => {
         { id: 'landings', label: 'Landings SEO', icon: Globe },
         { id: 'sectors', label: 'Sectores', icon: Briefcase },
         { id: 'locations', label: 'Localizaciones', icon: MapPin },
+        { id: 'analytics', label: 'Analíticas', icon: BarChart3 },
         { id: 'guidelines', label: 'Línea Editorial', icon: BookOpen },
-        { id: 'stats', label: 'Estadísticas', icon: BarChart3 },
+        { id: 'stats', label: 'Estadísticas', icon: ClipboardList },
         { id: 'config', label: 'Configuración', icon: Save },
     ];
 
@@ -83,6 +84,33 @@ const AdminPanel = () => {
     // Diagnosis State
     const [diagnoses, setDiagnoses] = useState([]);
     const [selectedDiagnosis, setSelectedDiagnosis] = useState(null);
+
+    // Analytics State
+    const [analyticsData, setAnalyticsData] = useState({
+        summary: { sessions: 0, visitors: 0, views: 0, realTime: 0 },
+        topPages: [],
+        devices: [],
+        browsers: [],
+        countries: [],
+        cities: [],
+        events: [],
+        chartData: []
+    });
+    const [analyticsPeriod, setAnalyticsPeriod] = useState(7); // días
+    const [analyticsFilters, setAnalyticsFilters] = useState({
+        path: 'all',
+        device: 'all',
+        country: 'all',
+        region: 'all',
+        city: 'all'
+    });
+    const [filterOptions, setFilterOptions] = useState({
+        paths: [],
+        countries: [],
+        regions: [],
+        cities: [],
+        devices: []
+    });
 
     // Landing View State
     const [landingView, setLandingView] = useState('active'); // 'active' or 'explorer'
@@ -152,8 +180,161 @@ const AdminPanel = () => {
             if (activeTab === 'diagnoses') {
                 getDiagnoses();
             }
+            if (activeTab === 'analytics') {
+                fetchAnalytics();
+            }
         }
-    }, [user, activeTab]);
+    }, [user, activeTab, analyticsPeriod, analyticsFilters]);
+
+    const fetchAnalytics = async () => {
+        setLoading(true);
+        try {
+            const startDate = new Date();
+            startDate.setDate(startDate.getDate() - analyticsPeriod);
+            const startDateISO = startDate.toISOString();
+
+            // --- 0. PRE-FETCH FILTER OPTIONS (Once or periodically) ---
+            const [allPathsRes, allCountriesRes] = await Promise.all([
+                supabase.from('analytics_page_views').select('path').limit(150),
+                supabase.from('analytics_sessions').select('country, region, city, device').limit(150)
+            ]);
+
+            if (allPathsRes.error) console.error('Error pre-fetching paths:', allPathsRes.error);
+            if (allCountriesRes.error) console.error('Error pre-fetching geo data:', allCountriesRes.error);
+
+            const uniquePaths = [...new Set(allPathsRes.data?.map(p => p.path) || [])].filter(Boolean);
+            const uniqueCountries = [...new Set(allCountriesRes.data?.map(s => s.country) || [])].filter(Boolean);
+            const uniqueRegions = [...new Set(allCountriesRes.data?.map(s => s.region) || [])].filter(Boolean);
+            const uniqueCities = [...new Set(allCountriesRes.data?.map(s => s.city) || [])].filter(Boolean);
+            const uniqueDevices = [...new Set(allCountriesRes.data?.map(s => s.device) || [])].filter(Boolean);
+
+            setFilterOptions({
+                paths: uniquePaths,
+                countries: uniqueCountries,
+                regions: uniqueRegions,
+                cities: uniqueCities,
+                devices: uniqueDevices
+            });
+
+            // --- 1. CORE FETCHING WITH FILTERS ---
+            let sessionQuery = supabase.from('analytics_sessions').select('*').gte('created_at', startDateISO);
+            let viewsQuery = supabase.from('analytics_page_views').select('*, analytics_sessions(*)').gte('created_at', startDateISO);
+            let eventsQuery = supabase.from('analytics_events').select('*, analytics_sessions(*)').gte('created_at', startDateISO);
+
+            // Apply Filters to Session Query
+            if (analyticsFilters.device !== 'all') sessionQuery = sessionQuery.eq('device', analyticsFilters.device);
+            if (analyticsFilters.country !== 'all') sessionQuery = sessionQuery.eq('country', analyticsFilters.country);
+            if (analyticsFilters.region !== 'all') sessionQuery = sessionQuery.eq('region', analyticsFilters.region);
+            if (analyticsFilters.city !== 'all') sessionQuery = sessionQuery.eq('city', analyticsFilters.city);
+
+            // If path filter is on, we first need session IDs that visited that path
+            let sessionIdsForPath = null;
+            if (analyticsFilters.path !== 'all') {
+                const { data: pathSessions, error: pathErr } = await supabase
+                    .from('analytics_page_views')
+                    .select('session_id')
+                    .eq('path', analyticsFilters.path)
+                    .gte('created_at', startDateISO);
+
+                if (pathErr) console.error('Error fetching path sessions:', pathErr);
+
+                sessionIdsForPath = [...new Set(pathSessions?.map(ps => ps.session_id) || [])];
+                sessionQuery = sessionQuery.in('id', sessionIdsForPath);
+            }
+
+            const { data: sessions, error: sErr } = await sessionQuery;
+            if (sErr) {
+                console.error('Session query error:', sErr);
+                setAnalyticsData(prev => ({ ...prev, summary: { ...prev.summary, sessions: 0, error: sErr.message } }));
+            }
+            const currentSessionIds = sessions?.map(s => s.id) || [];
+
+            // Apply session filter to views and events
+            if (currentSessionIds.length > 0) {
+                viewsQuery = viewsQuery.in('session_id', currentSessionIds);
+                eventsQuery = eventsQuery.in('session_id', currentSessionIds);
+            } else if (analyticsFilters.device !== 'all' || analyticsFilters.country !== 'all' || analyticsFilters.path !== 'all') {
+                // If filters are active but no sessions found, views and events should be empty
+                viewsQuery = viewsQuery.in('session_id', ['none']);
+                eventsQuery = eventsQuery.in('session_id', ['none']);
+            }
+
+            const { data: pageViews } = await viewsQuery;
+            const { data: eventsData } = await eventsQuery;
+
+            // 1.1 Summary Calculation
+            const summary = {
+                sessions: sessions?.length || 0,
+                visitors: [...new Set(sessions?.map(s => s.visitor_id))].length,
+                views: pageViews?.length || 0,
+                realTime: sessions?.filter(s => new Date(s.updated_at) > new Date(Date.now() - 5 * 60 * 1000)).length || 0
+            };
+
+            // 1.2 Top Pages Breakdown
+            const pageCounts = {};
+            pageViews?.forEach(pv => {
+                pageCounts[pv.path] = (pageCounts[pv.path] || 0) + 1;
+            });
+            const topPages = Object.entries(pageCounts)
+                .map(([path, count]) => ({ path, count }))
+                .sort((a, b) => b.count - a.count)
+                .slice(0, 15);
+
+            // 1.3 Geo Breakdown
+            const countryCounts = {};
+            const cityCounts = {};
+            sessions?.forEach(s => {
+                if (s.country) countryCounts[s.country] = (countryCounts[s.country] || 0) + 1;
+                if (s.city) cityCounts[`${s.city}, ${s.country}`] = (cityCounts[`${s.city}, ${s.country}`] || 0) + 1;
+            });
+
+            // 1.4 Device & Browser & Daily
+            const deviceCounts = {};
+            const browserCounts = {};
+            const dailyCounts = {};
+
+            // Initialize all dates in the period with 0
+            for (let i = 0; i <= analyticsPeriod; i++) {
+                const d = new Date();
+                d.setDate(d.getDate() - i);
+                const dateKey = d.toISOString().split('T')[0];
+                dailyCounts[dateKey] = 0;
+            }
+
+            sessions?.forEach(s => {
+                deviceCounts[s.device] = (deviceCounts[s.device] || 0) + 1;
+                browserCounts[s.browser] = (browserCounts[s.browser] || 0) + 1;
+                const day = s.created_at.split('T')[0];
+                if (dailyCounts[day] !== undefined) {
+                    dailyCounts[day] = (dailyCounts[day] || 0) + 1;
+                }
+            });
+
+            // 1.5 Events Breakdown
+            const eventCounts = {};
+            eventsData?.forEach(e => {
+                eventCounts[e.event_name] = (eventCounts[e.event_name] || 0) + 1;
+            });
+
+            setAnalyticsData({
+                summary,
+                topPages,
+                devices: Object.entries(deviceCounts).map(([name, value]) => ({ name, value })),
+                browsers: Object.entries(browserCounts).map(([name, value]) => ({ name, value })),
+                countries: Object.entries(countryCounts).map(([name, value]) => ({ name, value })).sort((a, b) => b.value - a.value).slice(0, 10),
+                cities: Object.entries(cityCounts).map(([name, value]) => ({ name, value })).sort((a, b) => b.value - a.value).slice(0, 10),
+                events: Object.entries(eventCounts).map(([name, count]) => ({ name, count })),
+                chartData: Object.entries(dailyCounts)
+                    .map(([date, count]) => ({ date, count }))
+                    .sort((a, b) => a.date.localeCompare(b.date))
+            });
+
+        } catch (error) {
+            console.error('Error fetching analytics:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const getDiagnoses = async () => {
         setLoading(true);
@@ -394,7 +575,12 @@ const AdminPanel = () => {
         try {
             // Ensure ID is set correctly (sector-location)
             const id = selectedLanding.id || `${selectedLanding.sector_slug}-${selectedLanding.location_slug}`;
-            const dataToSave = { ...selectedLanding, id };
+            // Ensure is_active is set (default to true for new landings)
+            const dataToSave = {
+                ...selectedLanding,
+                id,
+                is_active: selectedLanding.is_active !== undefined ? selectedLanding.is_active : true
+            };
 
             const { error } = await supabase
                 .from('sector_location_content')
@@ -410,6 +596,29 @@ const AdminPanel = () => {
             setSaveStatus('✗ Error al guardar');
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleToggleLandingStatus = async (landingId, currentStatus) => {
+        try {
+            const { error } = await supabase
+                .from('sector_location_content')
+                .update({ is_active: !currentStatus })
+                .eq('id', landingId);
+
+            if (error) throw error;
+
+            // Update local state
+            setLandingPages(prev => prev.map(page =>
+                page.id === landingId ? { ...page, is_active: !currentStatus } : page
+            ));
+
+            if (selectedLanding?.id === landingId) {
+                setSelectedLanding(prev => ({ ...prev, is_active: !currentStatus }));
+            }
+        } catch (error) {
+            console.error('Error toggling landing status:', error);
+            alert('Error al cambiar el estado de la landing');
         }
     };
 
@@ -1183,6 +1392,307 @@ const AdminPanel = () => {
                     </div>
                 )}
 
+                {activeTab === 'analytics' && (
+                    <div className="space-y-6">
+                        {/* Filters & Header */}
+                        <div className="flex flex-col gap-6">
+                            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                                <div className="flex bg-[#222222]/80 backdrop-blur-md rounded-xl p-1 border border-white/10 w-fit">
+                                    {[
+                                        { id: 1, label: 'Hoy' },
+                                        { id: 7, label: '7 días' },
+                                        { id: 30, label: '30 días' },
+                                        { id: 90, label: '90 días' }
+                                    ].map(p => (
+                                        <button
+                                            key={p.id}
+                                            onClick={() => setAnalyticsPeriod(p.id)}
+                                            className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${analyticsPeriod === p.id
+                                                ? 'bg-primary text-gray-900'
+                                                : 'text-gray-400 hover:text-white'}`}
+                                        >
+                                            {p.label}
+                                        </button>
+                                    ))}
+                                </div>
+
+                                <button
+                                    onClick={() => {
+                                        const csvData = [
+                                            ['Fecha', 'Sesiones', 'Vistas', 'Dispositivos', 'Páginas Top'].join(','),
+                                            ...analyticsData.chartData.map(d => `${d.date},${d.count},${analyticsData.summary.views / analyticsData.chartData.length},${analyticsData.devices.map(dev => dev.name).join('|')},${analyticsData.topPages.map(tp => tp.path).slice(0, 3).join('|')}`)
+                                        ].join('\n');
+                                        const blob = new Blob([csvData], { type: 'text/csv' });
+                                        const url = window.URL.createObjectURL(blob);
+                                        const a = document.createElement('a');
+                                        a.href = url;
+                                        a.download = `analiticas-avanzadas-engorilate-${new Date().toISOString().split('T')[0]}.csv`;
+                                        a.click();
+                                    }}
+                                    className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-bold rounded-lg transition-all"
+                                >
+                                    <Download className="w-4 h-4" />
+                                    Exportar Informe Completo
+                                </button>
+                            </div>
+
+                            {/* Advanced Filters Bar */}
+                            <div className="bg-[#222222] border border-white/10 p-4 rounded-xl flex flex-wrap items-center gap-4">
+                                <div className="flex items-center gap-2 text-gray-400 text-xs font-bold uppercase tracking-wider mr-2">
+                                    <Filter className="w-4 h-4 text-primary" /> Filtros:
+                                </div>
+
+                                <div className="flex-1 flex flex-wrap gap-4">
+                                    <div className="flex flex-col gap-1 min-w-[150px]">
+                                        <span className="text-[10px] text-gray-500 font-bold uppercase">Página</span>
+                                        <select
+                                            value={analyticsFilters.path}
+                                            onChange={(e) => setAnalyticsFilters({ ...analyticsFilters, path: e.target.value })}
+                                            className="bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:border-primary outline-none"
+                                        >
+                                            <option value="all">Todas las páginas</option>
+                                            {filterOptions.paths.map(p => <option key={p} value={p}>{p}</option>)}
+                                        </select>
+                                    </div>
+
+                                    <div className="flex flex-col gap-1 min-w-[150px]">
+                                        <span className="text-[10px] text-gray-500 font-bold uppercase">País</span>
+                                        <select
+                                            value={analyticsFilters.country}
+                                            onChange={(e) => setAnalyticsFilters({ ...analyticsFilters, country: e.target.value })}
+                                            className="bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:border-primary outline-none"
+                                        >
+                                            <option value="all">Todos los países</option>
+                                            {filterOptions.countries.map(c => <option key={c} value={c}>{c}</option>)}
+                                        </select>
+                                    </div>
+
+                                    <div className="flex flex-col gap-1 min-w-[150px]">
+                                        <span className="text-[10px] text-gray-500 font-bold uppercase">CC.AA. / Región</span>
+                                        <select
+                                            value={analyticsFilters.region}
+                                            onChange={(e) => setAnalyticsFilters({ ...analyticsFilters, region: e.target.value })}
+                                            className="bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:border-primary outline-none"
+                                        >
+                                            <option value="all">Todas las regiones</option>
+                                            {filterOptions.regions.map(r => <option key={r} value={r}>{r}</option>)}
+                                        </select>
+                                    </div>
+
+                                    <div className="flex flex-col gap-1 min-w-[150px]">
+                                        <span className="text-[10px] text-gray-500 font-bold uppercase">Ciudad</span>
+                                        <select
+                                            value={analyticsFilters.city}
+                                            onChange={(e) => setAnalyticsFilters({ ...analyticsFilters, city: e.target.value })}
+                                            className="bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:border-primary outline-none"
+                                        >
+                                            <option value="all">Todas las ciudades</option>
+                                            {filterOptions.cities.map(c => <option key={c} value={c}>{c}</option>)}
+                                        </select>
+                                    </div>
+
+                                    <div className="flex flex-col gap-1 min-w-[150px]">
+                                        <span className="text-[10px] text-gray-500 font-bold uppercase">Dispositivo</span>
+                                        <select
+                                            value={analyticsFilters.device}
+                                            onChange={(e) => setAnalyticsFilters({ ...analyticsFilters, device: e.target.value })}
+                                            className="bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:border-primary outline-none"
+                                        >
+                                            <option value="all">Todos los dispositivos</option>
+                                            {filterOptions.devices.map(d => <option key={d} value={d}>{d}</option>)}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                {(analyticsFilters.path !== 'all' || analyticsFilters.country !== 'all' || analyticsFilters.device !== 'all') && (
+                                    <button
+                                        onClick={() => setAnalyticsFilters({ path: 'all', country: 'all', device: 'all' })}
+                                        className="text-xs text-red-400 hover:text-red-300 font-bold underline px-2"
+                                    >
+                                        Limpiar filtros
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Summary Cards */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            {[
+                                { label: 'En Tiempo Real', value: analyticsData.summary.realTime, icon: Users, color: 'text-green-400', sub: 'Últimos 5 min' },
+                                { label: 'Visitantes Únicos', value: analyticsData.summary.visitors, icon: User, color: 'text-primary' },
+                                { label: 'Sesiones Totales', value: analyticsData.summary.sessions, icon: Target, color: 'text-blue-400' },
+                                { label: 'Páginas Vistas', value: analyticsData.summary.views, icon: Eye, color: 'text-purple-400' }
+                            ].map((card, i) => (
+                                <div key={i} className="bg-[#222222] border border-white/20 p-6 rounded-2xl shadow-xl">
+                                    <div className="flex items-center justify-between mb-2">
+                                        <card.icon className={`w-5 h-5 ${card.color}`} />
+                                        <span className="text-[10px] font-black uppercase tracking-widest text-gray-500">{card.label}</span>
+                                    </div>
+                                    <div className={`text-3xl font-black ${card.color}`}>{card.value}</div>
+                                    {card.sub && <div className="text-[10px] text-gray-500 mt-1">{card.sub}</div>}
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Charts Area */}
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            {/* Main Traffic Chart */}
+                            <div className="lg:col-span-2 bg-[#222222] border border-white/20 p-8 rounded-2xl shadow-xl">
+                                <h3 className="text-white font-bold mb-8 flex items-center gap-2">
+                                    <BarChart3 className="w-5 h-5 text-primary" /> Evolución de Tráfico (Sesiones)
+                                </h3>
+                                <div className="h-48 flex items-end justify-between gap-1">
+                                    {analyticsData.chartData.length > 0 ? (
+                                        analyticsData.chartData.map((d, i) => {
+                                            const max = Math.max(...analyticsData.chartData.map(cd => cd.count)) || 1;
+                                            const height = (d.count / max) * 100;
+                                            return (
+                                                <div key={i} className="flex-1 flex flex-col items-center gap-2 group relative">
+                                                    <div
+                                                        style={{ height: `${height}%` }}
+                                                        className="w-full bg-primary/40 group-hover:bg-primary transition-all rounded-t-sm min-h-[4px]"
+                                                    ></div>
+                                                    <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-white text-black text-[8px] font-bold px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+                                                        {d.date}: {d.count}
+                                                    </div>
+                                                </div>
+                                            );
+                                        })
+                                    ) : (
+                                        <div className="flex-1 flex items-center justify-center text-gray-600 italic text-sm">Sin datos suficientes</div>
+                                    )}
+                                </div>
+                                <div className="flex justify-between mt-4 text-[9px] font-bold text-gray-500 uppercase">
+                                    <span>{analyticsData.chartData[0]?.date || ''}</span>
+                                    <span>{analyticsData.chartData[analyticsData.chartData.length - 1]?.date || ''}</span>
+                                </div>
+                            </div>
+
+                            {/* Device & Events Info */}
+                            <div className="space-y-6">
+                                <div className="bg-[#222222] border border-white/20 p-6 rounded-2xl shadow-xl">
+                                    <h3 className="text-white font-bold mb-4 text-sm flex items-center gap-2">
+                                        <Globe className="w-4 h-4 text-primary" /> Dispositivos
+                                    </h3>
+                                    <div className="space-y-3">
+                                        {analyticsData.devices.map((d, i) => (
+                                            <div key={i} className="space-y-1">
+                                                <div className="flex justify-between text-xs font-bold">
+                                                    <span className="text-gray-400">{d.name}</span>
+                                                    <span className="text-white">{d.value}</span>
+                                                </div>
+                                                <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                                                    <div
+                                                        style={{ width: `${(d.value / (analyticsData.summary.sessions || 1)) * 100}%` }}
+                                                        className="h-full bg-primary"
+                                                    ></div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                                <div className="bg-[#222222] border border-white/20 p-6 rounded-2xl shadow-xl">
+                                    <h3 className="text-white font-bold mb-4 text-sm flex items-center gap-2">
+                                        <Target className="w-4 h-4 text-primary" /> Conversiones
+                                    </h3>
+                                    <div className="space-y-2">
+                                        {analyticsData.events.length > 0 ? analyticsData.events.map((e, i) => (
+                                            <div key={i} className="flex items-center justify-between p-2 bg-white/5 rounded-lg border border-white/5">
+                                                <span className="text-[10px] font-black uppercase text-gray-400">{e.name.replace('_', ' ')}</span>
+                                                <span className="text-primary font-black">{e.count}</span>
+                                            </div>
+                                        )) : (
+                                            <div className="text-gray-600 italic text-[10px] text-center">No se han registrado conversiones con estos filtros</div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Geo & Detailed Tables */}
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            {/* Top Pages Table */}
+                            <div className="bg-[#222222] border border-white/20 rounded-2xl overflow-hidden shadow-xl">
+                                <div className="p-6 border-b border-white/10 flex items-center justify-between bg-white/5">
+                                    <h3 className="text-white font-bold flex items-center gap-2">
+                                        <FileText className="w-5 h-5 text-primary" /> Páginas con más Vistas
+                                    </h3>
+                                </div>
+                                <div className="max-h-[400px] overflow-y-auto">
+                                    <table className="w-full text-left">
+                                        <thead className="sticky top-0 bg-[#222222] z-10">
+                                            <tr className="bg-white/5">
+                                                <th className="px-6 py-3 text-[10px] font-black uppercase tracking-tighter text-gray-400">Página / URL</th>
+                                                <th className="px-6 py-3 text-[10px] font-black uppercase tracking-tighter text-gray-400 text-right">Vistas</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="divide-y divide-white/5">
+                                            {analyticsData.topPages.map((p, i) => (
+                                                <tr key={i} className="hover:bg-white/5 transition-colors group">
+                                                    <td className="px-6 py-3">
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="text-xs font-mono text-gray-300 group-hover:text-primary transition-colors truncate max-w-[200px]">{p.path}</span>
+                                                            <a href={p.path} target="_blank" rel="noreferrer" className="opacity-0 group-hover:opacity-100 transition-opacity">
+                                                                <ExternalLink className="w-3 h-3 text-gray-500 hover:text-white" />
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-6 py-3 text-right">
+                                                        <span className="text-sm font-black text-white">{p.count}</span>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            {/* Geo Analysis */}
+                            <div className="bg-[#222222] border border-white/20 rounded-2xl overflow-hidden shadow-xl">
+                                <div className="p-6 border-b border-white/10 flex items-center justify-between bg-white/5">
+                                    <h3 className="text-white font-bold flex items-center gap-2">
+                                        <MapPin className="w-5 h-5 text-primary" /> Ubicaciones (Países y Ciudades)
+                                    </h3>
+                                </div>
+                                <div className="p-6 grid grid-cols-2 gap-6">
+                                    <div className="space-y-4">
+                                        <h4 className="text-[10px] font-black uppercase text-gray-500 tracking-widest border-b border-white/5 pb-2">Top Países</h4>
+                                        <div className="space-y-3">
+                                            {analyticsData.countries.map((c, i) => (
+                                                <div key={i} className="flex flex-col gap-1">
+                                                    <div className="flex justify-between text-xs font-bold">
+                                                        <span className="text-gray-300">{c.name}</span>
+                                                        <span className="text-white">{c.value}</span>
+                                                    </div>
+                                                    <div className="h-1 bg-white/5 rounded-full overflow-hidden">
+                                                        <div
+                                                            style={{ width: `${(c.value / (analyticsData.summary.sessions || 1)) * 100}%` }}
+                                                            className="h-full bg-primary/60"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            ))}
+                                            {analyticsData.countries.length === 0 && <p className="text-[10px] text-gray-600 italic">No hay datos geográficos</p>}
+                                        </div>
+                                    </div>
+                                    <div className="space-y-4">
+                                        <h4 className="text-[10px] font-black uppercase text-gray-500 tracking-widest border-b border-white/5 pb-2">Top Ciudades</h4>
+                                        <div className="space-y-2">
+                                            {analyticsData.cities.map((c, i) => (
+                                                <div key={i} className="flex justify-between items-center text-xs">
+                                                    <span className="text-gray-400 truncate max-w-[120px]">{c.name}</span>
+                                                    <span className="bg-white/5 px-2 py-0.5 rounded text-[10px] font-black text-white">{c.value}</span>
+                                                </div>
+                                            ))}
+                                            {analyticsData.cities.length === 0 && <p className="text-[10px] text-gray-600 italic">No hay datos de ciudades</p>}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
                 {activeTab === 'locations' && (
                     <div className="space-y-6">
                         <div className="bg-[#222222] border border-white/30 rounded-2xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.9)]">
@@ -1320,12 +1830,22 @@ const AdminPanel = () => {
                         </div>
                         <AnimatePresence>
                             {selectedDiagnosis && (
-                                <div className="fixed inset-y-0 right-0 z-[100] w-full md:w-auto">
-                                    <DiagnosisDetail
-                                        diagnosis={selectedDiagnosis}
-                                        onClose={() => setSelectedDiagnosis(null)}
+                                <>
+                                    {/* Backdrop */}
+                                    <motion.div
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        onClick={() => setSelectedDiagnosis(null)}
+                                        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[90]"
                                     />
-                                </div>
+                                    <div className="fixed inset-y-0 right-0 z-[100] w-full md:w-auto">
+                                        <DiagnosisDetail
+                                            diagnosis={selectedDiagnosis}
+                                            onClose={() => setSelectedDiagnosis(null)}
+                                        />
+                                    </div>
+                                </>
                             )}
                         </AnimatePresence>
                     </div>
@@ -1743,17 +2263,41 @@ const AdminPanel = () => {
                                                 <p className="text-gray-500 text-sm italic text-center py-8">No hay landings publicadas aún</p>
                                             ) : (
                                                 landingPages.map(page => (
-                                                    <button
-                                                        key={page.id}
-                                                        onClick={() => setSelectedLanding(page)}
-                                                        className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-left transition-all ${selectedLanding?.id === page.id ? 'bg-primary text-gray-900 border border-primary shadow-[0_4px_12px_rgba(224,255,0,0.2)]' : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white border border-transparent'}`}
-                                                    >
-                                                        <div>
-                                                            <div className="text-[10px] font-black uppercase tracking-tight opacity-70 mb-0.5">{page.sector_slug}</div>
-                                                            <div className="text-sm font-bold truncate max-w-[120px]">{page.location_slug}</div>
-                                                        </div>
-                                                        <ExternalLink className={`w-3 h-3 ${selectedLanding?.id === page.id ? 'text-gray-900' : 'text-gray-600'}`} />
-                                                    </button>
+                                                    <div key={page.id} className="w-full flex items-center gap-2">
+                                                        <button
+                                                            onClick={() => setSelectedLanding(page)}
+                                                            className={`flex-1 flex items-center justify-between px-4 py-3 rounded-xl text-left transition-all ${selectedLanding?.id === page.id ? 'bg-primary text-gray-900 border border-primary shadow-[0_4px_12px_rgba(224,255,0,0.2)]' : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white border border-transparent'}`}
+                                                        >
+                                                            <div>
+                                                                <div className="text-[10px] font-black uppercase tracking-tight opacity-70 mb-0.5">
+                                                                    {page.sector_slug || page.id.split('-')[0]}
+                                                                </div>
+                                                                <div className="text-sm font-bold truncate max-w-[120px]">
+                                                                    {page.location_slug || page.id.split('-').slice(1).join('-')}
+                                                                </div>
+                                                            </div>
+                                                            <div className="flex items-center gap-2">
+                                                                <span className={`text-[8px] font-black uppercase px-2 py-1 rounded ${page.is_active !== false ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
+                                                                    }`}>
+                                                                    {page.is_active !== false ? 'Activa' : 'Inactiva'}
+                                                                </span>
+                                                                <ExternalLink className={`w-3 h-3 ${selectedLanding?.id === page.id ? 'text-gray-900' : 'text-gray-600'}`} />
+                                                            </div>
+                                                        </button>
+                                                        <button
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                handleToggleLandingStatus(page.id, page.is_active !== false);
+                                                            }}
+                                                            className={`px-3 py-2 rounded-lg text-xs font-bold transition-all ${page.is_active !== false
+                                                                ? 'bg-green-500/20 text-green-400 hover:bg-green-500/30'
+                                                                : 'bg-red-500/20 text-red-400 hover:bg-red-500/30'
+                                                                }`}
+                                                            title={page.is_active !== false ? 'Desactivar' : 'Activar'}
+                                                        >
+                                                            {page.is_active !== false ? 'ON' : 'OFF'}
+                                                        </button>
+                                                    </div>
                                                 ))
                                             )}
                                         </div>

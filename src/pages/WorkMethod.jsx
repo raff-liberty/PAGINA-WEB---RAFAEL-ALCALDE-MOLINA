@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom';
 import BackgroundMesh from '../components/BackgroundMesh';
 import SEO from '../components/SEO';
 import ContactForm from '../components/ContactForm';
+import DiagnosisCTA from '../components/diagnosis/DiagnosisCTA';
 
 const WorkMethod = () => {
     return (
@@ -291,6 +292,7 @@ const WorkMethod = () => {
                 </div>
 
                 {/* FINAL CTA */}
+                <DiagnosisCTA className="mb-20" />
                 <div className="mt-32 max-w-5xl mx-auto">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}

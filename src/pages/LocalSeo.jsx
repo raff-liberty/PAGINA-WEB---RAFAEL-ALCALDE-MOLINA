@@ -4,6 +4,7 @@ import { Search, MapPin, TrendingUp, Target, ArrowRight, Zap, Eye, MousePointer2
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import ContactForm from '../components/ContactForm';
+import DiagnosisCTA from '../components/diagnosis/DiagnosisCTA';
 
 const LocalSeo = () => {
     const pillars = [
@@ -195,6 +196,7 @@ const LocalSeo = () => {
             </section>
 
             {/* FINAL CTA: THE FORM */}
+            <DiagnosisCTA className="mb-20" />
             <section className="px-6 py-16">
                 <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center bg-gradient-to-br from-[#111] to-black border border-white/10 p-8 md:p-16 rounded-[4rem] relative overflow-hidden shadow-2xl">
                     <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 blur-[120px] rounded-full" />

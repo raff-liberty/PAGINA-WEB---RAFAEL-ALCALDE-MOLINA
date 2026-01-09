@@ -2,10 +2,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Sparkles, ArrowRight, ShieldCheck, Zap, Brain } from 'lucide-react';
+import { analytics } from '../../lib/analytics';
 
-const DiagnosisCTA = () => {
+const DiagnosisCTA = ({ className = "" }) => {
     return (
-        <section className="relative py-24 overflow-hidden">
+        <section className={`relative overflow-hidden ${className}`}>
             {/* Background elements */}
             <div className="absolute inset-0 bg-[#0A0A0A]" />
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(110,231,183,0.05)_0%,transparent_70%)]" />
@@ -47,6 +48,7 @@ const DiagnosisCTA = () => {
 
                             <Link
                                 to="/autopsia"
+                                onClick={() => analytics.trackEvent('diagnosis_cta_click')}
                                 className="inline-flex items-center gap-3 bg-primary hover:bg-white text-black font-black px-10 py-5 rounded-xl text-lg transition-all transform hover:scale-105 shadow-[0_0_30px_rgba(110,231,183,0.2)] group/btn"
                             >
                                 OBTIENE TU DIAGNÓSTICO GRATIS

@@ -5,6 +5,7 @@ import { Lightbulb, ArrowRight, MessageSquare, TrendingUp, FileText, Target, Dat
 import BackgroundMesh from '../components/BackgroundMesh';
 import SEO from '../components/SEO';
 import ContactForm from '../components/ContactForm';
+import DiagnosisCTA from '../components/diagnosis/DiagnosisCTA';
 import { ShieldCheck, HelpCircle } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
 
@@ -736,7 +737,8 @@ const Home = () => {
                     </div>
 
                     {/* Integrated Investment & CTA Section - Split Layout */}
-                    <div className="mt-24 mb-12 max-w-6xl mx-auto px-4">
+                    <DiagnosisCTA className="mb-20" />
+                    <div className="mb-12 max-w-6xl mx-auto px-4">
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}

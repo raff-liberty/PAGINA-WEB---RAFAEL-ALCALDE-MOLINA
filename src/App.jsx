@@ -27,15 +27,22 @@ import Diagnosis from './pages/Diagnosis';
 import CookieBanner from './components/CookieBanner';
 import ScrollToTop from './components/ScrollToTop';
 import FloatingChat from './components/FloatingChat';
-import DiagnosisCTA from './components/diagnosis/DiagnosisCTA';
 import { supabase } from './lib/supabaseClient';
 
+import { useAnalytics } from './lib/useAnalytics';
+
 console.log('Supabase Client Initialized:', !!supabase);
+
+const AnalyticsTracker = () => {
+    useAnalytics();
+    return null;
+};
 
 function App() {
     return (
         <AuthProvider>
             <Router>
+                <AnalyticsTracker />
                 <ScrollToTop />
                 <div className="min-h-screen bg-background-dark">
                     <Navbar />
@@ -64,7 +71,6 @@ function App() {
                             <Route path="/:sector/:location" element={<SectorLocationPage />} />
                         </Routes>
                     </main>
-                    <DiagnosisCTAWrapper />
                     <Footer />
                     <CookieBanner />
                     <FloatingChat />
@@ -75,17 +81,6 @@ function App() {
             </Router>
         </AuthProvider>
     );
-}
-
-function DiagnosisCTAWrapper() {
-    const location = useLocation();
-    const hideCTAOn = ['/autopsia', '/admin'];
-
-    if (hideCTAOn.includes(location.pathname)) {
-        return null;
-    }
-
-    return <DiagnosisCTA />;
 }
 
 export default App;

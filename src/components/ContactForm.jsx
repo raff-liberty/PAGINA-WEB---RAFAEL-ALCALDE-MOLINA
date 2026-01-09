@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Send, CheckCircle2 } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
 import { processFormSubmission } from '../lib/crm/contacts';
+import { analytics } from '../lib/analytics';
 
 /**
  * Captura automática de datos de origen
@@ -114,6 +115,13 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
             } else {
                 console.warn('No N8N Webhook configured. Contact saved in Supabase.');
             }
+
+            // Rastrear evento de conversión
+            analytics.trackEvent('form_submission', {
+                source,
+                service: formData.service,
+                path: window.location.pathname
+            });
 
             setSubmitted(true);
         } catch (error) {

@@ -5,7 +5,9 @@ import { Mail, ArrowRight, MessageSquare, Send, Instagram, Linkedin, MapPin, Glo
 import { supabase } from '../lib/supabaseClient';
 import BackgroundMesh from '../components/BackgroundMesh';
 import ContactForm from '../components/ContactForm';
+import DiagnosisCTA from '../components/diagnosis/DiagnosisCTA';
 import SEO from '../components/SEO';
+import { analytics } from '../lib/analytics';
 
 const Contact = () => {
     const [siteConfig, setSiteConfig] = useState({
@@ -31,6 +33,10 @@ const Contact = () => {
         }
     };
 
+    const trackClick = (method) => {
+        analytics.trackEvent('contact_click', { method });
+    };
+
     return (
         <div className="relative pt-24 pb-12 min-h-screen bg-background-dark flex items-center justify-center">
             <SEO
@@ -41,6 +47,7 @@ const Contact = () => {
             <BackgroundMesh />
 
             <div className="relative z-10 w-full max-w-6xl px-6">
+                <DiagnosisCTA className="mb-8" />
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
 
                     {/* LEFT: Compact Form */}
@@ -65,7 +72,13 @@ const Contact = () => {
                             </h3>
 
                             <div className="space-y-4">
-                                <a href={siteConfig.whatsapp_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 p-3 rounded-xl bg-white/5 hover:bg-[#25D366]/20 hover:border-[#25D366]/50 border border-transparent transition-all group">
+                                <a
+                                    href={siteConfig.whatsapp_url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={() => trackClick('whatsapp')}
+                                    className="flex items-center gap-4 p-3 rounded-xl bg-white/5 hover:bg-[#25D366]/20 hover:border-[#25D366]/50 border border-transparent transition-all group"
+                                >
                                     <MessageSquare className="w-5 h-5 text-[#25D366]" />
                                     <div>
                                         <div className="text-white text-sm font-bold group-hover:text-[#25D366] transition-colors">WhatsApp (611 469 469)</div>
@@ -74,7 +87,13 @@ const Contact = () => {
                                     <ArrowRight className="w-4 h-4 text-gray-600 ml-auto group-hover:text-[#25D366] group-hover:translate-x-1 transition-all" />
                                 </a>
 
-                                <a href={siteConfig.instagram_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 p-3 rounded-xl bg-white/5 hover:bg-[#E1306C]/20 hover:border-[#E1306C]/50 border border-transparent transition-all group">
+                                <a
+                                    href={siteConfig.instagram_url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={() => trackClick('instagram')}
+                                    className="flex items-center gap-4 p-3 rounded-xl bg-white/5 hover:bg-[#E1306C]/20 hover:border-[#E1306C]/50 border border-transparent transition-all group"
+                                >
                                     <Instagram className="w-5 h-5 text-[#E1306C]" />
                                     <div>
                                         <div className="text-white text-sm font-bold group-hover:text-[#E1306C] transition-colors">Instagram</div>
@@ -83,7 +102,13 @@ const Contact = () => {
                                     <ArrowRight className="w-4 h-4 text-gray-600 ml-auto group-hover:text-[#E1306C] group-hover:translate-x-1 transition-all" />
                                 </a>
 
-                                <a href={siteConfig.linkedin_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 p-3 rounded-xl bg-white/5 hover:bg-[#0077B5]/20 hover:border-[#0077B5]/50 border border-transparent transition-all group">
+                                <a
+                                    href={siteConfig.linkedin_url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={() => trackClick('linkedin')}
+                                    className="flex items-center gap-4 p-3 rounded-xl bg-white/5 hover:bg-[#0077B5]/20 hover:border-[#0077B5]/50 border border-transparent transition-all group"
+                                >
                                     <Linkedin className="w-5 h-5 text-[#0077B5]" />
                                     <div>
                                         <div className="text-white text-sm font-bold group-hover:text-[#0077B5] transition-colors">LinkedIn</div>
@@ -92,7 +117,11 @@ const Contact = () => {
                                     <ArrowRight className="w-4 h-4 text-gray-600 ml-auto group-hover:text-[#0077B5] group-hover:translate-x-1 transition-all" />
                                 </a>
 
-                                <a href={`mailto:${siteConfig.contact_email}`} className="flex items-center gap-4 p-3 rounded-xl bg-white/5 hover:bg-primary/20 hover:border-primary/50 border border-transparent transition-all group">
+                                <a
+                                    href={`mailto:${siteConfig.contact_email}`}
+                                    onClick={() => trackClick('email')}
+                                    className="flex items-center gap-4 p-3 rounded-xl bg-white/5 hover:bg-primary/20 hover:border-primary/50 border border-transparent transition-all group"
+                                >
                                     <Mail className="w-5 h-5 text-primary" />
                                     <div>
                                         <div className="text-white text-sm font-bold group-hover:text-primary transition-colors">Email</div>
