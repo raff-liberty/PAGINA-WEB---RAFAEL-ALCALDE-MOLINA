@@ -26,7 +26,7 @@ export const sendToN8n = async (diagnosisData) => {
             body: JSON.stringify({
                 ...diagnosisData,
                 timestamp: new Date().toISOString(),
-                source: 'Autopsia Web'
+                source: 'Diagnóstico Web'
             }),
         });
 
@@ -50,7 +50,7 @@ export const submitDiagnosis = async (formData) => {
             email: formData.email,
             phone: formData.phone,
             message: `Diagnóstico completado: Rama ${formData.detected_branch}`,
-            source: 'autopsia_caos',
+            source: 'diagnostico_eficiencia',
             service_interest: 'consultoria_operativa'
         });
 

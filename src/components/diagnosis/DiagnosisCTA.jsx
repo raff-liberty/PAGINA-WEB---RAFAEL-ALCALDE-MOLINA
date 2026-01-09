@@ -47,7 +47,7 @@ const DiagnosisCTA = ({ className = "" }) => {
                             </div>
 
                             <Link
-                                to="/autopsia"
+                                to="/diagnostico"
                                 onClick={() => analytics.trackEvent('diagnosis_cta_click')}
                                 className="inline-flex items-center gap-3 bg-primary hover:bg-white text-black font-black px-10 py-5 rounded-xl text-lg transition-all transform hover:scale-105 shadow-[0_0_30px_rgba(110,231,183,0.2)] group/btn"
                             >

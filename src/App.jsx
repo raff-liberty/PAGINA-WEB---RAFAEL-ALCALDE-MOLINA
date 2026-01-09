@@ -67,7 +67,7 @@ function App() {
                             <Route path="/blog" element={<Blog />} />
                             <Route path="/blog/:slug" element={<BlogPost />} />
                             <Route path="/admin" element={<AdminPanel />} />
-                            <Route path="/autopsia" element={<Diagnosis />} />
+                            <Route path="/diagnostico" element={<Diagnosis />} />
                             <Route path="/:sector/:location" element={<SectorLocationPage />} />
                         </Routes>
                     </main>
