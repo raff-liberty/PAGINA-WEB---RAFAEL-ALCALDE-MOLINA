@@ -10,6 +10,34 @@ const updateContactType = async (contactId, newType) => {
 };
 
 /**
+ * Obtener todos los presupuestos con filtros opcionales
+ */
+export const fetchQuotes = async ({ status } = {}) => {
+    try {
+        let query = supabase
+            .from('quotes')
+            .select(`
+                *,
+                lines:quote_lines(*),
+                project:projects(id, name, contact_id, contact:contacts(full_name))
+            `)
+            .order('created_at', { ascending: false });
+
+        if (status && status !== 'all') {
+            query = query.eq('status', status);
+        }
+
+        const { data, error } = await query;
+
+        if (error) throw error;
+        return { data, error: null };
+    } catch (error) {
+        console.error('Error fetching quotes:', error);
+        return { data: [], error };
+    }
+};
+
+/**
  * Obtener presupuestos de un proyecto
  */
 export const fetchQuotesByProject = async (projectId) => {
@@ -29,6 +57,31 @@ export const fetchQuotesByProject = async (projectId) => {
 };
 
 /**
+ * Obtener presupuestos de un contacto
+ */
+export const fetchQuotesByContact = async (contactId) => {
+    try {
+        // Primero obtenemos los proyectos del contacto para filtrar
+        // O usamos el join si Supabase lo permite directamente
+        const { data, error } = await supabase
+            .from('quotes')
+            .select(`
+                *,
+                lines:quote_lines(*),
+                project:projects!inner(contact_id)
+            `)
+            .eq('project.contact_id', contactId)
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        return { data, error: null };
+    } catch (error) {
+        console.error('Error fetching quotes by contact:', error);
+        return { data: [], error };
+    }
+};
+
+/**
  * Obtener presupuesto por ID con líneas
  */
 export const fetchQuoteById = async (quoteId) => {
@@ -38,7 +91,7 @@ export const fetchQuoteById = async (quoteId) => {
             .select(`
                 *,
                 lines:quote_lines(*),
-                project:projects(id, name, contact_id, contact:contacts(id, full_name, email))
+                project:projects(id, name, contact_id, contact:contacts(id, full_name, email, tax_id, fiscal_address, city, postal_code, country))
             `)
             .eq('id', quoteId)
             .single();

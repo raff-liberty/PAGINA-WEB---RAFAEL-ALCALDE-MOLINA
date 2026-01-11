@@ -24,6 +24,7 @@ import SectorLocationPage from './pages/SectorLocationPage_v2';
 import SectorsDirectory from './pages/SectorsDirectory';
 import AdminPanel from './pages/AdminPanel';
 import Diagnosis from './pages/Diagnosis';
+import ChaosLanding from './pages/ChaosLanding';
 import CookieBanner from './components/CookieBanner';
 import ScrollToTop from './components/ScrollToTop';
 import FloatingChat from './components/FloatingChat';
@@ -68,6 +69,7 @@ function App() {
                             <Route path="/blog/:slug" element={<BlogPost />} />
                             <Route path="/admin" element={<AdminPanel />} />
                             <Route path="/diagnostico" element={<Diagnosis />} />
+                            <Route path="/caos-operativo" element={<ChaosLanding />} />
                             <Route path="/:sector/:location" element={<SectorLocationPage />} />
                         </Routes>
                     </main>

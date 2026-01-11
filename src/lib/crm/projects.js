@@ -86,8 +86,18 @@ export const createProject = async (contactId, projectData) => {
                 contact_id: contactId,
                 name: projectData.name || 'Nuevo Proyecto',
                 description: projectData.description || null,
-                responsible: projectData.responsible || null,
-                status: 'propuesta'
+                service_type: projectData.service_type || null,
+                status: projectData.status || 'propuesta',
+                priority: projectData.priority || 'media',
+                budget: projectData.budget || null,
+                actual_cost: projectData.actual_cost || null,
+                payment_status: projectData.payment_status || 'pendiente',
+                start_date: projectData.start_date || null,
+                end_date: projectData.end_date || null,
+                delivery_date: projectData.delivery_date || null,
+                actual_hours: projectData.actual_hours || null,
+                estimated_hours: projectData.estimated_hours || null,
+                notes: projectData.notes || projectData.responsible || null
             })
             .select()
             .single();

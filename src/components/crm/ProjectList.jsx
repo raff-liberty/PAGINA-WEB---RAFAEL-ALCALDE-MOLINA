@@ -66,38 +66,41 @@ const ProjectList = ({ onSelectProject, onCreateProject }) => {
         <div className="space-y-6">
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+                <div className="bg-[#222222]/60 backdrop-blur-md border border-white/10 rounded-xl p-6">
                     <div className="flex items-center justify-between mb-2">
                         <Briefcase className="w-5 h-5 text-primary" />
                         <span className="text-2xl font-bold text-white">{stats.total}</span>
                     </div>
                     <p className="text-sm text-gray-400">Total Proyectos</p>
                 </div>
-                <div className="bg-blue-500/5 border border-blue-500/20 rounded-xl p-6">
-                    <div className="flex items-center justify-between mb-2">
+                <div className="bg-[#222222]/60 backdrop-blur-md border border-blue-500/20 rounded-xl p-6 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 blur-3xl -mr-12 -mt-12 transition-all group-hover:bg-blue-500/10"></div>
+                    <div className="flex items-center justify-between mb-2 relative z-10">
                         <Clock className="w-5 h-5 text-blue-400" />
                         <span className="text-2xl font-bold text-blue-400">{stats.active}</span>
                     </div>
-                    <p className="text-sm text-gray-400">En Curso</p>
+                    <p className="text-sm text-gray-400 relative z-10">En Curso</p>
                 </div>
-                <div className="bg-green-500/5 border border-green-500/20 rounded-xl p-6">
-                    <div className="flex items-center justify-between mb-2">
+                <div className="bg-[#222222]/60 backdrop-blur-md border border-green-500/20 rounded-xl p-6 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-green-500/5 blur-3xl -mr-12 -mt-12 transition-all group-hover:bg-green-500/10"></div>
+                    <div className="flex items-center justify-between mb-2 relative z-10">
                         <Calendar className="w-5 h-5 text-green-400" />
                         <span className="text-2xl font-bold text-green-400">{stats.completed}</span>
                     </div>
-                    <p className="text-sm text-gray-400">Completados</p>
+                    <p className="text-sm text-gray-400 relative z-10">Completados</p>
                 </div>
-                <div className="bg-purple-500/5 border border-purple-500/20 rounded-xl p-6">
-                    <div className="flex items-center justify-between mb-2">
+                <div className="bg-[#222222]/60 backdrop-blur-md border border-purple-500/20 rounded-xl p-6 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-purple-500/5 blur-3xl -mr-12 -mt-12 transition-all group-hover:bg-purple-500/10"></div>
+                    <div className="flex items-center justify-between mb-2 relative z-10">
                         <DollarSign className="w-5 h-5 text-purple-400" />
                         <span className="text-2xl font-bold text-purple-400">{formatCurrency(stats.total_budget)}</span>
                     </div>
-                    <p className="text-sm text-gray-400">Presupuesto Total</p>
+                    <p className="text-sm text-gray-400 relative z-10">Presupuesto Total</p>
                 </div>
             </div>
 
             {/* Filters */}
-            <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+            <div className="bg-[#222222]/60 backdrop-blur-md border border-white/10 rounded-xl p-6">
                 <div className="flex flex-col md:flex-row gap-4">
                     {/* Search */}
                     <div className="flex-1">
@@ -108,7 +111,7 @@ const ProjectList = ({ onSelectProject, onCreateProject }) => {
                                 placeholder="Buscar proyecto..."
                                 value={filters.search}
                                 onChange={(e) => setFilters({ ...filters, search: e.target.value })}
-                                className="w-full bg-black/30 border border-white/20 rounded-lg pl-10 pr-4 py-2 text-white focus:border-primary focus:outline-none"
+                                className="w-full bg-[#222222]/60 backdrop-blur-md border border-white/20 rounded-lg pl-10 pr-4 py-2 text-white focus:border-primary focus:outline-none"
                             />
                         </div>
                     </div>
@@ -117,7 +120,7 @@ const ProjectList = ({ onSelectProject, onCreateProject }) => {
                     <select
                         value={filters.status}
                         onChange={(e) => setFilters({ ...filters, status: e.target.value })}
-                        className="bg-black/30 border border-white/20 rounded-lg px-4 py-2 text-white focus:border-primary focus:outline-none"
+                        className="bg-[#222222]/60 backdrop-blur-md border border-white/20 rounded-lg px-4 py-2 text-white focus:border-primary focus:outline-none"
                     >
                         <option value="all">Todos los estados</option>
                         <option value="pending">Pendiente</option>
@@ -138,7 +141,7 @@ const ProjectList = ({ onSelectProject, onCreateProject }) => {
             </div>
 
             {/* Projects Table */}
-            <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
+            <div className="bg-[#222222]/60 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden">
                 {loading ? (
                     <div className="flex items-center justify-center py-20">
                         <div className="w-8 h-8 border-2 border-primary/20 border-t-primary rounded-full animate-spin"></div>

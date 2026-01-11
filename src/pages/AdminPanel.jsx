@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Save, X, Eye, Edit, Plus, Trash2, Lock, Search, Filter, BookOpen, BarChart3, Copy, Upload, Download, Globe, MapPin, Briefcase, CheckCircle, AlertCircle, ExternalLink, Target, Bold, Quote, List, ListOrdered, CheckSquare, Table, Users, User, Mail, FileText, Send, Calendar, Tag, MoreHorizontal, Bell, ClipboardList } from 'lucide-react';
+import { Save, X, Eye, Edit, Plus, Trash2, Lock, Search, Filter, BookOpen, BarChart3, Copy, Upload, Download, Globe, MapPin, Briefcase, CheckCircle, AlertCircle, ExternalLink, Target, Bold, Quote, List, ListOrdered, CheckSquare, Table, Users, User, Mail, FileText, Send, Calendar, Tag, MoreHorizontal, Bell, ClipboardList, DollarSign } from 'lucide-react';
 import { fetchContacts, deleteContact, getContactStats } from '../lib/crm/contacts';
 import { fetchDiagnoses } from '../lib/diagnoses';
 import BackgroundMesh from '../components/BackgroundMesh';
@@ -15,14 +15,17 @@ import ContactList from '../components/crm/ContactList';
 import ContactDetail from '../components/crm/ContactDetail';
 import ProjectList from '../components/crm/ProjectList';
 import ProjectDetail from '../components/crm/ProjectDetail';
+import BillingDashboard from '../components/crm/BillingDashboard';
 import DiagnosisList from '../components/crm/DiagnosisList';
 import DiagnosisDetail from '../components/crm/DiagnosisDetail';
+import LandingFileManager from '../components/LandingFileManager';
 
 const AdminPanel = () => {
     const navigationTabs = [
         { id: 'editor', label: 'Blog', icon: Edit },
         { id: 'diagnoses', label: 'Diagnósticos', icon: ClipboardList },
         { id: 'crm', label: 'CRM', icon: Users },
+        { id: 'billing', label: 'Facturación', icon: DollarSign },
         { id: 'landings', label: 'Landings SEO', icon: Globe },
         { id: 'sectors', label: 'Sectores', icon: Briefcase },
         { id: 'locations', label: 'Localizaciones', icon: MapPin },
@@ -55,6 +58,7 @@ const AdminPanel = () => {
         contact_email: '',
         n8n_webhook_url: '',
         n8n_diagnosis_webhook: '',
+        n8n_caos_webhook: '',
         og_image_url: 'https://engorilate.com/og-image.jpg',
         twitter_handle: '@engorilate',
         default_meta_title: 'Engorilate | Destruimos la Burocracia con Automatización Inteligente',
@@ -114,6 +118,7 @@ const AdminPanel = () => {
 
     // Landing View State
     const [landingView, setLandingView] = useState('active'); // 'active' or 'explorer'
+    const [landingTab, setLandingTab] = useState('seo'); // 'seo' or 'files'
 
     // Sectors & Locations state
     const [selectedSector, setSelectedSector] = useState(null);
@@ -1886,7 +1891,10 @@ const AdminPanel = () => {
                                     <ContactDetail
                                         contactId={selectedContact === 'new' ? 'new' : selectedContact.id}
                                         onClose={() => setSelectedContact(null)}
-                                        onUpdate={() => setSelectedContact(null)}
+                                        onUpdate={() => {
+                                            // Trigger refresh of background list if needed, but don't close
+                                            setSelectedContact(selectedContact); // Just to trigger any state sync if necessary, though list handles its own refresh on mount/filters
+                                        }}
                                     />
                                 )}
                             </>
@@ -1903,11 +1911,14 @@ const AdminPanel = () => {
                                     <ProjectDetail
                                         projectId={selectedProject === 'new' ? 'new' : selectedProject.id}
                                         onClose={() => setSelectedProject(null)}
-                                        onUpdate={() => setSelectedProject(null)}
+                                        onUpdate={() => {
+                                            // Keep open but allow background refresh logic if we add it later
+                                        }}
                                     />
                                 )}
                             </>
                         )}
+
 
                         {crmTab === 'templates' && (
                             <div className="bg-[#222222] border border-white/30 rounded-2xl p-12 text-center shadow-[0_8px_32px_rgba(0,0,0,0.9)]">
@@ -1929,6 +1940,10 @@ const AdminPanel = () => {
                             </div>
                         )}
                     </div>
+                )}
+
+                {activeTab === 'billing' && (
+                    <BillingDashboard />
                 )}
 
                 {activeTab === 'config' && (
@@ -2011,6 +2026,18 @@ const AdminPanel = () => {
                                     className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none font-mono text-sm"
                                 />
                                 <p className="text-xs text-gray-500 mt-1">Webhook específico para procesar los Diagnósticos de la Autopsia con IA</p>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-400 mb-2">n8n Caos Operativo Webhook</label>
+                                <input
+                                    type="text"
+                                    value={siteConfig.n8n_caos_webhook}
+                                    onChange={(e) => setSiteConfig({ ...siteConfig, n8n_caos_webhook: e.target.value })}
+                                    placeholder="https://tu-n8n.com/webhook/caos-operativo..."
+                                    className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none font-mono text-sm"
+                                />
+                                <p className="text-xs text-gray-500 mt-1">Webhook específico para la landing "El Caos Operativo Invisible" (descargas de PDF)</p>
                             </div>
 
                             <div>
