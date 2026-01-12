@@ -80,19 +80,14 @@ class Analytics {
         if (ua.indexOf('Safari') !== -1 && ua.indexOf('Chrome') === -1) browser = 'Safari';
         if (ua.indexOf('Edge') !== -1) browser = 'Edge';
 
-        // Intentar obtener geolocalización básica (IP-based)
-        let geo = { country: 'Unknown', city: 'Unknown', region: 'Unknown', region_code: 'Unknown' };
-        try {
-            const geoRes = await fetch('https://ipapi.co/json/').then(r => r.json());
-            if (geoRes && geoRes.country_name) {
-                geo.country = geoRes.country_name;
-                geo.city = geoRes.city || 'Unknown';
-                geo.region = geoRes.region || 'Unknown';
-                geo.region_code = geoRes.region_code || 'Unknown';
-            }
-        } catch (e) {
-            console.warn('Geo tracking blocked or failed:', e);
-        }
+        // OPTIMIZACIÓN CRÍTICA: No bloquear el render inicial con geolocalización
+        // Los datos de geo se cargarán de forma diferida y se actualizarán después
+        const geo = {
+            country: 'Unknown',
+            city: 'Unknown',
+            region: 'Unknown',
+            region_code: 'Unknown'
+        };
 
         return {
             device,
@@ -103,6 +98,37 @@ class Analytics {
             language: navigator.language,
             ...geo
         };
+    }
+
+    /**
+     * Carga geolocalización de forma diferida y actualiza la sesión
+     * Se llama DESPUÉS del render inicial para no bloquear la página
+     */
+    async loadGeoDataLazy() {
+        if (!this.sessionId) return;
+
+        try {
+            // Importar lazy services solo cuando se necesita
+            const { lazyServices } = await import('./lazy-services.js');
+            const geo = await lazyServices.loadIPGeolocation();
+
+            // Actualizar sesión con datos de geolocalización
+            const { error } = await supabase
+                .from('analytics_sessions')
+                .update({
+                    country: geo.country,
+                    city: geo.city,
+                    region: geo.region,
+                    region_code: geo.region_code
+                })
+                .eq('id', this.sessionId);
+
+            if (error) {
+                console.warn('Failed to update session with geo data:', error);
+            }
+        } catch (e) {
+            console.warn('Lazy geo loading failed:', e);
+        }
     }
 
     async trackPageView(path, title = document.title) {
@@ -120,6 +146,13 @@ class Analytics {
 
         if (error) console.error('Error tracking page view:', error);
         this.updateSessionActivity();
+
+        // Cargar geolocalización de forma diferida (no bloquea el render)
+        // Solo se ejecuta en la primera página vista
+        if (!this._geoLoadStarted) {
+            this._geoLoadStarted = true;
+            this.loadGeoDataLazy();
+        }
     }
 
     async trackEvent(eventName, eventData = {}) {

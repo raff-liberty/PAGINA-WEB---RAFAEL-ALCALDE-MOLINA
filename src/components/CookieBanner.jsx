@@ -49,8 +49,9 @@ const CookieBanner = () => {
                                 to="/cookies"
                                 onClick={() => setIsVisible(false)}
                                 className="flex-1 bg-white/5 hover:bg-white/10 text-white font-bold py-2 px-4 rounded-lg border border-white/10 transition-all text-sm text-center"
+                                aria-label="Leer nuestra política de cookies completa"
                             >
-                                Más información
+                                Política de cookies
                             </Link>
                         </div>
                     </div>
