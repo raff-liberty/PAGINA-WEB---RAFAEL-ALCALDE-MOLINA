@@ -59,12 +59,25 @@ const AdminPanel = () => {
         n8n_webhook_url: '',
         n8n_diagnosis_webhook: '',
         n8n_caos_webhook: '',
+        n8n_email_webhook: '',
         og_image_url: 'https://engorilate.com/og-image.jpg',
         twitter_handle: '@engorilate',
         default_meta_title: 'Engorilate | Destruimos la Burocracia con Automatización Inteligente',
         default_meta_description: 'Si tu negocio depende de procesos manuales, estás perdiendo dinero. En Engorilate diseñamos ecosistemas de automatización que trabajan por ti. Recupera tu tiempo ahora.',
         default_keywords: 'automatización de negocios, eficiencia operativa, digitalización pymes, ahorro tiempo murcia, sistemas inteligentes',
         chat_embed_url: ''
+    });
+    const [companyConfig, setCompanyConfig] = useState({
+        company_name: '',
+        tax_id: '',
+        fiscal_address: '',
+        city: '',
+        postal_code: '',
+        country: 'España',
+        bank_account_iban: '',
+        bank_name: '',
+        legal_text: '',
+        payment_terms: ''
     });
     const [searchTerm, setSearchTerm] = useState('');
     const [filterCategory, setFilterCategory] = useState('all');
@@ -174,6 +187,7 @@ const AdminPanel = () => {
         if (user) {
             fetchPosts();
             fetchSiteConfig();
+            fetchCompanyConfig();
             fetchSEOData();
             fetchUnreadCount();
             if (activeTab === 'sectors') {
@@ -627,21 +641,19 @@ const AdminPanel = () => {
         }
     };
 
-    const fetchSiteConfig = async () => {
+    const fetchCompanyConfig = async () => {
         try {
             const { data, error } = await supabase
-                .from('site_config')
-                .select('key, value');
+                .from('company_config')
+                .select('*')
+                .single();
 
-            if (error) throw error;
-
-            const config = {};
-            data?.forEach(item => {
-                config[item.key] = item.value || '';
-            });
-            setSiteConfig(prev => ({ ...prev, ...config }));
+            if (error && error.code !== 'PGRST116') throw error;
+            if (data) {
+                setCompanyConfig(prev => ({ ...prev, ...data }));
+            }
         } catch (error) {
-            console.error('Error fetching site config:', error);
+            console.error('Error fetching company config:', error);
         }
     };
 
@@ -650,6 +662,7 @@ const AdminPanel = () => {
         setSaveStatus('Guardando configuración...');
 
         try {
+            // 1. Save Site Config (key/value)
             const updates = Object.entries(siteConfig).map(([key, value]) => ({
                 key,
                 value,
@@ -664,10 +677,20 @@ const AdminPanel = () => {
                 if (error) throw error;
             }
 
+            // 2. Save Company Config
+            const { error: companyError } = await supabase
+                .from('company_config')
+                .upsert({
+                    ...companyConfig,
+                    updated_at: new Date().toISOString()
+                });
+
+            if (companyError) throw companyError;
+
             setSaveStatus('✓ Configuración guardada correctamente');
             setTimeout(() => setSaveStatus(''), 3000);
         } catch (error) {
-            console.error('Error saving site config:', error);
+            console.error('Error saving config:', error);
             setSaveStatus('✗ Error al guardar configuración');
         } finally {
             setLoading(false);
@@ -2050,6 +2073,109 @@ const AdminPanel = () => {
                                     className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none font-mono text-sm"
                                 />
                                 <p className="text-xs text-gray-500 mt-1">URL pública del chat envevido de n8n</p>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-400 mb-2">n8n Email Webhook (Envío de Presupuestos)</label>
+                                <input
+                                    type="text"
+                                    value={siteConfig.n8n_email_webhook}
+                                    onChange={(e) => setSiteConfig({ ...siteConfig, n8n_email_webhook: e.target.value })}
+                                    placeholder="https://tu-n8n.com/webhook/send-email..."
+                                    className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none font-mono text-sm"
+                                />
+                                <p className="text-xs text-gray-500 mt-1">Webhook de n8n para enviar presupuestos por email con PDF adjunto (Gmail + Resend)</p>
+                            </div>
+
+                            {/* Información Fiscal y de Empresa */}
+                            <div className="mt-8 pt-8 border-t border-white/10">
+                                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                                    <FileText className="w-5 h-5 text-primary" />
+                                    Información Fiscal y de Empresa (PDFs)
+                                </h3>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-400 mb-2">Nombre Comercial / Razón Social</label>
+                                        <input
+                                            type="text"
+                                            value={companyConfig.company_name}
+                                            onChange={(e) => setCompanyConfig({ ...companyConfig, company_name: e.target.value })}
+                                            className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-400 mb-2">NIF / CIF</label>
+                                        <input
+                                            type="text"
+                                            value={companyConfig.tax_id}
+                                            onChange={(e) => setCompanyConfig({ ...companyConfig, tax_id: e.target.value })}
+                                            className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                        />
+                                    </div>
+                                    <div className="md:col-span-2">
+                                        <label className="block text-sm font-medium text-gray-400 mb-2">Dirección Fiscal</label>
+                                        <input
+                                            type="text"
+                                            value={companyConfig.fiscal_address}
+                                            onChange={(e) => setCompanyConfig({ ...companyConfig, fiscal_address: e.target.value })}
+                                            className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-400 mb-2">Ciudad</label>
+                                        <input
+                                            type="text"
+                                            value={companyConfig.city}
+                                            onChange={(e) => setCompanyConfig({ ...companyConfig, city: e.target.value })}
+                                            className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-400 mb-2">Código Postal</label>
+                                        <input
+                                            type="text"
+                                            value={companyConfig.postal_code}
+                                            onChange={(e) => setCompanyConfig({ ...companyConfig, postal_code: e.target.value })}
+                                            className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-400 mb-2">IBAN (Cuenta Bancaria)</label>
+                                        <input
+                                            type="text"
+                                            value={companyConfig.bank_account_iban}
+                                            onChange={(e) => setCompanyConfig({ ...companyConfig, bank_account_iban: e.target.value })}
+                                            className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none font-mono text-sm"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-400 mb-2">Nombre del Banco</label>
+                                        <input
+                                            type="text"
+                                            value={companyConfig.bank_name}
+                                            onChange={(e) => setCompanyConfig({ ...companyConfig, bank_name: e.target.value })}
+                                            className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                        />
+                                    </div>
+                                    <div className="md:col-span-2">
+                                        <label className="block text-sm font-medium text-gray-400 mb-2">Texto Legal / LOPD (Footer PDF)</label>
+                                        <textarea
+                                            value={companyConfig.legal_text}
+                                            onChange={(e) => setCompanyConfig({ ...companyConfig, legal_text: e.target.value })}
+                                            className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none h-24 text-xs"
+                                        />
+                                    </div>
+                                    <div className="md:col-span-2">
+                                        <label className="block text-sm font-medium text-gray-400 mb-2">Condiciones de Pago</label>
+                                        <input
+                                            type="text"
+                                            value={companyConfig.payment_terms}
+                                            onChange={(e) => setCompanyConfig({ ...companyConfig, payment_terms: e.target.value })}
+                                            className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
+                                        />
+                                    </div>
+                                </div>
                             </div>
 
                             {/* SEO Meta Tags Section */}

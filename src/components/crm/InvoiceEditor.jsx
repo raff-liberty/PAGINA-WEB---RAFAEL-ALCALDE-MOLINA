@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { X, ArrowLeft, Save, Plus, Trash2, Send, Lock, FileDown, MessageSquare, Mail, Eye, Edit3, ClipboardList, CheckCircle } from 'lucide-react';
 import { fetchInvoiceById, updateInvoice, addInvoiceLine, updateInvoiceLine, deleteInvoiceLine } from '../../lib/crm/invoices';
-// Note: We'll need to create similar email/PDF services for invoices later
-// import { sendInvoiceEmail, generateInvoicePDF } from '../../lib/emailService';
+import { downloadInvoicePDF } from '../../lib/pdfGenerator';
 
 const InvoiceEditor = ({ invoiceId, onClose, onUpdate }) => {
     const [invoice, setInvoice] = useState(null);
@@ -351,7 +350,10 @@ const InvoiceEditor = ({ invoiceId, onClose, onUpdate }) => {
                                 )}
 
                                 <div className="grid grid-cols-2 gap-3">
-                                    <button className="flex flex-col items-center justify-center gap-2 p-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition-all group">
+                                    <button
+                                        onClick={() => downloadInvoicePDF(invoice)}
+                                        className="flex flex-col items-center justify-center gap-2 p-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition-all group"
+                                    >
                                         <FileDown className="w-5 h-5 text-gray-400 group-hover:text-primary transition-colors" />
                                         <span className="text-[10px] font-black uppercase tracking-tighter text-gray-500 group-hover:text-white">Descargar PDF</span>
                                     </button>

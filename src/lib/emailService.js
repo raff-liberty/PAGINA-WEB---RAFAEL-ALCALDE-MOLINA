@@ -2,39 +2,44 @@ import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import { supabase } from './supabaseClient';
 
 /**
- * Send quote email with PDF attachment
+ * Send quote email with PDF attachment via n8n webhook
  */
 export const sendQuoteEmail = async (quoteData, emailData) => {
     try {
-        const { to, subject, message } = emailData;
+        const { to, subject, message, attachments } = emailData;
 
-        // Retrieve API Key from environment variable
-        const apiKey = import.meta.env.VITE_RESEND_API_KEY;
+        // Get n8n webhook URL from site configuration
+        const { data: config, error: configError } = await supabase
+            .from('site_config')
+            .select('n8n_email_webhook')
+            .single();
 
-        if (!apiKey) {
-            throw new Error('Resend API Key not found. Please add VITE_RESEND_API_KEY to your .env.local');
+        if (configError || !config?.n8n_email_webhook) {
+            throw new Error('n8n Email Webhook no configurado. Ve a Admin Panel → Configuración y añade la URL del webhook de n8n.');
         }
 
-        const response = await fetch('https://api.resend.com/emails', {
+        const N8N_WEBHOOK_URL = config.n8n_email_webhook;
+
+        // Call n8n webhook instead of Resend directly (to avoid CORS)
+        const response = await fetch(N8N_WEBHOOK_URL, {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${apiKey}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                from: 'Engorilate <r.alcalde@engorilate.com>',
-                to: [to],
+                to: to,
                 subject: subject,
                 html: message.replace(/\n/g, '<br>'),
-                attachments: emailData.attachments || []
+                attachments: attachments || []
             })
         });
 
         if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || 'Error al enviar el email');
+            const errorText = await response.text();
+            throw new Error(`Error al enviar email: ${errorText}`);
         }
 
         const data = await response.json();
@@ -287,18 +292,49 @@ export const generateQuotePDF = async (quote) => {
             doc.text(splitNotes, 20, finalY + 17);
         }
 
-        // Return base64 for email
+        // Return base64 for email AND doc object for direct download
         const pdfOutput = doc.output('datauristring');
         return {
             data: pdfOutput,
             base64: pdfOutput.split(',')[1],
             quoteNumber: quoteNumber,
             filename: `${quoteNumber}.pdf`,
+            doc: doc, // Return doc object for direct save
             error: null
         };
     } catch (error) {
         console.error('Error in PDF generation:', error);
         return { data: null, error };
+    }
+};
+
+/**
+ * Download quote PDF directly using file-saver - most reliable
+ * @param {Object} quote - The quote data
+ */
+export const downloadQuotePDF = async (quote) => {
+    try {
+        const result = await generateQuotePDF(quote);
+        if (result.error) {
+            return { error: result.error };
+        }
+
+        // Use blob output with explicit PDF type
+        const pdfBlob = result.doc.output('blob');
+
+        // Force .pdf extension
+        let filename = result.filename || 'presupuesto.pdf';
+        if (!filename.endsWith('.pdf')) {
+            filename = filename + '.pdf';
+        }
+
+        // Use file-saver - most reliable cross-browser download
+        saveAs(pdfBlob, filename);
+
+        return { success: true, filename };
+    } catch (error) {
+        console.error('Error downloading PDF:', error);
+        return { error };
     }
 };
 

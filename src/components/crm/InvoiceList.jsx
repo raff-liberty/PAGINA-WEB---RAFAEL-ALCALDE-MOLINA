@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Filter, Eye, Trash2, FileText, Download, MoreHorizontal, Calendar, User, Briefcase, Plus, CheckCircle, Clock, AlertTriangle, XCircle } from 'lucide-react';
 import { fetchInvoices, deleteInvoice } from '../../lib/crm/invoices';
-import { generateInvoicePDF, generateBulkPDFZip } from '../../lib/emailService';
+import { generateBulkPDFZip } from '../../lib/emailService';
+import { downloadInvoicePDF } from '../../lib/pdfGenerator';
 
 const InvoiceList = ({ onSelectInvoice, onCreateInvoice }) => {
     const [invoices, setInvoices] = useState([]);
@@ -54,35 +55,9 @@ const InvoiceList = ({ onSelectInvoice, onCreateInvoice }) => {
         if (!error) loadInvoices();
     };
 
-    const handleDownloadPDF = async (e, invoice) => {
+    const handleDownloadPDF = (e, invoice) => {
         e.stopPropagation();
-        try {
-            const { data: pdfDataUri, filename, error } = await generateInvoicePDF(invoice);
-
-            if (error) {
-                alert('Error al generar el PDF.');
-            } else if (pdfDataUri) {
-                const base64Content = pdfDataUri.split(',')[1];
-                const byteCharacters = atob(base64Content);
-                const byteNumbers = new Array(byteCharacters.length);
-                for (let i = 0; i < byteCharacters.length; i++) {
-                    byteNumbers[i] = byteCharacters.charCodeAt(i);
-                }
-                const byteArray = new Uint8Array(byteNumbers);
-                const blob = new Blob([byteArray], { type: 'application/pdf' });
-                const blobUrl = URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = blobUrl;
-                link.download = filename || 'factura.pdf';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                URL.revokeObjectURL(blobUrl);
-            }
-        } catch (err) {
-            console.error('Download error:', err);
-            alert('Error al descargar el PDF.');
-        }
+        downloadInvoicePDF(invoice);
     };
 
     // Sort by correlative ID (Invoice Number) descending

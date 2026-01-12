@@ -111,11 +111,52 @@ export const fetchQuoteById = async (quoteId) => {
 };
 
 /**
+ * Generar número de presupuesto secuencial (P-YYYY-NNNN)
+ */
+const generateQuoteNumber = async () => {
+    try {
+        const year = new Date().getFullYear();
+
+        // Obtener configuración y actualizar contador atómicamente si fuera posible,
+        // pero por ahora lo hacemos en dos pasos con comprobación de año
+        const { data: config, error: fetchError } = await supabase
+            .from('company_config')
+            .select('*')
+            .single();
+
+        if (fetchError || !config) {
+            // Fallback si no hay config todavía
+            return `P-${year}-0001`;
+        }
+
+        let nextCounter = (config.quote_year === year) ? (config.quote_counter + 1) : 1;
+
+        const { error: updateError } = await supabase
+            .from('company_config')
+            .update({
+                quote_counter: nextCounter,
+                quote_year: year
+            })
+            .eq('id', config.id);
+
+        if (updateError) throw updateError;
+
+        return `P-${year}-${nextCounter.toString().padStart(4, '0')}`;
+    } catch (error) {
+        console.error('Error generating quote number:', error);
+        return `P-${new Date().getFullYear()}-ERR`;
+    }
+};
+
+/**
  * Crear nuevo presupuesto (siempre v1 borrador)
  */
 export const createQuote = async (projectId, quoteData = {}) => {
     try {
-        // Obtener la versión más alta existente
+        // Generar número de presupuesto formal
+        const quoteNumber = await generateQuoteNumber();
+
+        // Obtener la versión más alta existente para este proyecto
         const { data: existing } = await supabase
             .from('quotes')
             .select('version')
@@ -129,6 +170,7 @@ export const createQuote = async (projectId, quoteData = {}) => {
             .from('quotes')
             .insert({
                 project_id: projectId,
+                quote_number: quoteNumber,
                 version: nextVersion,
                 status: 'borrador',
                 responsible: quoteData.responsible || null,

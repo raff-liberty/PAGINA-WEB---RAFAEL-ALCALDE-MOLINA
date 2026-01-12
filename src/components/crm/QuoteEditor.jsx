@@ -3,7 +3,8 @@ import { createPortal } from 'react-dom';
 import { X, ArrowLeft, Save, Plus, Trash2, Send, Lock, FileDown, MessageSquare, Mail, Eye, Edit3, ClipboardList, DollarSign } from 'lucide-react';
 import { fetchQuoteById, updateQuote, addQuoteLine, updateQuoteLine, deleteQuoteLine, sendQuote } from '../../lib/crm/quotes';
 import { createInvoiceFromQuote } from '../../lib/crm/invoices';
-import { sendQuoteEmail, getDefaultQuoteEmailTemplate, generateQuotePDF } from '../../lib/emailService';
+import { sendQuoteEmail, getDefaultQuoteEmailTemplate } from '../../lib/emailService';
+import { downloadQuotePDF, generateQuotePDFBase64 } from '../../lib/pdfGenerator';
 
 const QuoteEditor = ({ quoteId, onClose, onUpdate }) => {
     const [quote, setQuote] = useState(null);
@@ -130,8 +131,8 @@ const QuoteEditor = ({ quoteId, onClose, onUpdate }) => {
         setSaving(true);
         try {
             // Generate PDF for preview
-            const { data: pdfDataUri } = await generateQuotePDF(quote);
-            setPdfPreviewUrl(pdfDataUri);
+            const result = await generateQuotePDFBase64(quote);
+            setPdfPreviewUrl(`data:application/pdf;base64,${result.base64}`);
 
             const template = getDefaultQuoteEmailTemplate(quote, quote.project?.contact?.full_name || 'Cliente');
             setEmailData({
@@ -157,9 +158,9 @@ const QuoteEditor = ({ quoteId, onClose, onUpdate }) => {
         setSaving(true);
 
         // 1. Generar PDF
-        const { base64: pdfBase64, quoteNumber, error: pdfError } = await generateQuotePDF(quote);
+        const { base64: pdfBase64, filename, error: pdfError } = await generateQuotePDFBase64(quote);
         if (pdfError) {
-            alert('Error al generar el PDF del presupuesto. Asegúrate de haber instalado jspdf y jspdf-autotable.');
+            alert('Error al generar el PDF del presupuesto.');
             setSaving(false);
             return;
         }
@@ -198,42 +199,7 @@ const QuoteEditor = ({ quoteId, onClose, onUpdate }) => {
 
     const handleDownloadPDF = async () => {
         setSaving(true);
-        try {
-            const { data: pdfDataUri, filename, error } = await generateQuotePDF(quote);
-
-            if (error) {
-                alert('Error al generar el PDF. Verifica que jspdf esté instalado.');
-            } else if (pdfDataUri) {
-                // Split the data URI to get the base64 content
-                const base64Content = pdfDataUri.split(',')[1];
-
-                // Convert base64 to a Blob
-                const byteCharacters = atob(base64Content);
-                const byteNumbers = new Array(byteCharacters.length);
-                for (let i = 0; i < byteCharacters.length; i++) {
-                    byteNumbers[i] = byteCharacters.charCodeAt(i);
-                }
-                const byteArray = new Uint8Array(byteNumbers);
-                const blob = new Blob([byteArray], { type: 'application/pdf' });
-
-                // Create a temporary URL for the Blob
-                const blobUrl = URL.createObjectURL(blob);
-
-                // Create a hidden link and trigger download
-                const link = document.createElement('a');
-                link.href = blobUrl;
-                link.download = filename || 'presupuesto.pdf';
-                document.body.appendChild(link);
-                link.click();
-
-                // Cleanup
-                document.body.removeChild(link);
-                URL.revokeObjectURL(blobUrl);
-            }
-        } catch (err) {
-            console.error('Download error:', err);
-            alert('Error al descargar el PDF.');
-        }
+        downloadQuotePDF(quote);
         setSaving(false);
     };
 

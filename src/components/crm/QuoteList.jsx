@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Filter, Eye, Trash2, FileText, Download, User, Briefcase, Plus, CheckCircle, Clock, XCircle, AlertTriangle } from 'lucide-react';
+import { Search, Filter, Eye, Trash2, FileText, Download, User, Briefcase, Plus, CheckCircle, Clock, XCircle, AlertTriangle, Mail } from 'lucide-react';
 import { fetchQuotes } from '../../lib/crm/quotes';
-import { generateQuotePDF, generateBulkPDFZip } from '../../lib/emailService';
+import { generateBulkPDFZip } from '../../lib/emailService';
+import { downloadQuotePDF } from '../../lib/pdfGenerator';
+import { supabase } from '../../lib/supabaseClient';
 
 const QuoteList = ({ onSelectQuote, onCreateQuote }) => {
     const [quotes, setQuotes] = useState([]);
@@ -10,6 +12,7 @@ const QuoteList = ({ onSelectQuote, onCreateQuote }) => {
     const [filterStatus, setFilterStatus] = useState('all');
     const [selectedIds, setSelectedIds] = useState([]);
     const [exporting, setExporting] = useState(false);
+    const [sendingEmail, setSendingEmail] = useState(null);
 
     useEffect(() => {
         loadQuotes();
@@ -71,34 +74,57 @@ const QuoteList = ({ onSelectQuote, onCreateQuote }) => {
         return new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(amount || 0);
     };
 
-    const handleDownloadPDF = async (e, quote) => {
+    const handleDownloadPDF = (e, quote) => {
         e.stopPropagation();
-        try {
-            const { data: pdfDataUri, filename, error } = await generateQuotePDF(quote);
+        downloadQuotePDF(quote);
+    };
 
-            if (error) {
-                alert('Error al generar el PDF.');
-            } else if (pdfDataUri) {
-                const base64Content = pdfDataUri.split(',')[1];
-                const byteCharacters = atob(base64Content);
-                const byteNumbers = new Array(byteCharacters.length);
-                for (let i = 0; i < byteCharacters.length; i++) {
-                    byteNumbers[i] = byteCharacters.charCodeAt(i);
-                }
-                const byteArray = new Uint8Array(byteNumbers);
-                const blob = new Blob([byteArray], { type: 'application/pdf' });
-                const blobUrl = URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = blobUrl;
-                link.download = filename || 'presupuesto.pdf';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                URL.revokeObjectURL(blobUrl);
+    const handleSendEmail = async (e, quote) => {
+        e.stopPropagation();
+
+        // Validar que el contacto tenga email
+        if (!quote.project?.contact?.email) {
+            alert('Este contacto no tiene email configurado. Añade un email en la ficha del contacto.');
+            return;
+        }
+
+        const confirmed = confirm(`¿Enviar presupuesto a ${quote.project.contact.email}?`);
+        if (!confirmed) return;
+
+        setSendingEmail(quote.id);
+
+        try {
+            // 1. Generar PDF
+            const { data: pdfDataUri, error: pdfError } = await generateQuotePDF(quote);
+
+            if (pdfError || !pdfDataUri) {
+                throw new Error('Error al generar el PDF');
             }
-        } catch (err) {
-            console.error('Download error:', err);
-            alert('Error al descargar el PDF.');
+
+            // 2. Extraer base64 del PDF
+            const pdfBase64 = pdfDataUri.split(',')[1];
+
+            // 3. Enviar email con Resend
+            await sendQuoteEmail(quote, pdfBase64);
+
+            // 4. Actualizar estado del presupuesto en Supabase
+            await supabase
+                .from('quotes')
+                .update({
+                    status: 'enviado',
+                    sent_at: new Date().toISOString()
+                })
+                .eq('id', quote.id);
+
+            // 5. Recargar lista
+            await loadQuotes();
+
+            alert('✅ Presupuesto enviado con éxito');
+        } catch (error) {
+            console.error('Error al enviar email:', error);
+            alert(`❌ Error al enviar: ${error.message}`);
+        } finally {
+            setSendingEmail(null);
         }
     };
 
@@ -273,6 +299,18 @@ const QuoteList = ({ onSelectQuote, onCreateQuote }) => {
                                                     title="Descargar PDF"
                                                 >
                                                     <Download className="w-4 h-4" />
+                                                </button>
+                                                <button
+                                                    onClick={(e) => handleSendEmail(e, quote)}
+                                                    disabled={sendingEmail === quote.id}
+                                                    className="p-2 hover:bg-primary/10 rounded-lg transition-colors text-gray-400 hover:text-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                                                    title="Enviar por email"
+                                                >
+                                                    {sendingEmail === quote.id ? (
+                                                        <div className="w-4 h-4 border-2 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+                                                    ) : (
+                                                        <Mail className="w-4 h-4" />
+                                                    )}
                                                 </button>
                                             </div>
                                         </td>

@@ -65,20 +65,51 @@ export const fetchInvoiceById = async (invoiceId) => {
 };
 
 /**
+ * Generar número de factura secuencial correlativo (YYYY/NNNN)
+ * OBLIGATORIO por normativa fiscal española: correlativo y sin saltos.
+ */
+const generateInvoiceNumber = async () => {
+    try {
+        const year = new Date().getFullYear();
+
+        const { data: config, error: fetchError } = await supabase
+            .from('company_config')
+            .select('*')
+            .single();
+
+        if (fetchError || !config) {
+            // Fallback si no hay config todavía
+            return `${year}/0001`;
+        }
+
+        let nextCounter = (config.invoice_year === year) ? (config.invoice_counter + 1) : 1;
+
+        const { error: updateError } = await supabase
+            .from('company_config')
+            .update({
+                invoice_counter: nextCounter,
+                invoice_year: year
+            })
+            .eq('id', config.id);
+
+        if (updateError) throw updateError;
+
+        return `${year}/${nextCounter.toString().padStart(4, '0')}`;
+    } catch (error) {
+        console.error('Error generating invoice number:', error);
+        return `${new Date().getFullYear()}/ERR`;
+    }
+};
+
+/**
  * Create invoice
  */
 export const createInvoice = async (invoiceData) => {
     try {
-        // Generate a simple invoice number if not provided (e.g. F-YYYY-XXXX)
+        // Generate a sequential invoice number if not provided
         let invoiceNumber = invoiceData.invoice_number;
         if (!invoiceNumber) {
-            const year = new Date().getFullYear();
-            const { count } = await supabase
-                .from('invoices')
-                .select('*', { count: 'exact', head: true })
-                .gte('created_at', `${year}-01-01`);
-
-            invoiceNumber = `F-${year}-${(count + 1).toString().padStart(4, '0')}`;
+            invoiceNumber = await generateInvoiceNumber();
         }
 
         const { data, error } = await supabase
