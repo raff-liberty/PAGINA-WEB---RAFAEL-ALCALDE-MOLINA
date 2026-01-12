@@ -3,7 +3,6 @@ import { Search, Filter, Eye, Trash2, FileText, Download, User, Briefcase, Plus,
 import { fetchQuotes } from '../../lib/crm/quotes';
 import { generateBulkPDFZip } from '../../lib/emailService';
 import { downloadQuotePDF } from '../../lib/pdfGenerator';
-import { generateQuotePDF } from '../../lib/pdfGenerator';
 import { sendQuoteEmail } from '../../lib/emailService';
 import { supabase } from '../../lib/supabaseClient';
 

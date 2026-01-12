@@ -183,6 +183,33 @@ const AdminPanel = () => {
 ✅ \"El Robo Silencioso de tus Mañanas\"
 ✅ \"Tu CRM es un Zombi (y te está costando dinero)\"`;
 
+    const fetchSiteConfig = async () => {
+        try {
+            const config = await fetchFullConfig();
+            if (config) {
+                setSiteConfig(prev => ({ ...prev, ...config }));
+            }
+        } catch (error) {
+            console.error('Error fetching site config:', error);
+        }
+    };
+
+    const fetchCompanyConfig = async () => {
+        try {
+            const { data, error } = await supabase
+                .from('company_config')
+                .select('*')
+                .single();
+
+            if (error && error.code !== 'PGRST116') throw error;
+            if (data) {
+                setCompanyConfig(prev => ({ ...prev, ...data }));
+            }
+        } catch (error) {
+            console.error('Error fetching company config:', error);
+        }
+    };
+
     // CRM Data Fetching Logic
     useEffect(() => {
         if (user) {
@@ -639,33 +666,6 @@ const AdminPanel = () => {
         } catch (error) {
             console.error('Error toggling landing status:', error);
             alert('Error al cambiar el estado de la landing');
-        }
-    };
-
-    const fetchSiteConfig = async () => {
-        try {
-            const config = await fetchFullConfig();
-            if (config) {
-                setSiteConfig(prev => ({ ...prev, ...config }));
-            }
-        } catch (error) {
-            console.error('Error fetching site config:', error);
-        }
-    };
-
-    const fetchCompanyConfig = async () => {
-        try {
-            const { data, error } = await supabase
-                .from('company_config')
-                .select('*')
-                .single();
-
-            if (error && error.code !== 'PGRST116') throw error;
-            if (data) {
-                setCompanyConfig(prev => ({ ...prev, ...data }));
-            }
-        } catch (error) {
-            console.error('Error fetching company config:', error);
         }
     };
 
