@@ -4,17 +4,22 @@ import { fetchInvoices, deleteInvoice } from '../../lib/crm/invoices';
 import { generateBulkPDFZip } from '../../lib/emailService';
 import { downloadInvoicePDF } from '../../lib/pdfGenerator';
 
-const InvoiceList = ({ onSelectInvoice, onCreateInvoice }) => {
-    const [invoices, setInvoices] = useState([]);
-    const [loading, setLoading] = useState(true);
+const InvoiceList = ({ onSelectInvoice, onCreateInvoice, invoices: initialInvoices }) => {
+    const [invoices, setInvoices] = useState(initialInvoices || []);
+    const [loading, setLoading] = useState(!initialInvoices);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState('all');
     const [selectedIds, setSelectedIds] = useState([]);
     const [exporting, setExporting] = useState(false);
 
     useEffect(() => {
-        loadInvoices();
-    }, [filterStatus]);
+        if (!initialInvoices) {
+            loadInvoices();
+        } else {
+            setInvoices(initialInvoices);
+            setLoading(false);
+        }
+    }, [filterStatus, initialInvoices]);
 
     const loadInvoices = async () => {
         setLoading(true);
@@ -65,11 +70,16 @@ const InvoiceList = ({ onSelectInvoice, onCreateInvoice }) => {
         return (b.invoice_number || '').localeCompare(a.invoice_number || '');
     });
 
-    const filteredInvoices = sortedInvoices.filter(inv =>
-        inv.invoice_number.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        inv.contacts?.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        inv.projects?.name?.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredInvoices = sortedInvoices.filter(inv => {
+        const invoiceNum = inv.invoice_number || '';
+        const contactName = inv.contacts?.full_name || '';
+        const projectName = inv.projects?.name || '';
+        const search = searchTerm.toLowerCase();
+
+        return invoiceNum.toLowerCase().includes(search) ||
+            contactName.toLowerCase().includes(search) ||
+            projectName.toLowerCase().includes(search);
+    });
 
     const getStatusIcon = (status) => {
         switch (status) {

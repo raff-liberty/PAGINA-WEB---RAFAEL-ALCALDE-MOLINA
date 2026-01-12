@@ -878,7 +878,7 @@ const ContactDetail = ({ contactId, onClose, onUpdate }) => {
                             <InvoiceList
                                 invoices={invoices}
                                 onCreateInvoice={handleCreateInvoice}
-                                onSelectInvoice={(invoice) => setSelectedInvoice(invoice)}
+                                onSelectInvoice={(invoice) => setSelectedInvoice(invoice.id)}
                                 projectId={null}
                             />
                         </div>

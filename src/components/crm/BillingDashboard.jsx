@@ -36,12 +36,13 @@ const BillingDashboard = () => {
             // Logic to calculate totals from invoices
             // Since we don't have a direct 'total' column (it's calculated from lines),
             // this is just placeholder logic for now.
+            const invoiceList = invoices || [];
             setStats({
                 totalInvoiced: 0, // Should sum all paid invoices
                 pendingCollection: 0, // Should sum all 'enviada' invoices
                 totalQuotes: quotesCount || 0,
-                paidCount: invoices.filter(i => i.status === 'pagada').length,
-                overdueCount: invoices.filter(i => i.status === 'atrasada').length
+                paidCount: invoiceList.filter(i => i.status === 'pagada').length,
+                overdueCount: invoiceList.filter(i => i.status === 'atrasada').length
             });
         } catch (error) {
             console.error('Error loading billing stats:', error);
@@ -134,7 +135,7 @@ const BillingDashboard = () => {
             <div className="min-h-[400px]">
                 {activeView === 'facturas' ? (
                     <InvoiceList
-                        onSelectInvoice={(inv) => setSelectedInvoice(inv)}
+                        onSelectInvoice={(inv) => setSelectedInvoice(inv.id)}
                     />
                 ) : (
                     <QuoteList
@@ -146,7 +147,7 @@ const BillingDashboard = () => {
             {/* Invoice Detail Portal */}
             {selectedInvoice && (
                 <InvoiceEditor
-                    invoiceId={selectedInvoice === 'new' ? 'new' : selectedInvoice.id}
+                    invoiceId={selectedInvoice === 'new' ? 'new' : selectedInvoice}
                     onClose={() => {
                         setSelectedInvoice(null);
                         loadStats();

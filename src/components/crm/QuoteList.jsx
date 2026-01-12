@@ -3,6 +3,8 @@ import { Search, Filter, Eye, Trash2, FileText, Download, User, Briefcase, Plus,
 import { fetchQuotes } from '../../lib/crm/quotes';
 import { generateBulkPDFZip } from '../../lib/emailService';
 import { downloadQuotePDF } from '../../lib/pdfGenerator';
+import { generateQuotePDF } from '../../lib/pdfGenerator';
+import { sendQuoteEmail } from '../../lib/emailService';
 import { supabase } from '../../lib/supabaseClient';
 
 const QuoteList = ({ onSelectQuote, onCreateQuote }) => {
@@ -133,11 +135,16 @@ const QuoteList = ({ onSelectQuote, onCreateQuote }) => {
         return new Date(b.created_at) - new Date(a.created_at);
     });
 
-    const filteredQuotes = sortedQuotes.filter(quote =>
-        (quote.project?.name?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
-        (quote.project?.contact?.full_name?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
-        `v${quote.version}`.includes(searchTerm.toLowerCase())
-    );
+    const filteredQuotes = sortedQuotes.filter(quote => {
+        const projectName = quote.project?.name || '';
+        const contactName = quote.project?.contact?.full_name || '';
+        const version = `v${quote.version || ''}`;
+        const search = searchTerm.toLowerCase();
+
+        return projectName.toLowerCase().includes(search) ||
+            contactName.toLowerCase().includes(search) ||
+            version.toLowerCase().includes(search);
+    });
 
     return (
         <div className="space-y-6">

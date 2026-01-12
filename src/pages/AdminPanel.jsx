@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Save, X, Eye, Edit, Plus, Trash2, Lock, Search, Filter, BookOpen, BarChart3, Copy, Upload, Download, Globe, MapPin, Briefcase, CheckCircle, AlertCircle, ExternalLink, Target, Bold, Quote, List, ListOrdered, CheckSquare, Table, Users, User, Mail, FileText, Send, Calendar, Tag, MoreHorizontal, Bell, ClipboardList, DollarSign } from 'lucide-react';
 import { fetchContacts, deleteContact, getContactStats } from '../lib/crm/contacts';
 import { fetchDiagnoses } from '../lib/diagnoses';
+import { fetchFullConfig } from '../lib/siteConfig';
 import BackgroundMesh from '../components/BackgroundMesh';
 import StrategicRoadmap from '../components/StrategicRoadmap';
 import SEOPreview from '../components/SEOPreview';
@@ -638,6 +639,17 @@ const AdminPanel = () => {
         } catch (error) {
             console.error('Error toggling landing status:', error);
             alert('Error al cambiar el estado de la landing');
+        }
+    };
+
+    const fetchSiteConfig = async () => {
+        try {
+            const config = await fetchFullConfig();
+            if (config) {
+                setSiteConfig(prev => ({ ...prev, ...config }));
+            }
+        } catch (error) {
+            console.error('Error fetching site config:', error);
         }
     };
 

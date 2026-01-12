@@ -170,7 +170,7 @@ const QuoteEditor = ({ quoteId, onClose, onUpdate }) => {
             ...emailData,
             attachments: [
                 {
-                    filename: `${quoteNumber}.pdf`,
+                    filename: `Presupuesto_v${quote.version}.pdf`,
                     content: pdfBase64
                 }
             ]

@@ -1521,7 +1521,7 @@ const ProjectDetail = ({ projectId, onClose, onUpdate }) => {
                             <InvoiceList
                                 invoices={invoices}
                                 onCreateInvoice={handleCreateInvoice}
-                                onSelectInvoice={(invoice) => setSelectedInvoice(invoice)}
+                                onSelectInvoice={(invoice) => setSelectedInvoice(invoice.id)}
                                 projectId={projectId}
                             />
                         </div>
@@ -1543,7 +1543,7 @@ const ProjectDetail = ({ projectId, onClose, onUpdate }) => {
 
             {selectedInvoice && (
                 <InvoiceEditor
-                    invoiceId={selectedInvoice}
+                    invoiceId={selectedInvoice === 'new' ? 'new' : selectedInvoice}
                     projectId={projectId}
                     onClose={() => setSelectedInvoice(null)}
                     onUpdate={() => {
