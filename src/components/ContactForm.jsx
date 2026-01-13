@@ -197,6 +197,7 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
                 </div>
                 <div>
                     <div className="relative">
+                        <label htmlFor="service" className="sr-only">Servicio de interés</label>
                         <select
                             id="service"
                             value={formData.service}
