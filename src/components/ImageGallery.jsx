@@ -149,6 +149,7 @@ const ImageGallery = ({ isOpen, onClose, onSelectImage, selectedUrl }) => {
                                     <img
                                         src={image.publicUrl}
                                         alt={image.name}
+                                        loading="lazy"
                                         className="w-full h-48 object-cover"
                                     />
 
