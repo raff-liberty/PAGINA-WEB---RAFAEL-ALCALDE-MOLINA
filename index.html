@@ -77,14 +77,39 @@
   }
   </script>
 
-  <link rel="icon" type="image/png" href="/favicon.png" />
+  <!-- Optimized Favicon (32x32, ~2KB instead of 379KB) -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="apple-touch-icon" href="/favicon.png" />
 
-  <!-- Preload Critical Fonts (elimina bloqueo de render) -->
+  <!-- Preconnect to Supabase (reduce latency for analytics) -->
+  <link rel="preconnect" href="https://kqyycfviodvhurzpcic.supabase.co" crossorigin>
+
+  <!-- Preload Critical Fonts -->
   <link rel="preload" href="/fonts/space-grotesk-v15-latin-500.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/inter-v13-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
 
-  <!-- Self-hosted Fonts (sin dependencias externas) -->
-  <link rel="stylesheet" href="/fonts.css">
+  <!-- Critical CSS Inline (eliminates render-blocking) -->
+  <style>
+    body {
+      background: #050505;
+      color: #fff;
+      font-family: Inter, sans-serif;
+      -webkit-font-smoothing: antialiased
+    }
+
+    .dark {
+      color-scheme: dark
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+  </style>
+
+  <!-- Deferred Fonts CSS (non-blocking) -->
+  <link rel="stylesheet" href="/fonts.css" media="print" onload="this.media='all'">
 
 
 </head>

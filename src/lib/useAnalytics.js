@@ -6,8 +6,17 @@ export const useAnalytics = () => {
     const location = useLocation();
 
     useEffect(() => {
-        // Rastrear vista de página en cada cambio de ruta
-        analytics.trackPageView(location.pathname);
+        // Defer analytics until after page is interactive (improves FCP/LCP)
+        const trackPageView = () => {
+            analytics.trackPageView(location.pathname);
+        };
+
+        // Use requestIdleCallback if available, otherwise setTimeout
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(trackPageView);
+        } else {
+            setTimeout(trackPageView, 1000);
+        }
     }, [location.pathname]);
 
     return analytics;
