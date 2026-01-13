@@ -77,19 +77,14 @@
   }
   </script>
 
-  <!-- Optimized Favicon (32x32, ~2KB instead of 379KB) -->
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-  <link rel="apple-touch-icon" href="/favicon.png" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" />
 
-  <!-- Preconnect to Supabase (reduce latency for analytics) -->
-  <link rel="preconnect" href="https://kqyycfviodvhurzpcic.supabase.co" crossorigin>
-
-  <!-- Preload Critical Fonts -->
-  <link rel="preload" href="/fonts/space-grotesk-v15-latin-500.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/fonts/inter-v13-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
-
-  <!-- Fonts CSS (keep synchronous for now to avoid FOUC) -->
-  <link rel="stylesheet" href="/fonts.css">
+  <!-- Fonts CSS (defer for mobile performance) -->
+  <link rel="stylesheet" href="/fonts.css" media="print" onload="this.media='all'; this.onload=null;">
+  <noscript>
+    <link rel="stylesheet" href="/fonts.css">
+  </noscript>
 
 
 </head>
