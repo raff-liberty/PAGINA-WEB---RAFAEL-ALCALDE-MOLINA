@@ -72,6 +72,7 @@ const Navbar = () => {
                             alt="Engorilate Icon"
                             width="120"
                             height="120"
+                            fetchpriority="high"
                             className="h-12 md:h-20 w-auto"
                         />
                         <div className="flex flex-col">
