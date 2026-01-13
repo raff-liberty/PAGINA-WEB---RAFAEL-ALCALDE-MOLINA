@@ -88,28 +88,8 @@
   <link rel="preload" href="/fonts/space-grotesk-v15-latin-500.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/inter-v13-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
 
-  <!-- Critical CSS Inline (eliminates render-blocking) -->
-  <style>
-    body {
-      background: #050505;
-      color: #fff;
-      font-family: Inter, sans-serif;
-      -webkit-font-smoothing: antialiased
-    }
-
-    .dark {
-      color-scheme: dark
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0
-    }
-  </style>
-
-  <!-- Deferred Fonts CSS (non-blocking) -->
-  <link rel="stylesheet" href="/fonts.css" media="print" onload="this.media='all'">
+  <!-- Fonts CSS (keep synchronous for now to avoid FOUC) -->
+  <link rel="stylesheet" href="/fonts.css">
 
 
 </head>
