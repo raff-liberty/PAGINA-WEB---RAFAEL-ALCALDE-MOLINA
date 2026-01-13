@@ -11,11 +11,11 @@ export const useAnalytics = () => {
             analytics.trackPageView(location.pathname);
         };
 
-        // Use requestIdleCallback if available, otherwise setTimeout
+        // Use requestIdleCallback if available, otherwise setTimeout with longer delay
         if ('requestIdleCallback' in window) {
             requestIdleCallback(trackPageView);
         } else {
-            setTimeout(trackPageView, 1000);
+            setTimeout(trackPageView, 2000); // Increased from 1000ms to 2000ms
         }
     }, [location.pathname]);
 
