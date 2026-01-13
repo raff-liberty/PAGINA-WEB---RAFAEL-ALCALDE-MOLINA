@@ -828,8 +828,10 @@ const Home = () => {
                                     {/* Logo */}
                                     <div className="flex items-center gap-3 mb-6">
                                         <img
-                                            src="/favicon.png"
+                                            src="/logo-120.png"
                                             alt="Engorilate Icon"
+                                            width="120"
+                                            height="120"
                                             className="h-12 w-auto"
                                         />
                                         <div className="flex flex-col">

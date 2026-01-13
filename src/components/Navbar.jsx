@@ -68,8 +68,10 @@ const Navbar = () => {
                 <div className="flex items-center">
                     <Link className="group flex items-center gap-3" to="/">
                         <img
-                            src="/favicon.png"
+                            src="/logo-120.png"
                             alt="Engorilate Icon"
+                            width="120"
+                            height="120"
                             className="h-12 md:h-20 w-auto"
                         />
                         <div className="flex flex-col">
