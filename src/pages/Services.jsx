@@ -275,7 +275,7 @@ const Services = () => {
                     <h1 className="font-display text-4xl md:text-7xl font-black leading-[0.85] mb-8 text-white uppercase italic tracking-tighter">
                         Soluciones de <span className="text-primary">automatización</span> real
                     </h1>
-                    <p className="text-lg md:text-xl text-gray-300 font-normal leading-relaxed mb-10 italic max-w-3xl mx-auto">
+                    <p className="text-base md:text-lg text-gray-300 font-normal leading-relaxed mb-10 italic max-w-2xl mx-auto">
                         No vendemos paquetes cerrados ni humo tecnológico. <br />
                         Diseñamos el motor que tu empresa necesita para recuperar el control.
                     </p>
@@ -294,7 +294,7 @@ const Services = () => {
                                 Cada negocio es distinto. <br />
                                 <span className="text-primary">No trabajamos con plantillas.</span>
                             </h2>
-                            <p className="text-gray-300 text-xl leading-relaxed mb-8 italic">
+                            <p className="text-gray-300 text-lg leading-relaxed mb-8 italic">
                                 Analizamos cómo funciona tu empresa, dónde se pierde tiempo y dinero, y diseñamos
                                 <strong> automatizaciones a medida</strong> que se adaptan exactamente a tu forma de trabajar.
                             </p>
@@ -366,7 +366,7 @@ const Services = () => {
                                     <h3 className="text-white text-2xl md:text-3xl font-display font-black mb-4 leading-tight uppercase italic tracking-tighter">
                                         {starServices[activeService].title}
                                     </h3>
-                                    <p className="text-gray-200 text-lg md:text-xl mb-8 leading-relaxed max-w-xl italic">
+                                    <p className="text-gray-300 text-base md:text-lg mb-8 leading-relaxed max-w-xl italic">
                                         "{starServices[activeService].desc}"
                                     </p>
                                     <Link
@@ -382,7 +382,7 @@ const Services = () => {
                                     {starServices[activeService].subItems.map((item, idx) => (
                                         <div key={idx} className="bg-white/5 border border-white/10 p-5 rounded-xl hover:bg-white/10 transition-colors shadow-lg">
                                             <h4 className="text-primary font-black mb-2 text-xs md:text-sm uppercase italic tracking-wider">{item.title}</h4>
-                                            <p className="text-gray-300 text-sm md:text-base leading-relaxed italic">{item.desc}</p>
+                                            <p className="text-gray-400 text-xs md:text-sm leading-relaxed italic">{item.desc}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -543,7 +543,7 @@ const Services = () => {
                         {faqs.map((faq, i) => (
                             <div key={i} className="bg-[#151515] border border-white/10 p-6 rounded-2xl shadow-xl">
                                 <h3 className="text-primary font-black text-lg mb-4 uppercase italic tracking-tight">{faq.q}</h3>
-                                <p className="text-gray-100 leading-relaxed font-normal text-base md:text-lg italic">{faq.a}</p>
+                                <p className="text-gray-300 leading-relaxed font-normal text-sm md:text-base italic">{faq.a}</p>
                             </div>
                         ))}
                     </div>
