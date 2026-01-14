@@ -12,22 +12,22 @@ const DiagnosisCTA = ({ className = "" }) => {
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(110,231,183,0.05)_0%,transparent_70%)]" />
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">
-                <div className="bg-[#111111] border border-white/10 rounded-[2.5rem] p-8 md:p-16 overflow-hidden relative group">
+                <div className="bg-[#111111] border border-white/10 rounded-[2rem] p-8 md:p-12 overflow-hidden relative group">
                     {/* Decorative glow */}
                     <div className="absolute -top-24 -right-24 w-64 h-64 bg-primary/10 rounded-full blur-[100px] group-hover:bg-primary/20 transition-colors duration-700" />
 
-                    <div className="grid lg:grid-cols-2 gap-12 items-center">
-                        <div className="space-y-8">
+                    <div className="grid lg:grid-cols-2 gap-10 items-center">
+                        <div className="space-y-6">
                             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-bold uppercase tracking-widest">
                                 <Sparkles className="w-4 h-4" />
                                 Herramienta Exclusiva
                             </div>
 
-                            <h2 className="text-4xl md:text-6xl font-display font-black text-white leading-[1.1] tracking-tighter italic">
+                            <h2 className="text-4xl md:text-5xl font-display font-black text-white leading-[1.1] tracking-tighter italic">
                                 ¿TU NEGOCIO ES <span className="text-primary italic">AUTÓNOMO</span> O DEPENDE DE TI?
                             </h2>
 
-                            <p className="text-xl text-gray-400 leading-relaxed max-w-xl">
+                            <p className="text-lg text-gray-400 leading-relaxed max-w-xl">
                                 Deja de apagar fuegos. Realiza nuestro <span className="text-white font-bold">Diagnóstico de Eficiencia Operativa</span> y descubre en menos de 2 minutos exactamente dónde están los cuellos de botella que te impiden crecer.
                             </p>
 
@@ -49,7 +49,7 @@ const DiagnosisCTA = ({ className = "" }) => {
                             <Link
                                 to="/diagnostico"
                                 onClick={() => analytics.trackEvent('diagnosis_cta_click')}
-                                className="inline-flex items-center gap-3 bg-primary hover:bg-white text-black font-black px-10 py-5 rounded-xl text-lg transition-all transform hover:scale-105 shadow-[0_0_30px_rgba(110,231,183,0.2)] group/btn"
+                                className="inline-flex items-center gap-3 bg-primary hover:bg-white text-black font-black px-8 py-4 rounded-xl text-base transition-all transform hover:scale-105 shadow-[0_0_30px_rgba(110,231,183,0.2)] group/btn"
                             >
                                 OBTIENE TU DIAGNÓSTICO GRATIS
                                 <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
@@ -58,7 +58,7 @@ const DiagnosisCTA = ({ className = "" }) => {
 
                         <div className="relative">
                             {/* Visual representation of the tool */}
-                            <div className="relative z-20 bg-[#1A1A1A] border border-white/10 rounded-3xl p-8 shadow-2xl transform rotate-2 group-hover:rotate-0 transition-transform duration-500">
+                            <div className="relative z-20 bg-[#1A1A1A] border border-white/10 rounded-2xl p-6 shadow-2xl transform rotate-2 group-hover:rotate-0 transition-transform duration-500">
                                 <div className="space-y-6">
                                     <div className="h-2 w-24 bg-primary/20 rounded-full" />
                                     <div className="space-y-3">
