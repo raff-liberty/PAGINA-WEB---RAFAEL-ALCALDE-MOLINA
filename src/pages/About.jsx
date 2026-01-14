@@ -79,7 +79,7 @@ const About = () => {
                                 <span className="text-primary italic">vocación.</span>
                             </h1>
 
-                            <p className="text-xl md:text-2xl text-gray-400 font-light leading-relaxed max-w-2xl italic">
+                            <p className="text-xl md:text-3xl text-gray-300 font-light leading-relaxed max-w-3xl italic">
                                 Ayudo a poner un orden industrial donde hay caos operativo. Mi trabajo no es venderte software, sino construir el motor que te devuelva tu tiempo.
                             </p>
 
@@ -106,14 +106,14 @@ const About = () => {
                                 <span className="text-primary italic">este enfoque</span>
                             </h2>
                             <Quote className="w-12 h-12 text-primary/20 mb-6" />
-                            <p className="text-gray-400 text-lg font-light leading-relaxed italic">
+                            <p className="text-gray-300 text-xl font-light leading-relaxed italic">
                                 "La tecnología aplicada al desorden solo lo acelera. Primero ordenamos, luego automatizamos. No hay otro camino."
                             </p>
                         </div>
                     </div>
 
                     <div className="lg:col-span-8 space-y-16">
-                        <section className="prose prose-invert prose-2xl text-gray-300 leading-relaxed font-light">
+                        <section className="prose prose-invert prose-2xl text-gray-200 leading-relaxed font-normal">
                             <p>
                                 Vengo de los números. Durante años en el mundo del control de gestión, analicé por qué las empresas perdían dinero.
                                 <span className="text-white font-medium"> La respuesta nunca era falta de herramientas</span>, siempre era falta de claridad operativa.
@@ -157,7 +157,7 @@ const About = () => {
                                 >
                                     <item.icon className="w-8 h-8 text-gray-500 group-hover:text-white transition-colors mb-6" />
                                     <h4 className="text-xl font-bold text-white mb-3 tracking-tight">{item.title}</h4>
-                                    <p className="text-gray-500 text-sm leading-relaxed font-light italic">{item.text}</p>
+                                    <p className="text-gray-400 text-base leading-relaxed font-normal italic">{item.text}</p>
                                 </motion.div>
                             ))}
                         </div>
@@ -202,7 +202,7 @@ const About = () => {
                             <div key={i} className="bg-[#141414] border border-white/15 p-8 rounded-3xl text-center hover:border-primary/30 transition-colors">
                                 <val.icon className="w-10 h-10 text-primary mx-auto mb-6" />
                                 <h3 className="text-xl font-bold text-white mb-4">{val.title}</h3>
-                                <p className="text-gray-400 font-light italic text-sm leading-relaxed">{val.text}</p>
+                                <p className="text-gray-300 font-normal italic text-base leading-relaxed">{val.text}</p>
                             </div>
                         ))}
                     </div>

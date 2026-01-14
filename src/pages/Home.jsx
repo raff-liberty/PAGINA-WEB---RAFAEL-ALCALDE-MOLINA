@@ -22,7 +22,7 @@ const contentMap = {
     hair: [
         {
             problem: "El cliente te escribe por WhatsApp a las 23:00 para pedir cita. Al día siguiente, entre secadores y tintes, se te olvida contestar.",
-            solution: "No se dan citas por chat. Un agente virtual se conecta a tu calendario y CRM para entender quién es el cliente y de manera natural responde, agenda y cobra la cita si se desea.",
+            solution: "No se dan citas por chat. Un agente virtual se conecta a tu calendario y CRM para entender de manera natural quién es el cliente y responde, agenda y cobra la cita si se desea.",
             result: "Te levantas con la agenda llena. No has usado el móvil fuera de tu horario."
         },
         {
@@ -419,7 +419,7 @@ const Home = () => {
                         Cómo funcionaría tu negocio <br />
                         <span className="text-primary">con un poco más de orden</span>
                     </h2>
-                    <p className="text-xl text-gray-400 font-light max-w-2xl leading-relaxed">
+                    <p className="text-xl md:text-2xl text-gray-300 font-light max-w-3xl leading-relaxed">
                         Ejemplos reales de caos operativo convertidos en tranquilidad. Sin jerga técnica, solo causa y efecto.
                     </p>
                 </div>
@@ -482,7 +482,7 @@ const Home = () => {
                                                 <div className="flex items-center gap-3 mb-4">
                                                     <span className="text-[10px] font-mono text-gray-500 uppercase tracking-[0.2em] px-2 py-1 bg-white/5 rounded">Situación</span>
                                                 </div>
-                                                <p className="text-gray-300 leading-relaxed text-base md:text-lg font-light italic">"{item.problem}"</p>
+                                                <p className="text-gray-200 leading-relaxed text-lg md:text-xl font-normal italic">"{item.problem}"</p>
                                             </div>
 
                                             <div className="col-span-12 md:col-span-4 relative md:border-l md:border-white/10 md:pl-10">
@@ -534,7 +534,7 @@ const Home = () => {
                                 <h3 className="font-display text-4xl md:text-6xl font-bold text-gray-200 mb-4 tracking-tight">
                                     Sistemas listos para <span className="text-primary">implementar</span>
                                 </h3>
-                                <p className="text-gray-400 max-w-xl text-lg font-light italic">
+                                <p className="text-gray-300 max-w-2xl text-xl font-light italic">
                                     Abre el capó de lo que podemos construir para tu pyme hoy mismo.
                                 </p>
                             </div>
@@ -612,7 +612,7 @@ const Home = () => {
                                                     </div>
                                                 </div>
 
-                                                <p className="text-gray-400 text-xl font-light italic leading-relaxed mb-10 max-w-2xl">
+                                                <p className="text-gray-300 text-2xl font-light italic leading-relaxed mb-10 max-w-2xl">
                                                     "{filteredSolutions[selectedSolutionIndex].desc}"
                                                 </p>
 
@@ -676,7 +676,7 @@ const Home = () => {
                             <h3 className="font-display text-4xl md:text-5xl font-bold text-gray-200 mb-4 tracking-tight">
                                 Resolvemos tus <span className="text-primary italic">dudas reales</span>
                             </h3>
-                            <p className="text-gray-400 max-w-xl text-lg font-light italic">
+                            <p className="text-gray-300 max-w-2xl text-xl font-light italic">
                                 Sin filtros, sin rodeos y basándonos en resultados de clientes.
                             </p>
                         </div>
@@ -724,7 +724,7 @@ const Home = () => {
                                                     </h4>
                                                 </div>
                                                 <div className="pl-12">
-                                                    <p className="text-gray-400 text-lg font-light leading-relaxed italic">
+                                                    <p className="text-gray-200 text-xl font-normal leading-relaxed italic">
                                                         "{item.a}"
                                                     </p>
                                                 </div>
