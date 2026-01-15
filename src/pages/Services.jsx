@@ -252,7 +252,7 @@ const Services = () => {
     // };
 
     return (
-        <div className="relative pt-16 pb-12 min-h-screen selection:bg-primary selection:text-black">
+        <div className="relative pt-40 md:pt-56 pb-12 min-h-screen selection:bg-primary selection:text-black">
             <SEO
                 title="Servicios de Automatización y Desarrollo Web | Engorilate"
                 description="Automatizamos procesos reales y diseñamos herramientas a medida para que tu negocio funcione sin ti. n8n, Odoo, WhatsApp API y más."

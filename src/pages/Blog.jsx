@@ -54,7 +54,7 @@ const Blog = () => {
         });
 
     return (
-        <div className="relative pt-32 pb-24 min-h-screen">
+        <div className="relative pt-40 md:pt-56 pb-24 min-h-screen">
             <SEO
                 title="Blog | El Coste del Caos"
                 description="Artículos sin humo sobre automatización. Si no te ahorra tiempo o dinero, no lo escribimos."

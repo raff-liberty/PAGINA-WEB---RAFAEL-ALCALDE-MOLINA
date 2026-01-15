@@ -72,7 +72,7 @@ const WebDevelopment = () => {
     ];
 
     return (
-        <div className="bg-[#0A0A0A] text-white min-h-screen pt-24 pb-12 overflow-hidden selection:bg-primary selection:text-black">
+        <div className="bg-[#0A0A0A] text-white min-h-screen pt-40 md:pt-56 pb-12 overflow-hidden selection:bg-primary selection:text-black">
             <SEO
                 title="Desarrollo Web a Medida: Tu Activo Tecnológico Propio | Engorilate"
                 description="No alquiles tu negocio en plataformas cerradas. Construimos herramientas digitales en propiedad: webs de alto rendimiento y apps de gestión a medida."

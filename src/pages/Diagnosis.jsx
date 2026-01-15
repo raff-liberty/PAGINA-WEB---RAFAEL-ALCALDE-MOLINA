@@ -26,7 +26,7 @@ const Diagnosis = () => {
             </div>
 
             {/* HERO SECTION */}
-            <section className="relative z-10 pt-32 pb-20 px-6">
+            <section className="relative z-10 pt-40 md:pt-56 pb-20 px-6">
                 <div className="max-w-5xl mx-auto text-center space-y-8">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}

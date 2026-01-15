@@ -100,7 +100,7 @@ const WhatsAppBooking = () => {
     };
 
     return (
-        <div className="bg-[#0A0A0A] text-white min-h-screen pt-24 pb-12 overflow-hidden selection:bg-primary selection:text-black">
+        <div className="bg-[#0A0A0A] text-white min-h-screen pt-40 md:pt-56 pb-12 overflow-hidden selection:bg-primary selection:text-black">
             <SEO
                 title="Reservas por WhatsApp: Tu Negocio no duerme, pero tú sí | Engorilate"
                 description="Deja de contestar mensajes a mano. Tu motor de reservas inteligente en WhatsApp cierra citas mientras tú descansas. Integración real con ERP y CRM."

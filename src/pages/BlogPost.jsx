@@ -52,7 +52,7 @@ const BlogPost = () => {
     }
 
     return (
-        <div className="relative pt-32 pb-24 min-h-screen">
+        <div className="relative pt-40 md:pt-56 pb-24 min-h-screen">
             {post && (
                 <SEO
                     title={`${post.title} | Engorilate`}

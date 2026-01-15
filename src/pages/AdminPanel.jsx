@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Save, X, Eye, Edit, Plus, Trash2, Lock, Search, Filter, BookOpen, BarChart3, Copy, Upload, Download, Globe, MapPin, Briefcase, CheckCircle, AlertCircle, ExternalLink, Target, Bold, Quote, List, ListOrdered, CheckSquare, Table, Users, User, Mail, FileText, Send, Calendar, Tag, MoreHorizontal, Bell, ClipboardList, DollarSign } from 'lucide-react';
+import { Save, X, Eye, Edit, Plus, Trash2, Lock, Search, Filter, BookOpen, BarChart3, Copy, Upload, Download, Globe, MapPin, Briefcase, CheckCircle, AlertCircle, ExternalLink, Target, Bold, Quote, List, ListOrdered, CheckSquare, Table, Users, User, Mail, FileText, Send, Calendar, Tag, MoreHorizontal, Bell, ClipboardList, DollarSign, Zap } from 'lucide-react';
 import { fetchContacts, deleteContact, getContactStats } from '../lib/crm/contacts';
 import { fetchDiagnoses } from '../lib/diagnoses';
 import { fetchFullConfig } from '../lib/siteConfig';
@@ -105,13 +105,15 @@ const AdminPanel = () => {
 
     // Analytics State
     const [analyticsData, setAnalyticsData] = useState({
-        summary: { sessions: 0, visitors: 0, views: 0, realTime: 0 },
+        summary: { sessions: 0, visitors: 0, views: 0, realTime: 0, conversionRate: 0, bounceRate: 0, avgPages: 0 },
         topPages: [],
         devices: [],
         browsers: [],
         countries: [],
         cities: [],
         events: [],
+        trafficSources: [],
+        funnelData: [],
         chartData: []
     });
     const [analyticsPeriod, setAnalyticsPeriod] = useState(7); // días
@@ -310,11 +312,25 @@ const AdminPanel = () => {
             const { data: eventsData } = await eventsQuery;
 
             // 1.1 Summary Calculation
+            const sessionsWithViews = {};
+            pageViews?.forEach(pv => {
+                if (!sessionsWithViews[pv.session_id]) sessionsWithViews[pv.session_id] = 0;
+                sessionsWithViews[pv.session_id]++;
+            });
+
+            const totalSessions = sessions?.length || 0;
+            const bouncers = Object.values(sessionsWithViews).filter(count => count === 1).length;
+            const totalViews = pageViews?.length || 0;
+            const completedDiagnoses = eventsData?.filter(e => e.event_name === 'diagnosis_complete').length || 0;
+
             const summary = {
-                sessions: sessions?.length || 0,
+                sessions: totalSessions,
                 visitors: [...new Set(sessions?.map(s => s.visitor_id))].length,
-                views: pageViews?.length || 0,
-                realTime: sessions?.filter(s => new Date(s.updated_at) > new Date(Date.now() - 5 * 60 * 1000)).length || 0
+                views: totalViews,
+                realTime: sessions?.filter(s => new Date(s.updated_at) > new Date(Date.now() - 5 * 60 * 1000)).length || 0,
+                conversionRate: totalSessions > 0 ? ((completedDiagnoses / totalSessions) * 100).toFixed(1) : 0,
+                bounceRate: totalSessions > 0 ? ((bouncers / totalSessions) * 100).toFixed(1) : 0,
+                avgPages: totalSessions > 0 ? (totalViews / totalSessions).toFixed(1) : 0
             };
 
             // 1.2 Top Pages Breakdown
@@ -351,8 +367,8 @@ const AdminPanel = () => {
             sessions?.forEach(s => {
                 deviceCounts[s.device] = (deviceCounts[s.device] || 0) + 1;
                 browserCounts[s.browser] = (browserCounts[s.browser] || 0) + 1;
-                const day = s.created_at.split('T')[0];
-                if (dailyCounts[day] !== undefined) {
+                const day = s.created_at?.split('T')[0];
+                if (day && dailyCounts[day] !== undefined) {
                     dailyCounts[day] = (dailyCounts[day] || 0) + 1;
                 }
             });
@@ -363,6 +379,41 @@ const AdminPanel = () => {
                 eventCounts[e.event_name] = (eventCounts[e.event_name] || 0) + 1;
             });
 
+            // 1.6 Traffic Sources
+            const sourceCounts = {};
+            sessions?.forEach(s => {
+                let ref = s.referrer || 'Directo';
+                if (ref.includes('google')) ref = 'Google Search';
+                else if (ref.includes('instagram')) ref = 'Instagram';
+                else if (ref.includes('linkedin')) ref = 'LinkedIn';
+                else if (ref.includes('facebook')) ref = 'Facebook';
+                else if (ref.includes('t.co')) ref = 'Twitter/X';
+                else if (ref !== 'Directo') {
+                    try {
+                        const url = new URL(ref);
+                        ref = url.hostname;
+                    } catch (e) { }
+                }
+                sourceCounts[ref] = (sourceCounts[ref] || 0) + 1;
+            });
+
+            // 1.7 Diagnosis Funnel
+            const funnelSteps = [
+                { id: 'cta', label: 'Click CTA', event: 'diagnosis_cta_click' },
+                { id: 'start', label: 'Inicio', event: 'diagnosis_start' },
+                { id: 'module1', label: 'Paso 1', event: 'diagnosis_module_complete', filter: (e) => e.event_data?.module === 1 },
+                { id: 'module2', label: 'Paso 2', event: 'diagnosis_module_complete', filter: (e) => e.event_data?.module === 2 },
+                { id: 'leads', label: 'Formulario', event: 'diagnosis_leads_view' },
+                { id: 'complete', label: 'Completado', event: 'diagnosis_complete' }
+            ];
+
+            const funnelData = funnelSteps.map(step => ({
+                label: step.label,
+                count: eventsData?.filter(e =>
+                    e.event_name === step.event && (step.filter ? step.filter(e) : true)
+                ).length || 0
+            }));
+
             setAnalyticsData({
                 summary,
                 topPages,
@@ -370,7 +421,9 @@ const AdminPanel = () => {
                 browsers: Object.entries(browserCounts).map(([name, value]) => ({ name, value })),
                 countries: Object.entries(countryCounts).map(([name, value]) => ({ name, value })).sort((a, b) => b.value - a.value).slice(0, 10),
                 cities: Object.entries(cityCounts).map(([name, value]) => ({ name, value })).sort((a, b) => b.value - a.value).slice(0, 10),
-                events: Object.entries(eventCounts).map(([name, count]) => ({ name, count })),
+                events: Object.entries(eventCounts).map(([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count),
+                trafficSources: Object.entries(sourceCounts).map(([name, value]) => ({ name, value })).sort((a, b) => b.value - a.value),
+                funnelData,
                 chartData: Object.entries(dailyCounts)
                     .map(([date, count]) => ({ date, count }))
                     .sort((a, b) => a.date.localeCompare(b.date))
@@ -1460,7 +1513,7 @@ const AdminPanel = () => {
                                     onClick={() => {
                                         const csvData = [
                                             ['Fecha', 'Sesiones', 'Vistas', 'Dispositivos', 'Páginas Top'].join(','),
-                                            ...analyticsData.chartData.map(d => `${d.date},${d.count},${analyticsData.summary.views / analyticsData.chartData.length},${analyticsData.devices.map(dev => dev.name).join('|')},${analyticsData.topPages.map(tp => tp.path).slice(0, 3).join('|')}`)
+                                            ...analyticsData.chartData.map(d => `${d.date},${d.count},${analyticsData.chartData.length > 0 ? (analyticsData.summary.views / analyticsData.chartData.length).toFixed(1) : 0},${analyticsData.devices.map(dev => dev.name).join('|')},${analyticsData.topPages.map(tp => tp.path).slice(0, 3).join('|')}`)
                                         ].join('\n');
                                         const blob = new Blob([csvData], { type: 'text/csv' });
                                         const url = window.URL.createObjectURL(blob);
@@ -1556,20 +1609,23 @@ const AdminPanel = () => {
                         </div>
 
                         {/* Summary Cards */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
                             {[
                                 { label: 'En Tiempo Real', value: analyticsData.summary.realTime, icon: Users, color: 'text-green-400', sub: 'Últimos 5 min' },
                                 { label: 'Visitantes Únicos', value: analyticsData.summary.visitors, icon: User, color: 'text-primary' },
                                 { label: 'Sesiones Totales', value: analyticsData.summary.sessions, icon: Target, color: 'text-blue-400' },
-                                { label: 'Páginas Vistas', value: analyticsData.summary.views, icon: Eye, color: 'text-purple-400' }
+                                { label: 'Páginas Vistas', value: analyticsData.summary.views, icon: Eye, color: 'text-purple-400' },
+                                { label: 'Tasa Conv.', value: `${analyticsData.summary.conversionRate}%`, icon: Zap, color: 'text-yellow-400' },
+                                { label: 'Rebote', value: `${analyticsData.summary.bounceRate}%`, icon: AlertCircle, color: 'text-red-400' },
+                                { label: 'Págs/Sesión', value: analyticsData.summary.avgPages, icon: FileText, color: 'text-orange-400' }
                             ].map((card, i) => (
-                                <div key={i} className="bg-[#222222] border border-white/20 p-6 rounded-2xl shadow-xl">
+                                <div key={i} className="bg-[#222222] border border-white/20 p-4 rounded-2xl shadow-xl">
                                     <div className="flex items-center justify-between mb-2">
-                                        <card.icon className={`w-5 h-5 ${card.color}`} />
-                                        <span className="text-[10px] font-black uppercase tracking-widest text-gray-500">{card.label}</span>
+                                        <card.icon className={`w-4 h-4 ${card.color}`} />
+                                        <span className="text-[9px] font-black uppercase tracking-widest text-gray-500">{card.label}</span>
                                     </div>
-                                    <div className={`text-3xl font-black ${card.color}`}>{card.value}</div>
-                                    {card.sub && <div className="text-[10px] text-gray-500 mt-1">{card.sub}</div>}
+                                    <div className={`text-xl font-black ${card.color}`}>{card.value}</div>
+                                    {card.sub && <div className="text-[8px] text-gray-600 mt-1">{card.sub}</div>}
                                 </div>
                             ))}
                         </div>
@@ -1631,19 +1687,69 @@ const AdminPanel = () => {
                                         ))}
                                     </div>
                                 </div>
+                                {/* Conversion Funnel */}
+                                <div className="bg-[#222222] border border-white/20 p-6 rounded-2xl shadow-xl overflow-hidden">
+                                    <h3 className="text-white font-bold mb-6 text-sm flex items-center gap-2">
+                                        <Target className="w-4 h-4 text-primary" /> Embudo Diagnóstico
+                                    </h3>
+                                    <div className="space-y-4">
+                                        {(analyticsData.funnelData || []).map((step, i) => {
+                                            const prevCount = i > 0 ? analyticsData.funnelData[i - 1].count : step.count;
+                                            const dropRate = prevCount > 0 ? ((1 - step.count / prevCount) * 100).toFixed(0) : 0;
+                                            const maxCount = analyticsData.funnelData[0].count || 1;
+                                            const barWidth = (step.count / maxCount) * 100;
+
+                                            return (
+                                                <div key={i} className="relative group">
+                                                    <div className="flex justify-between items-center text-[10px] mb-1">
+                                                        <span className="text-gray-400 font-bold uppercase tracking-tighter">{step.label}</span>
+                                                        <div className="flex items-center gap-2">
+                                                            {i > 0 && step.count < prevCount && (
+                                                                <span className="text-red-400 text-[8px] font-bold">-{dropRate}% fuga</span>
+                                                            )}
+                                                            <span className="text-white font-black">{step.count}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div className="h-4 bg-white/5 rounded-sm overflow-hidden border border-white/5">
+                                                        <div
+                                                            style={{ width: `${barWidth}%` }}
+                                                            className={`h-full transition-all duration-1000 ${i === 0 ? 'bg-primary' : i === (analyticsData.funnelData.length - 1) ? 'bg-green-500' : 'bg-primary/40'}`}
+                                                        />
+                                                    </div>
+                                                    {i < (analyticsData.funnelData.length - 1) && (
+                                                        <div className="flex justify-center -my-1 relative z-10">
+                                                            <div className="w-0.5 h-2 bg-white/10" />
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+
+                                {/* Traffic Sources */}
                                 <div className="bg-[#222222] border border-white/20 p-6 rounded-2xl shadow-xl">
                                     <h3 className="text-white font-bold mb-4 text-sm flex items-center gap-2">
-                                        <Target className="w-4 h-4 text-primary" /> Conversiones
+                                        <Globe className="w-4 h-4 text-primary" /> Origen del Tráfico
                                     </h3>
-                                    <div className="space-y-2">
-                                        {analyticsData.events.length > 0 ? analyticsData.events.map((e, i) => (
-                                            <div key={i} className="flex items-center justify-between p-2 bg-white/5 rounded-lg border border-white/5">
-                                                <span className="text-[10px] font-black uppercase text-gray-400">{e.name.replace('_', ' ')}</span>
-                                                <span className="text-primary font-black">{e.count}</span>
-                                            </div>
-                                        )) : (
-                                            <div className="text-gray-600 italic text-[10px] text-center">No se han registrado conversiones con estos filtros</div>
-                                        )}
+                                    <div className="space-y-3">
+                                        {(analyticsData.trafficSources || []).map((s, i) => {
+                                            const percentage = ((s.value / (analyticsData.summary.sessions || 1)) * 100).toFixed(1);
+                                            return (
+                                                <div key={i} className="space-y-1">
+                                                    <div className="flex justify-between text-[10px] font-bold">
+                                                        <span className="text-gray-400 truncate max-w-[120px]">{s.name}</span>
+                                                        <span className="text-white">{s.value} <span className="text-gray-600 ml-1">({percentage}%)</span></span>
+                                                    </div>
+                                                    <div className="h-1 bg-white/5 rounded-full overflow-hidden">
+                                                        <div
+                                                            style={{ width: `${percentage}%` }}
+                                                            className="h-full bg-primary/60"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
                                     </div>
                                 </div>
                             </div>
@@ -3022,7 +3128,6 @@ const AdminPanel = () => {
 
 
 
-            {/* Live Blog Preview Modal */}
             <BlogPostPreview
                 isOpen={showBlogPreview}
                 onClose={() => setShowBlogPreview(false)}
@@ -3033,7 +3138,7 @@ const AdminPanel = () => {
                 readTime={editedReadTime}
                 savings={editedSavings}
             />
-        </div >
+        </div>
     );
 };
 

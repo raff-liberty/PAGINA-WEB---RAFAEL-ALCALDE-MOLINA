@@ -50,7 +50,7 @@ const LocalSeo = () => {
     ];
 
     return (
-        <div className="bg-[#0A0A0A] text-white min-h-screen pt-24 pb-12 overflow-hidden selection:bg-primary selection:text-black">
+        <div className="bg-[#0A0A0A] text-white min-h-screen pt-40 md:pt-56 pb-12 overflow-hidden selection:bg-primary selection:text-black">
             <SEO
                 title="SEO Local: Domina Google Maps y Capta Clientes en tu Ciudad | Engorilate"
                 description="Si no estás en los 3 primeros de Google Maps, le estás dando dinero a tu competencia. Estrategia de SEO Local agresiva para negocios que quieren crecer."

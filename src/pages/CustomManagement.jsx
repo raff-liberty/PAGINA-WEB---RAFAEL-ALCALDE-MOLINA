@@ -52,7 +52,7 @@ const CustomManagement = () => {
     ];
 
     return (
-        <div className="bg-[#0A0A0A] text-white min-h-screen pt-24 pb-12 overflow-hidden selection:bg-primary selection:text-black">
+        <div className="bg-[#0A0A0A] text-white min-h-screen pt-40 md:pt-56 pb-12 overflow-hidden selection:bg-primary selection:text-black">
             <SEO
                 title="Sistemas de Gestión y ERP a Medida: Tu Infraestructura de Guerra | Engorilate"
                 description="Deja de pelearte con Excel. Diseñamos sistemas de gestión personalizados que centralizan toda la operativa de tu negocio bajo tu control total."

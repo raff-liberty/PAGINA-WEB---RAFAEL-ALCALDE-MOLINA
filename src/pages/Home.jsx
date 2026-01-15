@@ -294,7 +294,7 @@ const Home = () => {
     const useCarousel = filteredSolutions.length > 3;
 
     return (
-        <div className="relative pt-32 pb-32 min-h-screen">
+        <div className="relative pt-40 md:pt-56 pb-32 min-h-screen">
             <SEO
                 title="Engorilate | Automatización de Negocios"
                 description="Automatiza los procesos repetitivos de tu empresa en Murcia. Recupera tu tiempo y deja de perder dinero en gestión manual."
