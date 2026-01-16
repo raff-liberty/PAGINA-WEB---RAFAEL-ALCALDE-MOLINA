@@ -602,7 +602,11 @@ const Diagnosis = () => {
                                 "Mi enfoque es entender cómo funciona realmente tu negocio <span className="text-primary font-medium italic text-3xl block mt-2">cuando tú no estás encima."</span>
                             </p>
                             <div className="flex items-center gap-4 pt-4 border-t border-white/10">
-                                <div className="w-12 h-12 rounded-full bg-primary/20" />
+                                <img
+                                    src="/rafael_profile.png"
+                                    alt="Rafael Alcalde"
+                                    className="w-12 h-12 rounded-full object-cover border border-primary/20"
+                                />
                                 <div>
                                     <p className="text-white font-bold">Rafael Alcalde</p>
                                     <p className="text-gray-500 text-sm italic">Estratega de Eficiencia Operativa</p>
