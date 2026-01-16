@@ -6,7 +6,7 @@ import { Check, ArrowRight, Loader2, AlertCircle } from 'lucide-react';
 import { analytics } from '../../lib/analytics';
 
 const DiagnosisForm = () => {
-    const [step, setStep] = useState(1); // Start directly at common questions
+    const [step, setStep] = useState(0); // Start at intro screen
     const [currentQuestionIdx, setCurrentQuestionIdx] = useState(0);
     const [responses, setResponses] = useState({});
     const [branch, setBranch] = useState(null);
@@ -99,6 +99,23 @@ const DiagnosisForm = () => {
             exit={{ opacity: 0, x: -20 }}
             className="space-y-6"
         >
+            {/* Category Badge */}
+            {q.category && (
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 border border-primary/20 rounded-full">
+                    <span className="text-xs font-bold uppercase tracking-wider text-primary">
+                        {q.category}
+                    </span>
+                </div>
+            )}
+
+            {/* Description */}
+            {q.description && (
+                <p className="text-sm md:text-base text-gray-400 leading-relaxed">
+                    {q.description}
+                </p>
+            )}
+
+            {/* Question */}
             <h3 className="text-2xl md:text-3xl font-display font-medium leading-tight">
                 {q.question}
             </h3>
@@ -146,6 +163,67 @@ const DiagnosisForm = () => {
     return (
         <div className="max-w-2xl mx-auto w-full px-4">
             <AnimatePresence mode="wait">
+                {/* Intro Screen */}
+                {step === 0 && (
+                    <motion.div
+                        key="intro"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        className="text-center space-y-8 py-12"
+                    >
+                        <div className="space-y-4">
+                            <h2 className="text-4xl md:text-5xl font-display font-bold">
+                                Diagnóstico de Eficiencia Operativa
+                            </h2>
+                            <p className="text-xl md:text-2xl text-gray-400 leading-relaxed">
+                                Identifica los cuellos de botella que están frenando tu negocio
+                            </p>
+                        </div>
+
+                        <div className="grid md:grid-cols-3 gap-6 text-left">
+                            <div className="p-6 bg-white/5 border border-white/10 rounded-2xl space-y-2">
+                                <div className="text-3xl font-bold text-primary">7 min</div>
+                                <p className="text-sm text-gray-400">Duración estimada</p>
+                            </div>
+                            <div className="p-6 bg-white/5 border border-white/10 rounded-2xl space-y-2">
+                                <div className="text-3xl font-bold text-primary">3</div>
+                                <p className="text-sm text-gray-400">Módulos personalizados</p>
+                            </div>
+                            <div className="p-6 bg-white/5 border border-white/10 rounded-2xl space-y-2">
+                                <div className="text-3xl font-bold text-primary">IA</div>
+                                <p className="text-sm text-gray-400">Análisis automatizado</p>
+                            </div>
+                        </div>
+
+                        <div className="p-6 bg-primary/10 border border-primary/20 rounded-2xl text-left space-y-3">
+                            <h4 className="font-bold text-primary text-lg">Qué recibirás:</h4>
+                            <ul className="space-y-2 text-gray-300">
+                                <li className="flex items-start gap-2">
+                                    <Check className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                                    <span>Informe personalizado analizado por IA</span>
+                                </li>
+                                <li className="flex items-start gap-2">
+                                    <Check className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                                    <span>Identificación de puntos críticos en tu operación</span>
+                                </li>
+                                <li className="flex items-start gap-2">
+                                    <Check className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                                    <span>Recomendaciones específicas para tu negocio</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <button
+                            onClick={() => setStep(1)}
+                            className="group px-8 py-4 bg-primary text-background-dark rounded-full text-lg font-bold hover:bg-primary-hover transition-all hover:scale-105 flex items-center gap-2 mx-auto"
+                        >
+                            Comenzar Diagnóstico
+                            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                        </button>
+                    </motion.div>
+                )}
+
                 {(step >= 1 && step <= 3) && (
                     <motion.div
                         key="quiz"

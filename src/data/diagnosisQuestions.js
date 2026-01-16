@@ -2,6 +2,8 @@ export const diagnosisQuestions = {
     common: [
         {
             id: 'owner_dependence',
+            category: 'Dependencia del Dueño',
+            description: 'Evaluamos qué tan dependiente es tu negocio de tu presencia física',
             question: 'Si hoy no estás, el negocio...',
             options: [
                 { label: 'Funciona casi igual', value: 'bajo', signal: 'low' },
@@ -12,6 +14,8 @@ export const diagnosisQuestions = {
         },
         {
             id: 'interruptions',
+            category: 'Gestión del Tiempo',
+            description: 'Identificamos las principales fuentes de interrupción que te impiden trabajar de forma enfocada',
             question: '¿Dónde se te interrumpe más durante el día?',
             options: [
                 { label: 'WhatsApp / llamadas', value: 'whatsapp', signal: 'high' },
@@ -22,6 +26,8 @@ export const diagnosisQuestions = {
         },
         {
             id: 'management_tools',
+            category: 'Herramientas de Gestión',
+            description: 'Analizamos si tienes un sistema centralizado o si la información está dispersa',
             question: '¿Dónde gestionas citas, pedidos, cobros o seguimientos?',
             options: [
                 { label: 'Todo en la cabeza', value: 'cabeza', signal: 'critical' },
@@ -32,6 +38,8 @@ export const diagnosisQuestions = {
         },
         {
             id: 'weekly_vision',
+            category: 'Visibilidad del Negocio',
+            description: 'Medimos si tienes datos en tiempo real o si navegas a ciegas',
             question: '¿Tienes una visión clara de cómo va el negocio esta semana?',
             options: [
                 { label: 'Sí', value: 'si', signal: 'low' },
@@ -41,6 +49,8 @@ export const diagnosisQuestions = {
         },
         {
             id: 'branch_selector',
+            category: 'Modelo de Negocio',
+            description: 'Esto nos ayuda a personalizar las siguientes preguntas según tu tipo de operación',
             question: '¿Cómo entran la mayoría de tus clientes?',
             options: [
                 { label: 'Con cita o reserva', value: 'AGENDA' },
@@ -54,6 +64,7 @@ export const diagnosisQuestions = {
         AGENDA: [
             {
                 id: 'agenda_manager',
+                category: 'Gestión de Citas',
                 question: '¿Quién gestiona las citas?',
                 options: [
                     { label: 'Yo mismo manual', value: 'yo', signal: 'high' },
@@ -63,6 +74,7 @@ export const diagnosisQuestions = {
             },
             {
                 id: 'agenda_no_shows',
+                category: 'Control de Cancelaciones',
                 question: '¿Qué pasa con cancelaciones o no-shows?',
                 options: [
                     { label: 'Pierdo el tiempo y el dinero', value: 'perdida', signal: 'high' },
@@ -72,6 +84,7 @@ export const diagnosisQuestions = {
             },
             {
                 id: 'agenda_confirmations',
+                category: 'Automatización de Confirmaciones',
                 question: '¿Cómo se confirman las citas?',
                 options: [
                     { label: 'Por WhatsApp uno a uno', value: 'manual', signal: 'high' },
@@ -83,6 +96,7 @@ export const diagnosisQuestions = {
         DIRECTO: [
             {
                 id: 'direct_interruptions',
+                category: 'Flujo de Clientes',
                 question: '¿Cuándo se producen más interrupciones?',
                 options: [
                     { label: 'En horas punta de clientes', value: 'punta', signal: 'high' },
@@ -92,6 +106,7 @@ export const diagnosisQuestions = {
             },
             {
                 id: 'direct_stock',
+                category: 'Stock y Productos',
                 question: '¿Está claro el stock o disponibilidad?',
                 options: [
                     { label: 'Tengo que mirarlo yo siempre', value: 'manual', signal: 'high' },
@@ -101,6 +116,7 @@ export const diagnosisQuestions = {
             },
             {
                 id: 'direct_registration',
+                category: 'Registro de Ventas',
                 question: '¿Cómo se registran ventas y cobros?',
                 options: [
                     { label: 'Tengo un TPV pero no me dice mucho', value: 'basico', signal: 'medium' },
@@ -112,6 +128,7 @@ export const diagnosisQuestions = {
         PRESUPUESTOS: [
             {
                 id: 'quotes_followup',
+                category: 'Seguimiento Comercial',
                 question: '¿Cuántos presupuestos quedan sin seguimiento?',
                 options: [
                     { label: 'La mayoría, no doy abasto', value: 'caos', signal: 'high' },
@@ -121,6 +138,7 @@ export const diagnosisQuestions = {
             },
             {
                 id: 'quotes_manager',
+                category: 'Responsabilidad de Ventas',
                 question: '¿Quién hace el seguimiento?',
                 options: [
                     { label: 'Yo cuando me acuerdo', value: 'yo', signal: 'high' },
@@ -130,6 +148,7 @@ export const diagnosisQuestions = {
             },
             {
                 id: 'quotes_storage',
+                category: 'Gestión de Datos',
                 question: '¿Dónde queda la información del cliente?',
                 options: [
                     { label: 'Emails y carpetas sueltas', value: 'suelto', signal: 'high' },
@@ -141,6 +160,7 @@ export const diagnosisQuestions = {
         MIXTO: [
             {
                 id: 'mixto_routine',
+                category: 'Estabilidad Operativa',
                 question: '¿Cada día es distinto?',
                 options: [
                     { label: 'Totalmente, apago fuegos', value: 'fuegas', signal: 'critical' },
@@ -150,6 +170,7 @@ export const diagnosisQuestions = {
             },
             {
                 id: 'mixto_growth',
+                category: 'Escalabilidad',
                 question: '¿El negocio creció sin cambiar procesos?',
                 options: [
                     { label: 'Sí, heredamos lo de cuando éramos 2', value: 'herencia', signal: 'high' },
@@ -159,6 +180,7 @@ export const diagnosisQuestions = {
             },
             {
                 id: 'mixto_feeling',
+                category: 'Estado Actual',
                 question: '¿Con qué frase te identificas más?',
                 options: [
                     { label: "El negocio me come", value: 'come', signal: 'critical' },
@@ -171,16 +193,19 @@ export const diagnosisQuestions = {
     final: [
         {
             id: 'recovery_time',
+            category: 'Prioridades Personales',
             question: 'Si recuperaras 4 horas a la semana, ¿en qué las invertirías?',
             type: 'open'
         },
         {
             id: 'current_distress',
+            category: 'Punto de Dolor Principal',
             question: '¿Qué es lo que más te angustia ahora mismo del día a día?',
             type: 'open'
         },
         {
             id: 'urgency_solve',
+            category: 'Urgencia de Cambio',
             question: '¿Cuánto te preocupa resolver esto en los próximos 3 meses?',
             options: [
                 { label: 'Es mi prioridad absoluta', value: 'maxima', signal: 'critical' },
