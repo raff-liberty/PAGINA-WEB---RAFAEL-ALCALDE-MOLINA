@@ -405,7 +405,7 @@ const Diagnosis = () => {
             {/* AJUSTE 2 — EL COSTE VISIBLE */}
             <section className="relative z-10 py-12 px-6">
                 <div className="max-w-4xl mx-auto relative p-[1px] rounded-[3rem] bg-gradient-to-br from-white/20 via-primary/20 to-primary/40 shadow-[0_0_50px_-12px_rgba(110,231,183,0.3)]">
-                    <div className="bg-[#0A0A0A] bg-gradient-to-br from-primary/[0.03] to-transparent backdrop-blur-3xl rounded-[2.9rem] p-10 md:p-16 relative overflow-hidden group">
+                    <div className="bg-[#0A0A0A] bg-gradient-to-br from-primary/[0.03] to-transparent backdrop-blur-3xl rounded-[2.9rem] p-6 md:p-16 relative overflow-hidden group">
                         {/* Internal glow */}
                         <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/10 blur-[120px] rounded-full group-hover:bg-primary/20 transition-all duration-1000" />
                         <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-primary/[0.05] blur-[120px] rounded-full group-hover:bg-primary/10 transition-all duration-1000" />
@@ -517,7 +517,7 @@ const Diagnosis = () => {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: i * 0.1 }}
-                                    className={`group relative p-8 rounded-[2rem] bg-white/[0.03] border border-white/10 hover:border-primary/50 transition-all duration-500 flex flex-col h-full min-w-[calc(50%-1rem)] md:min-w-0 snap-center`}
+                                    className={`group relative p-6 md:p-8 rounded-[2rem] bg-white/[0.03] border border-white/10 hover:border-primary/50 transition-all duration-500 flex flex-col h-full min-w-[85%] md:min-w-0 snap-center`}
                                 >
                                     <div className={`absolute inset-0 bg-gradient-to-br ${type.color} to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[2rem]`} />
 
@@ -525,7 +525,7 @@ const Diagnosis = () => {
                                         <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-white mb-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-background-dark transition-all duration-500">
                                             <type.icon className="w-6 h-6" />
                                         </div>
-                                        <h3 className="text-xl font-display font-bold text-white mb-6 line-clamp-1">{type.title}</h3>
+                                        <h3 className="text-xl font-display font-bold text-white mb-6">{type.title}</h3>
                                         <ul className="space-y-4 mb-8">
                                             {type.pain.map((p, j) => (
                                                 <li key={j} className="flex items-start gap-3 text-gray-400 text-[10px] md:text-sm font-light leading-tight">
