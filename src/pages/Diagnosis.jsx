@@ -182,7 +182,11 @@ const Diagnosis = () => {
                                     <div className="relative w-full order-1 md:order-2">
                                         <div className="relative w-full pb-[56.25%] rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(239,68,68,0.3)] border border-red-500/20">
                                             <iframe
-                                                src={youtubeUrl}
+                                                src={youtubeUrl.includes('watch?v=')
+                                                    ? youtubeUrl.replace('watch?v=', 'embed/')
+                                                    : youtubeUrl.includes('youtu.be/')
+                                                        ? youtubeUrl.replace('youtu.be/', 'youtube.com/embed/')
+                                                        : youtubeUrl}
                                                 title="Video de Diagnóstico"
                                                 className="absolute top-0 left-0 w-full h-full border-0"
                                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
