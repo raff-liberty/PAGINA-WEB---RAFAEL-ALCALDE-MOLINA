@@ -173,7 +173,7 @@ const Diagnosis = () => {
                                         <span className="text-red-500 font-medium italic">se pierde tiempo, dinero y capacidad de decisión.</span>
                                     </p>
                                     <p className="text-xl md:text-2xl text-gray-400 font-light italic">
-                                        Aunque no lo veas reflejado en la cuenta hoy.
+                                        Pero no tienes que resolverlo tú solo. Mi trabajo es diseñar el sistema que trabaje por ti para que recuperes el control y la paz mental.
                                     </p>
                                 </div>
 
@@ -182,11 +182,11 @@ const Diagnosis = () => {
                                     <div className="relative w-full order-1 md:order-2">
                                         <div className="relative w-full pb-[56.25%] rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(239,68,68,0.3)] border border-red-500/20">
                                             <iframe
-                                                src={youtubeUrl.includes('watch?v=')
+                                                src={(youtubeUrl.includes('watch?v=')
                                                     ? youtubeUrl.replace('watch?v=', 'embed/')
                                                     : youtubeUrl.includes('youtu.be/')
                                                         ? youtubeUrl.replace('youtu.be/', 'youtube.com/embed/')
-                                                        : youtubeUrl}
+                                                        : youtubeUrl) + "?modestbranding=1&rel=0&controls=1"}
                                                 title="Video de Diagnóstico"
                                                 className="absolute top-0 left-0 w-full h-full border-0"
                                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
