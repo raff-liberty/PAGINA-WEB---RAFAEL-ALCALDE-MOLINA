@@ -558,7 +558,7 @@ const Diagnosis = () => {
                                         <h3 className="text-xl font-display font-bold text-white mb-6">{type.title}</h3>
                                         <ul className="space-y-4 mb-8">
                                             {type.pain.map((p, j) => (
-                                                <li key={j} className="flex items-start gap-3 text-gray-400 text-sm md:text-base lg:text-lg font-light leading-tight">
+                                                <li key={j} className="flex items-start gap-3 text-gray-400 text-base md:text-lg lg:text-xl font-light leading-relaxed">
                                                     <div className="w-1 h-1 rounded-full bg-red-500/50 mt-1.5 shrink-0" />
                                                     {p}
                                                 </li>
