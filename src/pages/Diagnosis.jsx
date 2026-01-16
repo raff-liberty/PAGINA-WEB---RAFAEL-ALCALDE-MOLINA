@@ -5,6 +5,7 @@ import { Brain, Zap, Target, ArrowDown, ShieldCheck, TrendingUp, Clock, LayoutGr
 import SEO from '../components/SEO';
 
 const Diagnosis = () => {
+    const formRef = useRef(null);
     const [pillarIndex, setPillarIndex] = useState(0);
     const [chaosIndex, setChaosIndex] = useState(0);
 
