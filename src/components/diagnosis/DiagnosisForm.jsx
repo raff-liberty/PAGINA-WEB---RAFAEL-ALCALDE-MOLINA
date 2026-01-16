@@ -182,17 +182,17 @@ const DiagnosisForm = () => {
                         </div>
 
                         <div className="grid md:grid-cols-3 gap-6 text-left">
-                            <div className="p-6 bg-white/5 border border-white/10 rounded-2xl space-y-2">
-                                <div className="text-3xl font-bold text-primary">7 min</div>
-                                <p className="text-sm text-gray-400">Duración estimada</p>
+                            <div className="p-6 bg-primary/20 border border-primary/30 rounded-2xl space-y-2">
+                                <div className="text-3xl font-bold text-primary">3 min</div>
+                                <p className="text-sm text-gray-300">Duración estimada</p>
                             </div>
-                            <div className="p-6 bg-white/5 border border-white/10 rounded-2xl space-y-2">
+                            <div className="p-6 bg-primary/20 border border-primary/30 rounded-2xl space-y-2">
                                 <div className="text-3xl font-bold text-primary">3</div>
-                                <p className="text-sm text-gray-400">Módulos personalizados</p>
+                                <p className="text-sm text-gray-300">Módulos personalizados</p>
                             </div>
-                            <div className="p-6 bg-white/5 border border-white/10 rounded-2xl space-y-2">
+                            <div className="p-6 bg-primary/20 border border-primary/30 rounded-2xl space-y-2">
                                 <div className="text-3xl font-bold text-primary">IA</div>
-                                <p className="text-sm text-gray-400">Análisis automatizado</p>
+                                <p className="text-sm text-gray-300">Análisis automatizado</p>
                             </div>
                         </div>
 
