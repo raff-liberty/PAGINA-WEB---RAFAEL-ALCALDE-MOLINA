@@ -15,8 +15,6 @@ const Diagnosis = () => {
     useEffect(() => {
         const loadConfig = async () => {
             const config = await fetchFullConfig();
-            console.log('Config loaded:', config);
-            console.log('YouTube URL:', config?.diagnosis_youtube_url);
             if (config?.diagnosis_youtube_url) {
                 setYoutubeUrl(config.diagnosis_youtube_url);
             }
