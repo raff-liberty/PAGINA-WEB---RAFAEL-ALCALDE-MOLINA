@@ -1,13 +1,25 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import DiagnosisForm from '../components/diagnosis/DiagnosisForm';
 import { motion } from 'framer-motion';
 import { Brain, Zap, Target, ArrowDown, ShieldCheck, TrendingUp, Clock, LayoutGrid, Flame, UserMinus, Dice5, GitMerge, EyeOff, AlertCircle, MessageSquare, ShoppingCart, Star, PenTool } from 'lucide-react';
 import SEO from '../components/SEO';
+import { fetchFullConfig } from '../lib/siteConfig';
 
 const Diagnosis = () => {
     const formRef = useRef(null);
     const [pillarIndex, setPillarIndex] = useState(0);
     const [chaosIndex, setChaosIndex] = useState(0);
+    const [youtubeUrl, setYoutubeUrl] = useState('');
+
+    useEffect(() => {
+        const loadConfig = async () => {
+            const config = await fetchFullConfig();
+            if (config?.diagnosis_youtube_url) {
+                setYoutubeUrl(config.diagnosis_youtube_url);
+            }
+        };
+        loadConfig();
+    }, []);
 
     const scrollToForm = () => {
         formRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -106,10 +118,10 @@ const Diagnosis = () => {
                         transition={{ delay: 0.2 }}
                         className="space-y-4"
                     >
-                        <p className="text-xl md:text-3xl text-gray-300 font-light leading-relaxed">
+                        <p className="text-xl md:text-3xl lg:text-4xl text-gray-300 font-light leading-relaxed">
                             Tienes un problema de control que te está costando <span className="text-white font-medium">tiempo, dinero y tranquilidad.</span>
                         </p>
-                        <p className="text-sm md:text-lg text-gray-500 italic">
+                        <p className="text-base md:text-xl lg:text-2xl text-gray-500 italic">
                             El síntoma cambia según el negocio. El caos es siempre el mismo.
                         </p>
                     </motion.div>
@@ -136,25 +148,44 @@ const Diagnosis = () => {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="max-w-3xl mx-auto mt-16 px-6"
+                    className="max-w-6xl mx-auto mt-16 px-6"
                 >
                     <div className="relative p-1 rounded-[2.5rem] bg-gradient-to-br from-red-500/20 via-transparent to-red-500/10">
-                        <div className="bg-[#0D0D0D] backdrop-blur-xl rounded-[2.4rem] p-8 md:p-12 text-center border border-white/5 relative overflow-hidden group">
+                        <div className="bg-[#0D0D0D] backdrop-blur-xl rounded-[2.4rem] p-8 md:p-12 relative overflow-hidden group">
                             {/* Decorative glow */}
                             <div className="absolute -top-24 -right-24 w-48 h-48 bg-red-500/10 blur-[80px] rounded-full group-hover:bg-red-500/20 transition-colors" />
 
-                            <div className="relative z-10 space-y-4">
-                                <div className="inline-flex items-center gap-2 text-red-400 mb-2">
-                                    <AlertCircle className="w-5 h-5" />
-                                    <span className="text-xs font-bold uppercase tracking-[0.2em]">Advertencia</span>
+                            <div className="relative z-10 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                                {/* Left Column - Text Content */}
+                                <div className="space-y-4 order-2 md:order-1">
+                                    <div className="inline-flex items-center gap-2 text-red-400 mb-2">
+                                        <AlertCircle className="w-5 h-5" />
+                                        <span className="text-xs font-bold uppercase tracking-[0.2em]">Advertencia</span>
+                                    </div>
+                                    <p className="text-2xl md:text-4xl lg:text-5xl text-white font-light leading-tight">
+                                        Cada semana que el negocio funciona sin sistema, <br />
+                                        <span className="text-red-500 font-medium italic">se pierde tiempo, dinero y capacidad de decisión.</span>
+                                    </p>
+                                    <p className="text-xl md:text-2xl text-gray-400 font-light italic">
+                                        Aunque no lo veas reflejado en la cuenta hoy.
+                                    </p>
                                 </div>
-                                <p className="text-2xl md:text-4xl text-white font-light leading-tight">
-                                    Cada semana que el negocio funciona sin sistema, <br />
-                                    <span className="text-red-500 font-medium italic">se pierde tiempo, dinero y capacidad de decisión.</span>
-                                </p>
-                                <p className="text-lg text-gray-400 font-light italic">
-                                    Aunque no lo veas reflejado en la cuenta hoy.
-                                </p>
+
+                                {/* Right Column - YouTube Video */}
+                                {youtubeUrl && (
+                                    <div className="relative w-full order-1 md:order-2">
+                                        <div className="relative w-full pb-[56.25%] rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(239,68,68,0.3)] border border-red-500/20">
+                                            <iframe
+                                                src={youtubeUrl}
+                                                title="Video de Diagnóstico"
+                                                className="absolute top-0 left-0 w-full h-full"
+                                                frameBorder="0"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                allowFullScreen
+                                            />
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -223,7 +254,7 @@ const Diagnosis = () => {
                                         <div className={`w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:bg-white/10 ${point.color}`}>
                                             <point.icon className="w-6 h-6" />
                                         </div>
-                                        <p className="text-xl text-gray-200 font-light leading-relaxed group-hover:text-white transition-colors">
+                                        <p className="text-xl md:text-2xl lg:text-3xl text-gray-200 font-light leading-relaxed group-hover:text-white transition-colors">
                                             {point.text}
                                         </p>
                                     </div>
@@ -325,7 +356,7 @@ const Diagnosis = () => {
                                                     <p className="text-xs md:text-sm text-primary font-bold uppercase tracking-[0.2em] ml-[0.2em]">
                                                         {pillar.title}
                                                     </p>
-                                                    <p className="text-[11px] md:text-base text-gray-300 font-light leading-snug md:leading-relaxed px-2">
+                                                    <p className="text-sm md:text-lg lg:text-xl text-gray-300 font-light leading-snug md:leading-relaxed px-2">
                                                         {pillar.desc}
                                                     </p>
                                                 </div>
@@ -390,10 +421,10 @@ const Diagnosis = () => {
                         <h2 className="text-xl md:text-2xl font-display font-medium text-primary uppercase tracking-[0.2em]">
                             Esto no te pasa solo a ti.
                         </h2>
-                        <p className="text-2xl md:text-4xl text-white font-light leading-snug">
+                        <p className="text-2xl md:text-4xl lg:text-5xl text-white font-light leading-snug">
                             La mayoría de pequeños negocios no fallan por falta de clientes, sino porque <span className="text-primary italic font-medium">crecen sobre procesos frágiles o inexistentes.</span>
                         </p>
-                        <p className="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto">
+                        <p className="text-xl md:text-2xl lg:text-3xl text-gray-500 max-w-2xl mx-auto">
                             Antes de pensar en herramientas, hay que entender el problema.
                         </p>
                     </motion.div>
@@ -431,7 +462,7 @@ const Diagnosis = () => {
                                         </div>
                                         <div>
                                             <p className="text-xl text-white font-medium mb-1">{item.title}</p>
-                                            <p className="text-gray-400 font-light text-sm">{item.desc}</p>
+                                            <p className="text-gray-400 font-light text-base md:text-lg">{item.desc}</p>
                                         </div>
                                     </div>
                                 ))}
@@ -528,7 +559,7 @@ const Diagnosis = () => {
                                         <h3 className="text-xl font-display font-bold text-white mb-6">{type.title}</h3>
                                         <ul className="space-y-4 mb-8">
                                             {type.pain.map((p, j) => (
-                                                <li key={j} className="flex items-start gap-3 text-gray-400 text-[10px] md:text-sm font-light leading-tight">
+                                                <li key={j} className="flex items-start gap-3 text-gray-400 text-sm md:text-base lg:text-lg font-light leading-tight">
                                                     <div className="w-1 h-1 rounded-full bg-red-500/50 mt-1.5 shrink-0" />
                                                     {p}
                                                 </li>
@@ -573,7 +604,7 @@ const Diagnosis = () => {
                             <h2 className="text-3xl md:text-5xl font-display font-bold text-white leading-tight">
                                 No empiezo instalando <span className="text-primary italic">herramientas.</span>
                             </h2>
-                            <p className="text-xl text-gray-300 font-light">
+                            <p className="text-xl md:text-2xl lg:text-3xl text-gray-300 font-light">
                                 No empiezo automatizando procesos sin sentido.
                             </p>
                             <div className="space-y-4 pt-4">
@@ -586,7 +617,7 @@ const Diagnosis = () => {
                                         <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-sm">
                                             {i + 1}
                                         </div>
-                                        <p className="text-lg text-white font-medium">{step}</p>
+                                        <p className="text-xl md:text-2xl text-white font-medium">{step}</p>
                                     </div>
                                 ))}
                             </div>
@@ -598,7 +629,7 @@ const Diagnosis = () => {
                             viewport={{ once: true }}
                             className="bg-black/40 backdrop-blur-xl p-8 rounded-[2.5rem] border border-white/10 space-y-6"
                         >
-                            <p className="text-2xl text-white font-light leading-relaxed">
+                            <p className="text-2xl md:text-3xl lg:text-4xl text-white font-light leading-relaxed">
                                 "Mi enfoque es entender cómo funciona realmente tu negocio <span className="text-primary font-medium italic text-3xl block mt-2">cuando tú no estás encima."</span>
                             </p>
                             <div className="flex items-center gap-4 pt-4 border-t border-white/10">
@@ -631,7 +662,7 @@ const Diagnosis = () => {
                         <h2 className="text-4xl md:text-6xl font-display font-bold text-white">
                             ¿Listo para recuperar el control?
                         </h2>
-                        <p className="text-xl md:text-2xl text-gray-400 font-light max-w-2xl mx-auto">
+                        <p className="text-xl md:text-2xl lg:text-3xl text-gray-400 font-light max-w-2xl mx-auto">
                             He creado un Diagnóstico de Eficiencia Operativa para detectar exactamente dónde estás perdiendo tiempo y dinero.
                         </p>
                     </motion.div>
@@ -651,7 +682,7 @@ const Diagnosis = () => {
                                 className="p-6 rounded-2xl bg-white/[0.02] border border-white/5"
                             >
                                 <h4 className="text-primary font-bold mb-2 uppercase tracking-widest text-xs">{item.title}</h4>
-                                <p className="text-gray-400 font-light text-sm">{item.desc}</p>
+                                <p className="text-gray-400 font-light text-base md:text-lg">{item.desc}</p>
                             </motion.div>
                         ))}
                     </div>

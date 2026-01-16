@@ -66,7 +66,8 @@ const AdminPanel = () => {
         default_meta_title: 'Engorilate | Destruimos la Burocracia con Automatización Inteligente',
         default_meta_description: 'Si tu negocio depende de procesos manuales, estás perdiendo dinero. En Engorilate diseñamos ecosistemas de automatización que trabajan por ti. Recupera tu tiempo ahora.',
         default_keywords: 'automatización de negocios, eficiencia operativa, digitalización pymes, ahorro tiempo murcia, sistemas inteligentes',
-        chat_embed_url: ''
+        chat_embed_url: '',
+        diagnosis_youtube_url: ''
     });
     const [companyConfig, setCompanyConfig] = useState({
         company_name: '',
@@ -2203,6 +2204,18 @@ const AdminPanel = () => {
                                     className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none font-mono text-sm"
                                 />
                                 <p className="text-xs text-gray-500 mt-1">Webhook de n8n para enviar presupuestos por email con PDF adjunto (Gmail + Resend)</p>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-400 mb-2">Video YouTube (Diagnóstico)</label>
+                                <input
+                                    type="text"
+                                    value={siteConfig.diagnosis_youtube_url}
+                                    onChange={(e) => setSiteConfig({ ...siteConfig, diagnosis_youtube_url: e.target.value })}
+                                    placeholder="https://www.youtube.com/embed/VIDEO_ID"
+                                    className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none font-mono text-sm"
+                                />
+                                <p className="text-xs text-gray-500 mt-1">URL del video de YouTube para mostrar en el bloque de advertencia de la página de Diagnóstico (formato embed)</p>
                             </div>
 
                             {/* Información Fiscal y de Empresa */}
