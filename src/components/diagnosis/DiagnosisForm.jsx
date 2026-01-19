@@ -6,7 +6,7 @@ import { Check, ArrowRight, Loader2, AlertCircle } from 'lucide-react';
 import { analytics } from '../../lib/analytics';
 
 const DiagnosisForm = () => {
-    const [step, setStep] = useState(0); // Start at intro screen
+    const [step, setStep] = useState(1); // Start directly at questions
     const [currentQuestionIdx, setCurrentQuestionIdx] = useState(0);
     const [responses, setResponses] = useState({});
     const [branch, setBranch] = useState(null);
@@ -123,7 +123,7 @@ const DiagnosisForm = () => {
             {q.type === 'open' ? (
                 <div className="space-y-4">
                     <textarea
-                        className="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-lg focus:border-primary/50 focus:outline-none transition-colors min-h-[120px]"
+                        className="w-full bg-[#1E1E1E] border border-white/30 rounded-xl p-4 text-lg focus:border-primary/50 focus:outline-none transition-colors min-h-[120px] text-white placeholder-gray-500 shadow-inner"
                         placeholder="Escribe aquí tu respuesta..."
                         value={responses[q.id] || ''}
                         onChange={handleOpenResponseChange}
@@ -145,12 +145,12 @@ const DiagnosisForm = () => {
                             onClick={() => handleOptionSelect(opt.value, opt)}
                             className={`w-full text-left p-4 md:p-5 rounded-xl border transition-all duration-300 flex items-center justify-between group
                                 ${responses[q.id] === opt.value
-                                    ? 'bg-primary/20 border-primary text-primary'
-                                    : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'}`}
+                                    ? 'bg-primary/30 border-primary text-primary shadow-[0_0_30px_rgba(110,231,183,0.25)]'
+                                    : 'bg-[#1E1E1E] bg-gradient-to-br from-primary/[0.04] to-transparent border-white/30 hover:bg-white/10 hover:border-white/50 shadow-xl'}`}
                         >
-                            <span className="text-lg md:text-xl">{opt.label}</span>
-                            <div className={`w-6 h-6 rounded-full border flex items-center justify-center transition-all
-                                ${responses[q.id] === opt.value ? 'bg-primary border-primary' : 'border-white/20 group-hover:border-white/40'}`}>
+                            <span className="text-lg md:text-xl font-medium">{opt.label}</span>
+                            <div className={`w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all
+                                ${responses[q.id] === opt.value ? 'bg-primary border-primary' : 'border-white/30 group-hover:border-white/50'}`}>
                                 {responses[q.id] === opt.value && <Check className="w-4 h-4 text-background-dark" />}
                             </div>
                         </button>
@@ -163,66 +163,6 @@ const DiagnosisForm = () => {
     return (
         <div className="max-w-2xl mx-auto w-full px-4">
             <AnimatePresence mode="wait">
-                {/* Intro Screen */}
-                {step === 0 && (
-                    <motion.div
-                        key="intro"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        className="text-center space-y-8 py-12"
-                    >
-                        <div className="space-y-4">
-                            <h2 className="text-4xl md:text-5xl font-display font-bold">
-                                Diagnóstico de Eficiencia Operativa
-                            </h2>
-                            <p className="text-xl md:text-2xl text-gray-400 leading-relaxed">
-                                Identifica los cuellos de botella que están frenando tu negocio
-                            </p>
-                        </div>
-
-                        <div className="grid md:grid-cols-3 gap-6 text-left">
-                            <div className="p-6 bg-primary/20 border border-primary/30 rounded-2xl space-y-2">
-                                <div className="text-3xl font-bold text-primary">3 min</div>
-                                <p className="text-sm text-gray-300">Duración estimada</p>
-                            </div>
-                            <div className="p-6 bg-primary/20 border border-primary/30 rounded-2xl space-y-2">
-                                <div className="text-3xl font-bold text-primary">3</div>
-                                <p className="text-sm text-gray-300">Módulos personalizados</p>
-                            </div>
-                            <div className="p-6 bg-primary/20 border border-primary/30 rounded-2xl space-y-2">
-                                <div className="text-3xl font-bold text-primary">IA</div>
-                                <p className="text-sm text-gray-300">Análisis automatizado</p>
-                            </div>
-                        </div>
-
-                        <div className="p-6 bg-primary/10 border border-primary/20 rounded-2xl text-left space-y-3">
-                            <h4 className="font-bold text-primary text-lg">Qué recibirás:</h4>
-                            <ul className="space-y-2 text-gray-300">
-                                <li className="flex items-start gap-2">
-                                    <Check className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                                    <span>Informe personalizado analizado por IA</span>
-                                </li>
-                                <li className="flex items-start gap-2">
-                                    <Check className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                                    <span>Identificación de puntos críticos en tu operación</span>
-                                </li>
-                                <li className="flex items-start gap-2">
-                                    <Check className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                                    <span>Recomendaciones específicas para tu negocio</span>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <button
-                            onClick={() => setStep(1)}
-                            className="group px-8 py-4 bg-primary text-background-dark rounded-full text-lg font-bold hover:bg-primary-hover transition-all hover:scale-105 flex items-center gap-2 mx-auto"
-                        >
-                            Comenzar Diagnóstico
-                            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                        </button>
-                    </motion.div>
-                )}
 
                 {(step >= 1 && step <= 3) && (
                     <motion.div
@@ -237,7 +177,7 @@ const DiagnosisForm = () => {
                                 <span>Módulo {step} / 3</span>
                                 <span>{Math.round(progress)}% completado</span>
                             </div>
-                            <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                            <div className="h-2 w-full bg-[#111] rounded-full overflow-hidden border border-white/5 shadow-inner">
                                 <motion.div
                                     className="h-full bg-primary"
                                     initial={{ width: 0 }}
@@ -270,7 +210,7 @@ const DiagnosisForm = () => {
                                 <input
                                     required
                                     type="text"
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl p-4 focus:border-primary/50 focus:outline-none transition-colors"
+                                    className="w-full bg-[#1E1E1E] border border-white/30 rounded-xl p-4 focus:border-primary/50 focus:outline-none transition-colors text-white placeholder-gray-500 shadow-inner"
                                     placeholder="Juan Pérez"
                                     value={contactInfo.full_name}
                                     onChange={(e) => setContactInfo(prev => ({ ...prev, full_name: e.target.value }))}
@@ -281,7 +221,7 @@ const DiagnosisForm = () => {
                                 <input
                                     required
                                     type="email"
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl p-4 focus:border-primary/50 focus:outline-none transition-colors"
+                                    className="w-full bg-[#1E1E1E] border border-white/30 rounded-xl p-4 focus:border-primary/50 focus:outline-none transition-colors text-white placeholder-gray-500 shadow-inner"
                                     placeholder="juan@tuempresa.com"
                                     value={contactInfo.email}
                                     onChange={(e) => setContactInfo(prev => ({ ...prev, email: e.target.value }))}
@@ -291,7 +231,7 @@ const DiagnosisForm = () => {
                                 <label className="text-sm font-medium text-text-muted ml-1">WhatsApp (opcional)</label>
                                 <input
                                     type="tel"
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl p-4 focus:border-primary/50 focus:outline-none transition-colors"
+                                    className="w-full bg-[#1E1E1E] border border-white/30 rounded-xl p-4 focus:border-primary/50 focus:outline-none transition-colors text-white placeholder-gray-500 shadow-inner"
                                     placeholder="+34 600 000 000"
                                     value={contactInfo.phone}
                                     onChange={(e) => setContactInfo(prev => ({ ...prev, phone: e.target.value }))}
