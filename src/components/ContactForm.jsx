@@ -151,7 +151,7 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
                 <div>
                     <input
                         id="name"
-                        className="w-full bg-white/10 border border-white/30 rounded-lg px-4 py-2.5 text-sm text-white focus:border-primary outline-none transition-colors placeholder:text-gray-500"
+                        className="w-full bg-white/5 border border-white/20 rounded-xl px-5 py-3 text-sm text-white focus:border-primary/50 focus:bg-white/10 outline-none transition-all placeholder:text-gray-600 shadow-inner"
                         placeholder="Tu Nombre"
                         type="text"
                         value={formData.name}
@@ -162,7 +162,7 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
                 <div>
                     <input
                         id="phone"
-                        className="w-full bg-white/10 border border-white/30 rounded-lg px-4 py-2.5 text-sm text-white focus:border-primary outline-none transition-colors placeholder:text-gray-500"
+                        className="w-full bg-white/5 border border-white/20 rounded-xl px-5 py-3 text-sm text-white focus:border-primary/50 focus:bg-white/10 outline-none transition-all placeholder:text-gray-600 shadow-inner"
                         placeholder="+34 WhatsApp"
                         type="tel"
                         value={formData.phone}
@@ -175,7 +175,7 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
             <div>
                 <input
                     id="company"
-                    className="w-full bg-white/10 border border-white/30 rounded-lg px-4 py-2.5 text-sm text-white focus:border-primary outline-none transition-colors placeholder:text-gray-500"
+                    className="w-full bg-white/5 border border-white/20 rounded-xl px-5 py-3 text-sm text-white focus:border-primary/50 focus:bg-white/10 outline-none transition-all placeholder:text-gray-600 shadow-inner"
                     placeholder="Empresa (opcional)"
                     type="text"
                     value={formData.company}
@@ -187,7 +187,7 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
                 <div>
                     <input
                         id="email"
-                        className="w-full bg-white/10 border border-white/30 rounded-lg px-4 py-2.5 text-sm text-white focus:border-primary outline-none transition-colors placeholder:text-gray-500"
+                        className="w-full bg-white/5 border border-white/20 rounded-xl px-5 py-3 text-sm text-white focus:border-primary/50 focus:bg-white/10 outline-none transition-all placeholder:text-gray-600 shadow-inner"
                         placeholder="tu@email.com"
                         type="email"
                         value={formData.email}
@@ -202,7 +202,7 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
                             id="service"
                             value={formData.service}
                             onChange={handleChange}
-                            className="w-full bg-white/10 border border-white/30 rounded-lg px-4 py-2.5 text-sm text-white focus:border-primary outline-none appearance-none cursor-pointer"
+                            className="w-full bg-white/5 border border-white/20 rounded-xl px-5 py-3 text-sm text-white focus:border-primary/50 focus:bg-white/10 outline-none appearance-none cursor-pointer transition-all"
                         >
                             {serviceOptions.map(opt => (
                                 <option key={opt.value} value={opt.value} className="bg-gray-900">{opt.label}</option>
@@ -218,7 +218,7 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
             <div>
                 <textarea
                     id="message"
-                    className="w-full bg-white/10 border border-white/30 rounded-lg px-4 py-3 text-sm text-white focus:border-primary outline-none resize-none placeholder:text-gray-500"
+                    className="w-full bg-white/5 border border-white/20 rounded-xl px-5 py-3 text-sm text-white focus:border-primary/50 focus:bg-white/10 outline-none resize-none transition-all placeholder:text-gray-600 shadow-inner"
                     placeholder="¿Qué quieres automatizar? Sé breve y directo."
                     rows={3}
                     value={formData.message}
@@ -245,9 +245,12 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
                 <button
                     type="submit"
                     disabled={!isFormValid || loading}
-                    className={`w-full md:w-auto px-8 py-2.5 rounded-lg font-bold text-sm flex items-center justify-center gap-2 transition-all ${isFormValid && !loading ? 'bg-primary text-black hover:bg-white' : 'bg-white/5 text-gray-500 cursor-not-allowed'}`}
+                    className={`relative group/btn w-full md:w-auto px-10 py-3 rounded-xl font-black text-xs uppercase tracking-widest flex items-center justify-center gap-3 transition-all transform overflow-hidden ${isFormValid && !loading ? 'bg-gradient-to-r from-primary via-[#4ADE80] to-primary text-black hover:scale-105 shadow-[0_15px_40px_rgba(110,231,183,0.3)]' : 'bg-white/5 text-gray-600 cursor-not-allowed border border-white/10'}`}
                 >
-                    {loading ? '...' : 'Enviar'} <Send className="w-3.5 h-3.5" />
+                    <div className="absolute inset-0 bg-white/20 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
+                    <span className="relative z-10 flex items-center gap-2">
+                        {loading ? 'Procesando...' : 'Enviar Mensaje'} <Send className="w-3.5 h-3.5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    </span>
                 </button>
             </div>
         </form>

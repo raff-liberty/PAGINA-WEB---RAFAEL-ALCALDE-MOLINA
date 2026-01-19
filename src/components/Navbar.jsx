@@ -72,14 +72,14 @@ const Navbar = () => {
                             alt="Engorilate Icon"
                             width="136"
                             height="136"
-                            fetchpriority="high"
+                            fetchPriority="high"
                             className="h-12 md:h-20 w-auto"
                         />
                         <div className="flex flex-col">
                             <span className="font-display font-bold text-xl md:text-3xl tracking-tight text-primary leading-none">
                                 ENGORILATE
                             </span>
-                            <span className="text-gray-400 text-[10px] md:text-sm font-light tracking-wide mt-0.5">
+                            <span className="text-gray-400 text-[9px] md:text-sm font-light tracking-wide mt-0.5">
                                 Automatización de Negocios
                             </span>
                         </div>
