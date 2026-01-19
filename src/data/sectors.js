@@ -1,192 +1,426 @@
 export const sectors = [
+    // CITAS Y AGENDA
     {
         id: 'peluquerias',
-        name: 'Peluquerías y Estética',
+        name: 'Peluquerías',
         slug: 'peluquerias',
-        icon: '✂️',
-        description: 'Automatización para peluquerías, barberías y centros de estética',
+        icon: 'Scissors',
+        description: 'Gestión de citas y tiempos para peluquerías y barberías',
+        segmentId: 'citas-agenda',
+        // ... rest of the sectors precisely updated
         problems: [
             {
-                problem: "El cliente te escribe por WhatsApp a las 23:00 para pedir cita. Al día siguiente, entre secadores y tintes, se te olvida contestar.",
-                solution: "No se dan citas por chat. Un agente virtual se conecta a tu calendario y CRM para entender quién es el cliente y de manera natural responde, agenda y cobra la cita si se desea.",
-                result: "Te levantas con la agenda llena. No has usado el móvil fuera de tu horario."
+                problem: "Te escriben por WhatsApp a deshoras y se te olvida agendar entre tinte y tinte.",
+                solution: "Reserva automática vinculada a tu calendario. Se agenda solo, tú solo cortas el pelo.",
+                result: "Agenda llena sin tocar el móvil durante el servicio."
             },
             {
-                problem: "Un cliente no aparece (ausencia total). Has perdido una hora de facturación y ya no puedes llamar a nadie para cubrirlo.",
-                solution: "Recordatorio automático 24h antes por WhatsApp y cobro de señal (5€) al reservar que se descuenta después.",
-                result: "Las ausencias bajan al 5%. Si fallan, al menos has cobrado tu tiempo."
-            },
-            {
-                problem: "Te quedas sin el tinte #5 a mitad de semana. Tienes que salir corriendo a comprarlo más caro.",
-                solution: "Lista de mínimos. Cuando queda 1 bote, se escanea un código y se añade a la lista de compra automática del viernes.",
-                result: "Compras una vez a la semana. Nunca te falta material crítico."
+                problem: "Un cliente no aparece y pierdes la hora. No has cobrado nada y ese hueco se queda vacío.",
+                solution: "Cobro de una pequeña señal al reservar. Si no vienen, al menos cobras tu tiempo.",
+                result: "Adiós a los plantones que te hacen perder dinero."
             }
         ],
-        solutions: [
-            'Sistema de reservas online con recordatorios automáticos',
-            'Gestión de ausencias con señales y políticas claras',
-            'Control de inventario con alertas automáticas',
-            'Facturación desde tablet en el momento',
-            'Base de datos de clientes con historial'
-        ],
-        keywords: 'peluqueria, barberia, salon belleza, centro estetica, gestion citas peluqueria'
+        solutions: ['Reservas online 24/7', 'Recordatorios automáticos', 'Cobro de señal preventa', 'Historial de cliente'],
+        keywords: 'peluqueria, barberia, gestion citas'
     },
     {
-        id: 'restaurantes',
-        name: 'Restaurantes y Hostelería',
-        slug: 'restaurantes',
-        icon: '🍽️',
-        description: 'Soluciones para restaurantes, bares y negocios de hostelería',
+        id: 'estetica',
+        name: 'Centros de Estética',
+        slug: 'estetica',
+        icon: 'Sparkles',
+        description: 'Control de tratamientos y citas para centros de belleza',
+        segmentId: 'citas-agenda',
         problems: [
             {
-                problem: "Viernes noche, local lleno. El teléfono no para de sonar para pedir mesa, interrumpiendo a los camareros que llevan bandejas.",
-                solution: "Sistema de reservas online obligatorio. El teléfono tiene una locución que dirige educadamente a la web.",
-                result: "El personal se centra en servir mesas. La agenda se llena sola, sin errores de 'te entendí mal la hora'."
-            },
-            {
-                problem: "Se tira comida a la basura por mala previsión, pero te quedas sin pan de hamburguesa en mitad del servicio del sábado.",
-                solution: "Hoja de stock digital en la cocina. Cuando se abre el último paquete, se escanea para la lista de compra automática.",
-                result: "Compras lo justo y necesario. Nunca tienes que decir 'lo siento, ese plato se ha terminado'."
+                problem: "Gestión manual de cabinas y profesionales. A veces se solapan las citas.",
+                solution: "Asignación automática de recursos (cabina + esteticista) al reservar.",
+                result: "Cero errores de organización. Todo fluye solo."
             }
         ],
-        solutions: [
-            'Sistema de reservas online con señal',
-            'Recordatorios automáticos por WhatsApp',
-            'Control de inventario en tiempo real',
-            'Pedidos automáticos a proveedores',
-            'Dashboard de ventas actualizado en vivo'
-        ],
-        keywords: 'restaurante, bar, hosteleria, reservas restaurante, gestion restaurante'
+        solutions: ['Gestión de cabinas', 'Bonos de sesiones', 'Recordatorios WhatsApp'],
+        keywords: 'estetica, centro belleza, tratamientos'
     },
     {
         id: 'clinicas',
-        name: 'Clínicas y Centros Médicos',
+        name: 'Clínicas Privadas',
         slug: 'clinicas',
-        icon: '🏥',
-        description: 'Automatización para clínicas, consultas y centros de salud',
+        icon: 'Stethoscope',
+        description: 'Organización profesional de pacientes y consultas',
+        segmentId: 'citas-agenda',
         problems: [
             {
-                problem: "Pacientes que olvidan la cita o cancelan 10 min antes. Ese hueco ya no lo llenas y pierdes dinero.",
-                solution: "Sistema de confirmación por WhatsApp 48h antes. Si cancelan, el sistema avisa automáticamente a la lista de espera.",
-                result: "Agenda siempre llena. Si alguien falla, el hueco se cubre solo en minutos."
-            },
-            {
-                problem: "Llamadas constantes para cosas simples: '¿A qué hora abren?', '¿Tenéis cita para hoy?', interrumpiendo consultas.",
-                solution: "Agente virtual inteligente en WhatsApp que responde dudas básicas y agenda citas sin intervención humana.",
-                result: "Recepción tranquila. El personal se centra en atender al paciente que está delante."
+                problem: "El teléfono no para de sonar para preguntar horarios, interrumpiendo la consulta.",
+                solution: "Un asistente que responde dudas básicas y da citas por WhatsApp automáticamente.",
+                result: "Silencio en recepción. Calma para atender al paciente."
             }
         ],
-        solutions: [
-            'Sistema de citas con recordatorios automáticos',
-            'Gestión digital de historiales médicos',
-            'Confirmaciones automáticas por SMS/WhatsApp',
-            'Facturación integrada con mutuas',
-            'Seguimientos automáticos programados'
-        ],
-        keywords: 'clinica, centro medico, consulta, gestion pacientes, citas medicas'
+        solutions: ['Gestión de pacientes', 'Recordatorios de salud', 'Facturación inmediata'],
+        keywords: 'clinica, consulta medica, gestion pacientes'
     },
+    {
+        id: 'fisioterapia',
+        name: 'Fisioterapia',
+        slug: 'fisioterapia',
+        icon: 'Activity',
+        description: 'Gestión de sesiones y seguimiento de pacientes',
+        segmentId: 'citas-agenda',
+        problems: [
+            {
+                problem: "Pacientes que cancelan a última hora y pierdes el hueco del especialista.",
+                solution: "Sistema de confirmación obligatoria 24h antes. Si cancelan, se ofrece el hueco a la lista de espera.",
+                result: "Sala siempre llena y facturando."
+            }
+        ],
+        solutions: ['Listas de espera automáticas', 'Bonos de fisioterapia', 'Fichas de seguimiento'],
+        keywords: 'fisioterapeuta, fisio, rehabilitacion'
+    },
+    {
+        id: 'psicologia',
+        name: 'Psicología',
+        slug: 'psicologia',
+        icon: 'Brain',
+        description: 'Privacidad y organización para consultas de psicología',
+        segmentId: 'citas-agenda',
+        problems: [
+            {
+                problem: "Mucho tiempo perdido cuadrando sesiones y confirmando asistencias por email.",
+                solution: "Autogestión de citas para el paciente con total privacidad.",
+                result: "Más tiempo para tus sesiones y menos para el Excel."
+            }
+        ],
+        solutions: ['Privacidad blindada', 'Pagos online', 'Recordatorios discretos'],
+        keywords: 'psicologo, terapia, consulta psicologia'
+    },
+    {
+        id: 'bienestar',
+        name: 'Centros de Bienestar',
+        slug: 'bienestar',
+        icon: 'Sun',
+        description: 'Gestión de espacios y clases para centros wellness',
+        segmentId: 'citas-agenda',
+        problems: [
+            {
+                problem: "Controlar quién ha pagado el bono y cuántas sesiones le quedan es un lío de papeles.",
+                solution: "Control digital de bonos. Se descuentan solos al entrar.",
+                result: "Control total de ingresos y asistencia."
+            }
+        ],
+        solutions: ['Control de aforo', 'Gestión de bonos', 'Reservas de clases'],
+        keywords: 'wellness, yoga, pilates, bienestar'
+    },
+    {
+        id: 'academias',
+        name: 'Academias Pequeñas',
+        slug: 'academias',
+        icon: 'GraduationCap',
+        description: 'Control de grupos, cobros y asistencia para centros de formación',
+        segmentId: 'citas-agenda',
+        problems: [
+            {
+                problem: "Pasar recibos todos los meses y perseguir a los que no pagan es agotador.",
+                solution: "Cobro automático por tarjeta o domiciliación cada mes.",
+                result: "Cobras el día 1 sin mover un dedo."
+            }
+        ],
+        solutions: ['Pagos recurrentes', 'Control de asistencia', 'Comunicación con alumnos'],
+        keywords: 'academia, clases particulares, cursos'
+    },
+    {
+        id: 'entrenadores',
+        name: 'Entrenadores Personales',
+        slug: 'entrenadores',
+        icon: 'Dumbbell',
+        description: 'Optimización de tiempo y entrenamientos para coaches',
+        segmentId: 'citas-agenda',
+        problems: [
+            {
+                problem: "Pasas más tiempo enviando PDFs por WhatsApp que entrenando.",
+                solution: "Área de cliente con entrenamientos y citas centralizadas.",
+                result: "Orden profesional que te permite cobrar más caro."
+            }
+        ],
+        solutions: ['Reserva de sesiones', 'Pagos por objetivos', 'App de entrenamiento'],
+        keywords: 'coach, fitness, entrenamiento personal'
+    },
+
+    // ATENCIÓN PRESENCIAL
+    {
+        id: 'restaurantes',
+        name: 'Restaurantes',
+        slug: 'restaurantes',
+        icon: 'Utensils',
+        description: 'Control de reservas y flujo de sala para hostelería',
+        segmentId: 'atencion-presencial',
+        problems: [
+            {
+                problem: "Teléfono sonando en mitad del servicio. Camareros estresados anotando mal las mesas.",
+                solution: "Módulo de reserva web que solo deja mesa si realmente hay sitio.",
+                result: "Camareros centrados en servir, no en coger el teléfono."
+            }
+        ],
+        solutions: ['Reservas inteligentes', 'Gestión de mesas', 'Recordatorios SMS'],
+        keywords: 'restaurante, comer, cenas, reservas'
+    },
+    {
+        id: 'hosteleria-org',
+        name: 'Hostelería Organizada',
+        slug: 'hosteleria-org',
+        icon: 'Layers',
+        description: 'Estandarización de procesos para cadenas y grupos',
+        segmentId: 'atencion-presencial',
+        problems: [
+            {
+                problem: "Cada local funciona de una manera. Imposible saber la rentabilidad real de cada uno.",
+                solution: "Sistema centralizado de procesos y KPIs en tiempo real.",
+                result: "Control total de tu negocio desde una pantalla."
+            }
+        ],
+        solutions: ['Control multi-local', 'Estandarización', 'Métricas avanzadas'],
+        keywords: 'franquicia, cadena restaurantes, grupos hosteleros'
+    },
+    {
+        id: 'cafeterias',
+        name: 'Cafeterías con Reservas',
+        slug: 'cafeterias',
+        icon: 'Coffee',
+        description: 'Gestión de desayunos y meriendas grupales',
+        segmentId: 'atencion-presencial',
+        problems: [
+            {
+                problem: "Llegan grupos sin avisar y tienes que decir que no porque no tienes sitio montado.",
+                solution: "Fomentar la reserva online para grupos grandes con pre-pago si es necesario.",
+                result: "Ventas aseguradas y local bien organizado."
+            }
+        ],
+        solutions: ['Reservas de grupos', 'Venta anticipada', 'Control de rotación'],
+        keywords: 'cafeteria, brunch, meriendas'
+    },
+    {
+        id: 'bares-aforo',
+        name: 'Bares con Control de Aforo',
+        slug: 'bares-aforo',
+        icon: 'GlassWater',
+        description: 'Gestión de listas y entradas para locales nocturnos',
+        segmentId: 'atencion-presencial',
+        problems: [
+            {
+                problem: "Colas interminables en la puerta y líos con las listas VIP.",
+                solution: "Códigos QR de entrada y control de aforo en tiempo real desde el móvil.",
+                result: "Puerta rápida y control total de quién entra."
+            }
+        ],
+        solutions: ['Control QR', 'Listas online', 'Preventa de entradas'],
+        keywords: 'pub, discoteca, bar copas'
+    },
+
+    // SERVICIOS TÉCNICOS
     {
         id: 'talleres',
-        name: 'Talleres y Servicios Técnicos',
+        name: 'Talleres Mecánicos',
         slug: 'talleres',
-        icon: '🔧',
-        description: 'Soluciones para talleres mecánicos, fontaneros, electricistas',
+        icon: 'Wrench',
+        description: 'Control de reparaciones y recambios para automoción',
+        segmentId: 'servicios-tecnicos',
         problems: [
             {
-                problem: "Terminas la reparación y dices 'luego te paso la factura'. Llegas a casa reventado y se te olvida.",
-                solution: "La factura se genera en el móvil antes de arrancar la furgoneta. Un clic y enviada.",
-                result: "Cobras mucho antes. Duermes tranquilo sin 'deber' emails."
-            },
-            {
-                problem: "Te llaman mientras estás con una tubería rota. No coges. Pierdes el trabajo.",
-                solution: "Contestador automático inteligente que envía un WhatsApp: 'Estoy en una urgencia, dime qué necesitas y te llamo en 1h'.",
-                result: "El cliente se siente atendido. Tú trabajas sin interrupciones."
+                problem: "Coches que se quedan semanas porque falta una pieza que no pediste a tiempo.",
+                solution: "Control de stock crítico. El sistema pide la pieza al proveedor en cuanto abres la orden.",
+                result: "Reparaciones más rápidas y coches fuera del taller antes."
             }
         ],
-        solutions: [
-            'Facturación desde móvil en 30 segundos',
-            'Sistema de gestión de trabajos pendientes',
-            'Presupuestos digitales con seguimiento',
-            'Control de stock de repuestos',
-            'Recordatorios automáticos de pago'
-        ],
-        keywords: 'taller mecanico, fontanero, electricista, servicios tecnicos, reparaciones'
+        solutions: ['Orden de trabajo digital', 'Control de stock', 'Facturación inmediata'],
+        keywords: 'taller, mecanico, coches, reparacion'
     },
     {
-        id: 'tatuajes',
-        name: 'Estudios de Tatuajes',
-        slug: 'tatuajes',
-        icon: '🎨',
-        description: 'Gestión creativa y técnica para estudios de tatuajes y piercings',
+        id: 'servicios-tec',
+        name: 'Servicios Técnicos',
+        slug: 'servicios-tec',
+        icon: 'Cable',
+        description: 'Organización de avisos y reparaciones a domicilio',
+        segmentId: 'servicios-tecnicos',
         problems: [
             {
-                problem: "Pasas horas diseñando bocetos para clientes que luego cambian de idea o no pagan el depósito.",
-                solution: "Regla: No se empieza ningún diseño sin un formulario de ideas previo y el pago de una señal.",
-                result: "Solo diseñas para quien paga. Valoran más tu tiempo y tu arte."
-            },
-            {
-                problem: "El consentimiento informado es un papel que a veces se pierde o se mancha de tinta.",
-                solution: "Formulario digital en tablet antes de sentarse. Se guarda solo en la nube, organizado por fecha.",
-                result: "Legalmente cubierto siempre. Cero papeles por el estudio."
+                problem: "Técnicos que pierden los papeles de los avisos o no anotan bien los materiales.",
+                solution: "App donde el técnico anota todo en el momento. El cliente firma en el móvil.",
+                result: "Cero papeles perdidos y facturas sin errores."
             }
         ],
-        solutions: [
-            'Gestión de depósitos y citas online',
-            'Consentimientos informados digitales',
-            'Galería de diseños y portafolio automático',
-            'Seguimiento post-tatuaje automático',
-            'Control de stock de agujas y tintas'
-        ],
-        keywords: 'tatuaje, tattoo studio, gestion estudio tatuajes, cita tatuaje'
+        solutions: ['Gestión de partes', 'Firma digital', 'Geolocalización'],
+        keywords: 'reparaciones, sat, servicio tecnico'
     },
     {
-        id: 'agencias',
-        name: 'Agencias y Consultoras',
-        slug: 'agencias',
-        icon: '🚀',
-        description: 'Automatización de procesos para agencias de marketing, desarrollo y consultoría',
+        id: 'instaladores',
+        name: 'Instaladores',
+        slug: 'instaladores',
+        icon: 'HardHat',
+        description: 'Control de obras y mantenimientos para aire, luz o agua',
+        segmentId: 'servicios-tecnicos',
         problems: [
             {
-                problem: "Persiguiendo clientes para que te envíen el logo, los textos o las claves. El proyecto se retrasa semanas.",
-                solution: "Onboarding automático. Formulario con checklist que 'persigue' suavemente al cliente hasta que entrega todo.",
-                result: "Proyectos que arrancan a tiempo. Tú no haces de 'policía malo', lo hace el sistema."
-            },
-            {
-                problem: "Haces un presupuesto, lo envías y... silencio. Se te olvida hacer seguimiento entre tanto lío.",
-                solution: "Pipeline de ventas. Si no responden en 3 días, email automático: '¿Pudiste revisarlo?'.",
-                result: "Cierras más ventas por simple insistencia educada y automática."
+                problem: "Terminas la obra y tardas 1 semana en hacer la factura. El cliente se enfría y tarda en pagar.",
+                solution: "Factura enviada en cuanto el instalador sale de la casa del cliente.",
+                result: "Mejora brutal del flujo de caja."
             }
         ],
-        solutions: [
-            'Onboarding de clientes automático',
-            'Gestión de proyectos y tareas',
-            'Facturación recurrente y suscripciones',
-            'Pipeline de ventas automatizado',
-            'Reportes de rentabilidad por proyecto'
-        ],
-        keywords: 'agencia marketing, consultoría, gestion proyectos, onboarding clientes'
+        solutions: ['Presupuestos express', 'Control de obra', 'Certificados digitales'],
+        keywords: 'aire acondicionado, electricista, fontanero'
     },
+    {
+        id: 'mantenimiento',
+        name: 'Empresas de Mantenimiento',
+        slug: 'mantenimiento',
+        icon: 'Hammer',
+        description: 'Sistemas preventivos para edificios y empresas',
+        segmentId: 'servicios-tecnicos',
+        problems: [
+            {
+                problem: "Se te olvidan las revisiones obligatorias. Riesgo de multas y mal servicio.",
+                solution: "Calendario de preventivos que avisa solo y genera la orden de trabajo.",
+                result: "Cumplimiento legal 100% sin esfuerzo."
+            }
+        ],
+        solutions: ['Mantenimiento preventivo', 'Contratos recurrentes', 'Gestión de activos'],
+        keywords: 'comunidades, mantenimiento industrial, revisiones'
+    },
+
+    // VENTA DE PRODUCTO
     {
         id: 'comercios',
-        name: 'Comercios y Tiendas',
+        name: 'Comercios Locales',
         slug: 'comercios',
-        icon: '🏪',
-        description: 'Automatización para tiendas físicas y comercios locales',
+        icon: 'Store',
+        description: 'Digitalización del comercio de proximidad',
+        segmentId: 'venta-producto',
         problems: [
             {
-                problem: "Inventario descontrolado y no sabes realmente cuánto ganas al final del mes.",
-                solution: "Sistema de punto de venta (TPV) integrado con control de stock automático.",
-                result: "Sabes exactamente qué vendes y qué tienes que reponer."
+                problem: "No sabes qué productos te dejan dinero y cuáles solo ocupan sitio.",
+                solution: "Informes de rentabilidad por producto. Compra solo lo que vendes.",
+                result: "Estanterías productivas y caja con dinero."
             }
         ],
-        solutions: [
-            'Sistema de punto de venta (TPV) integrado',
-            'Control de inventario automático',
-            'Dashboard de ventas en tiempo real',
-            'Pedidos automáticos cuando stock es bajo',
-            'Reportes de rentabilidad automáticos'
+        solutions: ['TPV inteligente', 'Gestión de stock', 'Fidelización'],
+        keywords: 'tienda barrio, comercio, retail'
+    },
+    {
+        id: 'tiendas-esp',
+        name: 'Tiendas Especializadas',
+        slug: 'tiendas-esp',
+        icon: 'ShoppingBag',
+        description: 'Gestión de catálogo complejo y nicho',
+        segmentId: 'venta-producto',
+        problems: [
+            {
+                problem: "Vender en tienda y en web a la vez es un lío de stock. Vendes lo que no tienes.",
+                solution: "Stock único sincronizado. Si se vende en tienda, desaparece de la web.",
+                result: "Cero problemas con clientes online."
+            }
         ],
-        keywords: 'tienda, comercio, punto de venta, tpv, gestion tienda'
+        solutions: ['Sincronización web', 'Atributos de producto', 'Gestión de envíos'],
+        keywords: 'musica, deportes, hobby'
+    },
+    {
+        id: 'negocios-fisicos',
+        name: 'Negocios Físicos de Producto',
+        slug: 'negocios-fisicos',
+        icon: 'Box',
+        description: 'Control de almacén y venta para distribuidores locales',
+        segmentId: 'venta-producto',
+        problems: [
+            {
+                problem: "El almacén es un caos. Tardas más en encontrar el producto que en venderlo.",
+                solution: "Organización por ubicaciones digitalizada. Escaneas y encuentras.",
+                result: "Operativa rápida y sin fallos de envío."
+            }
+        ],
+        solutions: ['Control de almacén', 'Picking por móvil', 'Logística local'],
+        keywords: 'almacen, distribucion, suministros'
+    },
+
+    // SERVICIOS PROFESIONALES
+    {
+        id: 'agencias',
+        name: 'Agencias Creativas',
+        slug: 'agencias',
+        icon: 'Rocket',
+        description: 'Estandarización de entregas para marketing y diseño',
+        segmentId: 'servicios-profesionales',
+        problems: [
+            {
+                problem: "Proyectos que no terminan nunca. El cliente pide y pide cambios.",
+                solution: "Hitos de proyecto cerrados y firmados digitalmente antes de seguir.",
+                result: "Proyectos rentables que se cierran a tiempo."
+            }
+        ],
+        solutions: ['Gestión de proyectos', 'Hitos de cobro', 'Comunicación cliente'],
+        keywords: 'marketing, publicidad, social media'
+    },
+    {
+        id: 'estudios-diseno',
+        name: 'Estudios de Diseño',
+        slug: 'estudios-diseno',
+        icon: 'Palette',
+        description: 'Flujo de trabajo creativo optimizado',
+        segmentId: 'servicios-profesionales',
+        problems: [
+            {
+                problem: "Persiguiendo al cliente para que te envíe el logo o los textos.",
+                solution: "Onboarding automático. Si no envían el material, el proyecto no arranca.",
+                result: "Tú diseñas, el sistema gestiona los archivos."
+            }
+        ],
+        solutions: ['Recogida de archivos', 'Aprobaciones online', 'Control de horas'],
+        keywords: 'branding, diseño grafico, web'
+    },
+    {
+        id: 'arquitectos',
+        name: 'Arquitectos',
+        slug: 'arquitectos',
+        icon: 'Ruler',
+        description: 'Control de fases y visados para estudios de arquitectura',
+        segmentId: 'servicios-profesionales',
+        problems: [
+            {
+                problem: "Lío con las versiones de los planos y la documentación técnica.",
+                solution: "Repositorio único por proyecto con control de versiones.",
+                result: "Seguridad total en lo que se entrega al visado."
+            }
+        ],
+        solutions: ['Gestión documental', 'Hitos de obra', 'Presupuestos técnicos'],
+        keywords: 'arquitectura, proyectos, planos'
+    },
+    {
+        id: 'interiorismo',
+        name: 'Interiorismo',
+        slug: 'interiorismo',
+        icon: 'Armchair',
+        description: 'Gestión de compras y proveedores para proyectos de interior',
+        segmentId: 'servicios-profesionales',
+        problems: [
+            {
+                problem: "Controlar presupuestos de 10 proveedores distintos para una sola reforma.",
+                solution: "Consolidador de presupuestos por proyecto técnico.",
+                result: "Margen controlado al céntimo."
+            }
+        ],
+        solutions: ['Lista de la compra', 'Presupuestos cliente', 'Control de montajes'],
+        keywords: 'decoracion, reformas, muebles'
+    },
+    {
+        id: 'consultores',
+        name: 'Consultores Locales',
+        slug: 'consultores',
+        icon: 'Briefcase',
+        description: 'Venta de conocimiento y servicios de asesoría',
+        segmentId: 'servicios-profesionales',
+        problems: [
+            {
+                problem: "Mucho tiempo en reuniones gratuitas que no llegan a nada.",
+                solution: "Sistema de pago previo para consultorías estratégicas.",
+                result: "Solo hablas con quien valora tu tiempo."
+            }
+        ],
+        solutions: ['Venta de sesiones', 'Portal de cliente', 'Automatización legal'],
+        keywords: 'asesoria, abogado, consultoria'
     }
 ];
 
@@ -218,4 +452,3 @@ export const getSectorBySlug = (slug) => {
 export const getAllSectorSlugs = () => {
     return sectors.map(s => s.slug);
 };
-

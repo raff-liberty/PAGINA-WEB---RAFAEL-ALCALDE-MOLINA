@@ -244,7 +244,20 @@ const SectorLocationPage = () => {
                             ))}
                         </div>
 
-                        <div className="mt-20 text-center relative z-10">
+                        <div className="mt-20 text-center relative z-10 max-w-2xl mx-auto">
+                            <div className="mb-10 p-6 bg-white/5 border border-white/10 rounded-2xl">
+                                <p className="text-gray-400 text-sm mb-4 uppercase tracking-widest font-bold">Solución Estructural</p>
+                                <h4 className="text-white text-xl font-bold mb-4">
+                                    Este sector pertenece al modelo de <span className="text-primary tracking-tight">Negocio basado en {sector.name.includes('Peluquerías') || sector.name.includes('Clínicas') || sector.name.includes('Tatuajes') ? 'Citas y Agenda' : sector.name.includes('Restaurantes') ? 'Atención Presencial' : sector.name.includes('Talleres') ? 'Servicios Técnicos' : sector.name.includes('Agencias') ? 'Proyectos' : 'Venta de Producto'}</span>.
+                                </h4>
+                                <Link
+                                    to={`/segmentos/${sector.slug === 'peluquerias' || sector.slug === 'clinicas' || sector.slug === 'tatuajes' ? 'citas-agenda' : sector.slug === 'restaurantes' ? 'atencion-presencial' : sector.slug === 'talleres' ? 'servicios-tecnicos' : sector.slug === 'agencias' ? 'servicios-profesionales' : 'venta-producto'}`}
+                                    className="text-primary hover:text-white transition-colors inline-flex items-center gap-2 font-bold"
+                                >
+                                    Descubre por qué tu problema es estructural →
+                                </Link>
+                            </div>
+
                             <Link
                                 to="/contact"
                                 className="group relative inline-flex items-center gap-4 bg-primary text-black font-bold text-xl px-12 py-6 rounded-2xl hover:scale-105 transition-all shadow-[0_15px_40px_rgba(110,231,183,0.4)]"

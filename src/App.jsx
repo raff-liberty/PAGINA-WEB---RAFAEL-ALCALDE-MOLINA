@@ -30,6 +30,7 @@ const SectorsDirectory = lazy(() => import('./pages/SectorsDirectory'));
 const AdminPanel = lazy(() => import('./pages/AdminPanel'));
 const Diagnosis = lazy(() => import('./pages/Diagnosis'));
 const ChaosLanding = lazy(() => import('./pages/ChaosLanding'));
+const SegmentLanding = lazy(() => import('./pages/SegmentLanding'));
 import { supabase } from './lib/supabaseClient';
 
 import { useAnalytics } from './lib/useAnalytics';
@@ -73,6 +74,8 @@ function App() {
                                 <Route path="/admin" element={<AdminPanel />} />
                                 <Route path="/diagnostico" element={<Diagnosis />} />
                                 <Route path="/caos-operativo" element={<ChaosLanding />} />
+                                <Route path="/segmentos/:segmentId" element={<SegmentLanding />} />
+                                <Route path="/:sector" element={<SectorLocationPage />} />
                                 <Route path="/:sector/:location" element={<SectorLocationPage />} />
                             </Routes>
                         </Suspense>
