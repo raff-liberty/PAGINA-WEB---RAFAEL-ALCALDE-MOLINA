@@ -93,10 +93,9 @@ const generateSitemap = () => {
     return xml;
 };
 
-// Write to file (using absolute path to be safe in constrained environments)
+// Write to file
 const sitemapContent = generateSitemap();
-const outputPath = 'd:/ANTES DE HACER - RAFAEL web/stitch_homepage/public/sitemap.xml';
-fs.writeFileSync(outputPath, sitemapContent);
+fs.writeFileSync('public/sitemap.xml', sitemapContent);
 
 // Calculate totals
 const totalUrls = sitemapContent.split('<url>').length - 1;
