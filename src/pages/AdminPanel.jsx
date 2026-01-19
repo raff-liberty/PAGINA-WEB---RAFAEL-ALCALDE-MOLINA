@@ -30,6 +30,7 @@ const AdminPanel = () => {
         { id: 'landings', label: 'Landings SEO', icon: Globe },
         { id: 'sectors', label: 'Sectores', icon: Briefcase },
         { id: 'locations', label: 'Localizaciones', icon: MapPin },
+        { id: 'images', label: 'Imágenes', icon: Upload },
         { id: 'analytics', label: 'Analíticas', icon: BarChart3 },
         { id: 'guidelines', label: 'Línea Editorial', icon: BookOpen },
         { id: 'stats', label: 'Estadísticas', icon: ClipboardList },
@@ -1321,6 +1322,27 @@ const AdminPanel = () => {
                     </div>
                 </div>
 
+                {activeTab === 'images' && (
+                    <div className="bg-[#222222] border border-white/30 rounded-2xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.9)]">
+                        <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                            <Upload className="w-6 h-6 text-primary" />
+                            Gestión de Imágenes
+                        </h2>
+                        <p className="text-gray-400 mb-6">
+                            Sube y gestiona las imágenes para redes sociales (RRSS), Open Graph y otros usos.
+                        </p>
+                        <ImageGallery
+                            isOpen={true}
+                            embedded={true}
+                            onClose={() => { }}
+                            onSelectImage={(url) => {
+                                navigator.clipboard.writeText(url);
+                                alert('URL copiada al portapapeles: ' + url);
+                            }}
+                        />
+                    </div>
+                )}
+
                 {activeTab === 'guidelines' && (
                     <div className="bg-[#222222] border border-white/30 rounded-2xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.9)]">
                         <div className="prose prose-invert max-w-none">
@@ -2523,6 +2545,17 @@ const AdminPanel = () => {
                                 </div>
                             </div>
                         </div>
+
+                        {/* Image Gallery Modal */}
+                        <ImageGallery
+                            isOpen={showImageGallery}
+                            onClose={() => setShowImageGallery(false)}
+                            onSelectImage={(url) => {
+                                setSiteConfig({ ...siteConfig, og_image_url: url });
+                                setShowImageGallery(false);
+                            }}
+                            selectedUrl={siteConfig.og_image_url}
+                        />
                     </div>
                 )}
 
