@@ -1,10 +1,239 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { MapPin, ArrowRight, CheckCircle, AlertTriangle, Brain, ShieldCheck, Zap, XCircle, HelpCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { MapPin, ArrowRight, CheckCircle, AlertTriangle, Brain, ShieldCheck, Zap, XCircle, HelpCircle, Flame, Sword, Trophy, Sparkles, User, Info } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
 import BackgroundMesh from '../components/BackgroundMesh';
 import SEO from '../components/SEO';
+
+const HeroJourney = () => {
+    const stories = [
+        {
+            id: 'burnout',
+            title: "El Esclavo del Tinte",
+            tag: "GESTIÓN DE TIEMPO",
+            stages: [
+                {
+                    title: "El Abismo",
+                    icon: Flame,
+                    text: "Atado al móvil mientras aplicaba un tinte. Un mensaje de WhatsApp mal leído. Una cita solapada. El estrés de no saber si hoy comería a su hora por el caos de la agenda.",
+                    color: "text-red-400",
+                    bg: "bg-red-400/10"
+                },
+                {
+                    title: "El Despertar",
+                    icon: Sword,
+                    text: "Engorilate entró en la peluquería. No traía tijeras, traía lógica. El móvil se guardó en el cajón. Las citas empezaron a entrar solas, filtradas por un motor que no duerme.",
+                    color: "text-primary",
+                    bg: "bg-primary/10"
+                },
+                {
+                    title: "La Maestría",
+                    icon: Trophy,
+                    text: "Hoy, corta el pelo con música de fondo. Su única preocupación es el degradado perfecto. Su tiempo vuelve a ser suyo. El negocio factura más, trabajando él menos.",
+                    color: "text-yellow-400",
+                    bg: "bg-yellow-400/10"
+                }
+            ]
+        },
+        {
+            id: 'ghost',
+            title: "El Fantasma de los Sábados",
+            tag: "ANTI-PLANTONES",
+            stages: [
+                {
+                    title: "El Abismo",
+                    icon: Flame,
+                    text: "Sábado, 11:00 AM. Una mañana perdida. El cliente 'VIP' que nunca llegó. 50€ menos en caja. La impotencia de mirar una silla vacía mientras fuera llueven peticiones de cita.",
+                    color: "text-red-400",
+                    bg: "bg-red-400/10"
+                },
+                {
+                    title: "El Despertar",
+                    icon: Sword,
+                    text: "Inyectamos el blindaje anti-plantones. El sistema exige compromiso: si no hay señal, no hay silla. Si no confirman, el hueco se subasta al siguiente de la lista automáticamente.",
+                    color: "text-primary",
+                    bg: "bg-primary/10"
+                },
+                {
+                    title: "La Maestría",
+                    icon: Trophy,
+                    text: "Ya no hay sillas vacías por descuido. Solo clientes que valoran cada minuto del profesional. La caja cuadra al céntimo antes de abrir la puerta cada mañana.",
+                    color: "text-yellow-400",
+                    bg: "bg-yellow-400/10"
+                }
+            ]
+        },
+        {
+            id: 'stock',
+            title: "El Alquimista Ciego",
+            tag: "CONTROL DE STOCK",
+            stages: [
+                {
+                    title: "El Abismo",
+                    icon: Flame,
+                    text: "Abrió el armario y el bote estaba vacío. No había tinte #5. Tuvo que improvisar una mezcla que no era la suya. El miedo a perder la confianza del cliente por falta de previsión.",
+                    color: "text-red-400",
+                    bg: "bg-red-400/10"
+                },
+                {
+                    title: "El Despertar",
+                    icon: Sword,
+                    text: "Digitalizamos cada gota. El sistema predice el gasto basado en servicios reales. El pedido al proveedor se genera solo antes de que el estante se quede vacío.",
+                    color: "text-primary",
+                    bg: "bg-primary/10"
+                },
+                {
+                    title: "La Maestría",
+                    icon: Trophy,
+                    text: "Control total. Nunca falta, nunca sobra. El margen de beneficios subió un 12% solo por eliminar el desperdicio y las compras de pánico de última hora.",
+                    color: "text-yellow-400",
+                    bg: "bg-yellow-400/10"
+                }
+            ]
+        },
+        {
+            id: 'tech',
+            title: "El Muro de Cristal",
+            tag: "DIGITALIZACIÓN",
+            stages: [
+                {
+                    title: "El Abismo",
+                    icon: Flame,
+                    text: "Creyó que la tecnología era para 'grandes cadenas'. Que su libreta azul era sagrada. Hasta que la libreta se mojó y los nombres se borraron. El pánico de perder 10 años de contactos.",
+                    color: "text-red-400",
+                    bg: "bg-red-400/10"
+                },
+                {
+                    title: "El Despertar",
+                    icon: Sword,
+                    text: "No le obligamos a programar. Le entregamos un tablero de mando humano. Tan simple como pulsar un icono. Tan potente como un ejército de secretarias trabajando 24/7.",
+                    color: "text-primary",
+                    bg: "bg-primary/10"
+                },
+                {
+                    title: "La Maestría",
+                    icon: Trophy,
+                    text: "Ahora su Peluquería es el referente tecnológico del barrio. No volvió a comprar una libreta. Su mente está libre para crear, no para recordar nombres y horas.",
+                    color: "text-yellow-400",
+                    bg: "bg-yellow-400/10"
+                }
+            ]
+        },
+        {
+            id: 'empire',
+            title: "El Imperio de la Calma",
+            tag: "ESCALABILIDAD",
+            stages: [
+                {
+                    title: "El Abismo",
+                    icon: Flame,
+                    text: "Tenía 3 locales y 3 mil problemas. Cada día era un incendio que apagar. Estaba a punto de cerrar uno por puro agotamiento mental y falta de control real.",
+                    color: "text-red-400",
+                    bg: "bg-red-400/10"
+                },
+                {
+                    title: "El Despertar",
+                    icon: Sword,
+                    text: "Centralizamos la inteligencia. Reglas de oro aplicadas a cada local por igual. Paneles de control que le dicen la verdad del negocio desde su propia casa.",
+                    color: "text-primary",
+                    bg: "bg-primary/10"
+                },
+                {
+                    title: "La Maestría",
+                    icon: Trophy,
+                    text: "Hoy factura el triple con la mitad de personal de gestión. Está buscando local para el cuarto negocio. Dejó de ser el bombero para ser el arquitecto de su empresa.",
+                    color: "text-yellow-400",
+                    bg: "bg-yellow-400/10"
+                }
+            ]
+        }
+    ];
+
+    const [activeStory, setActiveStory] = useState(0);
+
+    return (
+        <div className="mb-32">
+            <div className="text-center mb-16">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold mb-6 uppercase tracking-widest">
+                    <Sparkles className="w-4 h-4" /> Historias de Transformación
+                </div>
+                <h2 className="font-display text-4xl md:text-6xl font-bold text-white mb-6">
+                    Del Caos a la <span className="text-primary italic">Maestría Operativa</span>
+                </h2>
+                <p className="text-gray-400 text-xl font-light max-w-3xl mx-auto">
+                    Cinco historias reales (aunque con nombres cambiados) de cómo la automatización salvó negocios que estaban al borde del colapso.
+                </p>
+            </div>
+
+            {/* Selector de historias */}
+            <div className="flex flex-wrap justify-center gap-4 mb-12">
+                {stories.map((story, idx) => (
+                    <button
+                        key={story.id}
+                        onClick={() => setActiveStory(idx)}
+                        className={`px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 border ${activeStory === idx
+                            ? 'bg-primary text-black border-primary shadow-[0_0_20px_rgba(110,231,183,0.3)]'
+                            : 'bg-white/5 text-gray-400 border-white/10 hover:border-primary/40'
+                            }`}
+                    >
+                        {story.title}
+                    </button>
+                ))}
+            </div>
+
+            {/* Caja del Viaje del Héroe */}
+            <AnimatePresence mode="wait">
+                <motion.div
+                    key={activeStory}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.5 }}
+                    className="grid grid-cols-1 lg:grid-cols-3 gap-8 p-1 bg-gradient-to-br from-white/10 to-transparent rounded-[3rem] overflow-hidden"
+                >
+                    {stories[activeStory].stages.map((stage, sIdx) => (
+                        <div
+                            key={sIdx}
+                            className="relative bg-[#0a0a0a] p-10 md:p-12 h-full flex flex-col group"
+                        >
+                            {/* Connector line for desktop */}
+                            {sIdx < 2 && (
+                                <div className="hidden lg:block absolute top-1/2 -right-4 w-8 h-[2px] bg-gradient-to-r from-primary/30 to-transparent z-20"></div>
+                            )}
+
+                            <div className={`w-14 h-14 rounded-2xl ${stage.bg} ${stage.color} flex items-center justify-center mb-8 shadow-inner`}>
+                                <stage.icon className="w-7 h-7" />
+                            </div>
+
+                            <div className="mb-4">
+                                <span className={`text-[10px] font-bold uppercase tracking-[0.2em] ${stage.color}`}>
+                                    Etapa 0{sIdx + 1}
+                                </span>
+                                <h3 className="text-2xl font-bold text-white mt-1">{stage.title}</h3>
+                            </div>
+
+                            <p className="text-gray-400 font-light leading-relaxed text-lg">
+                                {stage.text}
+                            </p>
+
+                            {/* Corner indicator */}
+                            <div className={`absolute bottom-6 right-6 opacity-5 group-hover:opacity-20 transition-opacity`}>
+                                <stage.icon className="w-16 h-16" />
+                            </div>
+                        </div>
+                    ))}
+                </motion.div>
+            </AnimatePresence>
+
+            <div className="mt-12 text-center">
+                <p className="text-gray-500 font-mono text-xs uppercase tracking-widest">
+                    Misión Actual: <span className="text-primary">{stories[activeStory].tag}</span>
+                </p>
+            </div>
+        </div>
+    );
+};
 
 const SectorLocationPage = () => {
     const { sector: sectorSlug, location: locationSlug } = useParams();
@@ -190,6 +419,9 @@ const SectorLocationPage = () => {
                         </div>
                     </div>
 
+                    {/* Epic Hero's Journey Section */}
+                    {sector && sector.slug === 'peluquerias' && <HeroJourney />}
+
                     {/* The Engorilate Methodology Redesign */}
                     <div className="relative mb-32 overflow-hidden rounded-[3.5rem] border border-white/10 bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] p-10 md:p-24 shadow-[0_20px_60px_rgba(0,0,0,0.6)]">
                         {/* Background decoration */}
@@ -326,27 +558,145 @@ const SectorLocationPage = () => {
                         </div>
                     </div>
 
-                    {/* CTA Bottom (Integrated) */}
-                    <div className="relative bg-gradient-to-br from-[#222222] to-[#111111] border border-white/20 p-12 md:p-20 rounded-[3rem] overflow-hidden text-center shadow-3xl">
+                    {/* CTA Bottom with Contact Form */}
+                    <div className="relative bg-gradient-to-br from-[#222222] to-[#111111] border border-white/20 p-12 md:p-20 rounded-[3rem] overflow-hidden shadow-3xl">
                         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 blur-[100px] -mr-32 -mt-32"></div>
-                        <div className="relative z-10 max-w-2xl mx-auto">
-                            <h3 className="font-display text-3xl md:text-5xl font-bold text-white mb-8">
+                        <div className="relative z-10 max-w-3xl mx-auto">
+                            <h3 className="font-display text-3xl md:text-5xl font-bold text-white mb-6 text-center">
                                 ¿Hablamos sobre tu <span className="text-primary">{sector.name.toLowerCase().replace(/s$/, '')}</span> en {location.name}?
                             </h3>
-                            <p className="text-xl text-gray-400 mb-12 leading-relaxed font-light">
-                                Si estás cansado de que el día a día te coma y quieres que tu negocio empiece a trabajar para ti, agendemos un café virtual.
+                            <p className="text-xl text-gray-400 mb-12 leading-relaxed font-light text-center">
+                                Si estás cansado de que el día a día te coma y quieres que tu negocio empiece a trabajar para ti, déjanos tus datos.
                             </p>
-                            <div className="flex flex-col items-center gap-6">
-                                <Link
-                                    to="/contact"
-                                    className="group relative inline-flex items-center gap-4 bg-white text-black font-bold text-xl px-12 py-6 rounded-2xl hover:bg-primary transition-all transform hover:scale-105 shadow-2xl"
+
+                            {/* Contact Form */}
+                            <form
+                                action="https://formspree.io/f/xwpkqbvz"
+                                method="POST"
+                                className="space-y-6 mb-12"
+                            >
+                                <input type="hidden" name="_subject" value={`Contacto desde ${sector.name} en ${location.name}`} />
+                                <input type="hidden" name="sector" value={sector.name} />
+                                <input type="hidden" name="location" value={location.name} />
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label htmlFor="name" className="block text-sm font-bold text-primary mb-2">
+                                            Nombre *
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="name"
+                                            name="name"
+                                            required
+                                            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                                            placeholder="Tu nombre"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="email" className="block text-sm font-bold text-primary mb-2">
+                                            Email *
+                                        </label>
+                                        <input
+                                            type="email"
+                                            id="email"
+                                            name="email"
+                                            required
+                                            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                                            placeholder="tu@email.com"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label htmlFor="phone" className="block text-sm font-bold text-primary mb-2">
+                                        Teléfono
+                                    </label>
+                                    <input
+                                        type="tel"
+                                        id="phone"
+                                        name="phone"
+                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                                        placeholder="+34 600 000 000"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label htmlFor="message" className="block text-sm font-bold text-primary mb-2">
+                                        Cuéntanos tu situación *
+                                    </label>
+                                    <textarea
+                                        id="message"
+                                        name="message"
+                                        required
+                                        rows="4"
+                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all resize-none"
+                                        placeholder="Describe brevemente qué problemas tienes en tu negocio..."
+                                    ></textarea>
+                                </div>
+
+                                <button
+                                    type="submit"
+                                    className="w-full group relative inline-flex items-center justify-center gap-4 bg-primary text-black font-bold text-xl px-12 py-6 rounded-2xl hover:bg-white transition-all transform hover:scale-105 shadow-[0_15px_40px_rgba(110,231,183,0.4)]"
                                 >
-                                    <span>Agendar Diagnóstico Gratuito</span>
+                                    <span>Solicitar Diagnóstico Gratuito</span>
                                     <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-                                </Link>
-                                <div className="flex items-center gap-2 text-gray-500 text-sm font-mono mt-4">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
-                                    Disponible para proyectos en {location.name}
+                                </button>
+
+                                <p className="text-center text-gray-500 text-sm">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse inline-block mr-2"></span>
+                                    Respuesta en menos de 24h · Disponible para proyectos en {location.name}
+                                </p>
+                            </form>
+
+                            {/* Social Media Links */}
+                            <div className="text-center pt-8 border-t border-white/10">
+                                <p className="text-gray-400 font-bold mb-6 uppercase tracking-widest text-sm">
+                                    O síguenos en redes sociales
+                                </p>
+                                <div className="flex justify-center gap-4">
+                                    <a
+                                        href="https://www.linkedin.com/company/engorilate"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="w-14 h-14 flex items-center justify-center bg-white/5 border border-white/10 rounded-full text-primary hover:bg-primary hover:text-black hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-primary/50"
+                                        aria-label="LinkedIn"
+                                    >
+                                        <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                                        </svg>
+                                    </a>
+                                    <a
+                                        href="https://twitter.com/engorilate"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="w-14 h-14 flex items-center justify-center bg-white/5 border border-white/10 rounded-full text-primary hover:bg-primary hover:text-black hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-primary/50"
+                                        aria-label="Twitter/X"
+                                    >
+                                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                                        </svg>
+                                    </a>
+                                    <a
+                                        href="https://www.instagram.com/engorilate"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="w-14 h-14 flex items-center justify-center bg-white/5 border border-white/10 rounded-full text-primary hover:bg-primary hover:text-black hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-primary/50"
+                                        aria-label="Instagram"
+                                    >
+                                        <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                                        </svg>
+                                    </a>
+                                    <a
+                                        href="mailto:contacto@engorilate.com"
+                                        className="w-14 h-14 flex items-center justify-center bg-white/5 border border-white/10 rounded-full text-primary hover:bg-primary hover:text-black hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-primary/50"
+                                        aria-label="Email"
+                                    >
+                                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                        </svg>
+                                    </a>
                                 </div>
                             </div>
                         </div>

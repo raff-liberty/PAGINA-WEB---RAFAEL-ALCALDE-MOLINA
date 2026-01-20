@@ -2253,6 +2253,119 @@ const AdminPanel = () => {
                                 <p className="text-xs text-gray-500 mt-1">URL del video de YouTube para mostrar en la sección "De dónde sale este enfoque" de la página Sobre Mí (formato embed)</p>
                             </div>
 
+                            {/* YouTube URLs por Macrosegmento */}
+                            <div className="mt-8 pt-8 border-t border-white/10">
+                                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                                    <svg className="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                                    </svg>
+                                    Videos YouTube por Sector (Hero Landings)
+                                </h3>
+                                <p className="text-sm text-gray-400 mb-6">
+                                    Cada macrosegmento comparte el mismo video en todas sus landings. El video se mostrará con auto-play y máxima calidad.
+                                </p>
+
+                                <div className="grid grid-cols-1 gap-4">
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-400 mb-2">
+                                            <span className="text-primary font-bold">Peluquerías y Estética</span>
+                                            <span className="text-xs text-gray-600 ml-2">(peluquerías, estética)</span>
+                                        </label>
+                                        <input
+                                            type="text"
+                                            value={siteConfig.youtube_peluquerias || ''}
+                                            onChange={(e) => setSiteConfig({ ...siteConfig, youtube_peluquerias: e.target.value })}
+                                            placeholder="https://www.youtube.com/watch?v=VIDEO_ID"
+                                            className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none font-mono text-sm"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-400 mb-2">
+                                            <span className="text-primary font-bold">Clínicas y Salud</span>
+                                            <span className="text-xs text-gray-600 ml-2">(clínicas, fisioterapia, psicología, bienestar)</span>
+                                        </label>
+                                        <input
+                                            type="text"
+                                            value={siteConfig.youtube_clinicas || ''}
+                                            onChange={(e) => setSiteConfig({ ...siteConfig, youtube_clinicas: e.target.value })}
+                                            placeholder="https://www.youtube.com/watch?v=VIDEO_ID"
+                                            className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none font-mono text-sm"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-400 mb-2">
+                                            <span className="text-primary font-bold">Academias y Formación</span>
+                                            <span className="text-xs text-gray-600 ml-2">(academias, entrenadores)</span>
+                                        </label>
+                                        <input
+                                            type="text"
+                                            value={siteConfig.youtube_academias || ''}
+                                            onChange={(e) => setSiteConfig({ ...siteConfig, youtube_academias: e.target.value })}
+                                            placeholder="https://www.youtube.com/watch?v=VIDEO_ID"
+                                            className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none font-mono text-sm"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-400 mb-2">
+                                            <span className="text-primary font-bold">Hostelería y Restauración</span>
+                                            <span className="text-xs text-gray-600 ml-2">(restaurantes, hostelería, cafeterías, bares)</span>
+                                        </label>
+                                        <input
+                                            type="text"
+                                            value={siteConfig.youtube_hosteleria || ''}
+                                            onChange={(e) => setSiteConfig({ ...siteConfig, youtube_hosteleria: e.target.value })}
+                                            placeholder="https://www.youtube.com/watch?v=VIDEO_ID"
+                                            className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none font-mono text-sm"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-400 mb-2">
+                                            <span className="text-primary font-bold">Servicios Técnicos</span>
+                                            <span className="text-xs text-gray-600 ml-2">(talleres, servicios técnicos, instaladores, mantenimiento)</span>
+                                        </label>
+                                        <input
+                                            type="text"
+                                            value={siteConfig.youtube_servicios_tecnicos || ''}
+                                            onChange={(e) => setSiteConfig({ ...siteConfig, youtube_servicios_tecnicos: e.target.value })}
+                                            placeholder="https://www.youtube.com/watch?v=VIDEO_ID"
+                                            className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none font-mono text-sm"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-400 mb-2">
+                                            <span className="text-primary font-bold">Retail y Comercio</span>
+                                            <span className="text-xs text-gray-600 ml-2">(comercios, tiendas especializadas, negocios físicos)</span>
+                                        </label>
+                                        <input
+                                            type="text"
+                                            value={siteConfig.youtube_retail || ''}
+                                            onChange={(e) => setSiteConfig({ ...siteConfig, youtube_retail: e.target.value })}
+                                            placeholder="https://www.youtube.com/watch?v=VIDEO_ID"
+                                            className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none font-mono text-sm"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-400 mb-2">
+                                            <span className="text-primary font-bold">Servicios Profesionales</span>
+                                            <span className="text-xs text-gray-600 ml-2">(agencias, estudios diseño, arquitectos, interiorismo, consultores)</span>
+                                        </label>
+                                        <input
+                                            type="text"
+                                            value={siteConfig.youtube_servicios_profesionales || ''}
+                                            onChange={(e) => setSiteConfig({ ...siteConfig, youtube_servicios_profesionales: e.target.value })}
+                                            placeholder="https://www.youtube.com/watch?v=VIDEO_ID"
+                                            className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none font-mono text-sm"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
                             {/* Información Fiscal y de Empresa */}
                             <div className="mt-8 pt-8 border-t border-white/10">
                                 <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">

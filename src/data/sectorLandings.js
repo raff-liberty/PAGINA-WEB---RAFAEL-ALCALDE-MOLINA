@@ -3,6 +3,7 @@ import { Scissors, Stethoscope, GraduationCap, Utensils, Wrench, Store, Briefcas
 export const sectorLandingsContent = {
     'citas-peluqueria': {
         sectors: ['peluquerias', 'estetica'],
+        youtube_url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', // Placeholder - actualizar en admin
         hero_phrase: "Tu agenda debería trabajar para ti, no tú para tu agenda.",
         falsas_creencias: [
             { c: "Necesito más clientes para ganar más.", r: "No necesitas más clientes, necesitas dejar de perder el margen en huecos muertos y cancelaciones." },
@@ -30,6 +31,7 @@ export const sectorLandingsContent = {
     },
     'clinicas-salud': {
         sectors: ['clinicas', 'fisioterapia', 'psicologia', 'bienestar'],
+        youtube_url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
         hero_phrase: "Tu vocación es curar, no gestionar un caos administrativo.",
         falsas_creencias: [
             { c: "Necesito más personal en recepción.", r: "Necesitas procesos que no requieran que alguien descuelgue el teléfono cada 5 minutos." },
@@ -55,6 +57,7 @@ export const sectorLandingsContent = {
     },
     'academias-formacion': {
         sectors: ['academias', 'entrenadores'],
+        youtube_url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
         hero_phrase: "Deja de vender horas y empieza a vender resultados escalables.",
         falsas_creencias: [
             { c: "El problema es que me faltan alumnos.", r: "El problema es que tus grupos están descompensados y pierdes dinero en cada hora." },
@@ -80,6 +83,7 @@ export const sectorLandingsContent = {
     },
     'hosteleria-restauracion': {
         sectors: ['restaurantes', 'hosteleria-org', 'cafeterias', 'bares-aforo'],
+        youtube_url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
         hero_phrase: "Que tu local esté lleno no debería ser una condena al estrés.",
         falsas_creencias: [
             { c: "Me falta personal cualificado.", r: "Te falta un sistema que no dependa de la 'heroicidad' de tus empleados clave." },
@@ -105,6 +109,7 @@ export const sectorLandingsContent = {
     },
     'servicios-tecnicos': {
         sectors: ['talleres', 'servicios-tec', 'instaladores', 'mantenimiento'],
+        youtube_url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
         hero_phrase: "Tus facturas no deberían esperar a que termines la jornada.",
         falsas_creencias: [
             { c: "Tengo que bajar precios para competir.", r: "Tienes que dejar de regalar horas y materiales que no estás facturando por desorden." },
@@ -130,6 +135,7 @@ export const sectorLandingsContent = {
     },
     'retail-comercio': {
         sectors: ['comercios', 'tiendas-esp', 'negocios-fisicos'],
+        youtube_url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
         hero_phrase: "Tu stock es dinero que se quema en las estanterías.",
         falsas_creencias: [
             { c: "Vender más lo arregla todo.", r: "Si vendes productos con poco margen o mucho stock muerto, vender más solo te arruina más rápido." },
@@ -155,6 +161,7 @@ export const sectorLandingsContent = {
     },
     'servicios-profesionales': {
         sectors: ['agencias', 'estudios-diseno', 'arquitectos', 'interiorismo', 'consultores'],
+        youtube_url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
         hero_phrase: "Tú eres el talento, no el administrativo de tus proyectos.",
         falsas_creencias: [
             { c: "El caos es el precio de crecer.", r: "El caos es el techo que te impide crecer. Sin orden, te estancas." },
