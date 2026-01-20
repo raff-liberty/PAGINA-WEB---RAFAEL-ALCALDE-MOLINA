@@ -69,7 +69,8 @@ const AdminPanel = () => {
         default_keywords: 'automatización de negocios, eficiencia operativa, digitalización pymes, ahorro tiempo murcia, sistemas inteligentes',
         chat_embed_url: '',
         diagnosis_youtube_url: '',
-        about_youtube_url: ''
+        about_youtube_url: '',
+        work_method_youtube_url: ''
     });
     const [companyConfig, setCompanyConfig] = useState({
         company_name: '',
@@ -2251,6 +2252,18 @@ const AdminPanel = () => {
                                     className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none font-mono text-sm"
                                 />
                                 <p className="text-xs text-gray-500 mt-1">URL del video de YouTube para mostrar en la sección "De dónde sale este enfoque" de la página Sobre Mí (formato embed)</p>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-400 mb-2">Video YouTube (Cómo Trabajamos)</label>
+                                <input
+                                    type="text"
+                                    value={siteConfig.work_method_youtube_url}
+                                    onChange={(e) => setSiteConfig({ ...siteConfig, work_method_youtube_url: e.target.value })}
+                                    placeholder="https://www.youtube.com/embed/VIDEO_ID"
+                                    className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none font-mono text-sm"
+                                />
+                                <p className="text-xs text-gray-500 mt-1">URL del video de YouTube para mostrar en la sección VSL de la página Cómo Trabajamos (formato embed)</p>
                             </div>
 
                             {/* YouTube URLs por Macrosegmento */}

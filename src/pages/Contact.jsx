@@ -44,32 +44,39 @@ const Contact = () => {
                 description="Habla directamente conmigo, sin filtros comerciales. Rediseñamos tu operativa para que el negocio deje de depender de ti."
                 keywords="consultoría automatización murcia, consultoría sistemas, estrategia operativa pyme"
             />
+
+            {/* Ambient Background Elements - Unison Atmosphere */}
             <BackgroundMesh />
+            <div className="fixed inset-0 pointer-events-none overflow-hidden">
+                <div className="absolute top-[5%] -left-[10%] w-[60%] h-[60%] bg-primary/10 blur-[130px] rounded-full animate-pulse opacity-60" />
+                <div className="absolute bottom-[5%] -right-[10%] w-[60%] h-[60%] bg-primary/10 blur-[130px] rounded-full animate-pulse opacity-60" style={{ animationDuration: '8s' }} />
+                <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.02] via-transparent to-primary/[0.05] opacity-50" />
+            </div>
 
             <div className="relative z-10 w-full max-w-6xl px-6">
                 {/* Header Authority */}
                 <div className="flex flex-col items-center text-center mb-16">
                     <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-md border border-white/20 text-primary text-[10px] md:text-xs font-black tracking-[0.3em] uppercase shadow-xl"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 text-primary text-[11px] font-mono tracking-widest uppercase mb-8 backdrop-blur-sm"
                     >
-                        <Zap className="w-4 h-4" />
+                        <Zap className="w-3.5 h-3.5 animate-pulse" />
                         Comunicación Directa & Sin Filtros
                     </motion.div>
                     <motion.h1
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="font-display text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter text-white mb-6 leading-tight uppercase"
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="font-display text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white mb-8 leading-none uppercase italic"
                     >
                         Hablemos de <br />
-                        <span className="bg-gradient-to-br from-primary via-white to-primary bg-clip-text text-transparent italic drop-shadow-[0_10px_30px_rgba(110,231,183,0.3)]">tu operativa.</span>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/80 drop-shadow-[0_0_20px_rgba(110,231,183,0.5)]">tu operativa.</span>
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="text-gray-400 text-lg md:text-xl font-medium max-w-2xl"
+                        className="text-xl md:text-2xl text-white/70 font-light max-w-3xl leading-relaxed italic border-l-primary/40 pl-6 border-l"
                     >
                         Olvida a los comerciales. Aquí hablas directamente con el arquitecto que diseñará e implementará tu sistema.
                     </motion.p>

@@ -1,320 +1,432 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
-    MemoryStick as Memory,
-    CheckCircle,
-    XCircle,
-    ArrowRight,
     Zap,
-    Globe,
-    MessageSquare,
+    CheckCircle,
+    ArrowRight,
+    TrendingUp,
+    Shield,
+    Bot,
+    Clock,
     Target,
     Layout,
-    Shield
+    Cpu,
+    Database,
+    CreditCard,
+    BarChart,
+    ChevronDown
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import BackgroundMesh from '../components/BackgroundMesh';
 import SEO from '../components/SEO';
-import ContactForm from '../components/ContactForm';
-import DiagnosisCTA from '../components/diagnosis/DiagnosisCTA';
+import { supabase } from '../lib/supabaseClient';
 
 const WorkMethod = () => {
-    return (
-        <div className="relative pt-64 pb-48 min-h-screen selection:bg-primary selection:text-black">
-            <SEO
-                title="Cómo Trabajamos | Metodología de Automatización | Engorilate"
-                description="Nuestra metodología de automatización para pequeños negocios. Orden antes que tecnología. Recupera horas de tu vida sin humo."
-            />
-            <BackgroundMesh />
+    const [siteConfig, setSiteConfig] = useState({
+        work_method_youtube_url: '',
+    });
 
-            <div className="relative z-10 max-w-7xl mx-auto px-6">
+    useEffect(() => {
+        const fetchConfig = async () => {
+            try {
+                const { data } = await supabase.from('site_config').select('key, value');
+                if (data) {
+                    const config = {};
+                    data.forEach(item => { config[item.key] = item.value || ''; });
+                    setSiteConfig(prev => ({ ...prev, ...config }));
+                }
+            } catch (e) { console.error(e); }
+        };
+        fetchConfig();
+    }, []);
+
+    const normalizeYouTubeUrl = (url) => {
+        if (!url) return '';
+        try {
+            if (url.includes('/embed/')) return url;
+            let videoId = '';
+            if (url.includes('youtu.be/')) {
+                videoId = url.split('youtu.be/')[1].split('?')[0].split('&')[0];
+            } else if (url.includes('youtube.com/watch')) {
+                const urlParams = new URLSearchParams(url.split('?')[1]);
+                videoId = urlParams.get('v');
+            } else if (url.includes('youtube.com/shorts/')) {
+                videoId = url.split('/shorts/')[1].split('?')[0];
+            }
+            return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
+        } catch (e) { return url; }
+    };
+
+    const normalizedYouTubeUrl = (() => {
+        const baseUrl = normalizeYouTubeUrl(siteConfig.work_method_youtube_url);
+        if (!baseUrl) return '';
+        const separator = baseUrl.includes('?') ? '&' : '?';
+        return `${baseUrl}${separator}vq=hd1080&hd=1&rel=0&modestbranding=1`;
+    })();
+
+    const timelinePhases = [
+        {
+            title: "Detectar Fugas de Dinero",
+            week: "Fase 1",
+            process: "Analizamos dónde estás perdiendo clientes y tiempo hoy mismo para tapar esos huecos desde el minuto uno.",
+            objective: "Crear una oferta que tus clientes no puedan rechazar.",
+            result: "Hoja de ruta clara para tu negocio.",
+            icon: Target,
+            image: "/gorilla-blueprints.png"
+        },
+        {
+            title: "Construir tu Sistema Automático",
+            week: "Fase 2",
+            process: "Montamos toda la tecnología que trabajará por ti: desde tu nueva web hasta la gestión automática de tus clientes.",
+            objective: "Que todo funcione solo. Nosotros lo montamos todo; tú no tienes que tocar el código.",
+            result: "Tu nueva máquina de ventas lista.",
+            icon: Layout,
+            image: "/gorilla-blueprints.png"
+        },
+        {
+            title: "Atraer Clientes que Sí PAGAN",
+            week: "Fase 3",
+            process: "Ponemos anuncios que atraen a la gente adecuada. Filtramos a los curiosos para que solo hables con quien de verdad quiere comprar.",
+            objective: "Llenar tu agenda. Personas interesadas llamando a tu puerta cada día.",
+            result: "Agenda llena de prospectos reales.",
+            icon: Zap,
+            image: "/gorilla-dashboard.png"
+        },
+        {
+            title: "Control Total y Libertad",
+            week: "Fase 4",
+            process: "Ajustamos los últimos detalles y te entregamos las llaves de un sistema que ya está trayendo dinero.",
+            objective: "Que seas libre. Te enseñamos a manejar el mando de control para que el negocio no dependa de ti.",
+            result: "Sistema funcionando al 100%.",
+            icon: TrendingUp,
+            image: "/gorilla-dashboard.png"
+        }
+    ];
+
+    const techStack = [
+        { name: "GoHighLevel", desc: "Gestión centralizada de leads y CRM.", icon: Database, color: "#2563eb" },
+        { name: "Claude 3.5", desc: "IA avanzada para copywriting y flujos lógicos.", icon: Bot, color: "#d4d4d8" },
+        { name: "Stripe", desc: "Infraestructura de pagos automatizada.", icon: CreditCard, color: "#f59e0b" },
+        { name: "Meta Business", desc: "Motor de captación ultra-segmentado.", icon: BarChart, color: "#0ea5e9" }
+    ];
+
+    return (
+        <div className="relative pt-32 md:pt-48 pb-24 min-h-screen selection:bg-primary selection:text-black bg-[#020202] text-white">
+            <SEO
+                title="Cómo Trabajamos | Ingeniería de Ventas | Engorilate"
+                description="Descubre nuestro sistema operativo de crecimiento profesionalizado en 30 días con ingeniería de precisión."
+            />
+
+            {/* Ambient Background Elements - High Intensity Atmosphere */}
+            <BackgroundMesh />
+            <div className="fixed inset-0 pointer-events-none overflow-hidden">
+                {/* Fixed atmospheric glows that feel "alive" */}
+                <div className="absolute top-[5%] -left-[10%] w-[60%] h-[60%] bg-primary/10 blur-[130px] rounded-full animate-pulse opacity-60" />
+                <div className="absolute bottom-[5%] -right-[10%] w-[60%] h-[60%] bg-primary/10 blur-[130px] rounded-full animate-pulse opacity-60" style={{ animationDuration: '8s' }} />
+
+                {/* Central gradient for depth */}
+                <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.02] via-transparent to-primary/[0.05] opacity-50" />
+            </div>
+
+            <div className="relative z-10 max-w-6xl mx-auto px-6">
                 {/* HERO SECTION */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mb-32 max-w-4xl"
+                    className="mb-24 text-center lg:text-left"
                 >
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-mono tracking-widest uppercase mb-6">
-                        <Zap className="w-3 h-3" />
-                        Metodología Única
-                    </div>
-                    <h1 className="font-display text-5xl md:text-8xl font-bold leading-tight mb-8 text-white tracking-tight">
-                        Primero el <span className="text-primary italic">orden</span>, <br />
-                        luego la <span className="text-white/40">tecnología</span>
+                    <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.2 }}
+                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 text-primary text-[11px] font-mono tracking-widest uppercase mb-8 backdrop-blur-sm"
+                    >
+                        <Cpu className="w-3.5 h-3.5 animate-pulse" />
+                        Sistema Operativo de Negocios
+                    </motion.div>
+
+                    <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-black leading-none mb-8 tracking-tighter uppercase italic">
+                        SISTEMAS QUE <br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/80 drop-shadow-[0_0_20px_rgba(110,231,183,0.5)]">VENDEN POR TI.</span>
                     </h1>
-                    <p className="text-xl md:text-2xl text-gray-400 font-light max-w-3xl leading-relaxed italic">
-                        No colecciones software. Diseña el motor que tu negocio necesita para recuperar el control de tu tiempo y tu vida.
+
+                    <p className="text-xl md:text-2xl text-white/70 font-light max-w-3xl leading-relaxed italic mb-10 border-l mb-10 border-l-primary/40 pl-6">
+                        Creamos sistemas automáticos que llenan tu agenda de clientes cada mañana.
+                        Profesionalizamos tu forma de vender en <span className="text-white font-bold">30 días</span> para que recuperes tu tiempo.
                     </p>
                 </motion.div>
 
-                {/* BEFORE / AFTER COMPARISON */}
-                <div className="mb-48">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        {/* Current Situation (X) */}
-                        <motion.div
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="bg-[#1a1a1a] border border-red-500/20 p-10 md:p-12 rounded-[2.5rem] relative overflow-hidden group hover:border-red-500/40 transition-all duration-500 shadow-2xl"
-                        >
-                            <div className="absolute -top-24 -left-24 w-64 h-64 bg-red-500/5 blur-[100px] rounded-full group-hover:bg-red-500/10 transition-all"></div>
-                            <h3 className="text-red-400 font-display text-3xl font-bold mb-8 flex items-center gap-4 italic tracking-tight">
-                                <XCircle className="w-8 h-8" /> Tu situación actual
-                            </h3>
-                            <ul className="space-y-6 text-gray-400 text-lg font-light italic">
-                                <li className="flex items-start gap-4">
-                                    <span className="text-red-500/50 mt-1 font-bold text-2xl">×</span>
-                                    <span>Interrupciones constantes en WhatsApp que fragmentan tu día.</span>
-                                </li>
-                                <li className="flex items-start gap-4">
-                                    <span className="text-red-500/50 mt-1 font-bold text-2xl">×</span>
-                                    <span>Tardes robadas por la facturación y los recordatorios manuales.</span>
-                                </li>
-                                <li className="flex items-start gap-4">
-                                    <span className="text-red-500/50 mt-1 font-bold text-2xl">×</span>
-                                    <span>Techo de crecimiento: "Si entran más clientes, exploto".</span>
-                                </li>
-                                <li className="flex items-start gap-4">
-                                    <span className="text-red-500/50 mt-1 font-bold text-2xl">×</span>
-                                    <span>Gestión reactiva, sin datos reales para tomar decisiones.</span>
-                                </li>
-                            </ul>
-                        </motion.div>
-
-                        {/* Engorilate Method (Check) */}
-                        <motion.div
-                            initial={{ opacity: 0, x: 20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="bg-[#1a1a1a] border border-primary/20 p-10 md:p-12 rounded-[2.5rem] relative overflow-hidden group hover:border-primary/40 transition-all duration-500 shadow-2xl"
-                        >
-                            <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-primary/10 blur-[100px] rounded-full group-hover:bg-primary/20 transition-all"></div>
-                            <h3 className="text-primary font-display text-3xl font-bold mb-8 flex items-center gap-4 italic tracking-tight">
-                                <CheckCircle className="w-8 h-8" /> El Método Engorilate
-                            </h3>
-                            <ul className="space-y-6 text-gray-300 text-lg font-medium">
-                                <li className="flex items-start gap-4">
-                                    <span className="text-primary mt-1 text-2xl">✓</span>
-                                    <span>Atención y captación automática 24/7 sin tu intervención.</span>
-                                </li>
-                                <li className="flex items-start gap-4">
-                                    <span className="text-primary mt-1 text-2xl">✓</span>
-                                    <span>Facturación instantánea y cobros automatizados.</span>
-                                </li>
-                                <li className="flex items-start gap-4">
-                                    <span className="text-primary mt-1 text-2xl">✓</span>
-                                    <span>Escalabilidad técnica: haz el doble de trabajo con el mismo equipo.</span>
-                                </li>
-                                <li className="flex items-start gap-4">
-                                    <span className="text-primary mt-1 text-2xl">✓</span>
-                                    <span>Paz mental absoluta. Tu negocio no depende de tu memoria.</span>
-                                </li>
-                            </ul>
-                        </motion.div>
-                    </div>
+                {/* VIDEO SECTION (VSL) WITH PREMIUM FRAME - REDUCED SIZE */}
+                <div className="mb-40 flex justify-center">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        className="relative z-10 w-full max-w-4xl aspect-video rounded-3xl overflow-hidden border border-white/20 shadow-[0_0_60px_rgba(0,0,0,0.6)] bg-black/40 backdrop-blur-xl group"
+                    >
+                        {normalizedYouTubeUrl ? (
+                            <iframe
+                                src={normalizedYouTubeUrl}
+                                title="Sistema Operativo de Crecimiento - Engorilate"
+                                className="w-full h-full"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                            />
+                        ) : (
+                            <div className="w-full h-full bg-gradient-to-br from-[#0a0a0a] via-black to-[#050505] flex flex-col items-center justify-center p-8 text-center overflow-hidden">
+                                <div className="absolute inset-0 opacity-10 scale-110 group-hover:scale-100 transition-transform duration-1000">
+                                    <img src="/hero-gorilla-engine.png" className="w-full h-full object-cover grayscale" alt="" />
+                                </div>
+                                <div className="relative z-20">
+                                    <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-6 border border-primary/40 shadow-[0_0_40px_rgba(34,197,94,0.2)]">
+                                        <Zap className="w-8 h-8 text-primary" />
+                                    </div>
+                                    <h3 className="text-2xl font-black text-white mb-3 uppercase tracking-tighter">PLAY SYSTEM REVEAL</h3>
+                                    <p className="text-white/50 text-sm max-w-sm mx-auto italic font-light">
+                                        Descubre la infraestructura técnica que escala negocios de servicios.
+                                    </p>
+                                </div>
+                            </div>
+                        )}
+                        <div className="absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-primary/40 rounded-tl-lg pointer-events-none" />
+                        <div className="absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 border-primary/40 rounded-br-lg pointer-events-none" />
+                    </motion.div>
                 </div>
 
-                {/* STEPS GRID */}
-                <div className="mb-48">
-                    <div className="text-center mb-24">
-                        <h2 className="font-display text-4xl md:text-6xl font-bold text-white mb-8 tracking-tight italic">
-                            Tu hoja de <span className="text-primary">ruta al control</span>
-                        </h2>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 relative">
-                        {/* Connecting Line (Desktop) */}
-                        <div className="absolute top-1/2 left-0 w-full h-px bg-white/5 -z-10 hidden md:block"></div>
-                        <div className="absolute left-1/2 top-0 h-full w-px bg-white/5 -z-10 hidden md:block"></div>
-
-                        {/* Step 1 */}
-                        <motion.div
-                            whileHover={{ y: -5 }}
-                            className="bg-[#1A1A1A] border-2 border-white/20 p-8 rounded-[2rem] relative overflow-hidden group hover:border-primary/40 transition-all duration-700 shadow-[0_32px_120px_rgba(0,0,0,1)]"
-                        >
-                            <div className="absolute -top-24 -right-24 w-64 h-64 bg-primary/10 blur-[100px] rounded-full group-hover:bg-primary/20 transition-all duration-700"></div>
-                            <div className="relative z-10 text-primary font-mono text-xs uppercase tracking-[3px] mb-6 font-bold flex items-center gap-2">
-                                <span className="w-8 h-px bg-primary/30"></span> 01. Auditoría Real
+                {/* THE SYSTEMPHASES: THE 4 WEEKS JOURNEY */}
+                <div className="mb-40">
+                    <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-12">
+                        <div className="max-w-2xl">
+                            <div className="inline-block px-3 py-1 bg-primary/5 border border-primary/20 rounded-md text-primary font-mono text-[10px] tracking-[0.2em] uppercase mb-4">
+                                PROTOCOLO DE DESPLIEGUE
                             </div>
-                            <h3 className="relative z-10 font-display text-2xl font-bold text-white mb-4 tracking-tight">Analizar antes de tocar</h3>
-                            <p className="relative z-10 text-gray-400 font-light italic leading-relaxed mb-8">
-                                "Identificamos dónde se te escapa el tiempo hoy. No suponemos, medimos fugas reales en tu operativa diaria."
+                            <h2 className="font-display text-4xl md:text-6xl font-bold text-white uppercase italic tracking-tighter leading-none mb-6">
+                                DE LA AUDITORÍA <span className="text-primary italic">A LA ESCALA</span>
+                            </h2>
+                            <p className="text-white/60 text-lg font-light italic leading-relaxed">
+                                No creemos en soluciones genéricas. Hemos diseñado un proceso de cuatro etapas diseñado para transformar el caos manual en un sistema de ventas predecible y eficiente.
                             </p>
-                            <div className="relative z-10 bg-black/60 p-6 rounded-2xl border border-white/10 shadow-inner">
-                                <p className="text-primary text-xs uppercase font-black tracking-widest mb-3 italic">Impacto Inmediato:</p>
-                                <ul className="text-sm text-gray-300 space-y-2 italic font-light">
-                                    <li>• Mapa de 'fugas industriales'</li>
-                                    <li>• Checklist prioritario de ahorro</li>
-                                </ul>
-                            </div>
-                        </motion.div>
-
-                        {/* Step 2 */}
-                        <motion.div
-                            whileHover={{ y: -5 }}
-                            className="bg-[#1A1A1A] border-2 border-white/20 p-8 rounded-[2rem] relative overflow-hidden group hover:border-blue-400/40 transition-all duration-700 shadow-[0_32px_120px_rgba(0,0,0,1)]"
-                        >
-                            <div className="absolute -top-24 -left-24 w-64 h-64 bg-blue-400/10 blur-[100px] rounded-full group-hover:bg-blue-400/20 transition-all duration-700"></div>
-                            <div className="relative z-10 text-blue-400 font-mono text-xs uppercase tracking-[3px] mb-6 font-bold flex items-center gap-2">
-                                <span className="w-8 h-px bg-blue-400/30"></span> 02. Simplificación
-                            </div>
-                            <h3 className="relative z-10 font-display text-2xl font-bold text-white mb-4 tracking-tight">Las Reglas del Juego</h3>
-                            <p className="relative z-10 text-gray-400 font-light italic leading-relaxed mb-8">
-                                "Simplificamos tus procesos antes de meter tecnología. Si el proceso está roto, automatizarlo solo lo acelera."
-                            </p>
-                            <div className="relative z-10 bg-black/60 p-6 rounded-2xl border border-white/10 shadow-inner">
-                                <p className="text-blue-400 text-xs uppercase font-black tracking-widest mb-3 italic">Entregable:</p>
-                                <ul className="text-sm text-gray-300 space-y-2 italic font-light">
-                                    <li>• Workflow operativo documentado</li>
-                                    <li>• Lógica de negocio blindada</li>
-                                </ul>
-                            </div>
-                        </motion.div>
-
-                        {/* Step 3 */}
-                        <motion.div
-                            whileHover={{ y: -5 }}
-                            className="bg-[#1A1A1A] border-2 border-white/20 p-8 rounded-[2rem] relative overflow-hidden group hover:border-purple-400/40 transition-all duration-700 shadow-[0_32px_120px_rgba(0,0,0,1)]"
-                        >
-                            <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-purple-400/10 blur-[100px] rounded-full group-hover:bg-purple-400/20 transition-all duration-700"></div>
-                            <div className="relative z-10 text-purple-400 font-mono text-xs uppercase tracking-[3px] mb-6 font-bold flex items-center gap-2">
-                                <span className="w-8 h-px bg-purple-400/30"></span> 03. Construcción
-                            </div>
-                            <h3 className="relative z-10 font-display text-2xl font-bold text-white mb-4 tracking-tight">El Smart Hub Central</h3>
-                            <p className="relative z-10 text-gray-400 font-light italic leading-relaxed mb-8">
-                                "Conectamos tus sistemas y construimos el motor (CRM/API) que ejecuta el trabajo sucio por ti."
-                            </p>
-                            <div className="relative z-10 bg-black/60 p-6 rounded-2xl border border-white/10 shadow-inner">
-                                <p className="text-purple-400 text-xs uppercase font-black tracking-widest mb-3 italic">Corazón Técnico:</p>
-                                <ul className="text-sm text-gray-300 space-y-2 italic font-light">
-                                    <li>• Arquitectura CRM conectada</li>
-                                    <li>• Agente Virtual configurado</li>
-                                </ul>
-                            </div>
-                        </motion.div>
-
-                        {/* Step 4 */}
-                        <motion.div
-                            whileHover={{ y: -5 }}
-                            className="bg-[#1A1A1A] border-2 border-white/20 p-8 rounded-[2rem] relative overflow-hidden group hover:border-primary/40 transition-all duration-700 shadow-[0_32px_120px_rgba(0,0,0,1)]"
-                        >
-                            <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-primary/10 blur-[100px] rounded-full group-hover:bg-primary/20 transition-all duration-700"></div>
-                            <div className="relative z-10 text-primary font-mono text-xs uppercase tracking-[3px] mb-6 font-bold flex items-center gap-2">
-                                <span className="w-8 h-px bg-primary/30"></span> 04. Escala Real
-                            </div>
-                            <h3 className="relative z-10 font-display text-2xl font-bold text-white mb-4 tracking-tight">Despegue y Seguimiento</h3>
-                            <p className="relative z-10 text-gray-400 font-light italic leading-relaxed mb-8">
-                                "Lanzamos al mundo, probamos al límite y te acompañamos durante el primer mes de vida real del sistema."
-                            </p>
-                            <div className="relative z-10 bg-black/60 p-6 rounded-2xl border border-white/10 shadow-inner">
-                                <p className="text-primary text-xs uppercase font-black tracking-widest mb-3 italic">Seguridad:</p>
-                                <ul className="text-sm text-gray-300 space-y-2 italic font-light">
-                                    <li>• 100% Autopiloto verificado</li>
-                                    <li>• 30 días de soporte preferente</li>
-                                </ul>
-                            </div>
-                        </motion.div>
-                    </div>
-                </div>
-
-                {/* ECOSISTEMA WRAPPER */}
-                <div className="mb-48 relative">
-                    <div className="text-center mb-24">
-                        <h2 className="font-display text-4xl md:text-7xl font-bold text-white mb-8 tracking-tight italic">
-                            Ecosistema de <span className="text-primary text-shadow-glow">Soluciones</span>
-                        </h2>
-                        <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed font-light italic">
-                            Diseñamos una experiencia de usuario impecable que alimenta tu Hub centralizado y ejecuta procesos en la sombra.
+                        </div>
+                        <p className="text-white/40 font-mono text-xs uppercase tracking-widest hidden md:block border border-white/10 px-4 py-2 rounded-lg">
+                            Estándar Industrial v2.1
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {[
-                            {
-                                stage: "01. Impresión",
-                                title: "Web Corporativa Pro",
-                                desc: "Web rápida, impacto premium y enfocada al lead.",
-                                icon: Globe,
-                                color: "text-blue-400",
-                                shadow: "shadow-blue-500/10",
-                                link: "/servicios/desarrollo-web-medida"
-                            },
-                            {
-                                stage: "02. Filtro",
-                                title: "Agente Virtual 24/7",
-                                desc: "IA por WhatsApp que filtra y cualifica clientes.",
-                                icon: MessageSquare,
-                                color: "text-purple-400",
-                                shadow: "shadow-purple-500/10",
-                                link: "/servicios/automatizacion-whatsapp"
-                            },
-                            {
-                                stage: "03. El Corazón",
-                                title: "Arquitectura CRM / API",
-                                desc: "El Smart Hub que ejecuta la lógica de negocio.",
-                                icon: Memory,
-                                color: "text-primary",
-                                shadow: "shadow-primary/10",
-                                link: "/servicios/sistemas-gestion-personalizados"
-                            },
-                            {
-                                stage: "04. Resultado",
-                                title: "SEO Local Estratégico",
-                                desc: "Captación constante donde están tus clientes.",
-                                icon: Target,
-                                color: "text-green-400",
-                                shadow: "shadow-green-500/10",
-                                link: "/servicios/seo-local-estrategia"
-                            }
-                        ].map((item, i) => (
+                    <div className="grid gap-8">
+                        {timelinePhases.map((phase, i) => (
+                            <motion.div
+                                key={i}
+                                initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true, margin: "-100px" }}
+                                transition={{ duration: 0.6, delay: i * 0.1 }}
+                                className="group relative"
+                            >
+                                <div className="relative bg-[#0a0a0a] border border-white/[0.15] rounded-[2.5rem] p-8 md:p-12 overflow-hidden hover:border-primary/60 transition-all duration-700 shadow-[0_50px_100px_-30px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.05)_inset] group">
+
+                                    {/* Reactive Background Glow for this specific box */}
+                                    <div className="absolute inset-0 bg-primary/[0.05] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
+
+                                    {/* High Intensity Rim Light */}
+                                    <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-70" />
+                                    <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent opacity-30" />
+
+                                    {/* Glass Overlay Effect - Dynamic Blob */}
+                                    <div className="absolute -left-20 -top-20 w-[400px] h-[400px] bg-primary/[0.15] blur-[100px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+
+                                    <div className="grid lg:grid-cols-12 gap-6 lg:gap-10 items-center">
+                                        <div className="lg:col-span-1 border-r border-white/5 pr-8 hidden lg:block">
+                                            <span className="text-7xl font-black text-white/5 font-mono leading-none">
+                                                0{i + 1}
+                                            </span>
+                                        </div>
+
+                                        <div className="lg:col-span-11 relative">
+                                            {/* Mobile Phase Number Overlay */}
+                                            <div className="absolute -top-4 -right-4 text-6xl font-black text-white/[0.03] font-mono leading-none lg:hidden pointer-events-none">
+                                                0{i + 1}
+                                            </div>
+
+                                            <div className="grid md:grid-cols-2 gap-8 lg:gap-10">
+                                                <div className="space-y-6 relative z-10">
+                                                    <div className="flex items-center gap-4">
+                                                        <span className="text-primary font-mono text-[10px] font-bold uppercase tracking-[0.3em] bg-primary/10 px-3 py-1 rounded border border-primary/20 shadow-[0_0_15px_rgba(34,197,94,0.1)]">
+                                                            {phase.week}
+                                                        </span>
+                                                    </div>
+
+                                                    <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tighter uppercase italic leading-tight">
+                                                        {phase.title}
+                                                    </h3>
+
+                                                    <div className="space-y-6">
+                                                        <div>
+                                                            <h4 className="text-[11px] uppercase tracking-[0.25em] text-primary font-black mb-3 flex items-center gap-2">
+                                                                <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
+                                                                QUÉ HACEMOS
+                                                            </h4>
+                                                            <p className="text-white/80 text-base font-normal leading-relaxed pr-4">
+                                                                {phase.process}
+                                                            </p>
+                                                        </div>
+                                                        <div>
+                                                            <h4 className="text-[11px] uppercase tracking-[0.25em] text-primary font-black mb-3 flex items-center gap-2">
+                                                                <span className="w-2.5 h-2.5 rounded-full bg-primary shadow-[0_0_15px_rgba(34,197,94,0.6)]" />
+                                                                TU BENEFICIO
+                                                            </h4>
+                                                            <div className="relative p-5 rounded-2xl bg-primary/[0.07] border border-primary/20 shadow-inner overflow-hidden group/benefit">
+                                                                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover/benefit:opacity-100 transition-opacity" />
+                                                                <p className="relative z-10 text-white text-base font-semibold italic leading-relaxed">
+                                                                    {phase.objective}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="pt-6 border-t border-white/5">
+                                                        <div className="inline-flex items-start gap-4 bg-black/40 p-4 rounded-2xl border border-white/5 group-hover:border-primary/20 transition-all shadow-inner">
+                                                            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/30 shrink-0 shadow-[0_0_20px_rgba(34,197,94,0.1)]">
+                                                                <CheckCircle className="w-5 h-5 text-primary" />
+                                                            </div>
+                                                            <div>
+                                                                <p className="text-[10px] text-white/30 font-black uppercase tracking-widest leading-none mb-2">Entregable Final</p>
+                                                                <p className="text-sm text-white font-bold uppercase tracking-tight leading-none">{phase.result}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex items-center justify-center bg-black/60 rounded-3xl border border-white/5 relative overflow-hidden group-hover:border-primary/20 transition-all min-h-[200px] md:min-h-0 shadow-inner">
+                                                    {/* Decorative background with more life */}
+                                                    <div className="absolute inset-0 opacity-[0.05] pointer-events-none"
+                                                        style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '20px 20px' }} />
+
+                                                    {/* Ambient Glow */}
+                                                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
+                                                    <div className="relative z-10 p-8 text-center">
+                                                        <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-white/[0.05] to-transparent flex items-center justify-center mx-auto mb-5 border border-white/10 group-hover:border-primary/30 group-hover:shadow-[0_0_30px_rgba(34,197,94,0.15)] transition-all duration-500 transform group-hover:-rotate-3 group-hover:scale-105">
+                                                            <phase.icon className="w-12 h-12 text-white/20 group-hover:text-primary transition-all duration-500" />
+                                                        </div>
+                                                        <p className="text-[10px] font-mono text-white/30 uppercase tracking-[0.3em] font-bold">PROTOCOLO ENGORILATE</p>
+                                                        <div className="mt-2 text-[8px] font-mono text-primary/40 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Ready to Install</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* TECH STACK: TRANSPARENCIA TOTAL */}
+                <div className="mb-40">
+                    <div className="text-center mb-20">
+                        <h2 className="font-display text-4xl md:text-6xl font-black text-white mb-6 uppercase italic tracking-tighter">
+                            MOTOR <span className="text-primary italic">TECNOLÓGICO</span>
+                        </h2>
+                        <p className="text-xl text-white/50 max-w-2xl mx-auto font-light italic leading-relaxed">
+                            No experimentamos con herramientas. Instalamos tecnología de nivel industrial validada para la estabilidad de tu sistema.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {techStack.map((item, i) => (
                             <motion.div
                                 key={i}
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: i * 0.1 }}
-                                className={`bg-[#1a1a1a] border border-white/5 p-8 rounded-[2rem] flex flex-col items-center text-center group hover:border-white/20 transition-all ${item.shadow}`}
+                                className="relative bg-[#111111] border border-white/[0.08] p-10 rounded-[2.5rem] text-center group hover:bg-[#161616] hover:border-white/20 transition-all duration-500 shadow-2xl overflow-hidden"
                             >
-                                <div className={`w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center mb-6 ${item.color} group-hover:scale-110 transition-transform`}>
-                                    <item.icon className="w-7 h-7" />
-                                </div>
-                                <h4 className="text-lg font-bold text-white mb-3">{item.title}</h4>
-                                <p className="text-gray-500 text-sm italic font-light leading-relaxed mb-6">{item.desc}</p>
-                                <Link
-                                    to={item.link}
-                                    className={`mt-auto inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest ${item.color} hover:opacity-70 transition-opacity`}
+                                {/* Brand Glow Background */}
+                                <div
+                                    className="absolute -bottom-20 -right-20 w-40 h-40 blur-[80px] rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-700"
+                                    style={{ backgroundColor: item.color }}
+                                />
+
+                                <div
+                                    className="w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-8 border transition-all duration-500 transform group-hover:scale-110 group-hover:rotate-3 shadow-lg"
+                                    style={{
+                                        backgroundColor: `${item.color}10`, // 10% opacity
+                                        borderColor: `${item.color}30`, // 30% opacity
+                                        boxShadow: `0 0 30px ${item.color}15`
+                                    }}
                                 >
-                                    Saber más <ArrowRight className="w-3 h-3" />
-                                </Link>
+                                    <item.icon
+                                        className="w-10 h-10 transition-colors duration-500"
+                                        style={{ color: item.color }}
+                                    />
+                                </div>
+                                <h4 className="text-xl font-bold text-white mb-4 uppercase italic tracking-tighter">{item.name}</h4>
+                                <p className="text-white/50 text-sm font-light italic leading-relaxed px-2 group-hover:text-white/70 transition-colors">{item.desc}</p>
+
+                                {/* Bottom Accent Line */}
+                                <div
+                                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-1 group-hover:w-1/2 transition-all duration-700 rounded-full"
+                                    style={{ backgroundColor: item.color }}
+                                />
                             </motion.div>
                         ))}
                     </div>
                 </div>
 
-                {/* FINAL CTA */}
-                <DiagnosisCTA className="mb-20" />
-                <div className="mt-32 max-w-5xl mx-auto">
+                {/* FINAL SECTION: QUALIFICATION CTA */}
+                <div className="pb-24">
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] border border-white/10 rounded-[3rem] p-10 md:p-16 relative overflow-hidden shadow-3xl text-center"
+                        className="relative bg-gradient-to-br from-[#111] via-black to-[#050505] border border-primary/30 rounded-[3rem] p-10 md:p-20 overflow-hidden text-center shadow-[0_40px_100px_rgba(0,0,0,0.8)]"
                     >
-                        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 blur-[150px] rounded-full opacity-50"></div>
-                        <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/5 blur-[150px] rounded-full opacity-30"></div>
+                        {/* Dramatic Lighting */}
+                        <div className="absolute -top-40 -left-40 w-96 h-96 bg-primary/20 blur-[150px] rounded-full opacity-40" />
+                        <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-primary/10 blur-[150px] rounded-full opacity-40" />
 
-                        <div className="relative z-10 max-w-2xl mx-auto">
-                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-xs font-bold mb-10 border border-primary/20">
-                                <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                                Solo aceptamos 3 proyectos nuevos en Febrero
-                            </div>
-                            <h2 className="text-4xl md:text-6xl text-white font-bold mb-10 tracking-tight leading-[1.1]">
-                                ¿Hablamos y vemos <br />
-                                <span className="text-primary italic">dónde está tu fuga?</span>
+                        <div className="max-w-2xl mx-auto relative z-10">
+                            <h2 className="text-3xl md:text-5xl font-black text-white mb-6 tracking-tighter uppercase italic leading-[1]">
+                                ¿TIENES UN NEGOCIO <br />
+                                <span className="text-primary italic">QUE QUIERES ESCALAR?</span>
                             </h2>
-                            <ContactForm source="WorkMethod Page" className="bg-[#111] p-8 rounded-3xl border border-white/5 shadow-2xl" />
+                            <p className="text-lg text-white/60 mb-10 font-light italic leading-relaxed">
+                                Este sistema no es para quien quiere "probar suerte". Solo trabajamos con negocios reales que están listos para dejar de ser esclavos de su día a día.
+                            </p>
+
+                            <Link
+                                to="/diagnostico"
+                                className="group relative inline-flex items-center justify-center gap-3 bg-primary hover:bg-white text-black font-black px-10 py-5 rounded-xl text-lg transition-all shadow-[0_20px_60px_rgba(34,197,94,0.3)] w-full md:w-auto uppercase tracking-tighter overflow-hidden"
+                            >
+                                <span className="relative z-10 text-base">SOLICITAR AUDITORÍA TÉCNICA</span>
+                                <ArrowRight className="relative z-10 w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
+                                <div className="absolute inset-0 bg-white translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-in-out" />
+                            </Link>
+
+                            <div className="mt-16 pt-12 border-t border-white/5 flex flex-wrap items-center justify-center gap-10 opacity-40">
+                                <div className="flex items-center gap-3">
+                                    <Clock className="w-5 h-5 text-primary" />
+                                    <span className="text-xs uppercase font-bold tracking-[0.2em]">30 DÍAS DE DESPLIEGUE</span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <Shield className="w-5 h-5 text-primary" />
+                                    <span className="text-xs uppercase font-bold tracking-[0.2em]">GARANTÍA DE INFRAESTRUCTURA</span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <Target className="w-5 h-5 text-primary" />
+                                    <span className="text-xs uppercase font-bold tracking-[0.2em]">CUALIFICACIÓN TÉCNICA</span>
+                                </div>
+                            </div>
                         </div>
                     </motion.div>
+                </div>
+
+                {/* REFINED BRAND SIGNATURE */}
+                <div className="text-center py-10 opacity-20 hover:opacity-100 transition-opacity duration-700">
+                    <p className="text-[10px] font-mono uppercase tracking-[1em] text-white pr-[1em]">
+                        NO TE ENGORILES, INSTALA SISTEMAS
+                    </p>
                 </div>
             </div>
         </div>
