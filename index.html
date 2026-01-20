@@ -77,10 +77,144 @@
     <link rel="stylesheet" href="/fonts.css">
   </noscript>
 
+  <style id="legacy-styles">
+    #legacy-browser {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #050505;
+      background: -webkit-linear-gradient(bottom, #050505 0%, #0a1f16 100%);
+      background: linear-gradient(0deg, #050505 0%, #0a1f16 100%);
+      z-index: 999999;
+      color: white;
+      font-family: 'Inter', sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+      text-align: center;
+      overflow: hidden;
+    }
 
+    .legacy-content {
+      position: relative;
+      z-index: 10;
+      padding-top: 15vh;
+    }
+
+    .falling-gorilla {
+      width: 200px;
+      height: auto;
+      -webkit-animation: gorillaFall 2s ease-out forwards;
+      animation: gorillaFall 2s ease-out forwards;
+      opacity: 0;
+    }
+
+    @-webkit-keyframes gorillaFall {
+      0% { -webkit-transform: translateY(-500px) rotate(10deg); opacity: 0; }
+      70% { -webkit-transform: translateY(0) rotate(-5deg); opacity: 1; }
+      85% { -webkit-transform: translateY(-20px) rotate(2deg); opacity: 1; }
+      100% { -webkit-transform: translateY(0) rotate(0deg); opacity: 1; }
+    }
+
+    @keyframes gorillaFall {
+      0% { transform: translateY(-500px) rotate(10deg); opacity: 0; }
+      70% { transform: translateY(0) rotate(-5deg); opacity: 1; }
+      85% { transform: translateY(-20px) rotate(2deg); opacity: 1; }
+      100% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    }
+
+    .legacy-title {
+      font-size: 28px;
+      font-weight: bold;
+      margin: 30px 20px 10px;
+      color: #6EE7B7;
+    }
+
+    .legacy-text {
+      font-size: 18px;
+      line-height: 1.5;
+      margin: 0 30px 40px;
+      color: #9CA3AF;
+    }
+
+    .smoke {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: rgba(110, 231, 183, 0.05);
+      -webkit-filter: blur(80px);
+      filter: blur(80px);
+      border-radius: 50%;
+      z-index: 1;
+      opacity: 0.6;
+      -webkit-animation: smokeMove 20s infinite alternate;
+      animation: smokeMove 20s infinite alternate;
+    }
+
+    .smoke-1 { top: -100px; left: -100px; }
+    .smoke-2 { bottom: -100px; right: -100px; -webkit-animation-delay: -10s; animation-delay: -10s; }
+
+    @-webkit-keyframes smokeMove {
+      0% { -webkit-transform: translate(0, 0) scale(1); }
+      100% { -webkit-transform: translate(100px, 100px) scale(1.5); }
+    }
+
+    @keyframes smokeMove {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(100px, 100px) scale(1.5); }
+    }
+
+    .cta-modernize {
+      display: inline-block;
+      padding: 15px 30px;
+      background: #6EE7B7;
+      color: #050505;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 8px;
+      margin-top: 20px;
+      -webkit-transition: all 0.3s;
+      transition: all 0.3s;
+    }
+  </style>
+
+  <script id="legacy-detection">
+    (function() {
+      var isLegacy = false;
+      
+      // Feature detection
+      try {
+        if (!window.Promise || !window.fetch || !Object.assign || !Array.prototype.includes) {
+          isLegacy = true;
+        }
+        // Test for arrow functions (eval is safe here for detection)
+        eval('var f = x => x');
+      } catch (e) {
+        isLegacy = true;
+      }
+
+      if (isLegacy) {
+        document.documentElement.className = 'legacy-detected';
+        window.onload = function() {
+          document.getElementById('legacy-browser').style.display = 'block';
+          document.getElementById('root').style.display = 'none';
+        };
+      }
+    })();
+  </script>
 </head>
 
 <body>
+  <div id="legacy-browser">
+    <div class="smoke smoke-1"></div>
+    <div class="smoke smoke-2"></div>
+    <div class="legacy-content">
+      <img src="/logo-512.png" alt="Engorilate Gorilla" class="falling-gorilla" id="monkey">
+      <h1 class="legacy-title">TU DISPOSITIVO ES UNA LEYENDA...</h1>
+      <p class="legacy-text">Pero nuestra web es del futuro. 🦍<br>Para vivir la experiencia completa de Engorilate, por favor usa un dispositivo más moderno.</p>
+      <a href="https://www.google.com/chrome/" target="_blank" class="cta-modernize">DESBLOQUEAR FUTURO</a>
+    </div>
+  </div>
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
 </body>
