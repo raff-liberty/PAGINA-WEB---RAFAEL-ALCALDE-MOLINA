@@ -1,102 +1,173 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Sparkles, ArrowRight, ShieldCheck, Zap, Brain } from 'lucide-react';
+import { Sparkles, ArrowRight, ShieldCheck, Zap, Play, MessageSquare, Instagram, Linkedin } from 'lucide-react';
 import { analytics } from '../../lib/analytics';
+import { supabase } from '../../lib/supabaseClient';
 
 const DiagnosisCTA = ({ className = "" }) => {
+    const [youtubeUrl, setYoutubeUrl] = useState('');
+    const [siteConfig, setSiteConfig] = useState({
+        whatsapp_url: '',
+        instagram_url: '',
+        linkedin_url: ''
+    });
+
+    useEffect(() => {
+        const fetchConfig = async () => {
+            try {
+                const { data } = await supabase.from('site_config').select('key, value');
+                if (data) {
+                    const config = {};
+                    data.forEach(item => { config[item.key] = item.value || ''; });
+                    setYoutubeUrl(config.about_youtube_url || '');
+                    setSiteConfig({
+                        whatsapp_url: config.whatsapp_url || '',
+                        instagram_url: config.instagram_url || '',
+                        linkedin_url: config.linkedin_url || ''
+                    });
+                }
+            } catch (e) {
+                console.error('Error fetching youtube config:', e);
+            }
+        };
+        fetchConfig();
+    }, []);
+
+    const normalizeYouTubeUrl = (url) => {
+        if (!url) return '';
+        try {
+            if (url.includes('/embed/')) return url;
+            let videoId = '';
+            if (url.includes('youtu.be/')) {
+                videoId = url.split('youtu.be/')[1].split('?')[0].split('&')[0];
+            } else if (url.includes('youtube.com/watch')) {
+                const urlParams = new URLSearchParams(url.split('?')[1]);
+                videoId = urlParams.get('v');
+            } else if (url.includes('youtube.com/shorts/')) {
+                videoId = url.split('/shorts/')[1].split('?')[0];
+            }
+            return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
+        } catch (e) {
+            return url;
+        }
+    };
+
+    const normalizedUrl = (() => {
+        const baseUrl = normalizeYouTubeUrl(youtubeUrl);
+        if (!baseUrl) return '';
+        const separator = baseUrl.includes('?') ? '&' : '?';
+        return `${baseUrl}${separator}vq=hd1080&hd=1&rel=0&modestbranding=1`;
+    })();
+
     return (
-        <section className={`relative overflow-hidden ${className}`}>
-            {/* Background elements */}
-            <div className="absolute inset-0 bg-[#0A0A0A]" />
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(110,231,183,0.05)_0%,transparent_70%)]" />
-
+        <section className={`relative pt-20 pb-20 overflow-hidden bg-transparent ${className}`}>
             <div className="max-w-7xl mx-auto px-6 relative z-10">
-                <div className="bg-[#111111] border border-white/10 rounded-[2rem] p-8 md:p-12 overflow-hidden relative group">
-                    {/* Decorative glow */}
-                    <div className="absolute -top-24 -right-24 w-64 h-64 bg-primary/10 rounded-full blur-[100px] group-hover:bg-primary/20 transition-colors duration-700" />
+                <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+                    {/* LEFT SIDE: REDESIGNED TEXT */}
+                    <motion.div
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        className="space-y-8"
+                    >
+                        <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-mono tracking-widest uppercase">
+                            <Sparkles className="w-4 h-4 animate-pulse" />
+                            Auditoría de Sistemas IA
+                        </div>
 
-                    <div className="grid lg:grid-cols-2 gap-10 items-center">
+                        <h2 className="text-5xl md:text-7xl font-display font-black text-white leading-[0.9] tracking-tighter uppercase italic">
+                            ¿ERES DUEÑO <br />
+                            <span className="text-primary">O ERES EL MOTOR?</span>
+                        </h2>
+
                         <div className="space-y-6">
-                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-bold uppercase tracking-widest">
-                                <Sparkles className="w-4 h-4" />
-                                Herramienta Exclusiva
-                            </div>
-
-                            <h2 className="text-4xl md:text-5xl font-display font-black text-white leading-[1.1] tracking-tighter italic">
-                                ¿TU NEGOCIO ES <span className="text-primary italic">AUTÓNOMO</span> O DEPENDE DE TI?
-                            </h2>
-
-                            <p className="text-lg text-gray-400 leading-relaxed max-w-xl">
-                                Deja de apagar fuegos. Realiza nuestro <span className="text-white font-bold">Diagnóstico de Eficiencia Operativa</span> y descubre en menos de 2 minutos exactamente dónde están los cuellos de botella que te impiden crecer.
+                            <p className="text-xl md:text-2xl text-white/90 font-light leading-snug italic max-w-xl">
+                                Tu negocio debería ser un sistema automático, no una cárcel de tareas repetitivas.
                             </p>
-
-                            <div className="flex flex-wrap gap-6 pt-4">
-                                <div className="flex items-center gap-2 text-sm text-gray-500">
-                                    <ShieldCheck className="w-5 h-5 text-primary/50" />
-                                    <span>Análisis por IA</span>
-                                </div>
-                                <div className="flex items-center gap-2 text-sm text-gray-500">
-                                    <Zap className="w-5 h-5 text-primary/50" />
-                                    <span>Resultados al instante</span>
-                                </div>
-                                <div className="flex items-center gap-2 text-sm text-gray-500">
-                                    <Brain className="w-5 h-5 text-primary/50" />
-                                    <span>Hoja de ruta estratégica</span>
-                                </div>
-                            </div>
-
-                            <Link
-                                to="/diagnostico"
-                                onClick={() => analytics.trackEvent('diagnosis_cta_click')}
-                                className="inline-flex items-center gap-3 bg-primary hover:bg-white text-black font-black px-8 py-4 rounded-xl text-base transition-all transform hover:scale-105 shadow-[0_0_30px_rgba(110,231,183,0.2)] group/btn"
-                            >
-                                OBTIENE TU DIAGNÓSTICO GRATIS
-                                <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
-                            </Link>
+                            <p className="text-lg text-white/50 leading-relaxed max-w-lg border-l-2 border-primary/30 pl-6">
+                                Descubre en menos de 2 minutos dónde se está filtrando tu rentabilidad y cómo cerrarle el grifo al caos con ingeniería sutil.
+                            </p>
                         </div>
 
-                        <div className="relative">
-                            {/* Visual representation of the tool */}
-                            <div className="relative z-20 bg-[#1A1A1A] border border-white/10 rounded-2xl p-6 shadow-2xl transform rotate-2 group-hover:rotate-0 transition-transform duration-500">
-                                <div className="space-y-6">
-                                    <div className="h-2 w-24 bg-primary/20 rounded-full" />
-                                    <div className="space-y-3">
-                                        <div className="h-4 w-full bg-white/5 rounded-lg" />
-                                        <div className="h-4 w-5/6 bg-white/5 rounded-lg" />
-                                        <div className="h-4 w-4/6 bg-white/5 rounded-lg" />
-                                    </div>
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div className="aspect-square rounded-2xl bg-primary/5 border border-primary/10 flex flex-col items-center justify-center gap-2">
-                                            <div className="text-2xl font-black text-primary">84%</div>
-                                            <div className="text-[10px] text-gray-500 uppercase font-bold text-center px-2">Eficiencia Actual</div>
-                                        </div>
-                                        <div className="aspect-square rounded-2xl bg-white/5 border border-white/10 flex flex-col items-center justify-center gap-2">
-                                            <Zap className="w-6 h-6 text-primary" />
-                                            <div className="text-[10px] text-gray-500 uppercase font-bold text-center px-2">Potencial de ahorro</div>
-                                        </div>
-                                    </div>
-                                    <div className="pt-4 border-t border-white/5">
-                                        <div className="flex justify-between items-center text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
-                                            <span>Analizando procesos...</span>
-                                            <span className="text-primary italic">IA ACTIVE</span>
-                                        </div>
-                                        <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
-                                            <motion.div
-                                                className="h-full bg-primary"
-                                                animate={{ width: ['20%', '80%', '60%', '100%'] }}
-                                                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
+                        <div className="flex flex-wrap gap-8 pt-4">
+                            <div className="flex items-center gap-3 text-sm text-white/40 font-mono uppercase tracking-widest font-bold">
+                                <ShieldCheck className="w-5 h-5 text-primary" />
+                                <span>Diagnóstico 100% Real</span>
                             </div>
-
-                            {/* Decorative background cards */}
-                            <div className="absolute top-0 left-0 w-full h-full bg-primary/5 border border-primary/10 rounded-3xl -rotate-3 z-10" />
-                            <div className="absolute top-0 left-0 w-full h-full bg-white/5 border border-white/5 rounded-3xl -rotate-6 z-0" />
+                            <div className="flex items-center gap-3 text-sm text-white/40 font-mono uppercase tracking-widest font-bold">
+                                <Zap className="w-5 h-5 text-primary" />
+                                <span>Hoja de ruta estratégica</span>
+                            </div>
                         </div>
-                    </div>
+
+                        <Link
+                            to="/diagnostico"
+                            onClick={() => analytics.trackEvent('diagnosis_cta_click')}
+                            className="inline-flex items-center gap-4 bg-primary hover:bg-white text-black font-black px-10 py-5 rounded-xl text-sm uppercase tracking-[0.2em] transition-all transform hover:scale-105 shadow-[0_20px_50px_rgba(34,197,94,0.3)] group/btn"
+                        >
+                            REALIZAR DIAGNÓSTICO GRATIS
+                            <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+                        </Link>
+                    </motion.div>
+
+                    {/* RIGHT SIDE: YOUTUBE WINDOW (Replicated from About.jsx style) */}
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8 }}
+                        className="relative"
+                    >
+                        {/* Ambient Glow */}
+                        <div className="absolute -inset-10 bg-primary/10 blur-[100px] rounded-full opacity-40 animate-pulse" />
+
+                        <div className="relative aspect-video rounded-3xl overflow-hidden border-2 border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.8)] group bg-black">
+                            {normalizedUrl ? (
+                                <iframe
+                                    src={normalizedUrl}
+                                    title="Diagnóstico de Sistemas"
+                                    className="w-full h-full"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                />
+                            ) : (
+                                <div className="w-full h-full flex flex-col items-center justify-center gap-4">
+                                    <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30">
+                                        <Play className="w-8 h-8 text-primary fill-current" />
+                                    </div>
+                                    <p className="text-white/30 font-mono text-xs uppercase tracking-widest">Cargando demostración...</p>
+                                </div>
+                            )}
+                            <div className="absolute inset-0 pointer-events-none border border-white/5 rounded-3xl" />
+                        </div>
+
+
+                        {/* Social Buttons Below Video */}
+                        <div className="mt-8 flex items-center gap-4 justify-center lg:justify-start overflow-x-auto lg:overflow-visible no-scrollbar pb-2 lg:pb-0">
+                            <p className="text-[9px] text-white/20 uppercase tracking-[0.3em] font-mono whitespace-nowrap shrink-0">Conexión directa:</p>
+                            <div className="flex items-center gap-3 relative z-30 flex-nowrap">
+                                {siteConfig.whatsapp_url && (
+                                    <a href={siteConfig.whatsapp_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 hover:border-primary/50 transition-all group shrink-0">
+                                        <MessageSquare className="w-4 h-4 text-[#25D366] opacity-70 group-hover:opacity-100" />
+                                        <span className="text-[10px] text-white/60 group-hover:text-white uppercase tracking-widest font-black">WhatsApp</span>
+                                    </a>
+                                )}
+                                {siteConfig.instagram_url && (
+                                    <a href={siteConfig.instagram_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 hover:border-primary/50 transition-all group shrink-0">
+                                        <Instagram className="w-4 h-4 text-[#E1306C] opacity-70 group-hover:opacity-100" />
+                                        <span className="text-[10px] text-white/60 group-hover:text-white uppercase tracking-widest font-black">Instagram</span>
+                                    </a>
+                                )}
+                                {siteConfig.linkedin_url && (
+                                    <a href={siteConfig.linkedin_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 hover:border-primary/50 transition-all group shrink-0">
+                                        <Linkedin className="w-4 h-4 text-[#0077B5] opacity-70 group-hover:opacity-100" />
+                                        <span className="text-[10px] text-white/60 group-hover:text-white uppercase tracking-widest font-black">LinkedIn</span>
+                                    </a>
+                                )}
+                            </div>
+                        </div>
+                    </motion.div>
                 </div>
             </div>
         </section>

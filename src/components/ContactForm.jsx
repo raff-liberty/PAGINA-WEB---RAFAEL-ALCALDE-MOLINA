@@ -146,110 +146,115 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
     }
 
     return (
-        <form onSubmit={handleSubmit} className={`space-y-4 ${className}`}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
+        <form onSubmit={handleSubmit} className={`space-y-6 ${className}`}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="group/input relative">
                     <input
                         id="name"
-                        className="w-full bg-white/5 border border-white/20 rounded-xl px-5 py-3 text-sm text-white focus:border-primary/50 focus:bg-white/10 outline-none transition-all placeholder:text-gray-600 shadow-inner"
+                        className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:border-primary/50 focus:bg-white/[0.07] outline-none transition-all placeholder:text-white/20 shadow-lg"
                         placeholder="Tu Nombre"
                         type="text"
                         value={formData.name}
                         onChange={handleChange}
                         required
                     />
+                    <div className="absolute inset-0 rounded-xl bg-primary/5 blur-xl opacity-0 group-focus-within/input:opacity-100 transition-opacity pointer-events-none" />
                 </div>
-                <div>
+                <div className="group/input relative">
                     <input
                         id="phone"
-                        className="w-full bg-white/5 border border-white/20 rounded-xl px-5 py-3 text-sm text-white focus:border-primary/50 focus:bg-white/10 outline-none transition-all placeholder:text-gray-600 shadow-inner"
+                        className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:border-primary/50 focus:bg-white/[0.07] outline-none transition-all placeholder:text-white/20 shadow-lg"
                         placeholder="+34 WhatsApp"
                         type="tel"
                         value={formData.phone}
                         onChange={handleChange}
                         required
                     />
+                    <div className="absolute inset-0 rounded-xl bg-primary/5 blur-xl opacity-0 group-focus-within/input:opacity-100 transition-opacity pointer-events-none" />
                 </div>
             </div>
 
-            <div>
+            <div className="group/input relative">
                 <input
                     id="company"
-                    className="w-full bg-white/5 border border-white/20 rounded-xl px-5 py-3 text-sm text-white focus:border-primary/50 focus:bg-white/10 outline-none transition-all placeholder:text-gray-600 shadow-inner"
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:border-primary/50 focus:bg-white/[0.07] outline-none transition-all placeholder:text-white/20 shadow-lg"
                     placeholder="Empresa (opcional)"
                     type="text"
                     value={formData.company}
                     onChange={handleChange}
                 />
+                <div className="absolute inset-0 rounded-xl bg-primary/5 blur-xl opacity-0 group-focus-within/input:opacity-100 transition-opacity pointer-events-none" />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="group/input relative">
                     <input
                         id="email"
-                        className="w-full bg-white/5 border border-white/20 rounded-xl px-5 py-3 text-sm text-white focus:border-primary/50 focus:bg-white/10 outline-none transition-all placeholder:text-gray-600 shadow-inner"
+                        className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:border-primary/50 focus:bg-white/[0.07] outline-none transition-all placeholder:text-white/20 shadow-lg"
                         placeholder="tu@email.com"
                         type="email"
                         value={formData.email}
                         onChange={handleChange}
                         required
                     />
+                    <div className="absolute inset-0 rounded-xl bg-primary/5 blur-xl opacity-0 group-focus-within/input:opacity-100 transition-opacity pointer-events-none" />
                 </div>
-                <div>
+                <div className="group/input relative">
                     <div className="relative">
                         <label htmlFor="service" className="sr-only">Servicio de interés</label>
                         <select
                             id="service"
                             value={formData.service}
                             onChange={handleChange}
-                            className="w-full bg-white/5 border border-white/20 rounded-xl px-5 py-3 text-sm text-white focus:border-primary/50 focus:bg-white/10 outline-none appearance-none cursor-pointer transition-all"
+                            className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:border-primary/50 focus:bg-white/[0.07] outline-none appearance-none cursor-pointer transition-all shadow-lg"
                         >
                             {serviceOptions.map(opt => (
-                                <option key={opt.value} value={opt.value} className="bg-gray-900">{opt.label}</option>
+                                <option key={opt.value} value={opt.value} className="bg-[#0a0a0a] text-white">{opt.label}</option>
                             ))}
                         </select>
-                        <div className="absolute right-3 top-3 pointer-events-none text-gray-500">
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-white/20 group-focus-within/input:text-primary/50 transition-colors">
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div>
+            <div className="group/input relative">
                 <textarea
                     id="message"
-                    className="w-full bg-white/5 border border-white/20 rounded-xl px-5 py-3 text-sm text-white focus:border-primary/50 focus:bg-white/10 outline-none resize-none transition-all placeholder:text-gray-600 shadow-inner"
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:border-primary/50 focus:bg-white/[0.07] outline-none resize-none transition-all placeholder:text-white/20 shadow-lg"
                     placeholder="¿Qué quieres automatizar? Sé breve y directo."
-                    rows={3}
+                    rows={4}
                     value={formData.message}
                     onChange={handleChange}
                     required
                 />
+                <div className="absolute inset-0 rounded-xl bg-primary/5 blur-xl opacity-0 group-focus-within/input:opacity-100 transition-opacity pointer-events-none" />
             </div>
 
-            <div className="pt-2 flex flex-col md:flex-row items-center gap-4 justify-between">
-                <div className="flex items-start gap-2 max-w-xs">
+            <div className="pt-4 flex flex-col md:flex-row items-center gap-6 justify-between">
+                <div className="flex items-start gap-3 max-w-xs">
                     <input
                         type="checkbox"
                         id="privacyAccepted"
                         checked={formData.privacyAccepted}
                         onChange={handleChange}
-                        className="mt-1 w-3 h-3 rounded border-white/20 bg-white/5 text-primary cursor-pointer accent-primary"
+                        className="mt-1 w-4 h-4 rounded border-white/10 bg-white/5 text-primary cursor-pointer accent-primary"
                         required
                     />
-                    <label htmlFor="privacyAccepted" className="text-[10px] text-gray-500 cursor-pointer">
-                        Acepto la <Link to="/privacidad" className="text-primary hover:underline">política de privacidad</Link>. (Cero SPAM, prometido).
+                    <label htmlFor="privacyAccepted" className="text-[10px] text-white/30 leading-tight cursor-pointer hover:text-white/50 transition-colors">
+                        Acepto la <Link to="/privacidad" className="text-primary/60 hover:text-primary transition-colors underline underline-offset-2">política de privacidad</Link>. (Cero SPAM, prometido).
                     </label>
                 </div>
 
                 <button
                     type="submit"
                     disabled={!isFormValid || loading}
-                    className={`relative group/btn w-full md:w-auto px-10 py-3 rounded-xl font-black text-xs uppercase tracking-widest flex items-center justify-center gap-3 transition-all transform overflow-hidden ${isFormValid && !loading ? 'bg-gradient-to-r from-primary via-[#4ADE80] to-primary text-black hover:scale-105 shadow-[0_15px_40px_rgba(110,231,183,0.3)]' : 'bg-white/5 text-gray-600 cursor-not-allowed border border-white/10'}`}
+                    className={`relative group/btn w-full md:w-auto px-12 py-5 rounded-xl font-black text-[11px] uppercase tracking-[0.3em] flex items-center justify-center gap-4 transition-all transform overflow-hidden ${isFormValid && !loading ? 'bg-primary text-black hover:scale-105 shadow-[0_20px_50px_rgba(34,197,94,0.3)]' : 'bg-white/5 text-white/20 cursor-not-allowed border border-white/5'}`}
                 >
                     <div className="absolute inset-0 bg-white/20 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
-                    <span className="relative z-10 flex items-center gap-2">
-                        {loading ? 'Procesando...' : 'Enviar Mensaje'} <Send className="w-3.5 h-3.5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    <span className="relative z-10 flex items-center gap-3">
+                        {loading ? 'Sincronizando...' : 'Enviar mensaje'} <Send className="w-4 h-4 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform duration-300" />
                     </span>
                 </button>
             </div>

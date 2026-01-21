@@ -22,7 +22,7 @@ const contentMap = {
     hair: [
         {
             problem: "El cliente te escribe por WhatsApp a las 23:00 para pedir cita. Al día siguiente, entre secadores y tintes, se te olvida contestar.",
-            solution: "No se dan citas por chat. Un agente virtual se conecta a tu calendario y CRM para entender de manera natural quién es el cliente y responde, agenda y cobra la cita si se desea.",
+            solution: "Un agente virtual se conecta a tu calendario y CRM para entender de manera natural quién es el cliente y responde, agenda y cobra la cita si se desea.",
             result: "Te levantas con la agenda llena. No has usado el móvil fuera de tu horario."
         },
         {
@@ -296,65 +296,94 @@ const Home = () => {
     const useCarousel = filteredSolutions.length > 3;
 
     return (
-        <div className="relative pt-40 md:pt-56 pb-32 min-h-screen">
+        <div className="relative pt-32 md:pt-48 pb-32 min-h-screen bg-[#020202] text-white selection:bg-primary selection:text-black">
             <SEO
-                title="Engorilate | Automatización de Negocios"
-                description="Automatiza los procesos repetitivos de tu empresa en Murcia. Recupera tu tiempo y deja de perder dinero en gestión manual."
+                title="Sistemas que Venden por Ti | Ingeniería de Ventas | Engorilate"
+                description="Automatiza los procesos repetitivos de tu empresa. Recupera tu tiempo y deja de perder dinero en gestión manual con ingeniería de precisión."
                 keywords="automatización negocios murcia, digitalización pymes, eficiencia operativa"
             />
             <BackgroundMesh />
 
+            {/* Ambient Background Elements - High Intensity Atmosphere */}
+            <div className="fixed inset-0 pointer-events-none overflow-hidden">
+                <div className="absolute top-[5%] -left-[10%] w-[60%] h-[60%] bg-primary/10 blur-[130px] rounded-full animate-pulse opacity-60" />
+                <div className="absolute bottom-[5%] -right-[10%] w-[60%] h-[60%] bg-primary/10 blur-[130px] rounded-full animate-pulse opacity-60" style={{ animationDuration: '8s' }} />
+                <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.02] via-transparent to-primary/[0.05] opacity-50" />
+            </div>
+
             <div className="relative z-10 max-w-7xl mx-auto px-6">
                 {/* Hero Section */}
-                <div className="flex flex-col items-center justify-center mb-20 text-center">
+                <div className="flex flex-col items-center justify-center mb-24 text-center lg:text-left">
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="mb-8 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20"
+                        className="mb-8 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 backdrop-blur-sm self-center lg:self-start"
                     >
-                        <span className="text-primary text-xs md:text-sm font-mono font-bold tracking-[0.2em] uppercase">
-                            Sistemas y Automatización de Negocios
-                        </span>
+                        <div className="flex items-center gap-2">
+                            <Zap className="w-3.5 h-3.5 text-primary animate-pulse" />
+                            <span className="text-primary text-[11px] font-mono font-bold tracking-[0.2em] uppercase">
+                                Sistema Operativo de Negocios v2.0
+                            </span>
+                        </div>
                     </motion.div>
-                    <motion.h1
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold tracking-tight text-gray-200 mb-6 relative inline-block max-w-5xl"
-                    >
-                        Si haces todos los días lo mismo, <br className="hidden md:block" />
-                        no es trabajo. Es <span className="text-primary">castigo.</span>
-                    </motion.h1>
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
-                        className="text-lg md:text-xl text-gray-300 font-medium mb-12 max-w-3xl mx-auto leading-relaxed"
-                    >
-                        Automatiza los procesos repetitivos de tu empresa
-                    </motion.p>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-6xl">
+
+                    <div className="grid lg:grid-cols-12 gap-12 items-center w-full">
+                        <div className="lg:col-span-12 xl:col-span-8 text-center lg:text-left">
+                            <motion.h1
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="font-display text-5xl md:text-8xl lg:text-9xl font-black leading-[0.9] tracking-tighter text-white mb-8 uppercase italic"
+                            >
+                                SISTEMAS QUE <br />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/80 drop-shadow-[0_0_20px_rgba(110,231,183,0.5)]">VENDEN POR TI.</span>
+                            </motion.h1>
+
+                            <motion.p
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.2 }}
+                                className="text-xl md:text-2xl text-white/90 font-light max-w-3xl leading-relaxed italic mb-12 border-l-2 lg:border-l-4 border-primary/40 pl-6 mx-auto lg:mx-0"
+                            >
+                                Creamos infraestructuras automáticas que llenan tu agenda de clientes cada mañana. Profesionalizamos tu forma de captar clientes en <span className="text-white font-bold">30 días</span>.
+                            </motion.p>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-7xl mt-12">
                         {[
                             {
-                                title: 'DETECCIÓN',
+                                title: 'BUSCAR EL ATASCO',
                                 icon: Search,
                                 step: '01',
-                                content: 'Identifico tareas que el dueño no debería estar haciendo.',
-                                highlight: 'Te tiras 5 horas diarias contestando Whatsapps de clientes curiosos'
+                                content: 'Buscamos esas tareas pesadas que te roban todo el día y que te impiden ganar más dinero.',
+                                highlight: [
+                                    'Identificamos lo que te roba tiempo',
+                                    'Vemos qué puede hacer el móvil solo',
+                                    'Ganamos tu primera hora libre'
+                                ]
                             },
                             {
-                                title: 'AUTOMATIZACIÓN',
+                                title: 'MONTAR EL SISTEMA',
                                 icon: Zap,
                                 step: '02',
-                                content: 'Diseño automatizaciones para que esas tareas funcionen solas.',
-                                highlight: 'Diseñamos un embudo de automatización que responde a todos los mensajes como tu responderías de manera natural'
+                                content: 'Instalamos herramientas inteligentes que trabajan por ti para que las cosas sigan funcionando solas.',
+                                highlight: [
+                                    'Atención y citas sin que tú mires',
+                                    'Un sistema que nunca duerme',
+                                    'Tú descansas, el negocio factura'
+                                ]
                             },
                             {
-                                title: 'AUTONOMÍA',
+                                title: 'PILOTO AUTOMÁTICO',
                                 icon: TrendingUp,
                                 step: '03',
-                                content: 'Consigo que el negocio no dependa de estar encima todo el día.',
-                                highlight: 'Tu negocio funciona solo. Dedica tu tiempo a aquello que realmente da rentabilidad a la empresa.'
+                                content: 'Tu negocio se convierte en una máquina que funciona por sí sola. Tú mandas, el sistema ejecuta.',
+                                highlight: [
+                                    'Control total desde tu bolsillo',
+                                    'Adiós a lo aburrido y repetitivo',
+                                    'Libertad para lo que de verdad importa'
+                                ]
                             }
                         ].map((item, i) => (
                             <motion.div
@@ -362,51 +391,65 @@ const Home = () => {
                                 initial={{ opacity: 0, y: 30 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.2 + i * 0.1, duration: 0.8, ease: "easeOut" }}
-                                className="group relative bg-[#404040] backdrop-blur-md border-2 border-white/90 p-6 rounded-xl hover:border-primary/50 transition-all duration-500 hover:bg-[#454545] flex flex-col shadow-[0_20px_80px_rgba(0,0,0,1),0_0_0_2px_rgba(255,255,255,0.15)] overflow-hidden h-full"
+                                className="group relative bg-[#0a0a0a] border border-white/[0.15] rounded-[2.5rem] p-8 md:p-10 overflow-hidden hover:border-primary/60 transition-all duration-700 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.05)_inset,0_25px_50px_-12px_rgba(34,197,94,0.25)] flex flex-col h-full hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.9),0_0_0_1px_rgba(34,197,94,0.2)_inset,0_35px_70px_-15px_rgba(34,197,94,0.5)]"
                             >
-                                {/* Background step number */}
-                                <span className="absolute -top-4 -right-4 text-8xl font-bold text-white/[0.02] group-hover:text-primary/[0.05] transition-colors pointer-events-none font-mono">
-                                    {item.step}
-                                </span>
+                                {/* Rim Light Effect */}
+                                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-70" />
 
-                                {/* Top gradient line */}
-                                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none"></div>
+                                {/* Background glow on hover */}
+                                <div className="absolute inset-0 bg-primary/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
 
                                 <div className="relative z-10 flex flex-col h-full">
                                     {/* Icon and Title */}
-                                    <div className="flex items-center gap-3 mb-4">
-                                        <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-500 border border-primary/20">
-                                            <item.icon className="w-5 h-5 text-primary" />
+                                    <div className="flex items-center justify-between mb-8">
+                                        <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-primary/40 group-hover:bg-primary/10 transition-all duration-700 shadow-inner">
+                                            <item.icon className="w-7 h-7 text-white/40 group-hover:text-primary transition-all duration-500" />
                                         </div>
-                                        <h3 className="font-display text-lg font-bold text-gray-200 group-hover:text-primary transition-colors uppercase tracking-wider">
-                                            {item.title}
-                                        </h3>
+                                        <span className="text-7xl font-black text-white/[0.03] font-mono leading-none group-hover:text-primary/[0.1] transition-colors">
+                                            {item.step}
+                                        </span>
                                     </div>
 
-                                    {/* Content with strategic line breaks */}
-                                    <div className="text-gray-300 text-sm leading-relaxed flex-grow space-y-3">
-                                        <p className="text-lg md:text-xl font-medium text-gray-100 group-hover:text-primary transition-colors leading-snug min-h-[5.5rem] lg:min-h-[6rem]">
+                                    <div className="space-y-6 flex-grow flex flex-col">
+                                        <div>
+                                            <h4 className="text-[11px] uppercase tracking-[0.25em] text-primary font-black mb-4 flex items-center gap-2">
+                                                <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
+                                                FASE {item.step}
+                                            </h4>
+                                            <h3 className="text-xl md:text-3xl font-bold text-white tracking-tighter uppercase italic leading-tight mb-4">
+                                                {item.title}
+                                            </h3>
+                                        </div>
+
+                                        <p className="text-white/80 text-base md:text-lg font-normal leading-relaxed mb-6 italic">
                                             {item.content}
                                         </p>
 
-                                        <p className="text-sm font-bold text-primary leading-tight py-2 border-l-2 border-primary/20 pl-3 min-h-[2.5rem] flex items-center">
-                                            {item.highlight}
-                                        </p>
+                                        <div className="relative p-5 rounded-2xl bg-primary/[0.07] border border-primary/20 shadow-inner overflow-hidden group/benefit mt-auto min-h-[120px] md:min-h-[140px] flex flex-col justify-center">
+                                            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover/benefit:opacity-100 transition-opacity" />
+                                            <ul className="relative z-10 space-y-2">
+                                                {item.highlight.map((line, idx) => (
+                                                    <li key={idx} className="flex items-start gap-2 text-white text-xs md:text-sm font-semibold italic">
+                                                        <CheckCircle className="w-3.5 h-3.5 text-primary mt-0.5 flex-shrink-0" />
+                                                        <span>{line}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
                                     </div>
-
-                                    {/* Bottom accent line */}
-                                    <div className="h-1 w-0 bg-gradient-to-r from-primary to-primary/50 group-hover:w-full transition-all duration-700 rounded-full mt-4"></div>
                                 </div>
-
-                                {/* Bottom highlight glow */}
-                                <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             </motion.div>
                         ))}
                     </div>
                 </div>
 
+                {/* Early DiagnosisCTA - Positioned for Maximum Impact */}
+                <div className="my-24">
+                    <DiagnosisCTA />
+                </div>
+
                 {/* Introduction */}
-                <div className="mb-20 max-w-4xl mt-20">
+                <div className="mb-20 max-w-4xl mt-32">
                     <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -417,25 +460,25 @@ const Home = () => {
                             Ejemplos
                         </span>
                     </motion.div>
-                    <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-6 text-gray-200">
+                    <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-6 text-white uppercase italic tracking-tighter">
                         Cómo funcionaría tu negocio <br />
-                        <span className="text-primary">con un poco más de orden</span>
+                        <span className="text-primary italic">con un poco más de orden</span>
                     </h2>
-                    <p className="text-xl text-gray-300 font-light max-w-3xl leading-relaxed">
+                    <p className="text-xl text-white/60 font-light max-w-3xl leading-relaxed">
                         Ejemplos reales de caos operativo convertidos en tranquilidad. Sin jerga técnica, solo causa y efecto.
                     </p>
                 </div>
 
                 {/* Tabs and Content */}
                 <div className="w-full">
-                    <div className="flex flex-wrap gap-4 mb-12 border-b border-white/5 pb-8">
+                    <div className="flex flex-wrap gap-3 mb-12 border-b border-white/5 pb-8 justify-center lg:justify-start">
                         {businessTypes.map((type) => (
                             <button
                                 key={type.id}
                                 onClick={() => setActiveTab(type.id)}
-                                className={`px-6 py-3 rounded-lg text-sm md:text-base border transition-all duration-300 select-none cursor-pointer ${activeTab === type.id
-                                    ? 'bg-primary text-gray-900 border-primary font-bold shadow-[0_0_15px_rgba(110,231,183,0.3)]'
-                                    : 'bg-white/10 border-white/20 text-gray-300 hover:text-white hover:border-white/40 hover:bg-white/20'
+                                className={`px-5 py-2.5 rounded-xl text-xs md:text-sm font-mono tracking-widest uppercase transition-all duration-500 border ${activeTab === type.id
+                                    ? 'bg-primary/10 border-primary text-primary shadow-[0_0_20px_rgba(110,231,183,0.2)]'
+                                    : 'bg-white/5 border-white/10 text-white/40 hover:text-white/70 hover:border-white/20'
                                     }`}
                             >
                                 {type.label}
@@ -476,29 +519,38 @@ const Home = () => {
                                         {/* Ambient glow on hover */}
                                         <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-primary/5 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
 
-                                        <div className="relative grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 bg-[#404040] border-2 border-white/90 p-6 md:p-12 rounded-2xl transition-all duration-300 items-start shadow-[0_20px_80px_rgba(0,0,0,1),0_0_0_2px_rgba(255,255,255,0.15)] overflow-hidden group-hover:border-primary/50">
-                                            {/* Subtle glass effect border on top */}
-                                            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+                                        <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 bg-[#0a0a0a] border border-white/[0.1] p-8 md:p-12 rounded-[2.5rem] transition-all duration-700 items-start overflow-hidden group/card shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,255,255,0.03)_inset] hover:border-primary/40 hover:shadow-[0_30px_60px_-15px_rgba(34,197,94,0.15)]">
+                                            {/* Rim Light */}
+                                            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-70" />
 
-                                            <div className="col-span-12 md:col-span-4">
-                                                <div className="flex items-center gap-3 mb-4">
-                                                    <span className="text-[10px] font-mono text-gray-200 uppercase tracking-[0.2em] px-2 py-1 bg-white/5 rounded">Situación</span>
+                                            <div className="lg:col-span-4 space-y-4">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/10">
+                                                        <Search className="w-5 h-5 text-white/30" />
+                                                    </div>
+                                                    <span className="text-primary font-mono text-[10px] font-bold uppercase tracking-[0.3em]">SITUACIÓN ACTUAL</span>
                                                 </div>
-                                                <p className="text-gray-300 leading-relaxed text-base md:text-lg font-normal italic">"{item.problem}"</p>
+                                                <p className="text-white/70 leading-relaxed text-lg font-normal italic">"{item.problem}"</p>
                                             </div>
 
-                                            <div className="col-span-12 md:col-span-4 relative md:border-l md:border-white/10 md:pl-10">
-                                                <div className="flex items-center gap-3 mb-4">
-                                                    <span className="text-[10px] font-mono text-primary/60 uppercase tracking-[0.2em] px-2 py-1 bg-primary/5 rounded">Qué se hace</span>
+                                            <div className="lg:col-span-4 space-y-4 lg:border-l lg:border-white/10 lg:pl-10">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20">
+                                                        <Zap className="w-5 h-5 text-primary" />
+                                                    </div>
+                                                    <span className="text-primary font-mono text-[10px] font-bold uppercase tracking-[0.3em]">INTERVENCIÓN TÉCNICA</span>
                                                 </div>
-                                                <p className="text-gray-100 font-medium text-lg md:text-xl leading-snug">{item.solution}</p>
+                                                <p className="text-white font-bold text-xl md:text-2xl tracking-tight leading-snug">{item.solution}</p>
                                             </div>
 
-                                            <div className="col-span-12 md:col-span-4 relative md:border-l md:border-white/10 md:pl-10">
-                                                <div className="flex items-center gap-3 mb-4">
-                                                    <span className="text-[10px] font-mono text-primary uppercase tracking-[0.2em] px-2 py-1 bg-primary/10 rounded">Resultado</span>
+                                            <div className="lg:col-span-4 space-y-4 lg:border-l lg:border-white/10 lg:pl-10">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center border border-primary/30">
+                                                        <CheckCircle className="w-5 h-5 text-primary" />
+                                                    </div>
+                                                    <span className="text-primary font-mono text-[10px] font-bold uppercase tracking-[0.3em]">MÉTRICA DE ÉXITO</span>
                                                 </div>
-                                                <p className="text-primary font-bold text-xl md:text-2xl leading-snug group-hover:text-primary transition-colors">{item.result}</p>
+                                                <p className="text-primary font-bold text-lg md:text-xl leading-relaxed tracking-tight">{item.result}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -521,7 +573,7 @@ const Home = () => {
                         {/* Specific Solutions Grid - Integrated */}
                         {/* Specific Solutions Grid - Integrated as a Product Showcase */}
                         {/* NEW PREMIUM SHOWCASE NAVIGATOR */}
-                        <div className="mt-16 relative">
+                        <div className="mt-32 relative">
                             <div className="flex flex-col items-center text-center mb-16">
                                 <motion.div
                                     initial={{ opacity: 0, y: 10 }}
@@ -529,14 +581,14 @@ const Home = () => {
                                     viewport={{ once: true }}
                                     className="mb-6 inline-block px-4 py-1.5 bg-primary/5 border border-primary/20 rounded-full"
                                 >
-                                    <span className="text-primary font-mono text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase">
+                                    <span className="text-primary font-mono text-[10px] font-bold tracking-[0.3em] uppercase">
                                         Catálogo de Soluciones de Alto Impacto
                                     </span>
                                 </motion.div>
-                                <h3 className="font-display text-4xl md:text-6xl font-bold text-gray-200 mb-4 tracking-tight">
-                                    Sistemas listos para <span className="text-primary">implementar</span>
+                                <h3 className="font-display text-3xl md:text-5xl font-bold text-white mb-4 tracking-tight leading-tight">
+                                    Sistemas listos para <span className="text-primary font-light italic">implementar</span>
                                 </h3>
-                                <p className="text-gray-300 max-w-xl text-lg font-light italic">
+                                <p className="text-white/50 max-w-xl text-base font-light leading-relaxed">
                                     Abre el capó de lo que podemos construir para tu pyme hoy mismo.
                                 </p>
                             </div>
@@ -556,23 +608,30 @@ const Home = () => {
                                                     setShowPreviewOnMobile(true);
                                                 }
                                             }}
-                                            className={`w-full text-left p-4 rounded-2xl transition-all duration-500 border group ${selectedSolutionIndex === idx
-                                                ? 'bg-white/5 border-primary/50 shadow-[0_0_30px_rgba(110,231,183,0.1)]'
-                                                : 'border-transparent hover:bg-white/[0.02]'
+                                            className={`w-full text-left p-6 rounded-2xl transition-all duration-700 border group relative overflow-hidden ${selectedSolutionIndex === idx
+                                                ? 'bg-primary/5 border-primary/40 shadow-[0_20px_40px_rgba(110,231,183,0.1)]'
+                                                : 'border-white/5 hover:border-white/20 hover:bg-white/[0.02]'
                                                 }`}
                                         >
-                                            <div className="flex items-center gap-4">
-                                                <div className={`w-1 h-12 rounded-full transition-all duration-500 ${selectedSolutionIndex === idx ? 'bg-primary' : 'bg-white/10 group-hover:bg-white/30'
-                                                    }`} />
-                                                <div>
-                                                    <h4 className={`text-xl md:text-2xl font-display font-bold tracking-tight transition-all duration-500 ${selectedSolutionIndex === idx ? 'text-gray-100' : 'text-gray-300 group-hover:text-gray-200'
+                                            {/* Selection Bar */}
+                                            <div className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 h-12 rounded-full transition-all duration-700 ${selectedSolutionIndex === idx ? 'bg-primary shadow-[0_0_15px_rgba(110,231,183,1)]' : 'bg-white/10 group-hover:bg-white/30'
+                                                }`} />
+
+                                            <div className="pl-4">
+                                                <h4 className={`text-xl md:text-2xl font-display font-bold tracking-tight transition-all duration-500 ${selectedSolutionIndex === idx ? 'text-white' : 'text-white/40 group-hover:text-white/70'
+                                                    }`}>
+                                                    {area.title}
+                                                </h4>
+                                                <div className="flex items-center gap-2 mt-2">
+                                                    <span className={`text-[10px] font-mono font-bold uppercase tracking-[0.2em] transition-all duration-500 ${selectedSolutionIndex === idx ? 'text-primary' : 'text-white/20'
                                                         }`}>
-                                                        {area.title}
-                                                    </h4>
-                                                    <p className={`text-xs font-mono uppercase tracking-[0.2em] mt-1 transition-all duration-500 ${selectedSolutionIndex === idx ? 'text-primary' : 'text-gray-400'
+                                                        {area.badge}
+                                                    </span>
+                                                    <div className={`w-1 h-1 rounded-full ${selectedSolutionIndex === idx ? 'bg-primary' : 'bg-white/10'}`} />
+                                                    <span className={`text-[10px] font-mono font-bold uppercase tracking-[0.2em] transition-all duration-500 ${selectedSolutionIndex === idx ? 'text-primary' : 'text-white/20'
                                                         }`}>
-                                                        {area.badge} — ROI {area.roi}
-                                                    </p>
+                                                        ROI {area.roi}
+                                                    </span>
                                                 </div>
                                             </div>
                                         </button>
@@ -588,40 +647,39 @@ const Home = () => {
                                             animate={{ opacity: 1, x: 0 }}
                                             exit={{ opacity: 0, x: -20 }}
                                             transition={{ duration: 0.4, ease: "circOut" }}
-                                            className="relative bg-[#1A1A1A] border-2 border-white/20 p-10 md:p-14 rounded-[3rem] overflow-hidden shadow-[0_32px_120px_rgba(0,0,0,1)] min-h-[450px] flex flex-col justify-center transition-all duration-700 hover:border-primary/40 group/card"
+                                            className="relative bg-[#0a0a0a] border border-white/[0.15] p-10 md:p-14 rounded-[3rem] overflow-hidden shadow-[0_50px_100px_-30px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.05)_inset] min-h-[450px] flex flex-col justify-center transition-all duration-700 hover:border-primary/60 group/card"
                                         >
-                                            {/* Dynamic Ambient Light - Intensified */}
-                                            <div className="absolute -top-20 -right-20 w-[400px] h-[400px] blur-[150px] rounded-full opacity-60 transition-all duration-1000"
-                                                style={{ backgroundColor: filteredSolutions[selectedSolutionIndex].color || '#6EE7B7' }} />
+                                            {/* Rim Light */}
+                                            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-70" />
 
-                                            {/* Decorative Border Glow */}
-                                            <div className="absolute inset-0 rounded-[3rem] opacity-0 group-hover/card:opacity-100 transition-opacity duration-700 pointer-events-none"
-                                                style={{ boxShadow: `inset 0 0 40px ${filteredSolutions[selectedSolutionIndex].color}20` }} />
+                                            {/* Dynamic Ambient Light */}
+                                            <div className="absolute -top-20 -right-20 w-[400px] h-[400px] blur-[150px] rounded-full opacity-40 transition-all duration-1000"
+                                                style={{ backgroundColor: filteredSolutions[selectedSolutionIndex].color || '#6EE7B7' }} />
 
                                             <div className="relative z-10">
                                                 <div className="flex items-center gap-4 mb-8">
-                                                    <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-primary">
+                                                    <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-primary shadow-inner">
                                                         {React.createElement(filteredSolutions[selectedSolutionIndex].icon, { className: "w-8 h-8" })}
                                                     </div>
                                                     <div>
-                                                        <span className="text-primary font-mono text-[10px] uppercase tracking-[0.2em] block mb-2 opacity-60">Impacto de Negocio</span>
-                                                        <h3 className="text-3xl md:text-5xl font-display font-bold text-gray-100 tracking-tight">
+                                                        <span className="text-primary/60 font-mono text-[9px] uppercase tracking-[0.3em] block mb-2 font-bold">Sistemas listos para implementar</span>
+                                                        <h3 className="text-2xl md:text-4xl font-display font-bold text-white tracking-tight leading-tight">
                                                             {filteredSolutions[selectedSolutionIndex].title}
                                                         </h3>
                                                     </div>
                                                 </div>
 
-                                                <p className="text-gray-300 text-xl font-light italic leading-relaxed mb-10 max-w-2xl">
+                                                <p className="text-white/80 text-xl font-light italic leading-relaxed mb-10 max-w-2xl border-l-2 border-primary/30 pl-6">
                                                     "{filteredSolutions[selectedSolutionIndex].desc}"
                                                 </p>
 
-                                                <ul className="space-y-5 mb-12">
+                                                <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-5 mb-12">
                                                     {filteredSolutions[selectedSolutionIndex].items.map((item, i) => (
-                                                        <li key={i} className="flex items-start gap-4">
-                                                            <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
-                                                                <CheckCircle className="w-4 h-4 text-primary" />
+                                                        <li key={i} className="flex items-start gap-3 group/item">
+                                                            <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5 border border-primary/20 group-hover/item:bg-primary group-hover/item:text-black transition-all">
+                                                                <CheckCircle className="w-4 h-4 text-primary group-hover/item:text-inherit" />
                                                             </div>
-                                                            <span className="text-gray-300 text-lg md:text-xl font-medium">{item}</span>
+                                                            <span className="text-white/70 text-base md:text-lg font-medium group-hover/item:text-white transition-colors">{item}</span>
                                                         </li>
                                                     ))}
                                                 </ul>
@@ -632,29 +690,16 @@ const Home = () => {
                                                             const sol = filteredSolutions[selectedSolutionIndex];
                                                             sol.path ? navigate(sol.path) : navigate(`/contact?service=${sol.serviceId}`);
                                                         }}
-                                                        className="bg-primary hover:bg-white text-black font-bold px-10 py-5 rounded-2xl uppercase tracking-wider flex items-center gap-3 transition-all transform hover:scale-105 shadow-[0_0_30px_rgba(110,231,183,0.3)] text-lg"
+                                                        className="group/btn relative bg-primary hover:bg-white text-black font-black px-10 py-5 rounded-xl uppercase tracking-widest flex items-center gap-3 transition-all transform hover:scale-105 shadow-[0_20px_50px_rgba(34,197,94,0.3)] text-sm overflow-hidden"
                                                     >
-                                                        Saber más <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                                                        <span className="relative z-10">Saber más</span>
+                                                        <ArrowRight className="w-5 h-5 relative z-10 group-hover/btn:translate-x-1 transition-transform" />
+                                                        <div className="absolute inset-0 bg-white translate-x-[-100%] group-hover/btn:translate-x-0 transition-transform duration-500" />
                                                     </button>
 
-                                                    <button
-                                                        onClick={() => {
-                                                            setShowPreviewOnMobile(false);
-                                                            if (solutionsMenuRef.current) {
-                                                                const yOffset = -150;
-                                                                const element = solutionsMenuRef.current;
-                                                                const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                                                                window.scrollTo({ top: y, behavior: 'smooth' });
-                                                            }
-                                                        }}
-                                                        className="lg:hidden flex items-center gap-2 px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-gray-300 hover:text-white transition-colors"
-                                                    >
-                                                        <ChevronLeft className="w-4 h-4" /> Volver a sistemas
-                                                    </button>
-
-                                                    <div className="px-6 py-4 rounded-2xl bg-white/5 border border-white/5 italic">
-                                                        <span className="text-gray-200 text-xs block uppercase font-mono tracking-widest mb-1">Consultoría Inicial</span>
-                                                        <span className="text-gray-100 font-black text-xl">GRATUITA</span>
+                                                    <div className="px-6 py-4 rounded-xl bg-white/5 border border-white/5 italic">
+                                                        <p className="text-white/30 text-[10px] block uppercase font-mono font-black tracking-widest mb-1">Consultoría Inicial</p>
+                                                        <p className="text-white font-black text-xl uppercase tracking-tighter">GRATUITA</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -755,74 +800,70 @@ const Home = () => {
                     </div>
 
 
-                    {/* FAQ EXPLORER - Replaces Testimonials Section */}
-                    <div className="mt-24 mb-24 px-4">
-                        <div className="flex flex-col items-center text-center mb-12">
-                            <motion.div
-                                initial={{ opacity: 0, y: 10 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                className="mb-6 inline-block px-4 py-1.5 bg-primary/5 border border-primary/20 rounded-full"
-                            >
-                                <span className="text-primary font-mono text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase">
-                                    Evidencia & Dudas Reales
-                                </span>
-                            </motion.div>
-                            <h3 className="font-display text-4xl md:text-5xl font-bold text-gray-200 mb-4 tracking-tight">
-                                Resolvemos tus <span className="text-primary italic">dudas reales</span>
-                            </h3>
-                            <p className="text-gray-300 max-w-xl text-lg font-light italic">
-                                Sin filtros, sin rodeos y basándonos en resultados de clientes.
-                            </p>
-                        </div>
-
-                        <div className="max-w-5xl mx-auto">
-                            {/* Category Selector - Non-overloading approach */}
-                            <div className="flex flex-wrap justify-center gap-3 mb-10">
-                                {faqCategories.map((cat) => (
-                                    <button
-                                        key={cat.id}
-                                        onClick={() => setActiveFaqCategory(cat.id)}
-                                        className={`flex items-center gap-3 px-6 py-3 rounded-2xl border transition-all duration-300 text-sm md:text-base font-bold tracking-tight ${activeFaqCategory === cat.id
-                                            ? 'bg-primary text-gray-900 border-primary shadow-[0_0_20px_rgba(110,231,183,0.2)]'
-                                            : 'bg-white/5 border-white/10 text-gray-300 hover:text-white hover:border-white/20'
-                                            }`}
+                    {/* FAQ & Contact Section - Consolidated Premium Experience */}
+                    <div className="mt-40 mb-32">
+                        <div className="grid lg:grid-cols-12 gap-20">
+                            {/* Left: FAQ Explorer */}
+                            <div className="lg:col-span-12 xl:col-span-5">
+                                <div className="xl:sticky xl:top-32">
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 10 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        className="mb-8 inline-block px-4 py-1.5 bg-primary/5 border border-primary/20 rounded-lg"
                                     >
-                                        <cat.icon className="w-4 h-4" />
-                                        {cat.label}
-                                    </button>
-                                ))}
+                                        <span className="text-primary font-mono text-[10px] font-bold tracking-[0.3em] uppercase">
+                                            FAQ - Dudas Reales
+                                        </span>
+                                    </motion.div>
+                                    <h2 className="text-3xl md:text-4xl font-display font-bold text-white tracking-tight leading-tight mb-6">
+                                        Lo que otros dueños <br /> <span className="text-primary font-light italic">preguntaron antes.</span>
+                                    </h2>
+                                    <p className="text-white/50 text-base font-light leading-relaxed mb-12">
+                                        Sin filtros, sin rodeos y basándonos en resultados de clientes.
+                                    </p>
+
+                                    <div className="space-y-2">
+                                        {faqCategories.map((cat) => (
+                                            <button
+                                                key={cat.id}
+                                                onClick={() => setActiveFaqCategory(cat.id)}
+                                                className={`w-full flex items-center gap-3 py-3 px-4 transition-all duration-300 group border-l-2 ${activeFaqCategory === cat.id
+                                                    ? 'border-primary text-primary bg-primary/5'
+                                                    : 'border-transparent text-white/40 hover:text-white/70 hover:border-white/20'
+                                                    }`}
+                                            >
+                                                <cat.icon className={`w-4 h-4 transition-colors ${activeFaqCategory === cat.id ? 'text-primary' : 'text-inherit'}`} />
+                                                <span className="font-mono text-xs uppercase tracking-widest font-bold">{cat.label}</span>
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
                             </div>
 
-                            {/* Q&A Panel */}
-                            <div className="grid gap-4">
+                            {/* Right: Answer Cards */}
+                            <div className="lg:col-span-12 xl:col-span-7">
                                 <AnimatePresence mode="wait">
                                     <motion.div
                                         key={activeFaqCategory}
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: -10 }}
-                                        transition={{ duration: 0.3 }}
-                                        className="space-y-4"
+                                        initial={{ opacity: 0, x: 20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: -20 }}
+                                        transition={{ duration: 0.4 }}
+                                        className="space-y-6"
                                     >
-                                        {faqCategories.find(c => c.id === activeFaqCategory).questions.map((item, i) => (
+                                        {faqCategories.find(c => c.id === activeFaqCategory)?.questions.map((item, idx) => (
                                             <div
-                                                key={i}
-                                                className="bg-[#181818] border border-white/10 p-6 md:p-8 rounded-3xl hover:border-primary/30 transition-all group"
+                                                key={idx}
+                                                className="group bg-[#0a0a0a] border border-white/[0.05] rounded-3xl p-8 md:p-10 transition-all duration-500 hover:border-white/10 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)]"
                                             >
-                                                <div className="flex items-start gap-4 mb-4">
-                                                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
-                                                        <HelpCircle className="w-5 h-5 text-primary opacity-50 group-hover:opacity-100 transition-opacity" />
-                                                    </div>
-                                                    <h4 className="text-xl md:text-2xl font-display font-bold text-gray-200 tracking-tight group-hover:text-primary transition-colors">
-                                                        {item.q}
-                                                    </h4>
-                                                </div>
-                                                <div className="pl-12">
-                                                    <p className="text-gray-300 text-lg font-normal leading-relaxed italic">
-                                                        "{item.a}"
-                                                    </p>
-                                                </div>
+                                                <h3 className="text-lg md:text-xl font-semibold text-white/90 tracking-tight mb-4 flex items-start gap-3">
+                                                    <span className="text-primary/60 font-mono text-xs mt-1 font-normal">Q{idx + 1}.</span>
+                                                    {item.q}
+                                                </h3>
+                                                <p className="text-white/40 text-sm md:text-base leading-relaxed font-light pl-6 border-l border-white/5">
+                                                    {item.a}
+                                                </p>
                                             </div>
                                         ))}
                                     </motion.div>
@@ -831,143 +872,104 @@ const Home = () => {
                         </div>
                     </div>
 
-                    {/* Integrated Investment & CTA Section - Split Layout */}
-                    <DiagnosisCTA className="mb-20" />
-                    <div className="mb-12 max-w-6xl mx-auto px-4">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            className="relative bg-gradient-to-br from-[#222222] to-[#181818] border border-white/30 rounded-2xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.9)]"
-                        >
-                            {/* Background effects */}
-                            <div className="absolute -top-40 -right-40 w-96 h-96 bg-primary/10 blur-[120px] rounded-full opacity-40"></div>
-                            <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-primary/5 blur-[120px] rounded-full opacity-30"></div>
 
-                            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-0">
-                                {/* LEFT: Investment & ROI */}
-                                <div className="p-6 md:p-8 lg:border-r border-white/10">
-                                    <div className="flex items-start gap-3 mb-6">
-                                        <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 text-primary border border-primary/20 flex-shrink-0">
-                                            <Euro className="w-5 h-5" />
-                                        </div>
+
+                    {/* Final Contact Section - Fluid & Industrial */}
+                    <div className="mt-40 relative overflow-hidden">
+                        {/* Atmospheric Glow Elements - Floating directly in the background */}
+                        <div className="absolute top-0 right-[-10%] w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+                        <div className="absolute bottom-0 left-[-10%] w-[400px] h-[400px] bg-primary/5 blur-[100px] rounded-full pointer-events-none" />
+
+                        <div className="max-w-7xl mx-auto px-6 relative z-10">
+                            <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-stretch">
+                                <div className="lg:col-span-1 space-y-8 flex flex-col justify-between">
+                                    <div className="max-w-2xl space-y-8 flex-grow flex flex-col justify-center">
+
+                                        {/* Technical Pricing Card */}
                                         <div>
-                                            <h3 className="font-display text-xl md:text-2xl font-bold text-gray-200 mb-1">
-                                                La inversión
-                                            </h3>
-                                            <p className="text-gray-200 text-xs italic">
-                                                (Sin letra pequeña)
+                                            <div className="flex justify-between items-start mb-6 border-b border-white/5 pb-6">
+                                                <div>
+                                                    <p className="text-white/20 text-[9px] uppercase tracking-[0.3em] font-mono mb-1">Descriptor de Proyecto</p>
+                                                    <h3 className="text-white font-black text-xl uppercase italic tracking-tighter">Rango Típico</h3>
+                                                </div>
+                                                <div className="text-right">
+                                                    <Euro className="w-6 h-6 text-primary/20" />
+                                                </div>
+                                            </div>
+
+                                            <div className="flex flex-col md:flex-row md:items-end gap-3 mb-4">
+                                                <span className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-none">600 - 2.500</span>
+                                                <span className="text-xl md:text-2xl font-black text-primary mb-1 md:mb-1 italic">€</span>
+                                            </div>
+                                            <p className="text-white/50 text-[10px] font-mono uppercase tracking-[0.2em] italic leading-relaxed mt-4">
+                                                Amortización técnica estimada en <span className="text-primary font-bold">menos de 2 meses</span>. <br />
+                                                A partir de ahí, todo el ahorro es estructural.
                                             </p>
                                         </div>
-                                    </div>
 
-                                    {/* Price */}
-                                    <div className="mb-6 p-4 bg-primary/5 border border-primary/20 rounded-xl">
-                                        <p className="text-gray-300 text-sm mb-1">
-                                            La mayoría de proyectos:
-                                        </p>
-                                        <p className="text-primary font-bold text-2xl md:text-3xl">
-                                            600 - 2.500€
-                                        </p>
-                                        <p className="text-gray-300 text-xs mt-1">
-                                            Depende de la complejidad y el sector
-                                        </p>
-                                    </div>
+                                        <div className="space-y-8 pl-4 md:pl-8 border-l border-white/5 mt-10">
+                                            <div>
+                                                <h4 className="text-white/20 text-[9px] uppercase tracking-[0.4em] font-mono font-black mb-6">Vías de Retorno Operativo:</h4>
 
-                                    {/* ROI Routes */}
-                                    <div className="mb-5">
-                                        <p className="text-gray-100 font-semibold text-base mb-3">
-                                            El retorno viene por tres vías:
-                                        </p>
-                                        <ul className="space-y-3">
-                                            <li className="flex items-start gap-2 group/item">
-                                                <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                                    <TrendingUp className="w-3 h-3 text-primary" />
-                                                </div>
-                                                <div>
-                                                    <p className="text-primary font-semibold text-xs">Incremento de rotación</p>
-                                                    <p className="text-gray-300 text-xs leading-relaxed">Más clientes con el mismo equipo</p>
-                                                </div>
-                                            </li>
-                                            <li className="flex items-start gap-2 group/item">
-                                                <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                                    <CheckCircle className="w-3 h-3 text-primary" />
-                                                </div>
-                                                <div>
-                                                    <p className="text-primary font-semibold text-xs">Reducción de errores</p>
-                                                    <p className="text-gray-300 text-xs leading-relaxed">Menos facturas olvidadas, stock mal gestionado</p>
-                                                </div>
-                                            </li>
-                                            <li className="flex items-start gap-2 group/item">
-                                                <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                                    <DollarSign className="w-3 h-3 text-primary" />
-                                                </div>
-                                                <div>
-                                                    <p className="text-primary font-semibold text-xs">Mejora de márgenes</p>
-                                                    <p className="text-gray-300 text-xs leading-relaxed">Optimización de recursos y rentabilidad</p>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                                <div className="grid gap-6">
+                                                    <div className="flex gap-4 group">
+                                                        <div className="mt-1 w-10 h-10 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center group-hover:bg-primary/10 group-hover:border-primary/30 transition-all duration-500 shadow-xl">
+                                                            <TrendingUp className="w-4 h-4 text-primary" />
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-white font-black text-base mb-0.5 uppercase tracking-tighter">Incremento de Rotación</p>
+                                                            <p className="text-white/30 text-xs italic font-light">Escala tu capacidad sin contratar más manos.</p>
+                                                        </div>
+                                                    </div>
 
-                                    {/* Amortization */}
-                                    <div className="pt-4 border-t border-white/10">
-                                        <p className="text-gray-400 text-xs leading-relaxed">
-                                            Amortización típica: <span className="text-primary font-bold">menos de 2 meses</span>. Después, ganancia neta.
-                                        </p>
-                                    </div>
-                                </div>
+                                                    <div className="flex gap-4 group">
+                                                        <div className="mt-1 w-10 h-10 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center group-hover:bg-primary/10 group-hover:border-primary/30 transition-all duration-500 shadow-xl">
+                                                            <ShieldCheck className="w-4 h-4 text-primary" />
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-white font-black text-base mb-0.5 uppercase tracking-tighter">Blindaje contra Errores</p>
+                                                            <p className="text-white/30 text-xs italic font-light">Elimina las fugas de dinero por despistes.</p>
+                                                        </div>
+                                                    </div>
 
-                                {/* RIGHT: Contact Form + Social Links */}
-                                <div className="p-6 md:p-8 flex flex-col justify-center bg-gradient-to-br from-primary/[0.02] to-transparent">
-                                    {/* Logo */}
-                                    <div className="flex items-center gap-3 mb-6">
-                                        <img
-                                            src="/logo-120.png"
-                                            alt="Engorilate Icon"
-                                            width="120"
-                                            height="120"
-                                            fetchPriority="high"
-                                            className="h-12 w-auto"
-                                        />
-                                        <div className="flex flex-col">
-                                            <span className="font-display font-bold text-xl tracking-tight text-primary leading-none">
-                                                ENGORILATE
-                                            </span>
-                                            <span className="text-gray-300 text-[10px] font-light tracking-wide mt-0.5">
-                                                Automatización de Negocios
-                                            </span>
+                                                    <div className="flex gap-4 group">
+                                                        <div className="mt-1 w-10 h-10 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center group-hover:bg-primary/10 group-hover:border-primary/30 transition-all duration-500 shadow-xl">
+                                                            <Zap className="w-4 h-4 text-primary" />
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-white font-black text-base mb-0.5 uppercase tracking-tighter">Expansión de Margen</p>
+                                                            <p className="text-white/30 text-xs italic font-light">Reduce el coste operativo de cada euro vendido.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
 
-                                    {/* Contact Form */}
-                                    <ContactForm source="Home Investment Section" />
+                                </div>
 
-                                    {/* Social Links */}
-                                    <div className="mt-6 pt-6 border-t border-white/10">
-                                        <p className="text-xs text-gray-200 mb-3">O contáctame directamente:</p>
-                                        <div className="flex gap-3">
-                                            <a href={siteConfig.whatsapp_url} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 p-2 rounded-lg bg-white/5 hover:bg-[#25D366]/20 border border-transparent hover:border-[#25D366]/50 transition-all group">
-                                                <MessageSquare className="w-4 h-4 text-[#25D366]" />
-                                                <span className="text-xs text-gray-300 group-hover:text-[#25D366]">WhatsApp (611 469 469)</span>
-                                            </a>
-                                            <a href={siteConfig.instagram_url} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 p-2 rounded-lg bg-white/5 hover:bg-[#E1306C]/20 border border-transparent hover:border-[#E1306C]/50 transition-all group">
-                                                <Instagram className="w-4 h-4 text-[#E1306C]" />
-                                                <span className="text-xs text-gray-300 group-hover:text-[#E1306C]">Instagram</span>
-                                            </a>
-                                            <a href={siteConfig.linkedin_url} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 p-2 rounded-lg bg-white/5 hover:bg-[#0077B5]/20 border border-transparent hover:border-[#0077B5]/50 transition-all group">
-                                                <Linkedin className="w-4 h-4 text-[#0077B5]" />
-                                                <span className="text-xs text-gray-300 group-hover:text-[#0077B5]">LinkedIn</span>
-                                            </a>
+                                <div className="lg:col-span-1 relative flex flex-col h-full">
+                                    {/* Ambient lighting removed for cleaner look */}
+                                    <div className="relative">
+                                        <div className="mb-14 border-l-4 border-primary/40 pl-8 pt-2">
+                                            <h4 className="text-3xl md:text-5xl font-display font-black text-white italic tracking-tighter uppercase leading-none mb-3">
+                                                ¿HABLAMOS <br />
+                                                <span className="text-primary not-italic">DIRECTO?</span>
+                                            </h4>
+                                            <p className="text-white/20 text-[11px] uppercase tracking-[0.4em] font-mono font-bold">Respuesta en menos de 24 horas</p>
+                                        </div>
+                                        <div className="relative">
+                                            <ContactForm source="Home Bottom Section" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </motion.div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 
