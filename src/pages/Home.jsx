@@ -327,7 +327,7 @@ const Home = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="text-lg md:text-xl text-gray-400 font-medium mb-12 max-w-3xl mx-auto leading-relaxed"
+                        className="text-lg md:text-xl text-gray-300 font-medium mb-12 max-w-3xl mx-auto leading-relaxed"
                     >
                         Automatiza los procesos repetitivos de tu empresa
                     </motion.p>
@@ -480,7 +480,7 @@ const Home = () => {
 
                                             <div className="col-span-12 md:col-span-4">
                                                 <div className="flex items-center gap-3 mb-4">
-                                                    <span className="text-[10px] font-mono text-gray-500 uppercase tracking-[0.2em] px-2 py-1 bg-white/5 rounded">Situación</span>
+                                                    <span className="text-[10px] font-mono text-gray-200 uppercase tracking-[0.2em] px-2 py-1 bg-white/5 rounded">Situación</span>
                                                 </div>
                                                 <p className="text-gray-300 leading-relaxed text-base md:text-lg font-normal italic">"{item.problem}"</p>
                                             </div>
@@ -566,11 +566,11 @@ const Home = () => {
                                                 <div className={`w-1 h-12 rounded-full transition-all duration-500 ${selectedSolutionIndex === idx ? 'bg-primary' : 'bg-white/10 group-hover:bg-white/30'
                                                     }`} />
                                                 <div>
-                                                    <h4 className={`text-xl md:text-2xl font-display font-bold tracking-tight transition-all duration-500 ${selectedSolutionIndex === idx ? 'text-gray-100' : 'text-gray-600 group-hover:text-gray-400'
+                                                    <h4 className={`text-xl md:text-2xl font-display font-bold tracking-tight transition-all duration-500 ${selectedSolutionIndex === idx ? 'text-gray-100' : 'text-gray-300 group-hover:text-gray-200'
                                                         }`}>
                                                         {area.title}
                                                     </h4>
-                                                    <p className={`text-xs font-mono uppercase tracking-[0.2em] mt-1 transition-all duration-500 ${selectedSolutionIndex === idx ? 'text-primary' : 'text-gray-700'
+                                                    <p className={`text-xs font-mono uppercase tracking-[0.2em] mt-1 transition-all duration-500 ${selectedSolutionIndex === idx ? 'text-primary' : 'text-gray-400'
                                                         }`}>
                                                         {area.badge} — ROI {area.roi}
                                                     </p>
@@ -612,7 +612,7 @@ const Home = () => {
                                                     </div>
                                                 </div>
 
-                                                <p className="text-gray-400 text-xl font-light italic leading-relaxed mb-10 max-w-2xl">
+                                                <p className="text-gray-300 text-xl font-light italic leading-relaxed mb-10 max-w-2xl">
                                                     "{filteredSolutions[selectedSolutionIndex].desc}"
                                                 </p>
 
@@ -639,7 +639,7 @@ const Home = () => {
                                                     </button>
 
                                                     <div className="px-6 py-4 rounded-2xl bg-white/5 border border-white/5 italic">
-                                                        <span className="text-gray-500 text-xs block uppercase font-mono tracking-widest mb-1">Consultoría Inicial</span>
+                                                        <span className="text-gray-200 text-xs block uppercase font-mono tracking-widest mb-1">Consultoría Inicial</span>
                                                         <span className="text-gray-100 font-black text-xl">GRATUITA</span>
                                                     </div>
                                                 </div>
@@ -690,7 +690,7 @@ const Home = () => {
                                         onClick={() => setActiveFaqCategory(cat.id)}
                                         className={`flex items-center gap-3 px-6 py-3 rounded-2xl border transition-all duration-300 text-sm md:text-base font-bold tracking-tight ${activeFaqCategory === cat.id
                                             ? 'bg-primary text-gray-900 border-primary shadow-[0_0_20px_rgba(110,231,183,0.2)]'
-                                            : 'bg-white/5 border-white/10 text-gray-400 hover:text-white hover:border-white/20'
+                                            : 'bg-white/5 border-white/10 text-gray-300 hover:text-white hover:border-white/20'
                                             }`}
                                     >
                                         <cat.icon className="w-4 h-4" />
@@ -760,7 +760,7 @@ const Home = () => {
                                             <h3 className="font-display text-xl md:text-2xl font-bold text-gray-200 mb-1">
                                                 La inversión
                                             </h3>
-                                            <p className="text-gray-500 text-xs italic">
+                                            <p className="text-gray-200 text-xs italic">
                                                 (Sin letra pequeña)
                                             </p>
                                         </div>
@@ -774,7 +774,7 @@ const Home = () => {
                                         <p className="text-primary font-bold text-2xl md:text-3xl">
                                             600 - 2.500€
                                         </p>
-                                        <p className="text-gray-400 text-xs mt-1">
+                                        <p className="text-gray-300 text-xs mt-1">
                                             Depende de la complejidad y el sector
                                         </p>
                                     </div>
@@ -791,7 +791,7 @@ const Home = () => {
                                                 </div>
                                                 <div>
                                                     <p className="text-primary font-semibold text-xs">Incremento de rotación</p>
-                                                    <p className="text-gray-400 text-xs">Más clientes con el mismo equipo</p>
+                                                    <p className="text-gray-300 text-xs leading-relaxed">Más clientes con el mismo equipo</p>
                                                 </div>
                                             </li>
                                             <li className="flex items-start gap-2 group/item">
@@ -800,7 +800,7 @@ const Home = () => {
                                                 </div>
                                                 <div>
                                                     <p className="text-primary font-semibold text-xs">Reducción de errores</p>
-                                                    <p className="text-gray-400 text-xs">Menos facturas olvidadas, stock mal gestionado</p>
+                                                    <p className="text-gray-300 text-xs leading-relaxed">Menos facturas olvidadas, stock mal gestionado</p>
                                                 </div>
                                             </li>
                                             <li className="flex items-start gap-2 group/item">
@@ -809,7 +809,7 @@ const Home = () => {
                                                 </div>
                                                 <div>
                                                     <p className="text-primary font-semibold text-xs">Mejora de márgenes</p>
-                                                    <p className="text-gray-400 text-xs">Optimización de recursos y rentabilidad</p>
+                                                    <p className="text-gray-300 text-xs leading-relaxed">Optimización de recursos y rentabilidad</p>
                                                 </div>
                                             </li>
                                         </ul>
@@ -839,7 +839,7 @@ const Home = () => {
                                             <span className="font-display font-bold text-xl tracking-tight text-primary leading-none">
                                                 ENGORILATE
                                             </span>
-                                            <span className="text-gray-400 text-[10px] font-light tracking-wide mt-0.5">
+                                            <span className="text-gray-300 text-[10px] font-light tracking-wide mt-0.5">
                                                 Automatización de Negocios
                                             </span>
                                         </div>
@@ -850,19 +850,19 @@ const Home = () => {
 
                                     {/* Social Links */}
                                     <div className="mt-6 pt-6 border-t border-white/10">
-                                        <p className="text-xs text-gray-500 mb-3">O contáctame directamente:</p>
+                                        <p className="text-xs text-gray-200 mb-3">O contáctame directamente:</p>
                                         <div className="flex gap-3">
                                             <a href={siteConfig.whatsapp_url} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 p-2 rounded-lg bg-white/5 hover:bg-[#25D366]/20 border border-transparent hover:border-[#25D366]/50 transition-all group">
                                                 <MessageSquare className="w-4 h-4 text-[#25D366]" />
-                                                <span className="text-xs text-gray-400 group-hover:text-[#25D366]">WhatsApp (611 469 469)</span>
+                                                <span className="text-xs text-gray-300 group-hover:text-[#25D366]">WhatsApp (611 469 469)</span>
                                             </a>
                                             <a href={siteConfig.instagram_url} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 p-2 rounded-lg bg-white/5 hover:bg-[#E1306C]/20 border border-transparent hover:border-[#E1306C]/50 transition-all group">
                                                 <Instagram className="w-4 h-4 text-[#E1306C]" />
-                                                <span className="text-xs text-gray-400 group-hover:text-[#E1306C]">Instagram</span>
+                                                <span className="text-xs text-gray-300 group-hover:text-[#E1306C]">Instagram</span>
                                             </a>
                                             <a href={siteConfig.linkedin_url} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 p-2 rounded-lg bg-white/5 hover:bg-[#0077B5]/20 border border-transparent hover:border-[#0077B5]/50 transition-all group">
                                                 <Linkedin className="w-4 h-4 text-[#0077B5]" />
-                                                <span className="text-xs text-gray-400 group-hover:text-[#0077B5]">LinkedIn</span>
+                                                <span className="text-xs text-gray-300 group-hover:text-[#0077B5]">LinkedIn</span>
                                             </a>
                                         </div>
                                     </div>

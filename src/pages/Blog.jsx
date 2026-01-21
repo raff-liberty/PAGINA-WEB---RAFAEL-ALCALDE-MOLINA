@@ -74,7 +74,7 @@ const Blog = () => {
                     </h1>
 
                     <div className="flex flex-col md:flex-row gap-8 items-start">
-                        <p className="text-xl md:text-2xl text-gray-400 font-light max-w-3xl leading-relaxed italic border-l-4 border-primary/30 pl-6 mb-8 md:mb-0">
+                        <p className="text-base md:text-lg lg:text-xl text-gray-300 font-normal max-w-3xl leading-relaxed italic border-l-4 border-primary/30 pl-6 mb-8 md:mb-0">
                             "Si el artículo no te ahorra al menos 10 horas al mes, no lo publicamos. Aquí venimos a facturar, no a leer cuentos de hadas."
                         </p>
 
@@ -162,10 +162,10 @@ const Blog = () => {
                 {/* Categories */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
                     {/* Categories */}
-                    <div className="flex overflow-x-auto md:flex-wrap gap-3 pb-4 md:pb-0 scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0">
+                    <div className="flex flex-wrap gap-2 md:gap-3">
                         <button
                             onClick={() => setSelectedCategory('Todos')}
-                            className={`px-4 py-2 rounded-lg font-medium text-sm transition-all flex-shrink-0 ${selectedCategory === 'Todos'
+                            className={`px-3 md:px-4 py-2 rounded-lg font-medium text-xs md:text-sm transition-all ${selectedCategory === 'Todos'
                                 ? 'bg-primary text-gray-900 shadow-[0_0_15px_rgba(110,231,183,0.3)]'
                                 : 'bg-surface-dark/40 border border-white/5 text-gray-400 hover:text-white hover:border-white/20'
                                 }`}
@@ -176,7 +176,7 @@ const Blog = () => {
                             <button
                                 key={category}
                                 onClick={() => setSelectedCategory(category)}
-                                className={`px-4 py-2 rounded-lg text-sm transition-all flex-shrink-0 ${selectedCategory === category
+                                className={`px-3 md:px-4 py-2 rounded-lg text-xs md:text-sm transition-all ${selectedCategory === category
                                     ? 'bg-primary text-gray-900 font-medium shadow-[0_0_15px_rgba(110,231,183,0.3)]'
                                     : 'bg-surface-dark/40 border border-white/5 text-gray-400 hover:text-white hover:border-white/20'
                                     }`}
@@ -251,18 +251,18 @@ const Blog = () => {
                                                     </span>
                                                 </div>
 
-                                                <h2 className="font-display text-2xl md:text-3xl font-black text-white mb-4 group-hover:text-primary transition-colors leading-[1.1] tracking-tight">
+                                                <h2 className="font-display text-xl md:text-2xl lg:text-3xl font-black text-white mb-4 group-hover:text-primary transition-colors leading-[1.1] tracking-tight">
                                                     {post.title}
                                                 </h2>
 
-                                                <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-3 font-light italic">
+                                                <p className="text-gray-200 text-base md:text-sm leading-relaxed mb-6 line-clamp-3 font-normal italic">
                                                     "{post.excerpt}"
                                                 </p>
 
                                                 {/* Potential Savings Indicator */}
                                                 <div className="mb-6 p-4 rounded-xl bg-white/5 border border-white/5 group-hover:border-primary/20 transition-colors">
                                                     <div className="flex items-center justify-between">
-                                                        <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">Ahorro Estimado</span>
+                                                        <span className="text-[10px] font-mono text-gray-400 uppercase tracking-widest">Ahorro Estimado</span>
                                                         <span className="text-primary font-bold text-sm">~{post.savings || '10h/mes'}</span>
                                                     </div>
                                                     <div className="mt-2 h-1 w-full bg-white/5 rounded-full overflow-hidden">
@@ -276,7 +276,7 @@ const Blog = () => {
                                             </div>
 
                                             {/* Footer */}
-                                            <div className="mt-auto p-8 pt-0 flex items-center justify-between text-[10px] text-gray-500 font-mono uppercase tracking-widest">
+                                            <div className="mt-auto p-8 pt-0 flex items-center justify-between text-[10px] text-gray-400 font-mono uppercase tracking-widest">
                                                 <div className="flex items-center gap-6">
                                                     <span className="flex items-center gap-2">
                                                         <Clock className="w-3 h-3 text-primary" />

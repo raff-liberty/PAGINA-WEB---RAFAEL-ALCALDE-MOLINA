@@ -150,7 +150,7 @@ const WorkMethod = () => {
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/80 drop-shadow-[0_0_20px_rgba(110,231,183,0.5)]">VENDEN POR TI.</span>
                     </h1>
 
-                    <p className="text-xl md:text-2xl text-white/70 font-light max-w-3xl leading-relaxed italic mb-10 border-l mb-10 border-l-primary/40 pl-6">
+                    <p className="text-xl md:text-2xl text-white/90 font-light max-w-3xl leading-relaxed italic mb-10 border-l mb-10 border-l-primary/40 pl-6">
                         Creamos sistemas automáticos que llenan tu agenda de clientes cada mañana.
                         Profesionalizamos tu forma de vender en <span className="text-white font-bold">30 días</span> para que recuperes tu tiempo.
                     </p>
@@ -182,7 +182,7 @@ const WorkMethod = () => {
                                         <Zap className="w-8 h-8 text-primary" />
                                     </div>
                                     <h3 className="text-2xl font-black text-white mb-3 uppercase tracking-tighter">PLAY SYSTEM REVEAL</h3>
-                                    <p className="text-white/50 text-sm max-w-sm mx-auto italic font-light">
+                                    <p className="text-white/80 text-sm max-w-sm mx-auto italic font-light">
                                         Descubre la infraestructura técnica que escala negocios de servicios.
                                     </p>
                                 </div>
@@ -203,7 +203,7 @@ const WorkMethod = () => {
                             <h2 className="font-display text-4xl md:text-6xl font-bold text-white uppercase italic tracking-tighter leading-none mb-6">
                                 DE LA AUDITORÍA <span className="text-primary italic">A LA ESCALA</span>
                             </h2>
-                            <p className="text-white/60 text-lg font-light italic leading-relaxed">
+                            <p className="text-white/80 text-lg font-light italic leading-relaxed">
                                 No creemos en soluciones genéricas. Hemos diseñado un proceso de cuatro etapas diseñado para transformar el caos manual en un sistema de ventas predecible y eficiente.
                             </p>
                         </div>
@@ -327,7 +327,7 @@ const WorkMethod = () => {
                         <h2 className="font-display text-4xl md:text-6xl font-black text-white mb-6 uppercase italic tracking-tighter">
                             MOTOR <span className="text-primary italic">TECNOLÓGICO</span>
                         </h2>
-                        <p className="text-xl text-white/50 max-w-2xl mx-auto font-light italic leading-relaxed">
+                        <p className="text-xl text-white/80 max-w-2xl mx-auto font-light italic leading-relaxed">
                             No experimentamos con herramientas. Instalamos tecnología de nivel industrial validada para la estabilidad de tu sistema.
                         </p>
                     </div>
@@ -362,7 +362,7 @@ const WorkMethod = () => {
                                     />
                                 </div>
                                 <h4 className="text-xl font-bold text-white mb-4 uppercase italic tracking-tighter">{item.name}</h4>
-                                <p className="text-white/50 text-sm font-light italic leading-relaxed px-2 group-hover:text-white/70 transition-colors">{item.desc}</p>
+                                <p className="text-white/70 text-sm font-light italic leading-relaxed px-2 group-hover:text-white/90 transition-colors">{item.desc}</p>
 
                                 {/* Bottom Accent Line */}
                                 <div
@@ -391,7 +391,7 @@ const WorkMethod = () => {
                                 ¿TIENES UN NEGOCIO <br />
                                 <span className="text-primary italic">QUE QUIERES ESCALAR?</span>
                             </h2>
-                            <p className="text-lg text-white/60 mb-10 font-light italic leading-relaxed">
+                            <p className="text-lg text-white/80 mb-10 font-light italic leading-relaxed">
                                 Este sistema no es para quien quiere "probar suerte". Solo trabajamos con negocios reales que están listos para dejar de ser esclavos de su día a día.
                             </p>
 

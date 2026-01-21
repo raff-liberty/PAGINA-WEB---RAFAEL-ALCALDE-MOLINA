@@ -82,7 +82,7 @@ const HeroJourney = ({ sectorSlug }) => {
                 <h2 className="font-display text-4xl md:text-6xl font-bold mb-6 uppercase italic tracking-tighter">
                     <span className="text-gray-100">Del Caos a la</span> <span className="text-primary italic">Maestría Operativa</span>
                 </h2>
-                <p className="text-gray-100 text-xl md:text-2xl font-normal max-w-3xl mx-auto italic leading-relaxed">
+                <p className="text-white text-xl md:text-2xl font-normal max-w-3xl mx-auto italic leading-relaxed">
                     Cinco historias reales (aunque con nombres cambiados) de cómo la automatización salvó negocios que estaban al borde del colapso.
                 </p>
             </div>
@@ -95,7 +95,7 @@ const HeroJourney = ({ sectorSlug }) => {
                         onClick={() => setActiveStory(idx)}
                         className={`px-6 py-3 rounded-2xl font-bold text-sm md:text-base transition-all duration-300 border uppercase italic tracking-tight ${activeStory === idx
                             ? 'bg-primary text-black border-primary shadow-[0_0_20px_rgba(110,231,183,0.3)]'
-                            : 'bg-white/5 text-gray-200 border-white/20 hover:border-primary/40 hover:text-white'
+                            : 'bg-white/5 text-gray-300 border-white/20 hover:border-primary/40 hover:text-white'
                             }`}
                     >
                         {story.title}
@@ -190,7 +190,7 @@ const HeroJourney = ({ sectorSlug }) => {
             </AnimatePresence>
 
             <div className="mt-12 text-center">
-                <p className="text-gray-400 font-mono text-sm uppercase tracking-widest">
+                <p className="text-gray-300 font-mono text-sm uppercase tracking-widest">
                     Misión Actual: <span className="text-primary font-bold">{stories[activeStory].tag}</span>
                 </p>
             </div>
@@ -407,7 +407,7 @@ const SectorLocationPage_v2 = () => {
                         <h1 className="font-display text-5xl md:text-7xl font-black leading-[0.9] mb-8 text-white tracking-tighter uppercase italic">
                             {strategicContent?.hero_phrase || pageContent.hero_title}
                         </h1>
-                        <p className="text-xl text-gray-400 font-light leading-relaxed mb-10 max-w-xl italic">
+                        <p className="text-xl text-gray-300 font-light leading-relaxed mb-10 max-w-xl italic">
                             {pageContent.hero_subtitle}
                         </p>
 
@@ -479,7 +479,7 @@ const SectorLocationPage_v2 = () => {
                         Dolores que te <br />
                         <span className="text-red-500">quitan el sueño</span>
                     </h2>
-                    <p className="text-xl text-gray-400 max-w-2xl mx-auto font-light italic">
+                    <p className="text-xl text-gray-300 max-w-2xl mx-auto font-light italic">
                         Si te sientes identificado con más de dos, tu negocio está en riesgo operativo.
                     </p>
                 </div>
@@ -501,7 +501,7 @@ const SectorLocationPage_v2 = () => {
                             </div>
                             <div>
                                 <h3 className="text-white text-2xl font-black mb-4 uppercase italic tracking-tighter leading-none">{problem.t}</h3>
-                                <p className="text-gray-400 leading-relaxed text-base italic font-light">
+                                <p className="text-gray-300 leading-relaxed text-base italic font-light">
                                     {problem.d}
                                 </p>
                             </div>
@@ -535,7 +535,7 @@ const SectorLocationPage_v2 = () => {
                             <h3 className="text-2xl font-black text-white uppercase italic tracking-tighter mb-4">
                                 Captar Clientes<br />Mientras Duermes
                             </h3>
-                            <p className="text-gray-400 leading-relaxed">
+                            <p className="text-gray-300 leading-relaxed">
                                 Lead magnets que convierten visitantes en clientes potenciales. Formularios inteligentes que cualifican automáticamente. Seguimiento que nunca olvida un prospecto.
                             </p>
                         </div>
@@ -548,7 +548,7 @@ const SectorLocationPage_v2 = () => {
                             <h3 className="text-2xl font-black text-white uppercase italic tracking-tighter mb-4">
                                 Operaciones que<br />se Gestionan Solas
                             </h3>
-                            <p className="text-gray-400 leading-relaxed">
+                            <p className="text-gray-300 leading-relaxed">
                                 Agendas automáticas que eliminan el teléfono. Recordatorios que reducen ausencias a cero. Gestión de recursos sin hojas de cálculo.
                             </p>
                         </div>
@@ -561,7 +561,7 @@ const SectorLocationPage_v2 = () => {
                             <h3 className="text-2xl font-black text-white uppercase italic tracking-tighter mb-4">
                                 Cobra sin<br />Perseguir a Nadie
                             </h3>
-                            <p className="text-gray-400 leading-relaxed">
+                            <p className="text-gray-300 leading-relaxed">
                                 Presupuestos generados en segundos. Facturas que se envían solas. Cobros automáticos y recordatorios inteligentes de pago.
                             </p>
                         </div>
@@ -574,7 +574,7 @@ const SectorLocationPage_v2 = () => {
                             <h3 className="text-2xl font-black text-white uppercase italic tracking-tighter mb-4">
                                 Clientes que<br />Vuelven Solos
                             </h3>
-                            <p className="text-gray-400 leading-relaxed">
+                            <p className="text-gray-300 leading-relaxed">
                                 Campañas de reactivación automáticas. Programas de fidelización que funcionan. Análisis que te dicen qué hacer antes de que lo pienses.
                             </p>
                         </div>
@@ -618,8 +618,8 @@ const SectorLocationPage_v2 = () => {
                                     <div
                                         key={idx}
                                         className={`group border rounded-3xl transition-all duration-500 overflow-hidden ${activeAccordion === idx
-                                                ? 'bg-white/[0.03] border-primary/30 shadow-[0_0_30px_rgba(110,231,183,0.05)]'
-                                                : 'bg-transparent border-white/5 hover:border-white/10'
+                                            ? 'bg-white/[0.03] border-primary/30 shadow-[0_0_30px_rgba(110,231,183,0.05)]'
+                                            : 'bg-transparent border-white/5 hover:border-white/10'
                                             }`}
                                     >
                                         <button
@@ -631,8 +631,8 @@ const SectorLocationPage_v2 = () => {
                                                 {faq.q}
                                             </span>
                                             <div className={`shrink-0 w-8 h-8 rounded-full border flex items-center justify-center transition-all duration-500 ${activeAccordion === idx
-                                                    ? 'bg-primary border-primary text-black rotate-180'
-                                                    : 'border-white/10 text-white group-hover:border-primary/50'
+                                                ? 'bg-primary border-primary text-black rotate-180'
+                                                : 'border-white/10 text-white group-hover:border-primary/50'
                                                 }`}>
                                                 <ChevronDown className="w-4 h-4" />
                                             </div>
@@ -645,7 +645,7 @@ const SectorLocationPage_v2 = () => {
                                                     exit={{ height: 0, opacity: 0 }}
                                                     transition={{ duration: 0.4, ease: "circOut" }}
                                                 >
-                                                    <div className="px-7 pb-7 text-gray-400 leading-relaxed text-lg font-light italic border-t border-white/5 pt-4">
+                                                    <div className="px-7 pb-7 text-gray-300 leading-relaxed text-lg font-light italic border-t border-white/5 pt-4">
                                                         {faq.a}
                                                     </div>
                                                 </motion.div>

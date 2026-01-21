@@ -73,7 +73,7 @@ const About = () => {
     })();
 
     return (
-        <div className="relative pt-64 pb-32 min-h-screen selection:bg-primary selection:text-black bg-gradient-to-br from-black via-[#0a1a0f] to-black">
+        <div className="relative pt-40 md:pt-48 pb-20 min-h-screen selection:bg-primary selection:text-black bg-gradient-to-br from-black via-[#0a1a0f] to-black">
             {/* Green ambient glow overlay */}
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(110,231,183,0.08)_0%,_transparent_50%)] pointer-events-none" />
 
@@ -85,7 +85,7 @@ const About = () => {
 
             <div className="relative z-10 max-w-7xl mx-auto px-6">
                 {/* HERO SECTION / PROFILE */}
-                <div className="flex flex-col-reverse lg:flex-row gap-12 lg:gap-24 items-center mb-32 lg:mb-48">
+                <div className="flex flex-col-reverse lg:flex-row gap-12 lg:gap-20 items-center mb-20 lg:mb-24">
                     <div className="lg:w-2/5 relative">
                         {/* Ambient Glow behind photo */}
                         <div className="absolute -inset-10 bg-primary/20 rounded-full blur-[120px] opacity-40 animate-pulse"></div>
@@ -134,14 +134,24 @@ const About = () => {
                                 Ayudo a poner un orden industrial donde hay caos operativo. Mi trabajo no es venderte software, sino construir el motor que te devuelva tu tiempo.
                             </p>
 
-                            <div className="grid grid-cols-2 gap-3 md:gap-4 pt-4">
-                                <div className="px-4 md:px-6 py-3 md:py-4 bg-white/5 border border-white/10 rounded-2xl text-center">
-                                    <p className="text-lg md:text-2xl font-bold text-white mb-1">+5 años</p>
-                                    <p className="text-[10px] md:text-xs text-gray-500 uppercase tracking-widest">En Control de Gestión</p>
+                            <div className="grid grid-cols-2 gap-4 pt-6">
+                                <div className="relative group overflow-hidden">
+                                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                    <div className="absolute -inset-1 bg-gradient-to-r from-primary/50 to-primary/30 rounded-2xl blur opacity-0 group-hover:opacity-75 transition-opacity duration-500" />
+                                    <div className="relative px-4 md:px-6 py-4 md:py-5 bg-gradient-to-br from-white/10 to-white/5 border-2 border-white/20 rounded-2xl text-center backdrop-blur-sm group-hover:border-primary/50 transition-all duration-500 shadow-xl">
+                                        <p className="text-2xl md:text-3xl lg:text-4xl font-black text-white mb-2 tracking-tight">+5 años</p>
+                                        <p className="text-[10px] md:text-xs text-gray-300 uppercase tracking-[0.15em] font-bold">En Control de Gestión</p>
+                                        <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-primary shadow-[0_0_10px_rgba(110,231,183,0.8)] animate-pulse" />
+                                    </div>
                                 </div>
-                                <div className="px-4 md:px-6 py-3 md:py-4 bg-white/5 border border-white/10 rounded-2xl text-center">
-                                    <p className="text-lg md:text-2xl font-bold text-white mb-1">Economista</p>
-                                    <p className="text-[10px] md:text-xs text-gray-500 uppercase tracking-widest">Colegiado & Especialista</p>
+                                <div className="relative group overflow-hidden">
+                                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                    <div className="absolute -inset-1 bg-gradient-to-r from-primary/50 to-primary/30 rounded-2xl blur opacity-0 group-hover:opacity-75 transition-opacity duration-500" />
+                                    <div className="relative px-4 md:px-6 py-4 md:py-5 bg-gradient-to-br from-white/10 to-white/5 border-2 border-white/20 rounded-2xl text-center backdrop-blur-sm group-hover:border-primary/50 transition-all duration-500 shadow-xl">
+                                        <p className="text-xl md:text-2xl lg:text-3xl font-black text-white mb-2 tracking-tight">Economista</p>
+                                        <p className="text-[10px] md:text-xs text-gray-300 uppercase tracking-[0.15em] font-bold">Colegiado & Especialista</p>
+                                        <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-primary shadow-[0_0_10px_rgba(110,231,183,0.8)] animate-pulse" />
+                                    </div>
                                 </div>
                             </div>
                         </motion.div>
@@ -295,7 +305,7 @@ const About = () => {
                 </div>
 
                 {/* MISSION SECTION */}
-                <div className="mb-10 relative">
+                <div className="mb-16 relative">
                     <div className="absolute -inset-20 bg-primary/10 blur-[130px] rounded-full opacity-30 -z-10 animate-pulse"></div>
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
@@ -318,7 +328,7 @@ const About = () => {
                 </div>
 
                 {/* VALUES SECTION */}
-                <div className="mb-10">
+                <div className="mb-16">
                     <div className="text-center mb-8">
                         <h2 className="font-display text-3xl md:text-4xl font-black text-white tracking-tighter uppercase leading-none">
                             Mis <span className="text-primary italic drop-shadow-[0_0_15px_rgba(110,231,183,0.3)]">Valores</span>

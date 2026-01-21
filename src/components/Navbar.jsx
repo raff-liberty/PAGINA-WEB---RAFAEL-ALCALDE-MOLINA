@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown, Zap, Globe, Search, Database, Layout } from 'lucide-react';
+import { Menu, X, ChevronDown, Zap, Globe, Search, Database, Layout, ArrowRight } from 'lucide-react';
 
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
@@ -60,26 +60,26 @@ const Navbar = () => {
     ];
 
     return (
-        <nav className={`fixed w-full z-50 top-0 border-b border-white/10 transition-all duration-300 ${scrolled
+        <nav className={`fixed w-full z-[9999] top-0 border-b border-white/10 transition-all duration-300 ${scrolled
             ? 'bg-[#0A0A0A]/95 backdrop-blur-md h-16 md:h-20 shadow-2xl'
             : 'bg-[#0F0F0F]/80 backdrop-blur-sm h-20 md:h-24'
             }`}>
-            <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
-                <div className="flex items-center">
-                    <Link className="group flex items-center gap-3" to="/">
+            <div className="max-w-7xl mx-auto px-4 md:px-6 h-full flex items-center justify-between">
+                <div className="flex items-center overflow-hidden">
+                    <Link className="group flex items-center gap-2 md:gap-3" to="/">
                         <img
                             src="/logo-136.png"
                             alt="Engorilate Icon"
                             width="136"
                             height="136"
                             fetchPriority="high"
-                            className="h-12 md:h-20 w-auto"
+                            className="h-10 md:h-12 lg:h-20 w-auto flex-shrink-0"
                         />
-                        <div className="flex flex-col">
-                            <span className="font-display font-bold text-xl md:text-3xl tracking-tight text-primary leading-none">
+                        <div className="flex flex-col min-w-0">
+                            <span className="font-display font-bold text-lg md:text-xl lg:text-3xl tracking-tight text-primary leading-none truncate">
                                 ENGORILATE
                             </span>
-                            <span className="text-gray-400 text-[9px] md:text-sm font-light tracking-wide mt-0.5">
+                            <span className="text-gray-400 text-[8px] md:text-[9px] lg:text-sm font-light tracking-wide mt-0.5 truncate">
                                 Automatización de Negocios
                             </span>
                         </div>
@@ -161,100 +161,146 @@ const Navbar = () => {
                 </div>
 
                 {/* Mobile menu button */}
-                <div className="lg:hidden flex items-center">
+                <div className={`lg:hidden flex items-center relative z-[99999999] ${isMenuOpen ? 'invisible' : ''}`}>
                     <button
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
-                        className="text-white focus:outline-none"
+                        className="relative z-[99999999] text-white focus:outline-none p-2 bg-black/50 rounded-lg border border-white/10 hover:bg-black/70 transition-all"
                         aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
                     >
-                        {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                        <Menu className="w-6 h-6" />
                     </button>
                 </div>
             </div>
 
-            {/* BRAND NEW MOBILE MENU - FULL SCREEN OVERLAY */}
-            {isMenuOpen && (
-                <div
-                    className="lg:hidden fixed top-0 left-0 right-0"
-                    style={{
-                        backgroundColor: '#000000',
-                        zIndex: 999999,
-                        position: 'fixed',
-                        width: '100vw',
-                        maxHeight: '100vh',
-                        overflow: 'hidden'
-                    }}
-                >
-                    {/* Header with close button */}
-                    <div className="flex justify-between items-center p-6 border-b" style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
-                        <span className="text-primary font-bold text-xl">MENÚ</span>
-                        <button
-                            onClick={() => setIsMenuOpen(false)}
-                            style={{ color: '#ffffff' }}
-                        >
-                            <X className="w-8 h-8" />
-                        </button>
-                    </div>
+            {/* PREMIUM MOBILE MENU - FULL SCREEN OVERLAY */}
+            <AnimatePresence>
+                {isMenuOpen && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="lg:hidden fixed inset-0 z-[9999999] bg-black"
+                    >
+                        {/* Subtle ambient glows */}
+                        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 blur-[150px] rounded-full opacity-20 pointer-events-none" />
+                        <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/5 blur-[120px] rounded-full opacity-15 pointer-events-none" />
 
-                    {/* Menu Items */}
-                    <div className="p-8 space-y-8">
-                        {navLinks.map((link) => (
-                            <div key={link.path}>
-                                {link.dropdown ? (
-                                    <div>
-                                        <button
-                                            onClick={() => setIsServicesOpen(!isServicesOpen)}
-                                            className="flex items-center justify-between w-full text-left text-2xl font-bold mb-4"
-                                            style={{ color: '#6EE7B7' }}
-                                        >
-                                            <span>{link.name}</span>
-                                            <ChevronDown
-                                                className={`w-6 h-6 transition-transform ${isServicesOpen ? 'rotate-180' : ''}`}
-                                                style={{ color: '#6EE7B7' }}
-                                            />
-                                        </button>
-                                        {isServicesOpen && (
-                                            <div className="pl-4 space-y-4 mb-4">
-                                                {link.dropdown.map((sub) => (
-                                                    <Link
-                                                        key={sub.path}
-                                                        to={sub.path}
-                                                        className="flex items-center gap-3 text-lg"
-                                                        style={{ color: '#d1d5db' }}
-                                                        onClick={() => setIsMenuOpen(false)}
-                                                    >
-                                                        <sub.icon className="w-5 h-5" style={{ color: '#6EE7B799' }} />
-                                                        <span>{sub.name}</span>
-                                                    </Link>
-                                                ))}
-                                            </div>
-                                        )}
-                                    </div>
-                                ) : (
-                                    <Link
-                                        to={link.path}
-                                        className="block text-2xl font-bold"
-                                        style={{ color: location.pathname === link.path ? '#6EE7B7' : '#ffffff' }}
-                                        onClick={() => setIsMenuOpen(false)}
-                                    >
-                                        {link.name}
-                                    </Link>
-                                )}
+                        <div className="relative min-h-screen h-full overflow-y-auto flex flex-col bg-black">
+                            {/* Premium Header with close button */}
+                            <div className="flex justify-between items-center p-6 border-b border-white/10 bg-gradient-to-r from-black via-[#0a1a0f] to-black">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-1 h-8 bg-primary rounded-full shadow-[0_0_10px_rgba(110,231,183,0.5)]" />
+                                    <span className="text-primary font-black text-xl tracking-wider uppercase">Menú</span>
+                                </div>
+                                <button
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-white/10 hover:border-primary/50 transition-all hover:rotate-90 duration-300"
+                                >
+                                    <X className="w-6 h-6" />
+                                </button>
                             </div>
-                        ))}
 
-                        {/* CTA Button */}
-                        <Link
-                            to="/contact"
-                            className="block text-center text-xl font-bold px-8 py-4 rounded-xl mt-12"
-                            style={{ backgroundColor: '#6EE7B7', color: '#000000' }}
-                            onClick={() => setIsMenuOpen(false)}
-                        >
-                            Hablamos
-                        </Link>
-                    </div>
-                </div>
-            )}
+                            {/* Menu items */}
+                            <div className="flex-1 p-6 space-y-2">
+                                {navLinks.map((link, idx) => (
+                                    <motion.div
+                                        key={link.path}
+                                        initial={{ opacity: 0, x: -20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: idx * 0.1, duration: 0.3 }}
+                                    >
+                                        {link.dropdown ? (
+                                            <div className="mb-2">
+                                                <button
+                                                    onClick={() => setIsServicesOpen(!isServicesOpen)}
+                                                    className={`flex items-center justify-between w-full text-left px-6 py-4 rounded-2xl border transition-all backdrop-blur-sm ${link.dropdown.some(sub => location.pathname === sub.path)
+                                                        ? 'bg-primary/10 border-primary/30 shadow-[0_0_20px_rgba(110,231,183,0.2)]'
+                                                        : 'bg-gradient-to-r from-white/5 to-white/[0.02] border-white/10 hover:border-primary/30'
+                                                        }`}
+                                                >
+                                                    <span className={`text-2xl font-black tracking-tight uppercase italic ${link.dropdown.some(sub => location.pathname === sub.path) ? 'text-primary' : 'text-white'
+                                                        }`}>
+                                                        {link.name}
+                                                    </span>
+                                                    <ChevronDown
+                                                        className={`w-6 h-6 transition-transform duration-300 ${link.dropdown.some(sub => location.pathname === sub.path) ? 'text-primary' : 'text-white'
+                                                            } ${isServicesOpen ? 'rotate-180' : ''}`}
+                                                    />
+                                                </button>
+                                                {isServicesOpen && (
+                                                    <motion.div
+                                                        initial={{ height: 0, opacity: 0 }}
+                                                        animate={{ height: 'auto', opacity: 1 }}
+                                                        transition={{ duration: 0.3 }}
+                                                        className="overflow-hidden"
+                                                    >
+                                                        <div className="pl-4 pr-2 pt-3 space-y-2">
+                                                            {link.dropdown.map((sub) => (
+                                                                <Link
+                                                                    key={sub.path}
+                                                                    to={sub.path}
+                                                                    className="flex items-center gap-4 px-4 py-3 rounded-xl bg-gradient-to-r from-white/5 to-transparent border border-white/10 hover:bg-primary/10 hover:border-primary/30 transition-all"
+                                                                    onClick={() => setIsMenuOpen(false)}
+                                                                >
+                                                                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
+                                                                        <sub.icon className="w-5 h-5" />
+                                                                    </div>
+                                                                    <div className="flex-1">
+                                                                        <div className="text-white font-bold text-base">
+                                                                            {sub.name}
+                                                                        </div>
+                                                                        <div className="text-gray-500 text-xs mt-0.5">
+                                                                            {sub.desc}
+                                                                        </div>
+                                                                    </div>
+                                                                </Link>
+                                                            ))}
+                                                        </div>
+                                                    </motion.div>
+                                                )}
+                                            </div>
+                                        ) : (
+                                            <Link
+                                                to={link.path}
+                                                className={`block px-6 py-4 rounded-2xl text-2xl font-black uppercase italic tracking-tight transition-all ${location.pathname === link.path
+                                                    ? 'bg-primary/10 border border-primary/30 text-primary shadow-[0_0_20px_rgba(110,231,183,0.2)]'
+                                                    : 'bg-gradient-to-r from-white/5 to-transparent border border-white/10 text-white hover:border-white/20'
+                                                    }`}
+                                                onClick={() => setIsMenuOpen(false)}
+                                            >
+                                                {link.name}
+                                            </Link>
+                                        )}
+                                    </motion.div>
+                                ))}
+                            </div>
+
+                            {/* Premium CTA Button */}
+                            <div className="p-6 pt-8">
+                                <Link
+                                    to="/contact"
+                                    className="relative block overflow-hidden group"
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
+                                    <div className="absolute inset-0 bg-primary translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500" />
+                                    <div className="relative flex items-center justify-center gap-3 bg-primary group-hover:bg-transparent text-black font-black uppercase italic text-xl px-8 py-5 rounded-2xl transition-all duration-500 border-2 border-primary shadow-[0_0_30px_rgba(110,231,183,0.3)]">
+                                        Hablamos
+                                        <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                                    </div>
+                                </Link>
+                            </div>
+
+                            {/* Bottom Decoration */}
+                            <div className="p-6 text-center border-t border-white/5 mt-8">
+                                <p className="text-gray-500 text-xs font-mono tracking-widest uppercase">
+                                    Automatización de Negocios
+                                </p>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </nav>
 
     );

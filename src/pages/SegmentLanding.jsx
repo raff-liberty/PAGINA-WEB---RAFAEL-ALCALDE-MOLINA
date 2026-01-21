@@ -108,7 +108,7 @@ const SegmentLanding = () => {
                                         <Link
                                             key={sector.id}
                                             to={`/${sector.slug}/`}
-                                            className="px-8 py-4 rounded-2xl bg-white/[0.03] backdrop-blur-md border border-white/5 text-gray-400 hover:border-primary/40 hover:bg-primary/5 hover:text-white transition-all text-sm font-bold flex items-center gap-3 group"
+                                            className="px-8 py-4 rounded-2xl bg-white/[0.03] backdrop-blur-md border border-white/5 text-gray-300 hover:border-primary/40 hover:bg-primary/5 hover:text-white transition-all text-sm font-bold flex items-center gap-3 group"
                                         >
                                             <IconComponent className="w-5 h-5 text-primary group-hover:scale-110 transition-transform" />
                                             {sector.name}
@@ -136,7 +136,7 @@ const SegmentLanding = () => {
                                         <AlertCircle className="w-5 h-5 text-red-500" />
                                     </div>
                                     <h4 className="text-white font-black uppercase text-xs tracking-widest mb-2 italic">{bullet.t}</h4>
-                                    <p className="text-gray-400 text-sm leading-snug">{bullet.s}</p>
+                                    <p className="text-gray-300 text-sm leading-snug">{bullet.s}</p>
                                 </div>
                             ))}
                         </div>
@@ -179,7 +179,7 @@ const SegmentLanding = () => {
                             No es un problema de tu sector. <br />
                             <span className="text-primary italic">Es tu ADN operativo.</span>
                         </h2>
-                        <p className="text-xl md:text-2xl text-gray-400 font-light italic leading-relaxed max-w-3xl mx-auto">
+                        <p className="text-xl md:text-2xl text-gray-300 font-light italic leading-relaxed max-w-3xl mx-auto">
                             "El caos no es una señal de que necesitas más clientes, es el síntoma de que tu estructura está colapsando bajo su propio peso."
                         </p>
                     </motion.div>
@@ -200,12 +200,12 @@ const SegmentLanding = () => {
                                 El desorden <br />
                                 <span className="text-primary">no es gratis.</span>
                             </h2>
-                            <p className="text-xl text-gray-400 leading-relaxed font-light mb-8 max-w-2xl">
+                            <p className="text-xl text-gray-300 leading-relaxed font-light mb-8 max-w-2xl">
                                 Siempre surge en los mismos puntos críticos. El caos operativo es la etapa previa a la pérdida de rentabilidad irreversible. Ponemos orden industrial donde otros solo ven "lío".
                             </p>
                             <div className="flex flex-wrap gap-3">
-                                <div className="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-[9px] font-mono uppercase tracking-[0.2em] text-gray-400">Detección_Cuellos_Botella</div>
-                                <div className="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-[9px] font-mono uppercase tracking-[0.2em] text-gray-400">Mapeo_Procesos_IA</div>
+                                <div className="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-[9px] font-mono uppercase tracking-[0.2em] text-gray-300">Detección_Cuellos_Botella</div>
+                                <div className="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-[9px] font-mono uppercase tracking-[0.2em] text-gray-300">Mapeo_Procesos_IA</div>
                             </div>
                         </div>
                         <div className="lg:col-span-12 xl:col-span-5 relative group">
@@ -214,7 +214,7 @@ const SegmentLanding = () => {
                                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-red-500 to-transparent animate-pulse" />
                                 <div className="space-y-8">
                                     <div className="flex justify-between items-center">
-                                        <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Lo que te está costando hoy</div>
+                                        <div className="text-[10px] font-black text-gray-300 uppercase tracking-widest">Lo que te está costando hoy</div>
                                         <div className="text-[10px] font-black text-red-500 animate-pulse uppercase italic">Agotamiento: Máximo</div>
                                     </div>
                                     <div className="space-y-4">
@@ -233,11 +233,11 @@ const SegmentLanding = () => {
                                     </div>
                                     <div className="grid grid-cols-2 gap-4">
                                         <div className="p-4 bg-white/5 rounded-2xl border border-white/5 flex flex-col justify-center">
-                                            <span className="text-[9px] font-black text-gray-500 uppercase mb-2">Ventas Perdidas</span>
+                                            <span className="text-[9px] font-black text-gray-200 uppercase mb-2">Ventas Perdidas</span>
                                             <span className="text-2xl font-black text-white italic tracking-tighter">1 de cada 3</span>
                                         </div>
                                         <div className="p-4 bg-white/5 rounded-2xl border border-white/5 flex flex-col justify-center">
-                                            <span className="text-[9px] font-black text-gray-500 uppercase mb-2">Tiempo Familiar Robado</span>
+                                            <span className="text-[9px] font-black text-gray-200 uppercase mb-2">Tiempo Familiar Robado</span>
                                             <span className="text-2xl font-black text-white italic tracking-tighter">50h / mes</span>
                                         </div>
                                     </div>
@@ -264,7 +264,7 @@ const SegmentLanding = () => {
                             No instalamos software. <br />
                             <span className="text-primary">Construimos el motor.</span>
                         </h2>
-                        <p className="text-xl text-gray-400 font-light italic max-w-3xl mx-auto leading-relaxed">
+                        <p className="text-xl text-gray-300 font-light italic max-w-3xl mx-auto leading-relaxed">
                             Nuestro proceso industrial garantiza orden, claridad y escalabilidad real.
                         </p>
                     </motion.div>
@@ -290,7 +290,7 @@ const SegmentLanding = () => {
                                     {React.cloneElement(step.icon, { size: 32 })}
                                 </div>
                                 <h4 className="text-2xl font-black mb-3 text-white uppercase italic tracking-tighter">{step.title}</h4>
-                                <p className="text-gray-400 text-base leading-relaxed font-light italic">{step.text}</p>
+                                <p className="text-gray-300 text-base leading-relaxed font-light italic">{step.text}</p>
                             </motion.div>
                         ))}
                     </motion.div>
@@ -308,7 +308,7 @@ const SegmentLanding = () => {
                                 La realidad de <br />
                                 <span className="text-primary drop-shadow-[0_0_20px_rgba(110,231,183,0.4)]">tu día a día</span>
                             </h2>
-                            <p className="text-xl text-gray-400 font-light leading-relaxed italic border-l-2 border-white/10 pl-6">
+                            <p className="text-xl text-gray-300 font-light leading-relaxed italic border-l-2 border-white/10 pl-6">
                                 Ponemos nombre a lo que te pasa cada mañana cuando abres la persiana.
                             </p>
                         </div>
@@ -402,7 +402,7 @@ const SegmentLanding = () => {
                             <h2 className="text-3xl md:text-5xl font-black text-white mb-6 uppercase italic tracking-tighter">
                                 Preguntas <span className="text-primary italic">Frecuentes</span>
                             </h2>
-                            <p className="text-gray-400 font-light italic text-lg">
+                            <p className="text-gray-300 font-light italic text-lg">
                                 Resolvemos las dudas habituales sobre este modelo operativo.
                             </p>
                         </div>
@@ -433,7 +433,7 @@ const SegmentLanding = () => {
                                                 exit={{ height: 0, opacity: 0 }}
                                                 transition={{ duration: 0.4, ease: "easeInOut" }}
                                             >
-                                                <div className="px-8 pb-8 text-gray-400 text-lg font-light leading-relaxed italic border-t border-white/5 pt-6">
+                                                <div className="px-8 pb-8 text-gray-300 text-lg font-light leading-relaxed italic border-t border-white/5 pt-6">
                                                     {faq.a}
                                                 </div>
                                             </motion.div>
@@ -469,7 +469,7 @@ const SegmentLanding = () => {
                             ¿Tu negocio es <br />
                             <span className="text-primary drop-shadow-[0_0_20px_rgba(110,231,183,0.4)]">autónomo</span> o depende de ti?
                         </h2>
-                        <p className="text-xl text-gray-400 mb-12 font-light italic max-w-2xl mx-auto leading-relaxed">
+                        <p className="text-xl text-gray-300 mb-12 font-light italic max-w-2xl mx-auto leading-relaxed">
                             "Analizamos si tu estructura operativa actual es la responsable de devorar tus márgenes y tu tiempo."
                         </p>
 
@@ -485,9 +485,9 @@ const SegmentLanding = () => {
                         </div>
 
                         <div className="flex flex-wrap justify-center gap-8 mb-24 opacity-60">
-                            <span className="text-[10px] font-black font-mono text-gray-400 uppercase tracking-[0.4em]">Análisis_IA_Incluido</span>
-                            <span className="text-[10px] font-black font-mono text-gray-400 uppercase tracking-[0.4em]">Sin_Presión_Comercial</span>
-                            <span className="text-[10px] font-black font-mono text-gray-400 uppercase tracking-[0.4em]">Resultados_Inmediatos</span>
+                            <span className="text-[10px] font-black font-mono text-gray-300 uppercase tracking-[0.4em]">Análisis_IA_Incluido</span>
+                            <span className="text-[10px] font-black font-mono text-gray-300 uppercase tracking-[0.4em]">Sin_Presión_Comercial</span>
+                            <span className="text-[10px] font-black font-mono text-gray-300 uppercase tracking-[0.4em]">Resultados_Inmediatos</span>
                         </div>
 
                         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-left max-w-4xl mx-auto mb-20">

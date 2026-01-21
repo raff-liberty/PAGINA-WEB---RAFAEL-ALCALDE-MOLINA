@@ -27,8 +27,12 @@
 }
 
 @layer base {
+  html {
+    @apply overflow-x-hidden;
+  }
+
   body {
-    @apply bg-background-dark text-white font-body antialiased;
+    @apply bg-background-dark text-white font-body antialiased overflow-x-hidden;
   }
 
   ::-webkit-scrollbar {
@@ -162,10 +166,13 @@
   }
 
   @keyframes pulse-slow {
-    0%, 100% {
+
+    0%,
+    100% {
       opacity: 1;
       transform: scale(1);
     }
+
     50% {
       opacity: 0.95;
       transform: scale(1.02);

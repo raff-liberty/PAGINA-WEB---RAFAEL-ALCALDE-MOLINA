@@ -161,7 +161,7 @@ const HeroJourney = () => {
                 <h2 className="font-display text-4xl md:text-6xl font-bold text-white mb-6">
                     Del Caos a la <span className="text-primary italic">Maestría Operativa</span>
                 </h2>
-                <p className="text-gray-400 text-xl font-light max-w-3xl mx-auto">
+                <p className="text-gray-300 text-xl font-light max-w-3xl mx-auto">
                     Cinco historias reales (aunque con nombres cambiados) de cómo la automatización salvó negocios que estaban al borde del colapso.
                 </p>
             </div>
@@ -174,7 +174,7 @@ const HeroJourney = () => {
                         onClick={() => setActiveStory(idx)}
                         className={`px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 border ${activeStory === idx
                             ? 'bg-primary text-black border-primary shadow-[0_0_20px_rgba(110,231,183,0.3)]'
-                            : 'bg-white/5 text-gray-400 border-white/10 hover:border-primary/40'
+                            : 'bg-white/5 text-gray-300 border-white/10 hover:border-primary/40'
                             }`}
                     >
                         {story.title}
@@ -213,7 +213,7 @@ const HeroJourney = () => {
                                 <h3 className="text-2xl font-bold text-white mt-1">{stage.title}</h3>
                             </div>
 
-                            <p className="text-gray-400 font-light leading-relaxed text-lg">
+                            <p className="text-gray-300 font-light leading-relaxed text-lg">
                                 {stage.text}
                             </p>
 
@@ -387,7 +387,7 @@ const SectorLocationPage = () => {
                         <h1 className="font-display text-4xl md:text-7xl font-bold leading-tight mb-8 text-white text-balance">
                             {pageContent.hero_title || pageContent.hero?.title}
                         </h1>
-                        <p className="text-xl text-gray-400 font-light max-w-2xl leading-relaxed">
+                        <p className="text-xl text-gray-300 font-light max-w-2xl leading-relaxed">
                             {pageContent.hero_subtitle || pageContent.hero?.subtitle}
                         </p>
                     </div>
@@ -410,7 +410,7 @@ const SectorLocationPage = () => {
                                     <div className="absolute top-0 left-0 w-1.5 h-full bg-primary/20 group-hover:bg-primary transition-colors"></div>
                                     <div className="text-primary/40 mb-6 font-mono text-sm tracking-tighter">CASO_SECTOR_{String(idx + 1).padStart(2, '0')}</div>
                                     <h3 className="text-white text-xl font-bold mb-4">{problem.title}</h3>
-                                    <p className="text-gray-400 leading-relaxed font-light mb-6">{problem.description}</p>
+                                    <p className="text-gray-300 leading-relaxed font-light mb-6">{problem.description}</p>
                                     <div className="flex items-center gap-2 text-red-500/80 text-[10px] font-bold uppercase tracking-widest">
                                         <XCircle className="w-3.5 h-3.5" /> Fuga operativa detectada
                                     </div>
@@ -432,7 +432,7 @@ const SectorLocationPage = () => {
                             <h2 className="font-display text-4xl md:text-6xl font-bold text-white mb-10">
                                 Tu {sector.name.toLowerCase().replace(/s$/, '')} en <span className="text-primary italic">Piloto Automático</span>
                             </h2>
-                            <p className="text-gray-400 text-xl font-light leading-relaxed">
+                            <p className="text-gray-300 text-xl font-light leading-relaxed">
                                 No instalamos parches. Construimos el <strong className="text-white">Motor de Gestión</strong> que permite que tu {sector.name.toLowerCase().replace(/s$/, '')} facture mientras tú recuperas tu vida.
                             </p>
                         </div>
@@ -469,7 +469,7 @@ const SectorLocationPage = () => {
                                         {step.benefit}
                                     </div>
                                     <h3 className="text-2xl font-bold text-white mb-6 leading-tight">{step.title}</h3>
-                                    <p className="text-gray-400 leading-relaxed font-light">
+                                    <p className="text-gray-300 leading-relaxed font-light">
                                         {step.desc}
                                     </p>
                                 </div>
@@ -478,7 +478,7 @@ const SectorLocationPage = () => {
 
                         <div className="mt-20 text-center relative z-10 max-w-2xl mx-auto">
                             <div className="mb-10 p-6 bg-white/5 border border-white/10 rounded-2xl">
-                                <p className="text-gray-400 text-sm mb-4 uppercase tracking-widest font-bold">Solución Estructural</p>
+                                <p className="text-gray-300 text-sm mb-4 uppercase tracking-widest font-bold">Solución Estructural</p>
                                 <h4 className="text-white text-xl font-bold mb-4">
                                     Este sector pertenece al modelo de <span className="text-primary tracking-tight">Negocio basado en {sector.name.includes('Peluquerías') || sector.name.includes('Clínicas') || sector.name.includes('Tatuajes') ? 'Citas y Agenda' : sector.name.includes('Restaurantes') ? 'Atención Presencial' : sector.name.includes('Talleres') ? 'Servicios Técnicos' : sector.name.includes('Agencias') ? 'Proyectos' : 'Venta de Producto'}</span>.
                                 </h4>
@@ -509,7 +509,7 @@ const SectorLocationPage = () => {
                                 ¿Por qué esto es vital en {location.name}?
                             </h3>
                         </div>
-                        <p className="text-gray-400 text-xl font-light leading-relaxed border-l-2 border-primary/20 pl-8 italic">
+                        <p className="text-gray-300 text-xl font-light leading-relaxed border-l-2 border-primary/20 pl-8 italic">
                             {pageContent.local_context || pageContent.localContext}
                         </p>
                     </div>
@@ -529,7 +529,7 @@ const SectorLocationPage = () => {
                                             <Link
                                                 key={relatedSlug}
                                                 to={`/${rSectorSlug}/${locationSlug}`}
-                                                className="text-gray-400 hover:text-primary transition-colors text-sm"
+                                                className="text-gray-300 hover:text-primary transition-colors text-sm"
                                             >
                                                 → {rSectorSlug.charAt(0).toUpperCase() + rSectorSlug.slice(1).replace(/-/g, ' ')} en {location.name}
                                             </Link>
@@ -547,7 +547,7 @@ const SectorLocationPage = () => {
                                             <Link
                                                 key={relatedSlug}
                                                 to={`/${sectorSlug}/${rLocationSlug}`}
-                                                className="text-gray-400 hover:text-primary transition-colors text-sm"
+                                                className="text-gray-300 hover:text-primary transition-colors text-sm"
                                             >
                                                 → {sector.name} en {locName}
                                             </Link>
@@ -565,7 +565,7 @@ const SectorLocationPage = () => {
                             <h3 className="font-display text-3xl md:text-5xl font-bold text-white mb-6 text-center">
                                 ¿Hablamos sobre tu <span className="text-primary">{sector.name.toLowerCase().replace(/s$/, '')}</span> en {location.name}?
                             </h3>
-                            <p className="text-xl text-gray-400 mb-12 leading-relaxed font-light text-center">
+                            <p className="text-xl text-gray-300 mb-12 leading-relaxed font-light text-center">
                                 Si estás cansado de que el día a día te coma y quieres que tu negocio empiece a trabajar para ti, déjanos tus datos.
                             </p>
 
@@ -651,7 +651,7 @@ const SectorLocationPage = () => {
 
                             {/* Social Media Links */}
                             <div className="text-center pt-8 border-t border-white/10">
-                                <p className="text-gray-400 font-bold mb-6 uppercase tracking-widest text-sm">
+                                <p className="text-gray-300 font-bold mb-6 uppercase tracking-widest text-sm">
                                     O síguenos en redes sociales
                                 </p>
                                 <div className="flex justify-center gap-4">

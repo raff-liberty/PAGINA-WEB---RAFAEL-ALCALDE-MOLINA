@@ -321,11 +321,11 @@ const Services = () => {
                                         <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-black transition-all">
                                             <flow.icon className="w-5 h-5" />
                                         </div>
-                                        <span className="text-gray-400 group-hover:text-white transition-colors">{flow.text}</span>
+                                        <span className="text-gray-300 group-hover:text-white transition-colors">{flow.text}</span>
                                     </div>
                                 ))}
                             </div>
-                            <div className="mt-10 p-4 border-t border-white/5 text-sm text-gray-500 italic">
+                            <div className="mt-10 p-4 border-t border-white/5 text-sm text-gray-200 italic">
                                 "Nada se fuerza. Nada se rompe. Todo se diseña para encajar."
                             </div>
                         </div>
@@ -338,7 +338,7 @@ const Services = () => {
                         <h2 className="font-display text-2xl md:text-5xl font-black text-white mb-4 uppercase italic tracking-tighter">
                             Nuestros <span className="text-primary">Productos Estrella</span>
                         </h2>
-                        <p className="text-gray-400 text-lg font-light italic">
+                        <p className="text-gray-300 text-lg font-light italic">
                             Soluciones de alto impacto diseñadas para escalar tu facturación de forma inmediata.
                         </p>
                     </div>
@@ -382,7 +382,7 @@ const Services = () => {
                                     {starServices[activeService].subItems.map((item, idx) => (
                                         <div key={idx} className="bg-white/5 border border-white/10 p-5 rounded-xl hover:bg-white/10 transition-colors shadow-lg">
                                             <h4 className="text-primary font-black mb-2 text-xs md:text-sm uppercase italic tracking-wider">{item.title}</h4>
-                                            <p className="text-gray-400 text-xs md:text-sm leading-relaxed italic">{item.desc}</p>
+                                            <p className="text-gray-300 text-xs md:text-sm leading-relaxed italic">{item.desc}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -428,7 +428,7 @@ const Services = () => {
                         <div>
                             <h2 className="font-display text-2xl md:text-4xl font-black text-white mb-4 uppercase italic tracking-tighter leading-tight">
                                 Infraestructura propia. <br />
-                                <span className="text-gray-500">Para que nada falle.</span>
+                                <span className="text-gray-200">Para que nada falle.</span>
                             </h2>
                             <p className="text-gray-300 text-lg mb-8 italic">
                                 Nos encargamos de toda la base técnica: hosting, dominios, mantenimiento y seguridad.
@@ -442,7 +442,7 @@ const Services = () => {
                                     </div>
                                     <div>
                                         <h4 className="text-white font-bold text-lg mb-2">VPS Dedicados</h4>
-                                        <p className="text-gray-500 text-sm">Mayor estabilidad y control real sobre tus datos sin depender de plataformas opacas.</p>
+                                        <p className="text-gray-200 text-sm">Mayor estabilidad y control real sobre tus datos sin depender de plataformas opacas.</p>
                                     </div>
                                 </div>
                                 <div className="flex gap-6">
@@ -451,7 +451,7 @@ const Services = () => {
                                     </div>
                                     <div>
                                         <h4 className="text-white font-bold text-lg mb-2">Backups y Monitorización</h4>
-                                        <p className="text-gray-500 text-sm">Todo está centralizado, documentado y protegido 24/7/365.</p>
+                                        <p className="text-gray-200 text-sm">Todo está centralizado, documentado y protegido 24/7/365.</p>
                                     </div>
                                 </div>
                             </div>
@@ -466,7 +466,7 @@ const Services = () => {
                             <ContactForm source="Services Audit Form" />
 
                             <div className="mt-auto border-t border-white/5 pt-8">
-                                <p className="text-center text-[10px] uppercase tracking-widest text-gray-500 mb-6 font-bold">O sígueme en la red</p>
+                                <p className="text-center text-[10px] uppercase tracking-widest text-gray-200 mb-6 font-bold">O sígueme en la red</p>
                                 <div className="flex justify-center gap-6">
                                     <a href={siteConfig.whatsapp_url} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-[#25D366] hover:text-black transition-all group">
                                         <MessageSquare className="w-5 h-5" />

@@ -12,25 +12,37 @@ export const sendToN8n = async (diagnosisData) => {
     // Si no está, usamos el valor por defecto del .env
     const webhookUrl = await getConfigValue('n8n_diagnosis_webhook', DEFAULT_N8N_WEBHOOK);
 
+    console.log('🔗 Webhook URL:', webhookUrl); // DEBUG
+
     if (!webhookUrl) {
         console.warn('n8n Webhook URL no configurada');
         return { error: 'Webhook not configured' };
     }
 
     try {
+        const payload = {
+            ...diagnosisData,
+            timestamp: new Date().toISOString(),
+            source: 'Diagnóstico Web'
+        };
+
+        console.log('📤 Enviando a n8n:', payload); // DEBUG
+
         const response = await fetch(webhookUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                ...diagnosisData,
-                timestamp: new Date().toISOString(),
-                source: 'Diagnóstico Web'
-            }),
+            body: JSON.stringify(payload),
         });
 
-        if (!response.ok) throw new Error('Error al enviar a n8n');
+        console.log('📥 Respuesta de n8n:', response.status, response.statusText); // DEBUG
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('❌ Error response:', errorText); // DEBUG
+            throw new Error(`Error al enviar a n8n: ${response.status} - ${errorText}`);
+        }
 
         return { success: true };
     } catch (error) {
