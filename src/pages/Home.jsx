@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Lightbulb, ArrowRight, MessageSquare, TrendingUp, FileText, Target, Database, Users, CheckCircle, PenTool as Custom, Search, Zap, DollarSign, Euro, ChevronLeft, ChevronRight, Globe, Instagram, Linkedin } from 'lucide-react';
+import { Lightbulb, ArrowRight, MessageSquare, TrendingUp, FileText, Target, Database, Users, CheckCircle, PenTool as Custom, Search, Zap, DollarSign, Euro, ChevronLeft, ChevronRight, Globe, Instagram, Linkedin, X } from 'lucide-react';
 import BackgroundMesh from '../components/BackgroundMesh';
 import SEO from '../components/SEO';
 import ContactForm from '../components/ContactForm';
@@ -221,6 +221,8 @@ const Home = () => {
     const [scrollIndex, setScrollIndex] = useState(0);
     const scrollRef = useRef(null);
     const solutionPreviewRef = useRef(null);
+    const solutionsMenuRef = useRef(null);
+    const [showPreviewOnMobile, setShowPreviewOnMobile] = useState(false);
     const content = contentMap[activeTab];
     const [siteConfig, setSiteConfig] = useState({
         whatsapp_url: 'https://wa.me/34600000000',
@@ -541,20 +543,17 @@ const Home = () => {
 
                             <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 items-start min-h-[500px]">
                                 {/* LEFT MENU: TITLES */}
-                                <div className="lg:col-span-4 space-y-4">
+                                <div
+                                    ref={solutionsMenuRef}
+                                    className="lg:col-span-4 space-y-4"
+                                >
                                     {filteredSolutions.map((area, idx) => (
                                         <button
                                             key={area.title}
                                             onClick={() => {
                                                 setSelectedSolutionIndex(idx);
-                                                // Auto-scroll to preview on mobile
-                                                if (window.innerWidth < 1024 && solutionPreviewRef.current) {
-                                                    setTimeout(() => {
-                                                        solutionPreviewRef.current?.scrollIntoView({
-                                                            behavior: 'smooth',
-                                                            block: 'start'
-                                                        });
-                                                    }, 100);
+                                                if (window.innerWidth < 1024) {
+                                                    setShowPreviewOnMobile(true);
                                                 }
                                             }}
                                             className={`w-full text-left p-4 rounded-2xl transition-all duration-500 border group ${selectedSolutionIndex === idx
@@ -580,8 +579,8 @@ const Home = () => {
                                     ))}
                                 </div>
 
-                                {/* RIGHT: RICH PREVIEW CARD */}
-                                <div className="lg:col-span-8 relative" ref={solutionPreviewRef}>
+                                {/* RIGHT: RICH PREVIEW CARD (DESKTOP) */}
+                                <div className="hidden lg:block lg:col-span-8 relative" ref={solutionPreviewRef}>
                                     <AnimatePresence mode="wait">
                                         <motion.div
                                             key={selectedSolutionIndex}
@@ -638,6 +637,21 @@ const Home = () => {
                                                         Saber más <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                                                     </button>
 
+                                                    <button
+                                                        onClick={() => {
+                                                            setShowPreviewOnMobile(false);
+                                                            if (solutionsMenuRef.current) {
+                                                                const yOffset = -150;
+                                                                const element = solutionsMenuRef.current;
+                                                                const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                                                                window.scrollTo({ top: y, behavior: 'smooth' });
+                                                            }
+                                                        }}
+                                                        className="lg:hidden flex items-center gap-2 px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-gray-300 hover:text-white transition-colors"
+                                                    >
+                                                        <ChevronLeft className="w-4 h-4" /> Volver a sistemas
+                                                    </button>
+
                                                     <div className="px-6 py-4 rounded-2xl bg-white/5 border border-white/5 italic">
                                                         <span className="text-gray-200 text-xs block uppercase font-mono tracking-widest mb-1">Consultoría Inicial</span>
                                                         <span className="text-gray-100 font-black text-xl">GRATUITA</span>
@@ -656,6 +670,87 @@ const Home = () => {
                                     </div>
                                 </div>
                             </div>
+
+                            {/* MOBILE MODAL SHOWCASE */}
+                            <AnimatePresence>
+                                {showPreviewOnMobile && (
+                                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 lg:hidden">
+                                        <motion.div
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            exit={{ opacity: 0 }}
+                                            onClick={() => setShowPreviewOnMobile(false)}
+                                            className="absolute inset-0 bg-black/90 backdrop-blur-sm"
+                                        />
+                                        <motion.div
+                                            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                                            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                                            className="relative w-full max-w-lg bg-[#111111] border-2 border-white/10 p-6 md:p-8 rounded-[2rem] overflow-hidden shadow-2xl overflow-y-auto max-h-[90vh]"
+                                        >
+                                            {/* Close Button */}
+                                            <button
+                                                onClick={() => setShowPreviewOnMobile(false)}
+                                                className="absolute top-4 right-4 z-20 p-2 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-white transition-colors"
+                                            >
+                                                <X className="w-5 h-5" />
+                                            </button>
+
+                                            {/* Glow Background */}
+                                            <div
+                                                className="absolute -top-20 -right-20 w-64 h-64 blur-[100px] rounded-full opacity-40 pointer-events-none"
+                                                style={{ backgroundColor: filteredSolutions[selectedSolutionIndex].color || '#6EE7B7' }}
+                                            />
+
+                                            <div className="relative z-10">
+                                                <div className="flex items-center gap-3 mb-6">
+                                                    <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-primary">
+                                                        {React.createElement(filteredSolutions[selectedSolutionIndex].icon, { className: "w-6 h-6" })}
+                                                    </div>
+                                                    <div>
+                                                        <span className="text-primary font-mono text-[10px] uppercase tracking-[0.2em] block mb-1 opacity-60">Impacto de Negocio</span>
+                                                        <h3 className="text-2xl font-display font-bold text-gray-100 tracking-tight">
+                                                            {filteredSolutions[selectedSolutionIndex].title}
+                                                        </h3>
+                                                    </div>
+                                                </div>
+
+                                                <p className="text-gray-300 text-base font-light italic leading-relaxed mb-8">
+                                                    "{filteredSolutions[selectedSolutionIndex].desc}"
+                                                </p>
+
+                                                <ul className="space-y-4 mb-10">
+                                                    {filteredSolutions[selectedSolutionIndex].items.map((item, i) => (
+                                                        <li key={i} className="flex items-start gap-3">
+                                                            <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                                <CheckCircle className="w-3 h-3 text-primary" />
+                                                            </div>
+                                                            <span className="text-gray-300 text-sm md:text-base font-medium">{item}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+
+                                                <div className="flex flex-col gap-4">
+                                                    <button
+                                                        onClick={() => {
+                                                            const sol = filteredSolutions[selectedSolutionIndex];
+                                                            sol.path ? navigate(sol.path) : navigate(`/contact?service=${sol.serviceId}`);
+                                                        }}
+                                                        className="w-full bg-primary hover:bg-white text-black font-bold px-8 py-4 rounded-xl uppercase tracking-wider flex items-center justify-center gap-3 transition-all shadow-[0_0_20px_rgba(110,231,183,0.3)] text-sm"
+                                                    >
+                                                        Saber más <ArrowRight className="w-4 h-4" />
+                                                    </button>
+
+                                                    <div className="w-full p-4 rounded-xl bg-white/5 border border-white/5 text-center">
+                                                        <span className="text-gray-200 text-[10px] block uppercase font-mono tracking-widest mb-1">Consultoría Inicial</span>
+                                                        <span className="text-gray-100 font-black text-lg">GRATUITA</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </motion.div>
+                                    </div>
+                                )}
+                            </AnimatePresence>
                         </div>
                     </div>
 
