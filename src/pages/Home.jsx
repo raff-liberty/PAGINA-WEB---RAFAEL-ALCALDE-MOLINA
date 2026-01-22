@@ -223,6 +223,7 @@ const Home = () => {
     const solutionPreviewRef = useRef(null);
     const solutionsMenuRef = useRef(null);
     const [showPreviewOnMobile, setShowPreviewOnMobile] = useState(false);
+    const [showFaqOnMobile, setShowFaqOnMobile] = useState(false);
     const content = contentMap[activeTab];
     const [siteConfig, setSiteConfig] = useState({
         whatsapp_url: 'https://wa.me/34600000000',
@@ -345,7 +346,7 @@ const Home = () => {
                                 transition={{ delay: 0.2 }}
                                 className="text-xl md:text-2xl text-white/90 font-light max-w-3xl leading-relaxed italic mb-12 border-l-2 lg:border-l-4 border-primary/40 pl-6 mx-auto lg:mx-0"
                             >
-                                Creamos infraestructuras automáticas que llenan tu agenda de clientes cada mañana. Profesionalizamos tu forma de captar clientes en <span className="text-white font-bold">30 días</span>.
+                                Creamos infraestructuras automáticas que llenan tu agenda de clientes cada mañana. Profesionalizamos tu forma de captar clientes <span className="text-white font-bold">en tiempo récord</span>.
                             </motion.p>
                         </div>
                     </div>
@@ -401,7 +402,7 @@ const Home = () => {
 
                                 <div className="relative z-10 flex flex-col h-full">
                                     {/* Icon and Title */}
-                                    <div className="flex items-center justify-between mb-8">
+                                    <div className="flex items-center justify-between mb-6">
                                         <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-primary/40 group-hover:bg-primary/10 transition-all duration-700 shadow-inner">
                                             <item.icon className="w-7 h-7 text-white/40 group-hover:text-primary transition-all duration-500" />
                                         </div>
@@ -471,7 +472,7 @@ const Home = () => {
 
                 {/* Tabs and Content */}
                 <div className="w-full">
-                    <div className="flex flex-wrap gap-3 mb-8 border-b border-white/5 pb-6 justify-center lg:justify-start">
+                    <div className="grid grid-cols-2 md:flex md:flex-wrap gap-3 mb-8 border-b border-white/5 pb-6 justify-center lg:justify-start">
                         {businessTypes.map((type) => (
                             <button
                                 key={type.id}
@@ -577,7 +578,7 @@ const Home = () => {
                         {/* Specific Solutions Grid - Integrated */}
                         {/* Specific Solutions Grid - Integrated as a Product Showcase */}
                         {/* NEW PREMIUM SHOWCASE NAVIGATOR */}
-                        <div className="mt-20 relative">
+                        <div className="mt-10 relative">
                             <div className="flex flex-col items-center text-center mb-16">
                                 <motion.div
                                     initial={{ opacity: 0, y: 10 }}
@@ -601,7 +602,7 @@ const Home = () => {
                                 {/* LEFT MENU: TITLES */}
                                 <div
                                     ref={solutionsMenuRef}
-                                    className="lg:col-span-4 space-y-5"
+                                    className="lg:col-span-4 space-y-3"
                                 >
                                     {filteredSolutions.map((area, idx) => (
                                         <button
@@ -612,9 +613,9 @@ const Home = () => {
                                                     setShowPreviewOnMobile(true);
                                                 }
                                             }}
-                                            className={`w-full text-left p-6 rounded-2xl transition-all duration-700 border group relative overflow-hidden ${selectedSolutionIndex === idx
-                                                ? 'bg-primary/5 border-primary/40 shadow-[0_20px_40px_rgba(110,231,183,0.1)]'
-                                                : 'border-white/5 hover:border-white/20 hover:bg-white/[0.02]'
+                                            className={`w-full text-left p-5 rounded-2xl transition-all duration-700 border group relative overflow-hidden ${selectedSolutionIndex === idx
+                                                ? 'bg-primary/10 border-primary/50 shadow-[0_20px_40px_rgba(110,231,183,0.15)]'
+                                                : 'border-white/10 hover:border-white/30 hover:bg-white/[0.04]'
                                                 }`}
                                         >
                                             {/* Selection Bar */}
@@ -804,6 +805,7 @@ const Home = () => {
                     </div>
 
 
+
                     {/* FAQ & Contact Section - Consolidated Premium Experience */}
                     <div className="mt-40 mb-32">
                         <div className="grid lg:grid-cols-12 gap-20">
@@ -820,10 +822,10 @@ const Home = () => {
                                             FAQ - Dudas Reales
                                         </span>
                                     </motion.div>
-                                    <h2 className="text-3xl md:text-4xl font-display font-bold text-white tracking-tight leading-tight mb-6">
-                                        Lo que otros dueños <br /> <span className="text-primary font-light italic">preguntaron antes.</span>
+                                    <h2 className="text-4xl md:text-5xl font-display font-bold text-white tracking-tight leading-tight mb-6">
+                                        <span className="italic">Lo que otros dueños</span> <br /> <span className="text-primary font-light italic">preguntaron antes.</span>
                                     </h2>
-                                    <p className="text-white/50 text-base font-light leading-relaxed mb-12">
+                                    <p className="text-white/70 text-lg font-light leading-relaxed mb-12">
                                         Sin filtros, sin rodeos y basándonos en resultados de clientes.
                                     </p>
 
@@ -831,7 +833,12 @@ const Home = () => {
                                         {faqCategories.map((cat) => (
                                             <button
                                                 key={cat.id}
-                                                onClick={() => setActiveFaqCategory(cat.id)}
+                                                onClick={() => {
+                                                    setActiveFaqCategory(cat.id);
+                                                    if (window.innerWidth < 1024) {
+                                                        setShowFaqOnMobile(true);
+                                                    }
+                                                }}
                                                 className={`w-full flex items-center gap-3 py-3 px-4 transition-all duration-300 group border-l-2 ${activeFaqCategory === cat.id
                                                     ? 'border-primary text-primary bg-primary/5'
                                                     : 'border-transparent text-white/40 hover:text-white/70 hover:border-white/20'
@@ -845,8 +852,8 @@ const Home = () => {
                                 </div>
                             </div>
 
-                            {/* Right: Answer Cards */}
-                            <div className="lg:col-span-12 xl:col-span-7">
+                            {/* Right: Answer Cards (Desktop Only) */}
+                            <div className="hidden lg:block lg:col-span-12 xl:col-span-7">
                                 <AnimatePresence mode="wait">
                                     <motion.div
                                         key={activeFaqCategory}
@@ -874,6 +881,66 @@ const Home = () => {
                                 </AnimatePresence>
                             </div>
                         </div>
+
+                        {/* MOBILE FAQ MODAL */}
+                        <AnimatePresence>
+                            {showFaqOnMobile && (
+                                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 lg:hidden">
+                                    <motion.div
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        onClick={() => setShowFaqOnMobile(false)}
+                                        className="absolute inset-0 bg-black/90 backdrop-blur-sm"
+                                    />
+                                    <motion.div
+                                        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                                        exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                                        className="relative w-full max-w-lg bg-[#111111] border-2 border-white/10 p-6 md:p-8 rounded-[2rem] overflow-hidden shadow-2xl overflow-y-auto max-h-[90vh]"
+                                    >
+                                        {/* Close Button */}
+                                        <button
+                                            onClick={() => setShowFaqOnMobile(false)}
+                                            className="absolute top-4 right-4 z-20 p-2 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-white transition-colors"
+                                        >
+                                            <X className="w-5 h-5" />
+                                        </button>
+
+                                        <div className="relative z-10">
+                                            <div className="flex items-center gap-3 mb-6">
+                                                <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-primary">
+                                                    {React.createElement(faqCategories.find(c => c.id === activeFaqCategory)?.icon || HelpCircle, { className: "w-6 h-6" })}
+                                                </div>
+                                                <div>
+                                                    <span className="text-primary font-mono text-[10px] uppercase tracking-[0.2em] block mb-1 opacity-60">FAQ</span>
+                                                    <h3 className="text-2xl font-display font-bold text-gray-100 tracking-tight">
+                                                        {faqCategories.find(c => c.id === activeFaqCategory)?.label}
+                                                    </h3>
+                                                </div>
+                                            </div>
+
+                                            <div className="space-y-6">
+                                                {faqCategories.find(c => c.id === activeFaqCategory)?.questions.map((item, idx) => (
+                                                    <div
+                                                        key={idx}
+                                                        className="bg-[#0a0a0a] border border-white/[0.05] rounded-2xl p-6"
+                                                    >
+                                                        <h4 className="text-xl font-semibold text-white/90 tracking-tight mb-4 flex items-start gap-2">
+                                                            <span className="text-primary/60 font-mono text-sm mt-1">Q{idx + 1}.</span>
+                                                            <span>{item.q}</span>
+                                                        </h4>
+                                                        <p className="text-white/70 text-base leading-relaxed font-light pl-6 border-l border-white/5">
+                                                            {item.a}
+                                                        </p>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                </div>
+                            )}
+                        </AnimatePresence>
                     </div>
 
 
@@ -886,8 +953,8 @@ const Home = () => {
 
                         <div className="max-w-7xl mx-auto px-6 relative z-10">
                             <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-stretch">
-                                <div className="lg:col-span-1 space-y-10 flex flex-col justify-between">
-                                    <div className="max-w-2xl space-y-10 flex-grow flex flex-col justify-center">
+                                <div className="lg:col-span-1 space-y-10 flex flex-col">
+                                    <div className="max-w-2xl space-y-10 flex-grow flex flex-col">
 
                                         {/* Technical Pricing Card */}
                                         <div className="space-y-6">
@@ -960,7 +1027,7 @@ const Home = () => {
                                 <div className="lg:col-span-1 relative flex flex-col h-full">
                                     {/* Ambient lighting removed for cleaner look */}
                                     <div className="relative">
-                                        <div className="mb-14 border-l-4 border-primary/40 pl-8 pt-2">
+                                        <div className="mb-8 border-l-4 border-primary/40 pl-8 pt-2">
                                             <h4 className="text-3xl md:text-5xl font-display font-black text-white italic tracking-tighter uppercase leading-none mb-3">
                                                 ¿HABLAMOS <br />
                                                 <span className="text-primary not-italic">DIRECTO?</span>

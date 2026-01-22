@@ -146,12 +146,12 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
     }
 
     return (
-        <form onSubmit={handleSubmit} className={`space-y-6 ${className}`}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <form onSubmit={handleSubmit} className={`space-y-4 md:space-y-6 ${className}`}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 <div className="group/input relative">
                     <input
                         id="name"
-                        className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:border-primary/50 focus:bg-white/[0.07] outline-none transition-all placeholder:text-white/20 shadow-lg"
+                        className="w-full bg-white/[0.08] border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:border-primary/50 focus:bg-white/[0.12] outline-none transition-all placeholder:text-white/30 shadow-[0_0_20px_rgba(255,255,255,0.05),0_4px_6px_-1px_rgba(0,0,0,0.3)]"
                         placeholder="Tu Nombre"
                         type="text"
                         value={formData.name}
@@ -163,7 +163,7 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
                 <div className="group/input relative">
                     <input
                         id="phone"
-                        className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:border-primary/50 focus:bg-white/[0.07] outline-none transition-all placeholder:text-white/20 shadow-lg"
+                        className="w-full bg-white/[0.08] border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:border-primary/50 focus:bg-white/[0.12] outline-none transition-all placeholder:text-white/30 shadow-[0_0_20px_rgba(255,255,255,0.05),0_4px_6px_-1px_rgba(0,0,0,0.3)]"
                         placeholder="+34 WhatsApp"
                         type="tel"
                         value={formData.phone}
@@ -177,7 +177,7 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
             <div className="group/input relative">
                 <input
                     id="company"
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:border-primary/50 focus:bg-white/[0.07] outline-none transition-all placeholder:text-white/20 shadow-lg"
+                    className="w-full bg-white/[0.08] border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:border-primary/50 focus:bg-white/[0.12] outline-none transition-all placeholder:text-white/30 shadow-[0_0_20px_rgba(255,255,255,0.05),0_4px_6px_-1px_rgba(0,0,0,0.3)]"
                     placeholder="Empresa (opcional)"
                     type="text"
                     value={formData.company}
@@ -186,11 +186,11 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
                 <div className="absolute inset-0 rounded-xl bg-primary/5 blur-xl opacity-0 group-focus-within/input:opacity-100 transition-opacity pointer-events-none" />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 <div className="group/input relative">
                     <input
                         id="email"
-                        className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:border-primary/50 focus:bg-white/[0.07] outline-none transition-all placeholder:text-white/20 shadow-lg"
+                        className="w-full bg-white/[0.08] border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:border-primary/50 focus:bg-white/[0.12] outline-none transition-all placeholder:text-white/30 shadow-[0_0_20px_rgba(255,255,255,0.05),0_4px_6px_-1px_rgba(0,0,0,0.3)]"
                         placeholder="tu@email.com"
                         type="email"
                         value={formData.email}
@@ -206,7 +206,7 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
                             id="service"
                             value={formData.service}
                             onChange={handleChange}
-                            className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:border-primary/50 focus:bg-white/[0.07] outline-none appearance-none cursor-pointer transition-all shadow-lg"
+                            className="w-full bg-white/[0.08] border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:border-primary/50 focus:bg-white/[0.12] outline-none appearance-none cursor-pointer transition-all shadow-[0_0_20px_rgba(255,255,255,0.05),0_4px_6px_-1px_rgba(0,0,0,0.3)]"
                         >
                             {serviceOptions.map(opt => (
                                 <option key={opt.value} value={opt.value} className="bg-[#0a0a0a] text-white">{opt.label}</option>
@@ -222,7 +222,7 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
             <div className="group/input relative">
                 <textarea
                     id="message"
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:border-primary/50 focus:bg-white/[0.07] outline-none resize-none transition-all placeholder:text-white/20 shadow-lg"
+                    className="w-full bg-white/[0.08] border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:border-primary/50 focus:bg-white/[0.12] outline-none resize-none transition-all placeholder:text-white/30 shadow-[0_0_20px_rgba(255,255,255,0.05),0_4px_6px_-1px_rgba(0,0,0,0.3)]"
                     placeholder="¿Qué quieres automatizar? Sé breve y directo."
                     rows={4}
                     value={formData.message}
