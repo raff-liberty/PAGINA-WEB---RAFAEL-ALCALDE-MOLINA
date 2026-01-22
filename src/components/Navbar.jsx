@@ -80,7 +80,7 @@ const Navbar = () => {
                                 ENGORILATE
                             </span>
                             <span className="text-gray-400 text-[8px] md:text-[9px] lg:text-sm font-light tracking-wide mt-0.5 truncate">
-                                Automatización de Negocios
+                                Tu negocio en piloto automático
                             </span>
                         </div>
                     </Link>
@@ -294,7 +294,10 @@ const Navbar = () => {
                             {/* Bottom Decoration */}
                             <div className="p-6 text-center border-t border-white/5 mt-8">
                                 <p className="text-gray-500 text-xs font-mono tracking-widest uppercase">
-                                    Automatización de Negocios
+                                    Tu negocio en piloto automático
+                                </p>
+                                <p className="text-gray-600 text-[10px] font-mono tracking-wider uppercase mt-1">
+                                    Región de Murcia
                                 </p>
                             </div>
                         </div>
