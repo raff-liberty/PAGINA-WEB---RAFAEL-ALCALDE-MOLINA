@@ -156,7 +156,7 @@ const LocalSeo = () => {
                                     <p.icon className="w-6 h-6 text-white/40 group-hover:text-primary transition-all duration-500" />
                                 </div>
                                 <h3 className="text-xl font-bold text-white uppercase italic tracking-tighter mb-4">{p.title}</h3>
-                                <p className="text-white/60 text-sm leading-relaxed italic">{p.desc}</p>
+                                <p className="text-white/80 text-base leading-relaxed font-medium italic">{p.desc}</p>
                             </motion.div>
                         ))}
                     </div>
@@ -177,7 +177,7 @@ const LocalSeo = () => {
                                     </div>
                                     <div>
                                         <h4 className="text-white font-bold text-base mb-1 uppercase italic tracking-tighter">Auditoría Express</h4>
-                                        <p className="text-white/50 text-xs md:text-sm leading-relaxed italic">Analizamos por qué tu competencia sale antes que tú y trazamos un plan para superarlos.</p>
+                                        <p className="text-white/80 text-base leading-relaxed font-medium italic">Analizamos por qué tu competencia sale antes que tú y trazamos un plan para superarlos.</p>
                                     </div>
                                 </li>
                                 <li className="flex items-start gap-4 group">
@@ -186,7 +186,7 @@ const LocalSeo = () => {
                                     </div>
                                     <div>
                                         <h4 className="text-white font-bold text-base mb-1 uppercase italic tracking-tighter">Estrategia de Reseñas</h4>
-                                        <p className="text-white/50 text-xs md:text-sm leading-relaxed italic">No solo cantidad, sino calidad. Conseguimos que los mejores clientes te recomienden.</p>
+                                        <p className="text-white/80 text-base leading-relaxed font-medium italic">No solo cantidad, sino calidad. Conseguimos que los mejores clientes te recomienden.</p>
                                     </div>
                                 </li>
                                 <li className="flex items-start gap-4 group">
@@ -195,7 +195,7 @@ const LocalSeo = () => {
                                     </div>
                                     <div>
                                         <h4 className="text-white font-bold text-base mb-1 uppercase italic tracking-tighter">SEO Técnico</h4>
-                                        <p className="text-white/50 text-xs md:text-sm leading-relaxed italic">Optimizamos el código interno para que Google te valore como el líder de tu zona.</p>
+                                        <p className="text-white/80 text-base leading-relaxed font-medium italic">Optimizamos el código interno para que Google te valore como el líder de tu zona.</p>
                                     </div>
                                 </li>
                             </ul>
@@ -239,7 +239,7 @@ const LocalSeo = () => {
                     {faqs.map((faq, i) => (
                         <div key={i} className="bg-[#0a0a0a] p-8 rounded-[2rem] border border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
                             <h3 className="text-xl font-bold text-white mb-4 uppercase italic tracking-tight">{faq.q}</h3>
-                            <p className="text-white/50 leading-relaxed font-light italic">{faq.a}</p>
+                            <p className="text-gray-200 leading-relaxed font-medium italic text-base">{faq.a}</p>
                         </div>
                     ))}
                 </div>

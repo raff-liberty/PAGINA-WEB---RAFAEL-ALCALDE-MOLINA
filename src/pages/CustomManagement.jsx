@@ -141,7 +141,7 @@ const CustomManagement = () => {
                             Módulos <br />
                             <span className="text-primary italic">para tu medida</span>
                         </h2>
-                        <p className="text-white/50 max-w-2xl mt-4 italic">No adaptas tu negocio a un programa cerrado. Nosotros creamos el programa que encaja con tu forma de trabajar.</p>
+                        <p className="text-white/70 max-w-2xl mt-4 font-medium italic">No adaptas tu negocio a un programa cerrado. Nosotros creamos el programa que encaja con tu forma de trabajar.</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -159,7 +159,7 @@ const CustomManagement = () => {
                                     <m.icon className="w-6 h-6 text-white/40 group-hover:text-primary transition-all duration-500" />
                                 </div>
                                 <h3 className="text-xl font-bold text-white uppercase italic tracking-tighter mb-4">{m.title}</h3>
-                                <p className="text-white/60 text-sm leading-relaxed italic">{m.desc}</p>
+                                <p className="text-white/80 text-base leading-relaxed font-medium italic">{m.desc}</p>
                             </motion.div>
                         ))}
                     </div>
@@ -180,7 +180,7 @@ const CustomManagement = () => {
                                     </div>
                                     <div>
                                         <h4 className="text-white font-bold text-base mb-1 uppercase italic tracking-tighter">Informes Automáticos</h4>
-                                        <p className="text-white/50 text-xs md:text-sm leading-relaxed italic">Recibe cada semana un resumen de tus beneficios, ventas y stock sin mover un dedo.</p>
+                                        <p className="text-white/80 text-base leading-relaxed font-medium italic">Recibe cada semana un resumen de tus beneficios, ventas y stock sin mover un dedo.</p>
                                     </div>
                                 </li>
                                 <li className="flex items-start gap-4 group">
@@ -189,7 +189,7 @@ const CustomManagement = () => {
                                     </div>
                                     <div>
                                         <h4 className="text-white font-bold text-base mb-1 uppercase italic tracking-tighter">Control de Stock</h4>
-                                        <p className="text-white/50 text-xs md:text-sm leading-relaxed italic">Avisos automáticos cuando te queda poco material para que nunca dejes de producir.</p>
+                                        <p className="text-white/80 text-base leading-relaxed font-medium italic">Avisos automáticos cuando te queda poco material para que nunca dejes de producir.</p>
                                     </div>
                                 </li>
                                 <li className="flex items-start gap-4 group">
@@ -198,7 +198,7 @@ const CustomManagement = () => {
                                     </div>
                                     <div>
                                         <h4 className="text-white font-bold text-base mb-1 uppercase italic tracking-tighter">Tareas de Empleados</h4>
-                                        <p className="text-white/50 text-xs md:text-sm leading-relaxed italic">Organiza el trabajo de tu equipo y supervisa los avances desde tu propio móvil.</p>
+                                        <p className="text-white/80 text-base leading-relaxed font-medium italic">Organiza el trabajo de tu equipo y supervisa los avances desde tu propio móvil.</p>
                                     </div>
                                 </li>
                             </ul>
@@ -255,7 +255,7 @@ const CustomManagement = () => {
                     {faqs.map((faq, i) => (
                         <div key={i} className="bg-[#0a0a0a] p-8 rounded-[2rem] border border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
                             <h3 className="text-xl font-bold text-white mb-4 uppercase italic tracking-tight">{faq.q}</h3>
-                            <p className="text-white/50 leading-relaxed font-light italic">{faq.a}</p>
+                            <p className="text-gray-200 leading-relaxed font-medium italic text-base">{faq.a}</p>
                         </div>
                     ))}
                 </div>

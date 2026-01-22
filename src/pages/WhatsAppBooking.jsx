@@ -213,7 +213,7 @@ const WhatsAppBooking = () => {
                                     <h3 className="text-lg font-bold text-white uppercase italic tracking-tighter leading-tight">{s.name}</h3>
                                 </div>
 
-                                <p className="text-white/60 text-sm leading-relaxed italic">{s.detail}</p>
+                                <p className="text-white/80 text-base leading-relaxed font-medium italic">{s.detail}</p>
                             </motion.div>
                         ))}
                     </div>
@@ -275,7 +275,7 @@ const WhatsAppBooking = () => {
                         <h2 className="text-3xl md:text-6xl font-display font-black uppercase italic tracking-tighter text-white">
                             Proceso <span className="text-primary italic">Sin Esfuerzo</span>
                         </h2>
-                        <p className="text-white/40 text-[10px] md:text-base mt-3 max-w-xl mx-auto font-light italic uppercase tracking-widest">
+                        <p className="text-white/70 text-[10px] md:text-base mt-3 max-w-xl mx-auto font-medium italic uppercase tracking-widest">
                             Tres fases diseñadas para maximizar tu libertad.
                         </p>
                     </div>
@@ -292,7 +292,7 @@ const WhatsAppBooking = () => {
                                         </div>
                                         <h3 className="text-2xl md:text-4xl font-display font-black uppercase italic leading-none text-white m-0 p-0">{s.title}</h3>
                                     </div>
-                                    <p className="text-white/50 text-base leading-relaxed italic">{s.text}</p>
+                                    <p className="text-white/80 text-base leading-relaxed font-medium italic">{s.text}</p>
                                 </div>
                             </div>
                         ))}
@@ -342,7 +342,7 @@ const WhatsAppBooking = () => {
                                             exit={{ height: 0, opacity: 0 }}
                                             className="px-6 pb-6"
                                         >
-                                            <p className="pl-14 text-white/50 leading-relaxed font-light italic text-sm">
+                                            <p className="pl-14 text-gray-200 leading-relaxed font-medium italic text-base">
                                                 {faq.a}
                                             </p>
                                         </motion.div>

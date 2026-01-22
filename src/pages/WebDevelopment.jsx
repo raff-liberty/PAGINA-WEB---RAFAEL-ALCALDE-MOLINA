@@ -187,7 +187,7 @@ const WebDevelopment = () => {
                                     <v.icon className="w-6 h-6 text-white/40 group-hover:text-primary transition-all duration-500" />
                                 </div>
                                 <h3 className="text-xl font-bold text-white uppercase italic tracking-tighter mb-4">{v.title}</h3>
-                                <p className="text-white/60 text-sm leading-relaxed italic">{v.desc}</p>
+                                <p className="text-white/80 text-base leading-relaxed font-medium italic">{v.desc}</p>
                             </motion.div>
                         ))}
                     </div>
@@ -208,7 +208,7 @@ const WebDevelopment = () => {
                                     </div>
                                     <div>
                                         <h4 className="text-white font-bold text-base mb-1 uppercase italic tracking-tighter">{type.title}</h4>
-                                        <p className="text-white/50 text-xs md:text-sm leading-relaxed italic">{type.desc}</p>
+                                        <p className="text-white/80 text-base leading-relaxed font-medium italic">{type.desc}</p>
                                     </div>
                                 </div>
                             ))}
@@ -256,7 +256,7 @@ const WebDevelopment = () => {
                     {faqs.map((faq, i) => (
                         <div key={i} className="bg-[#0a0a0a] p-8 rounded-[2rem] border border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
                             <h3 className="text-xl font-bold text-white mb-4 uppercase italic tracking-tight">{faq.q}</h3>
-                            <p className="text-white/50 leading-relaxed font-light italic">{faq.a}</p>
+                            <p className="text-gray-200 leading-relaxed font-medium italic text-base">{faq.a}</p>
                         </div>
                     ))}
                 </div>
