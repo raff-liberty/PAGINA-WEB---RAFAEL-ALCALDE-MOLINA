@@ -471,7 +471,7 @@ const Home = () => {
 
                 {/* Tabs and Content */}
                 <div className="w-full">
-                    <div className="flex flex-wrap gap-3 mb-12 border-b border-white/5 pb-8 justify-center lg:justify-start">
+                    <div className="flex flex-wrap gap-3 mb-8 border-b border-white/5 pb-6 justify-center lg:justify-start">
                         {businessTypes.map((type) => (
                             <button
                                 key={type.id}
@@ -526,11 +526,11 @@ const Home = () => {
                                             <div className="lg:col-span-4 space-y-4">
                                                 <div className="flex items-center gap-3">
                                                     <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/10">
-                                                        <Search className="w-5 h-5 text-white/30" />
+                                                        <Search className="w-6 h-6 text-white/40" />
                                                     </div>
-                                                    <span className="text-primary font-mono text-[10px] font-bold uppercase tracking-[0.3em]">SITUACIÓN ACTUAL</span>
+                                                    <span className="text-primary font-mono text-xs font-bold uppercase tracking-wider">SITUACIÓN ACTUAL</span>
                                                 </div>
-                                                <p className="text-white/70 leading-relaxed text-lg font-normal italic">"{item.problem}"</p>
+                                                <p className="text-white/70 leading-relaxed text-lg font-normal">"{item.problem}"</p>
                                             </div>
 
                                             <div className="lg:col-span-4 space-y-4 lg:border-l lg:border-white/10 lg:pl-10">
@@ -538,7 +538,7 @@ const Home = () => {
                                                     <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20">
                                                         <Zap className="w-5 h-5 text-primary" />
                                                     </div>
-                                                    <span className="text-primary font-mono text-[10px] font-bold uppercase tracking-[0.3em]">INTERVENCIÓN TÉCNICA</span>
+                                                    <span className="text-primary font-mono text-xs font-bold uppercase tracking-wider">INTERVENCIÓN TÉCNICA</span>
                                                 </div>
                                                 <p className="text-white font-bold text-xl md:text-2xl tracking-tight leading-snug">{item.solution}</p>
                                             </div>
@@ -548,7 +548,7 @@ const Home = () => {
                                                     <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center border border-primary/30">
                                                         <CheckCircle className="w-5 h-5 text-primary" />
                                                     </div>
-                                                    <span className="text-primary font-mono text-[10px] font-bold uppercase tracking-[0.3em]">MÉTRICA DE ÉXITO</span>
+                                                    <span className="text-primary font-mono text-xs font-bold uppercase tracking-wider">MÉTRICA DE ÉXITO</span>
                                                 </div>
                                                 <p className="text-primary font-bold text-lg md:text-xl leading-relaxed tracking-tight">{item.result}</p>
                                             </div>
@@ -560,20 +560,24 @@ const Home = () => {
 
                         {/* Pagination Dots */}
                         {content.length > 1 && (
-                            <div className="flex justify-center gap-3 mt-8">
+                            <div className="flex justify-center gap-2 mt-3">
                                 {content.map((_, idx) => (
                                     <button
                                         key={idx}
                                         onClick={() => scrollToIndex(idx)}
-                                        className={`w-3 h-3 rounded-full transition-all duration-300 ${scrollIndex === idx ? 'bg-primary w-8' : 'bg-white/10 hover:bg-white/30'}`}
+                                        className={`w-2 h-2 rounded-full transition-all duration-300 ${scrollIndex === idx ? 'bg-primary w-6' : 'bg-white/20 hover:bg-white/40'}`}
                                     />
                                 ))}
                             </div>
                         )}
+
+
+
+
                         {/* Specific Solutions Grid - Integrated */}
                         {/* Specific Solutions Grid - Integrated as a Product Showcase */}
                         {/* NEW PREMIUM SHOWCASE NAVIGATOR */}
-                        <div className="mt-32 relative">
+                        <div className="mt-20 relative">
                             <div className="flex flex-col items-center text-center mb-16">
                                 <motion.div
                                     initial={{ opacity: 0, y: 10 }}
@@ -586,18 +590,18 @@ const Home = () => {
                                     </span>
                                 </motion.div>
                                 <h3 className="font-display text-3xl md:text-5xl font-bold text-white mb-4 tracking-tight leading-tight">
-                                    Sistemas listos para <span className="text-primary font-light italic">implementar</span>
+                                    Sistemas listos para <span className="text-primary font-light">implementar</span>
                                 </h3>
-                                <p className="text-white/50 max-w-xl text-base font-light leading-relaxed">
+                                <p className="text-white/70 max-w-xl text-base font-light leading-relaxed">
                                     Abre el capó de lo que podemos construir para tu pyme hoy mismo.
                                 </p>
                             </div>
 
-                            <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 items-start min-h-[500px]">
+                            <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 items-start min-h-[500px]">
                                 {/* LEFT MENU: TITLES */}
                                 <div
                                     ref={solutionsMenuRef}
-                                    className="lg:col-span-4 space-y-4"
+                                    className="lg:col-span-4 space-y-5"
                                 >
                                     {filteredSolutions.map((area, idx) => (
                                         <button
@@ -618,17 +622,17 @@ const Home = () => {
                                                 }`} />
 
                                             <div className="pl-4">
-                                                <h4 className={`text-xl md:text-2xl font-display font-bold tracking-tight transition-all duration-500 ${selectedSolutionIndex === idx ? 'text-white' : 'text-white/40 group-hover:text-white/70'
+                                                <h4 className={`text-xl md:text-2xl font-display font-bold tracking-tight transition-all duration-500 ${selectedSolutionIndex === idx ? 'text-white' : 'text-white/80 group-hover:text-white'}
                                                     }`}>
                                                     {area.title}
                                                 </h4>
                                                 <div className="flex items-center gap-2 mt-2">
-                                                    <span className={`text-[10px] font-mono font-bold uppercase tracking-[0.2em] transition-all duration-500 ${selectedSolutionIndex === idx ? 'text-primary' : 'text-white/20'
+                                                    <span className={`text-xs font-mono font-bold uppercase tracking-wider transition-all duration-500 ${selectedSolutionIndex === idx ? 'text-primary' : 'text-white/50'
                                                         }`}>
                                                         {area.badge}
                                                     </span>
                                                     <div className={`w-1 h-1 rounded-full ${selectedSolutionIndex === idx ? 'bg-primary' : 'bg-white/10'}`} />
-                                                    <span className={`text-[10px] font-mono font-bold uppercase tracking-[0.2em] transition-all duration-500 ${selectedSolutionIndex === idx ? 'text-primary' : 'text-white/20'
+                                                    <span className={`text-xs font-mono font-bold uppercase tracking-wider transition-all duration-500 ${selectedSolutionIndex === idx ? 'text-primary' : 'text-white/50'
                                                         }`}>
                                                         ROI {area.roi}
                                                     </span>
@@ -662,7 +666,7 @@ const Home = () => {
                                                         {React.createElement(filteredSolutions[selectedSolutionIndex].icon, { className: "w-8 h-8" })}
                                                     </div>
                                                     <div>
-                                                        <span className="text-primary/60 font-mono text-[9px] uppercase tracking-[0.3em] block mb-2 font-bold">Sistemas listos para implementar</span>
+                                                        <span className="text-primary/60 font-mono text-xs uppercase tracking-wider block mb-2 font-bold">Sistemas listos para implementar</span>
                                                         <h3 className="text-2xl md:text-4xl font-display font-bold text-white tracking-tight leading-tight">
                                                             {filteredSolutions[selectedSolutionIndex].title}
                                                         </h3>
@@ -857,11 +861,11 @@ const Home = () => {
                                                 key={idx}
                                                 className="group bg-[#0a0a0a] border border-white/[0.05] rounded-3xl p-8 md:p-10 transition-all duration-500 hover:border-white/10 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)]"
                                             >
-                                                <h3 className="text-lg md:text-xl font-semibold text-white/90 tracking-tight mb-4 flex items-start gap-3">
-                                                    <span className="text-primary/60 font-mono text-xs mt-1 font-normal">Q{idx + 1}.</span>
+                                                <h3 className="text-xl md:text-2xl font-semibold text-white/90 tracking-tight mb-4 flex items-start gap-3">
+                                                    <span className="text-primary/60 font-mono text-sm mt-1 font-normal">Q{idx + 1}.</span>
                                                     {item.q}
                                                 </h3>
-                                                <p className="text-white/40 text-sm md:text-base leading-relaxed font-light pl-6 border-l border-white/5">
+                                                <p className="text-white/50 text-base md:text-lg leading-relaxed font-light pl-6 border-l border-white/5">
                                                     {item.a}
                                                 </p>
                                             </div>
@@ -875,77 +879,81 @@ const Home = () => {
 
 
                     {/* Final Contact Section - Fluid & Industrial */}
-                    <div className="mt-40 relative overflow-hidden">
+                    <div className="mt-24 relative overflow-hidden">
                         {/* Atmospheric Glow Elements - Floating directly in the background */}
                         <div className="absolute top-0 right-[-10%] w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
                         <div className="absolute bottom-0 left-[-10%] w-[400px] h-[400px] bg-primary/5 blur-[100px] rounded-full pointer-events-none" />
 
                         <div className="max-w-7xl mx-auto px-6 relative z-10">
                             <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-stretch">
-                                <div className="lg:col-span-1 space-y-8 flex flex-col justify-between">
-                                    <div className="max-w-2xl space-y-8 flex-grow flex flex-col justify-center">
+                                <div className="lg:col-span-1 space-y-10 flex flex-col justify-between">
+                                    <div className="max-w-2xl space-y-10 flex-grow flex flex-col justify-center">
 
                                         {/* Technical Pricing Card */}
-                                        <div>
-                                            <div className="flex justify-between items-start mb-6 border-b border-white/5 pb-6">
+                                        <div className="space-y-6">
+                                            <div className="flex justify-between items-start mb-4 pb-4 border-b border-white/10">
                                                 <div>
-                                                    <p className="text-white/20 text-[9px] uppercase tracking-[0.3em] font-mono mb-1">Descriptor de Proyecto</p>
-                                                    <h3 className="text-white font-black text-xl uppercase italic tracking-tighter">Rango Típico</h3>
-                                                </div>
-                                                <div className="text-right">
-                                                    <Euro className="w-6 h-6 text-primary/20" />
+                                                    <p className="text-white/60 text-xs uppercase tracking-wider font-mono mb-2">Inversión Típica</p>
+                                                    <h3 className="text-white font-black text-2xl tracking-tight">Rango de Proyecto</h3>
                                                 </div>
                                             </div>
 
-                                            <div className="flex flex-col md:flex-row md:items-end gap-3 mb-4">
-                                                <span className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-none">600 - 2.500</span>
-                                                <span className="text-xl md:text-2xl font-black text-primary mb-1 md:mb-1 italic">€</span>
+                                            <div className="flex flex-row items-end gap-2 mb-6">
+                                                <span className="text-5xl md:text-7xl font-black text-white tracking-tighter leading-none">600 - 2.500</span>
+                                                <span className="text-2xl md:text-3xl font-black text-primary mb-1 md:mb-2">€</span>
                                             </div>
-                                            <p className="text-white/50 text-[10px] font-mono uppercase tracking-[0.2em] italic leading-relaxed mt-4">
-                                                Amortización técnica estimada en <span className="text-primary font-bold">menos de 2 meses</span>. <br />
-                                                A partir de ahí, todo el ahorro es estructural.
-                                            </p>
+
+                                            <div className="bg-primary/5 border-l-2 border-primary/50 pl-4 py-3">
+                                                <p className="text-white/70 text-sm font-medium leading-relaxed">
+                                                    Amortización técnica estimada en <span className="text-primary font-bold text-base">menos de 2 meses</span>.
+                                                </p>
+                                                <p className="text-white/60 text-xs mt-1">
+                                                    A partir de ahí, todo el ahorro es estructural.
+                                                </p>
+                                            </div>
                                         </div>
 
-                                        <div className="space-y-8 pl-4 md:pl-8 border-l border-white/5 mt-10">
+                                        {/* Return Paths */}
+                                        <div className="space-y-6 pl-6 border-l-2 border-primary/10">
                                             <div>
-                                                <h4 className="text-white/20 text-[9px] uppercase tracking-[0.4em] font-mono font-black mb-6">Vías de Retorno Operativo:</h4>
+                                                <h4 className="text-white/50 text-xs uppercase tracking-wider font-bold mb-6">Vías de Retorno:</h4>
 
-                                                <div className="grid gap-6">
+                                                <div className="grid gap-5">
                                                     <div className="flex gap-4 group">
-                                                        <div className="mt-1 w-10 h-10 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center group-hover:bg-primary/10 group-hover:border-primary/30 transition-all duration-500 shadow-xl">
-                                                            <TrendingUp className="w-4 h-4 text-primary" />
+                                                        <div className="mt-0.5 w-11 h-11 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-center group-hover:bg-primary/20 group-hover:border-primary/50 transition-all duration-300">
+                                                            <TrendingUp className="w-5 h-5 text-primary" />
                                                         </div>
                                                         <div>
-                                                            <p className="text-white font-black text-base mb-0.5 uppercase tracking-tighter">Incremento de Rotación</p>
-                                                            <p className="text-white/30 text-xs italic font-light">Escala tu capacidad sin contratar más manos.</p>
+                                                            <p className="text-white font-bold text-base mb-1 tracking-tight">Incremento de Rotación</p>
+                                                            <p className="text-white/50 text-sm leading-relaxed">Escala tu capacidad sin contratar más manos.</p>
                                                         </div>
                                                     </div>
 
                                                     <div className="flex gap-4 group">
-                                                        <div className="mt-1 w-10 h-10 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center group-hover:bg-primary/10 group-hover:border-primary/30 transition-all duration-500 shadow-xl">
-                                                            <ShieldCheck className="w-4 h-4 text-primary" />
+                                                        <div className="mt-0.5 w-11 h-11 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-center group-hover:bg-primary/20 group-hover:border-primary/50 transition-all duration-300">
+                                                            <ShieldCheck className="w-5 h-5 text-primary" />
                                                         </div>
                                                         <div>
-                                                            <p className="text-white font-black text-base mb-0.5 uppercase tracking-tighter">Blindaje contra Errores</p>
-                                                            <p className="text-white/30 text-xs italic font-light">Elimina las fugas de dinero por despistes.</p>
+                                                            <p className="text-white font-bold text-base mb-1 tracking-tight">Blindaje contra Errores</p>
+                                                            <p className="text-white/50 text-sm leading-relaxed">Elimina las fugas de dinero por despistes.</p>
                                                         </div>
                                                     </div>
 
                                                     <div className="flex gap-4 group">
-                                                        <div className="mt-1 w-10 h-10 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center group-hover:bg-primary/10 group-hover:border-primary/30 transition-all duration-500 shadow-xl">
-                                                            <Zap className="w-4 h-4 text-primary" />
+                                                        <div className="mt-0.5 w-11 h-11 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-center group-hover:bg-primary/20 group-hover:border-primary/50 transition-all duration-300">
+                                                            <Zap className="w-5 h-5 text-primary" />
                                                         </div>
                                                         <div>
-                                                            <p className="text-white font-black text-base mb-0.5 uppercase tracking-tighter">Expansión de Margen</p>
-                                                            <p className="text-white/30 text-xs italic font-light">Reduce el coste operativo de cada euro vendido.</p>
+                                                            <p className="text-white font-bold text-base mb-1 tracking-tight">Expansión de Margen</p>
+                                                            <p className="text-white/50 text-sm leading-relaxed">Reduce el coste operativo de cada euro vendido.</p>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
+
                                     </div>
+
 
                                 </div>
 

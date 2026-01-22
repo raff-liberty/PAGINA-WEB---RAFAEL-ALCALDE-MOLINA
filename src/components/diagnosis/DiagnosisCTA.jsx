@@ -76,39 +76,41 @@ const DiagnosisCTA = ({ className = "" }) => {
                             Auditoría de Sistemas IA
                         </div>
 
-                        <h2 className="text-5xl md:text-7xl font-display font-black text-white leading-[0.9] tracking-tighter uppercase italic">
+                        <h2 className="text-4xl md:text-7xl font-display font-black text-white leading-[0.9] tracking-tighter uppercase italic break-words">
                             ¿ERES DUEÑO <br />
                             <span className="text-primary">O ERES EL MOTOR?</span>
                         </h2>
 
-                        <div className="space-y-6">
-                            <p className="text-xl md:text-2xl text-white/90 font-light leading-snug italic max-w-xl">
+                        <div className="space-y-8">
+                            <p className="text-lg md:text-2xl text-white/80 font-light leading-relaxed">
                                 Tu negocio debería ser un sistema automático, no una cárcel de tareas repetitivas.
                             </p>
-                            <p className="text-lg text-white/50 leading-relaxed max-w-lg border-l-2 border-primary/30 pl-6">
+                            <p className="text-sm md:text-lg text-white/70 leading-relaxed border-l-2 border-primary/30 pl-4 md:pl-6 bg-white/5 py-3">
                                 Descubre en menos de 2 minutos dónde se está filtrando tu rentabilidad y cómo cerrarle el grifo al caos con ingeniería sutil.
                             </p>
                         </div>
 
-                        <div className="flex flex-wrap gap-8 pt-4">
-                            <div className="flex items-center gap-3 text-sm text-white/40 font-mono uppercase tracking-widest font-bold">
+                        <div className="flex flex-wrap gap-8 pt-8">
+                            <div className="flex items-center gap-3 text-xs text-white/60 font-mono uppercase tracking-wider font-bold">
                                 <ShieldCheck className="w-5 h-5 text-primary" />
                                 <span>Diagnóstico 100% Real</span>
                             </div>
-                            <div className="flex items-center gap-3 text-sm text-white/40 font-mono uppercase tracking-widest font-bold">
+                            <div className="flex items-center gap-3 text-xs text-white/60 font-mono uppercase tracking-wider font-bold">
                                 <Zap className="w-5 h-5 text-primary" />
                                 <span>Hoja de ruta estratégica</span>
                             </div>
                         </div>
 
-                        <Link
-                            to="/diagnostico"
-                            onClick={() => analytics.trackEvent('diagnosis_cta_click')}
-                            className="inline-flex items-center gap-4 bg-primary hover:bg-white text-black font-black px-10 py-5 rounded-xl text-sm uppercase tracking-[0.2em] transition-all transform hover:scale-105 shadow-[0_20px_50px_rgba(34,197,94,0.3)] group/btn"
-                        >
-                            REALIZAR DIAGNÓSTICO GRATIS
-                            <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
-                        </Link>
+                        <div className="pt-2 border-t border-white/5">
+                            <Link
+                                to="/diagnostico"
+                                onClick={() => analytics.trackEvent('diagnosis_cta_click')}
+                                className="inline-flex items-center gap-4 bg-primary hover:bg-white text-black font-black px-10 py-5 rounded-xl text-sm uppercase tracking-[0.2em] transition-all transform hover:scale-105 shadow-[0_20px_50px_rgba(34,197,94,0.3)] group/btn"
+                            >
+                                REALIZAR DIAGNÓSTICO GRATIS
+                                <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+                            </Link>
+                        </div>
                     </motion.div>
 
                     {/* RIGHT SIDE: YOUTUBE WINDOW (Replicated from About.jsx style) */}
@@ -144,25 +146,25 @@ const DiagnosisCTA = ({ className = "" }) => {
 
 
                         {/* Social Buttons Below Video */}
-                        <div className="mt-8 flex items-center gap-4 justify-center lg:justify-start overflow-x-auto lg:overflow-visible no-scrollbar pb-2 lg:pb-0">
-                            <p className="text-[9px] text-white/20 uppercase tracking-[0.3em] font-mono whitespace-nowrap shrink-0">Conexión directa:</p>
-                            <div className="flex items-center gap-3 relative z-30 flex-nowrap">
+                        <div className="mt-6 flex flex-col sm:flex-row sm:items-center gap-3 justify-center lg:justify-start">
+                            <p className="text-xs text-white/40 uppercase tracking-wider font-mono whitespace-nowrap shrink-0 text-center sm:text-left">Conexión directa:</p>
+                            <div className="flex items-center gap-2 relative z-30 flex-nowrap justify-center lg:justify-start">
                                 {siteConfig.whatsapp_url && (
-                                    <a href={siteConfig.whatsapp_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 hover:border-primary/50 transition-all group shrink-0">
-                                        <MessageSquare className="w-4 h-4 text-[#25D366] opacity-70 group-hover:opacity-100" />
-                                        <span className="text-[10px] text-white/60 group-hover:text-white uppercase tracking-widest font-black">WhatsApp</span>
+                                    <a href={siteConfig.whatsapp_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white/[0.08] hover:bg-white/[0.12] border border-white/20 hover:border-primary/50 transition-all group shrink-0">
+                                        <MessageSquare className="w-4 h-4 text-[#25D366] opacity-80 group-hover:opacity-100" />
+                                        <span className="text-[10px] text-white/70 group-hover:text-white uppercase tracking-wide font-black">WhatsApp</span>
                                     </a>
                                 )}
                                 {siteConfig.instagram_url && (
-                                    <a href={siteConfig.instagram_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 hover:border-primary/50 transition-all group shrink-0">
-                                        <Instagram className="w-4 h-4 text-[#E1306C] opacity-70 group-hover:opacity-100" />
-                                        <span className="text-[10px] text-white/60 group-hover:text-white uppercase tracking-widest font-black">Instagram</span>
+                                    <a href={siteConfig.instagram_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white/[0.08] hover:bg-white/[0.12] border border-white/20 hover:border-primary/50 transition-all group shrink-0">
+                                        <Instagram className="w-4 h-4 text-[#E1306C] opacity-80 group-hover:opacity-100" />
+                                        <span className="text-[10px] text-white/70 group-hover:text-white uppercase tracking-wide font-black">Instagram</span>
                                     </a>
                                 )}
                                 {siteConfig.linkedin_url && (
-                                    <a href={siteConfig.linkedin_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 hover:border-primary/50 transition-all group shrink-0">
-                                        <Linkedin className="w-4 h-4 text-[#0077B5] opacity-70 group-hover:opacity-100" />
-                                        <span className="text-[10px] text-white/60 group-hover:text-white uppercase tracking-widest font-black">LinkedIn</span>
+                                    <a href={siteConfig.linkedin_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white/[0.08] hover:bg-white/[0.12] border border-white/20 hover:border-primary/50 transition-all group shrink-0">
+                                        <Linkedin className="w-4 h-4 text-[#0077B5] opacity-80 group-hover:opacity-100" />
+                                        <span className="text-[10px] text-white/70 group-hover:text-white uppercase tracking-wide font-black">LinkedIn</span>
                                     </a>
                                 )}
                             </div>
