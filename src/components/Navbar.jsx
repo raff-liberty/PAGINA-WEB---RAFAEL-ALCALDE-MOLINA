@@ -73,13 +73,13 @@ const Navbar = () => {
                             width="136"
                             height="136"
                             fetchPriority="high"
-                            className="h-10 md:h-12 lg:h-20 w-auto flex-shrink-0"
+                            className="h-12 md:h-14 lg:h-24 w-auto flex-shrink-0"
                         />
                         <div className="flex flex-col min-w-0">
                             <span className="font-display font-bold text-lg md:text-xl lg:text-3xl tracking-tight text-primary leading-none truncate">
                                 ENGORILATE
                             </span>
-                            <span className="text-gray-400 text-[8px] md:text-[9px] lg:text-sm font-light tracking-wide mt-0.5 truncate">
+                            <span className="text-gray-400 text-[8px] md:text-[9px] lg:text-sm font-medium tracking-wide mt-0.5 truncate">
                                 Tu negocio en piloto automático
                             </span>
                         </div>
