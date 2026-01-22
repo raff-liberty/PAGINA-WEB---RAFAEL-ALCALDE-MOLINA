@@ -9,6 +9,13 @@ import DiagnosisCTA from '../components/diagnosis/DiagnosisCTA';
 import { ShieldCheck, HelpCircle } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
 
+// Simulators
+import LocalSeoSimulator from '../components/LocalSeoSimulator';
+import CustomManagementSimulator from '../components/CustomManagementSimulator';
+import WebDevPerformanceSimulator from '../components/WebDevPerformanceSimulator';
+import WhatsAppChatSim from '../components/WhatsAppChatSim';
+import CrmArchitectureSimulator from '../components/CrmArchitectureSimulator';
+
 const businessTypes = [
     { id: 'hair', label: 'Peluquería / Estética' },
     { id: 'tattoo', label: 'Estudio de Tatuajes' },
@@ -157,6 +164,7 @@ const solutionAreas = [
         roi: 'Alta',
         color: '#6EE7B7',
         desc: 'Atención instantánea y captación sin fricción para tu negocio.',
+        simulator: WhatsAppChatSim,
         items: [
             'Capta leads y agenda citas 24/7 por WhatsApp',
             'Cobra señales de reserva automáticamente',
@@ -173,6 +181,7 @@ const solutionAreas = [
         roi: 'Alta',
         color: '#3B82F6',
         desc: 'Domina las búsquedas locales y Google Maps en tu zona.',
+        simulator: LocalSeoSimulator,
         items: [
             'Posicionamiento orgánico en Google Maps',
             'Auditoría estratégica de tu competencia local',
@@ -189,6 +198,7 @@ const solutionAreas = [
         roi: 'Media',
         color: '#A855F7',
         desc: 'Control total de tu operativa desde un solo lugar.',
+        simulator: CustomManagementSimulator,
         items: [
             'Facturación y control de stock automatizado',
             'Dashboards en tiempo real con tus KPIs críticos',
@@ -205,6 +215,7 @@ const solutionAreas = [
         roi: 'Inmediata',
         color: '#F472B6',
         desc: 'Tu activo tecnológico más potente. Sin cuotas mensuales.',
+        simulator: WebDevPerformanceSimulator,
         items: [
             'Diseño de alto impacto enfocado 100% a conversión',
             'Propiedad total del código y velocidad extrema',
@@ -286,6 +297,7 @@ const Home = () => {
             roi: 'Exponencial',
             color: '#FB923C',
             desc: 'Ingeniería sutil para resolver problemas complejos y cuellos de botella.',
+            simulator: CrmArchitectureSimulator,
             items: [
                 'Resolución de cuellos de botella mediante código',
                 'Integraciones profundas (API) entre tus apps',
@@ -652,59 +664,74 @@ const Home = () => {
                                             animate={{ opacity: 1, x: 0 }}
                                             exit={{ opacity: 0, x: -20 }}
                                             transition={{ duration: 0.4, ease: "circOut" }}
-                                            className="relative bg-[#0a0a0a] border border-white/[0.15] p-10 md:p-14 rounded-[3rem] overflow-hidden shadow-[0_50px_100px_-30px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.05)_inset] min-h-[450px] flex flex-col justify-center transition-all duration-700 hover:border-primary/60 group/card"
+                                            className="relative bg-[#0a0a0a] border border-white/[0.15] p-8 md:p-10 rounded-[3rem] overflow-hidden shadow-[0_50px_100px_-30px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.05)_inset] min-h-[550px] transition-all duration-700 hover:border-primary/60 group/card"
                                         >
                                             {/* Rim Light */}
                                             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-70" />
 
                                             {/* Dynamic Ambient Light */}
-                                            <div className="absolute -top-20 -right-20 w-[400px] h-[400px] blur-[150px] rounded-full opacity-40 transition-all duration-1000"
+                                            <div className="absolute -top-20 -right-20 w-[400px] h-[400px] blur-[150px] rounded-full opacity-30 transition-all duration-1000"
                                                 style={{ backgroundColor: filteredSolutions[selectedSolutionIndex].color || '#6EE7B7' }} />
 
-                                            <div className="relative z-10">
-                                                <div className="flex items-center gap-4 mb-8">
-                                                    <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-primary shadow-inner">
-                                                        {React.createElement(filteredSolutions[selectedSolutionIndex].icon, { className: "w-8 h-8" })}
+                                            <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center h-full">
+                                                {/* Left Column: Text Content */}
+                                                <div className="flex flex-col justify-center h-full">
+                                                    <div className="flex items-center gap-4 mb-6">
+                                                        <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-primary shadow-inner">
+                                                            {React.createElement(filteredSolutions[selectedSolutionIndex].icon, { className: "w-8 h-8" })}
+                                                        </div>
+                                                        <div>
+                                                            <span className="text-primary/60 font-mono text-xs uppercase tracking-wider block mb-1 font-bold">Tecnología de Élite</span>
+                                                            <h3 className="text-2xl md:text-3xl font-display font-bold text-white tracking-tight leading-tight">
+                                                                {filteredSolutions[selectedSolutionIndex].title}
+                                                            </h3>
+                                                        </div>
                                                     </div>
-                                                    <div>
-                                                        <span className="text-primary/60 font-mono text-xs uppercase tracking-wider block mb-2 font-bold">Sistemas listos para implementar</span>
-                                                        <h3 className="text-2xl md:text-4xl font-display font-bold text-white tracking-tight leading-tight">
-                                                            {filteredSolutions[selectedSolutionIndex].title}
-                                                        </h3>
+
+                                                    <p className="text-white/80 text-lg font-light italic leading-relaxed mb-8 border-l-2 border-primary/30 pl-6">
+                                                        "{filteredSolutions[selectedSolutionIndex].desc}"
+                                                    </p>
+
+                                                    <ul className="space-y-4 mb-10">
+                                                        {filteredSolutions[selectedSolutionIndex].items.map((item, i) => (
+                                                            <li key={i} className="flex items-start gap-3 group/item">
+                                                                <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5 border border-primary/20 group-hover/item:bg-primary group-hover/item:text-black transition-all">
+                                                                    <CheckCircle className="w-4 h-4 text-primary group-hover/item:text-inherit" />
+                                                                </div>
+                                                                <span className="text-white/70 text-base md:text-lg font-medium group-hover/item:text-white transition-colors">{item}</span>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+
+                                                    <div className="flex flex-wrap items-center gap-4">
+                                                        <button
+                                                            onClick={() => {
+                                                                const sol = filteredSolutions[selectedSolutionIndex];
+                                                                sol.path ? navigate(sol.path) : navigate(`/contact?service=${sol.serviceId}`);
+                                                            }}
+                                                            className="group/btn relative bg-primary hover:bg-white text-black font-black px-8 py-4 rounded-xl uppercase tracking-widest flex items-center gap-3 transition-all transform hover:scale-105 shadow-[0_20px_50px_rgba(34,197,94,0.3)] text-xs overflow-hidden"
+                                                        >
+                                                            <span className="relative z-10">Explorar Solución</span>
+                                                            <ArrowRight className="w-4 h-4 relative z-10 group-hover/btn:translate-x-1 transition-transform" />
+                                                            <div className="absolute inset-0 bg-white translate-x-[-100%] group-hover/btn:translate-x-0 transition-transform duration-500" />
+                                                        </button>
+
+                                                        <div className="px-4 py-3 rounded-xl bg-white/5 border border-white/5 italic">
+                                                            <p className="text-white/30 text-[8px] block uppercase font-mono font-black tracking-widest">Consultoría</p>
+                                                            <p className="text-white font-black text-sm uppercase tracking-tighter">GRATUITA</p>
+                                                        </div>
                                                     </div>
                                                 </div>
 
-                                                <p className="text-white/80 text-xl font-light italic leading-relaxed mb-10 max-w-2xl border-l-2 border-primary/30 pl-6">
-                                                    "{filteredSolutions[selectedSolutionIndex].desc}"
-                                                </p>
-
-                                                <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-5 mb-12">
-                                                    {filteredSolutions[selectedSolutionIndex].items.map((item, i) => (
-                                                        <li key={i} className="flex items-start gap-3 group/item">
-                                                            <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5 border border-primary/20 group-hover/item:bg-primary group-hover/item:text-black transition-all">
-                                                                <CheckCircle className="w-4 h-4 text-primary group-hover/item:text-inherit" />
-                                                            </div>
-                                                            <span className="text-white/70 text-base md:text-lg font-medium group-hover/item:text-white transition-colors">{item}</span>
-                                                        </li>
-                                                    ))}
-                                                </ul>
-
-                                                <div className="flex flex-wrap items-center gap-6">
-                                                    <button
-                                                        onClick={() => {
-                                                            const sol = filteredSolutions[selectedSolutionIndex];
-                                                            sol.path ? navigate(sol.path) : navigate(`/contact?service=${sol.serviceId}`);
-                                                        }}
-                                                        className="group/btn relative bg-primary hover:bg-white text-black font-black px-10 py-5 rounded-xl uppercase tracking-widest flex items-center gap-3 transition-all transform hover:scale-105 shadow-[0_20px_50px_rgba(34,197,94,0.3)] text-sm overflow-hidden"
-                                                    >
-                                                        <span className="relative z-10">Saber más</span>
-                                                        <ArrowRight className="w-5 h-5 relative z-10 group-hover/btn:translate-x-1 transition-transform" />
-                                                        <div className="absolute inset-0 bg-white translate-x-[-100%] group-hover/btn:translate-x-0 transition-transform duration-500" />
-                                                    </button>
-
-                                                    <div className="px-6 py-4 rounded-xl bg-white/5 border border-white/5 italic">
-                                                        <p className="text-white/30 text-[10px] block uppercase font-mono font-black tracking-widest mb-1">Consultoría Inicial</p>
-                                                        <p className="text-white font-black text-xl uppercase tracking-tighter">GRATUITA</p>
+                                                {/* Right Column: Interactive Simulator */}
+                                                <div className="relative h-full flex items-center justify-center lg:pl-6">
+                                                    <div className="w-full relative">
+                                                        {/* Simulator wrapper to scale slightly on desktop if needed */}
+                                                        <div className="transform scale-95 xl:scale-100 transition-transform duration-700">
+                                                            {filteredSolutions[selectedSolutionIndex].simulator &&
+                                                                React.createElement(filteredSolutions[selectedSolutionIndex].simulator)
+                                                            }
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -765,6 +792,15 @@ const Home = () => {
                                                     </div>
                                                 </div>
 
+                                                {/* Simulator on Mobile Modal */}
+                                                <div className="mb-8 overflow-hidden rounded-2xl border border-white/5 bg-black/40 p-4">
+                                                    <div className="transform scale-90 origin-top">
+                                                        {filteredSolutions[selectedSolutionIndex].simulator &&
+                                                            React.createElement(filteredSolutions[selectedSolutionIndex].simulator)
+                                                        }
+                                                    </div>
+                                                </div>
+
                                                 <p className="text-gray-300 text-base font-light italic leading-relaxed mb-8">
                                                     "{filteredSolutions[selectedSolutionIndex].desc}"
                                                 </p>
@@ -788,7 +824,7 @@ const Home = () => {
                                                         }}
                                                         className="w-full bg-primary hover:bg-white text-black font-bold px-8 py-4 rounded-xl uppercase tracking-wider flex items-center justify-center gap-3 transition-all shadow-[0_0_20px_rgba(110,231,183,0.3)] text-sm"
                                                     >
-                                                        Saber más <ArrowRight className="w-4 h-4" />
+                                                        Explorar Solución <ArrowRight className="w-4 h-4" />
                                                     </button>
 
                                                     <div className="w-full p-4 rounded-xl bg-white/5 border border-white/5 text-center">
