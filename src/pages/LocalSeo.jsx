@@ -5,200 +5,251 @@ import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import ContactForm from '../components/ContactForm';
 import DiagnosisCTA from '../components/diagnosis/DiagnosisCTA';
+import BackgroundMesh from '../components/BackgroundMesh';
 
 const LocalSeo = () => {
     const pillars = [
         {
             icon: MapPin,
-            title: "Dominancia en Maps",
-            desc: "No basta con 'estar'. Tienes que ser la opción por defecto en el Local Pack de Google."
+            title: "Dominio de Google Maps",
+            desc: "Hacemos que tu ficha sea la opción por la que Google más apuesta en tu ciudad."
         },
         {
             icon: Target,
-            title: "Tráfico de Intención",
-            desc: "Captamos a quien busca tu servicio CON la tarjeta en la mano. Leads calificados, no curiosos."
+            title: "Tráfico Directo",
+            desc: "Ponemos tu negocio delante de quien ya está buscando tus servicios ahora mismo."
         },
         {
             icon: MousePointer2,
-            title: "GMB de Élite",
-            desc: "Optimizamos tu ficha para que cada reseña y cada foto trabaje como un comercial 24/7."
+            title: "Ficha Optimizada",
+            desc: "Convertimos tu perfil de Google en una herramienta que genera llamadas y visitas a diario."
         },
         {
             icon: BarChart,
-            title: "Métricas Reales",
-            desc: "Informes de llamadas, clics y rutas. El SEO local se mide en facturación, no en humo."
+            title: "Resultados Reales",
+            desc: "Nada de humo. Verás exactamente cuántas llamadas y clientes nuevos te trae el sistema."
         }
     ];
 
     const faqs = [
         {
-            q: "¿Cuánto tiempo se tarda en ver resultados?",
-            a: "La optimización inicial surte efecto en semanas. Sin embargo, la dominancia total de una zona competitiva suele requerir una estrategia sostenida de 3 a 6 meses."
+            q: "¿Cuándo empezaré a ver resultados?",
+            a: "Los primeros cambios se notan en un par de semanas, pero para dominar tu zona por completo solemos trabajar entre 3 y 6 meses."
         },
         {
-            q: "¿Garantizáis el primer puesto?",
-            a: "Google no permite garantizar posiciones. Lo que sí garantizamos es una mejora radical en tu visibilidad y superar a tus competidores actuales mediante técnicas de autoridad local."
+            q: "¿Me aseguras estar el primero?",
+            a: "Nadie puede prometer el primer puesto de Google por escrito, pero lo que sí te garantizamos es una mejora radical y superar a tus competidores directos."
         },
         {
-            q: "¿Sirve si tengo varias sedes?",
-            a: "Absolutamente. Diseñamos estrategias multi-ubicación para que cada una de tus sedes domine su radio de influencia específico."
+            q: "¿Sirve si tengo varios locales?",
+            a: "Por supuesto. Adaptamos la estrategia para que cada uno de tus locales sea el líder en su barrio o zona de influencia."
         },
         {
-            q: "¿Cómo sabemos si está funcionando?",
-            a: "Te entregamos un panel donde verás el aumento real en llamadas, solicitudes de ruta y clics a tu web directamente desde Google Maps."
+            q: "¿Cómo sé si está funcionando?",
+            a: "Te damos un acceso a un panel sencillo donde verás el aumento de llamadas y de personas que piden la ruta para llegar a tu local."
         }
     ];
 
     return (
-        <div className="bg-[#0A0A0A] text-white min-h-screen pt-40 md:pt-56 pb-12 overflow-hidden selection:bg-primary selection:text-black">
+        <div className="relative pt-32 md:pt-40 pb-20 min-h-screen bg-[#020202] text-white selection:bg-primary selection:text-black overflow-hidden">
             <SEO
-                title="SEO Local: Domina Google Maps y Capta Clientes en tu Ciudad | Engorilate"
+                title="SEO Local: Domina Google Maps y Capta Clientes | Engorilate"
                 description="Si no estás en los 3 primeros de Google Maps, le estás dando dinero a tu competencia. Estrategia de SEO Local agresiva para negocios que quieren crecer."
-                keywords="seo local murcia, posicionamiento maps, google my business avanzado, captacion clientes locales"
             />
+            <BackgroundMesh />
 
-            {/* HERO: BRUTAL HONESTY */}
-            <section className="relative px-6 py-12 max-w-7xl mx-auto overflow-hidden">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 blur-[150px] rounded-full pointer-events-none" />
+            {/* Ambient Atmosphere (Mirroring Home) */}
+            <div className="fixed inset-0 pointer-events-none overflow-hidden">
+                <div className="absolute top-[5%] -left-[10%] w-[60%] h-[60%] bg-primary/10 blur-[130px] rounded-full animate-pulse opacity-60" />
+                <div className="absolute bottom-[5%] -right-[10%] w-[60%] h-[60%] bg-primary/10 blur-[130px] rounded-full animate-pulse opacity-60" style={{ animationDuration: '8s' }} />
+            </div>
 
-                <div className="relative z-10 text-center max-w-5xl mx-auto">
+            <div className="relative z-10 max-w-7xl mx-auto px-6">
+                {/* HERO SECTION - Mirroring Home Layout but Compact */}
+                <div className="flex flex-col mb-16 text-center lg:text-left">
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        className="mb-8 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 backdrop-blur-sm self-center lg:self-start"
                     >
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold mb-8 tracking-widest uppercase">
-                            <Target className="w-3 h-3" /> Visibilidad Radical
+                        <div className="flex items-center gap-2">
+                            <Zap className="w-3.5 h-3.5 text-primary animate-pulse" />
+                            <span className="text-primary text-[11px] font-mono font-bold tracking-[0.2em] uppercase">
+                                Visibilidad Radical en tu Ciudad
+                            </span>
                         </div>
-                        <h1 className="text-5xl md:text-6xl font-display font-black mb-8 leading-[0.8] italic uppercase tracking-tighter">
-                            Si no te <span className="text-white/20">Ven</span> <br />
-                            <span className="text-primary italic">No existes</span>.
-                        </h1>
-                        <p className="text-lg md:text-xl text-gray-400 mb-10 max-w-3xl mx-auto leading-relaxed font-light italic">
-                            El 46% de las búsquedas en Google tienen intención local. Si no sales en el <span className="text-white border-b border-primary/50">Top 3 de Maps</span>, estás trabajando para tu competencia.
-                        </p>
-                        <Link to="/contact" className="bg-primary text-black font-black px-10 py-5 rounded-2xl hover:scale-105 transition-transform inline-flex items-center gap-4 shadow-[0_0_50px_rgba(110,231,183,0.3)] text-lg italic uppercase">
-                            DOMINAR MI CÓDIGO POSTAL <ArrowRight className="w-8 h-8 text-black" />
-                        </Link>
                     </motion.div>
-                </div>
-            </section>
 
-            {/* STATS: THE HARSH REALITY */}
-            <section className="px-6 py-12 bg-white/5 border-y border-white/5">
-                <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-12 text-center uppercase italic font-display">
-                    <div>
-                        <div className="text-7xl font-black text-primary mb-2 tracking-tighter">70%</div>
-                        <div className="text-xs text-gray-500 font-bold tracking-widest">De los clics van a los 3 primeros</div>
-                    </div>
-                    <div>
-                        <div className="text-7xl font-black text-white/20 mb-2 tracking-tighter">0%</div>
-                        <div className="text-xs text-gray-500 font-bold tracking-widest">De paciencia tiene tu cliente</div>
-                    </div>
-                    <div>
-                        <div className="text-7xl font-black text-primary mb-2 tracking-tighter">24H</div>
-                        <div className="text-xs text-gray-500 font-bold tracking-widest">Tu ficha vendiendo por ti</div>
-                    </div>
-                </div>
-            </section>
+                    <div className="grid lg:grid-cols-12 gap-8 items-center">
+                        <div className="lg:col-span-8">
+                            <motion.h1
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="font-display text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tight text-white mb-8 uppercase italic pr-2"
+                            >
+                                DOMINA <br />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/80">TU CALLE.</span>
+                            </motion.h1>
 
-            {/* VISUAL COMPARISON: MAPS DOMINATION */}
-            <section className="px-6 py-16 max-w-7xl mx-auto">
-                <div className="grid lg:grid-cols-2 gap-20 items-center">
-                    <div>
-                        <h2 className="text-4xl md:text-6xl font-display font-black mb-8 leading-[0.85] uppercase italic tracking-tighter">
-                            Guerra <br />
-                            <span className="text-primary italic">En el Mapa</span>
-                        </h2>
-                        <p className="text-gray-400 text-lg mb-12 leading-relaxed">
-                            Analizamos a tus rivales, robamos sus mejores palabras clave y optimizamos tu ficha de Google My Business para que Google te quiera más a ti que a ellos.
-                        </p>
-                        <div className="space-y-6">
-                            {[
-                                "Auditoría de Ficha Express",
-                                "Estrategia de Reseñas de Valor",
-                                "SEO On-Page Localizado",
-                                "Linkbuilding Geográfico"
-                            ].map((item, i) => (
-                                <div key={i} className="flex items-center gap-4 text-white font-bold italic uppercase tracking-wider">
-                                    <CheckCircle className="w-6 h-6 text-primary" />
-                                    {item}
-                                </div>
-                            ))}
+                            <motion.p
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.1 }}
+                                className="text-xl md:text-2xl text-white/90 font-light max-w-2xl leading-relaxed italic mb-10 border-l-2 lg:border-l-4 border-primary/40 pl-4 md:pl-6 mx-auto lg:mx-0"
+                            >
+                                Si no sales en los 3 primeros de <span className="text-white font-bold">Google Maps</span>, el cliente se va a tu competencia. Inyectamos tráfico de personas que ya están buscando lo que tú vendes.
+                            </motion.p>
+
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.2 }}
+                            >
+                                <Link to="/contact" className="group/btn relative bg-primary hover:bg-white text-black font-black px-8 py-4 rounded-xl uppercase tracking-widest flex items-center gap-3 transition-all transform hover:scale-105 shadow-[0_20px_50px_rgba(34,197,94,0.3)] text-sm overflow-hidden inline-flex">
+                                    <span className="relative z-10">ANALIZAR MI ZONA GRATIS</span>
+                                    <ArrowRight className="w-5 h-5 relative z-10 group-hover/btn:translate-x-1 transition-transform" />
+                                    <div className="absolute inset-0 bg-white translate-x-[-100%] group-hover/btn:translate-x-0 transition-transform duration-500" />
+                                </Link>
+                            </motion.div>
                         </div>
-                    </div>
 
-                    <div className="relative">
-                        <div className="bg-[#111] border border-white/10 rounded-[3rem] p-8 md:p-12 relative z-10 shadow-2xl">
-                            <div className="h-4 bg-white/10 rounded w-1/4 mb-10" />
-                            <div className="space-y-6">
-                                {/* Our Client */}
-                                <motion.div
-                                    initial={{ scale: 0.95, opacity: 0 }}
-                                    whileInView={{ scale: 1.05, opacity: 1 }}
-                                    className="p-6 bg-primary/20 border-2 border-primary rounded-2xl flex justify-between items-center relative overflow-hidden group"
-                                >
-                                    <div className="absolute top-0 right-0 p-2 bg-primary text-black text-[10px] font-black uppercase italic">¡TU NEGOCIO!</div>
-                                    <div>
-                                        <h4 className="font-black text-white text-lg mb-1 uppercase italic tracking-tight">ENGORILADOS - LÍDER LOCAL</h4>
-                                        <div className="flex text-yellow-500 gap-1 text-xs mb-1">★★★★★ (100+)</div>
-                                        <p className="text-primary text-[10px] font-bold uppercase tracking-widest italic">Primer Resultado</p>
+                        <div className="lg:col-span-4 hidden lg:block">
+                            <div className="bg-[#0a0a0a] border border-white/[0.15] rounded-[2.5rem] p-8 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.05)_inset] relative overflow-hidden group">
+                                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                                <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/10 blur-[50px] rounded-full group-hover:bg-primary/20 transition-all duration-700" />
+
+                                <div className="relative z-10 space-y-4">
+                                    <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 text-primary">
+                                        <MapPin className="w-6 h-6" />
                                     </div>
-                                    <div className="bg-primary text-black w-10 h-10 rounded-xl flex items-center justify-center font-black text-xl italic">1º</div>
-                                </motion.div>
-                                {/* Competitors */}
-                                <div className="p-6 bg-white/5 border border-white/10 rounded-2xl flex justify-between items-center opacity-40 grayscale">
-                                    <div className="h-10 bg-white/10 w-2/3 rounded" />
-                                    <div className="bg-white/10 w-10 h-10 rounded-xl" />
-                                </div>
-                                <div className="p-6 bg-white/5 border border-white/10 rounded-2xl flex justify-between items-center opacity-20 grayscale">
-                                    <div className="h-10 bg-white/10 w-2/3 rounded" />
-                                    <div className="bg-white/10 w-10 h-10 rounded-xl" />
+                                    <h3 className="text-lg font-bold text-white uppercase italic">LA REALIDAD:</h3>
+                                    <p className="text-white/60 text-sm italic leading-relaxed">
+                                        El 70% de las ventas locales se las llevan los 3 primeros negocios de Maps. Si no estás ahí, no existes.
+                                    </p>
                                 </div>
                             </div>
                         </div>
-                        {/* Glows */}
-                        <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-primary/20 blur-[100px] pointer-events-none" />
                     </div>
                 </div>
-            </section>
 
-            {/* PILLARS GRID */}
-            <section className="px-6 py-12 bg-[#111]">
-                <div className="max-w-7xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {pillars.map((p, i) => (
-                        <div key={i} className="bg-black/40 p-10 rounded-3xl border border-white/5 hover:border-primary/20 transition-all text-center group">
-                            <div className="w-16 h-16 rounded-2xl bg-[#1a1a1a] flex items-center justify-center text-primary mb-8 mx-auto group-hover:bg-primary group-hover:text-black transition-all">
-                                <p.icon className="w-8 h-8" />
-                            </div>
-                            <h3 className="text-xl font-display font-black mb-4 uppercase italic tracking-tighter">{p.title}</h3>
-                            <p className="text-gray-500 text-sm leading-relaxed">{p.desc}</p>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            {/* FAQ SECTION */}
-            <section className="px-6 py-12 bg-white/5">
-                <div className="max-w-4xl mx-auto">
-                    <div className="text-center mb-16">
-                        <HelpCircle className="w-12 h-12 text-primary mx-auto mb-4" />
-                        <h2 className="text-3xl md:text-5xl font-display font-black uppercase italic text-white">Preguntas <span className="text-primary italic">Frecuentes</span></h2>
+                {/* PILLARS - Mirroring Home Grids Style */}
+                <div className="my-20">
+                    <div className="mb-12">
+                        <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold leading-tight uppercase italic tracking-tighter text-white">
+                            Los pilares de <br />
+                            <span className="text-primary italic">tu visibilidad</span>
+                        </h2>
                     </div>
-                    <div className="grid gap-6">
-                        {faqs.map((faq, i) => (
-                            <div key={i} className="bg-[#111] p-8 rounded-3xl border border-white/5">
-                                <h3 className="text-xl font-bold text-white mb-4 uppercase italic tracking-tight">{faq.q}</h3>
-                                <p className="text-gray-400 leading-relaxed font-light">{faq.a}</p>
-                            </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {pillars.map((p, i) => (
+                            <motion.div
+                                key={i}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: i * 0.1 }}
+                                className="group relative bg-[#0a0a0a] border border-white/[0.15] rounded-[2rem] p-8 overflow-hidden hover:border-primary/60 transition-all duration-700 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.05)_inset]"
+                            >
+                                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-70" />
+                                <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-primary/40 group-hover:bg-primary/10 transition-all duration-700 mb-6">
+                                    <p.icon className="w-6 h-6 text-white/40 group-hover:text-primary transition-all duration-500" />
+                                </div>
+                                <h3 className="text-xl font-bold text-white uppercase italic tracking-tighter mb-4">{p.title}</h3>
+                                <p className="text-white/60 text-sm leading-relaxed italic">{p.desc}</p>
+                            </motion.div>
                         ))}
                     </div>
                 </div>
-            </section>
+
+                {/* THE SYSTEM REASONING - COMPACT & CLEAR */}
+                <div className="grid lg:grid-cols-2 gap-12 items-center my-20">
+                    <div>
+                        <h2 className="font-display text-3xl md:text-5xl font-bold leading-tight uppercase italic tracking-tighter text-white mb-6">
+                            Guerra total <br />
+                            <span className="text-primary italic">en el Mapa</span>.
+                        </h2>
+                        <div className="space-y-6">
+                            <ul className="space-y-5">
+                                <li className="flex items-start gap-4 group">
+                                    <div className="w-10 h-10 shrink-0 rounded-xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20 group-hover:bg-primary group-hover:text-black transition-all">
+                                        <Eye className="w-5 h-5" />
+                                    </div>
+                                    <div>
+                                        <h4 className="text-white font-bold text-base mb-1 uppercase italic tracking-tighter">Auditoría Express</h4>
+                                        <p className="text-white/50 text-xs md:text-sm leading-relaxed italic">Analizamos por qué tu competencia sale antes que tú y trazamos un plan para superarlos.</p>
+                                    </div>
+                                </li>
+                                <li className="flex items-start gap-4 group">
+                                    <div className="w-10 h-10 shrink-0 rounded-xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20 group-hover:bg-primary group-hover:text-black transition-all">
+                                        <TrendingUp className="w-5 h-5" />
+                                    </div>
+                                    <div>
+                                        <h4 className="text-white font-bold text-base mb-1 uppercase italic tracking-tighter">Estrategia de Reseñas</h4>
+                                        <p className="text-white/50 text-xs md:text-sm leading-relaxed italic">No solo cantidad, sino calidad. Conseguimos que los mejores clientes te recomienden.</p>
+                                    </div>
+                                </li>
+                                <li className="flex items-start gap-4 group">
+                                    <div className="w-10 h-10 shrink-0 rounded-xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20 group-hover:bg-primary group-hover:text-black transition-all">
+                                        <CheckCircle className="w-5 h-5" />
+                                    </div>
+                                    <div>
+                                        <h4 className="text-white font-bold text-base mb-1 uppercase italic tracking-tighter">SEO Técnico</h4>
+                                        <p className="text-white/50 text-xs md:text-sm leading-relaxed italic">Optimizamos el código interno para que Google te valore como el líder de tu zona.</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div className="bg-[#0a0a0a] border border-white/[0.15] p-8 md:p-10 rounded-[2.5rem] relative overflow-hidden shadow-[0_40px_80px_-20px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.05)_inset] hover:border-primary/40 transition-all duration-700 group/results">
+                        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-70" />
+                        <div className="absolute -bottom-20 -right-20 w-[300px] h-[300px] bg-primary/10 blur-[100px] rounded-full group-hover/results:bg-primary/20 transition-all duration-700" />
+
+                        <h3 className="relative z-10 text-primary font-mono text-[10px] font-bold tracking-[0.3em] uppercase mb-8">Impacto Visual</h3>
+
+                        <div className="space-y-6">
+                            {/* Comparison Example */}
+                            <div className="bg-white/[0.03] border border-white/5 p-6 rounded-2xl relative overflow-hidden">
+                                <div className="absolute top-0 right-0 p-2 bg-primary text-black text-[9px] font-black uppercase italic">Tú</div>
+                                <div className="flex justify-between items-center">
+                                    <div className="space-y-1">
+                                        <div className="text-white font-bold uppercase italic text-sm">ENGORILADOS LOCAL</div>
+                                        <div className="flex text-yellow-500 text-[10px]">★★★★★ (100+)</div>
+                                    </div>
+                                    <div className="bg-primary text-black w-10 h-10 rounded-xl flex items-center justify-center font-black text-xl italic">1º</div>
+                                </div>
+                            </div>
+                            <div className="bg-white/[0.01] border border-white/5 p-6 rounded-2xl opacity-40 grayscale flex justify-between items-center">
+                                <div className="h-4 bg-white/10 w-2/3 rounded" />
+                                <div className="bg-white/10 w-10 h-10 rounded-xl" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* FAQ SECTION */}
+            <div className="max-w-4xl mx-auto px-6 py-20">
+                <div className="text-center mb-16">
+                    <HelpCircle className="w-12 h-12 text-primary mx-auto mb-4" />
+                    <h2 className="text-3xl md:text-5xl font-display font-black uppercase italic text-white tracking-tighter">Dudas <span className="text-primary italic">y Respuestas</span></h2>
+                </div>
+                <div className="grid gap-6">
+                    {faqs.map((faq, i) => (
+                        <div key={i} className="bg-[#0a0a0a] p-8 rounded-[2rem] border border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
+                            <h3 className="text-xl font-bold text-white mb-4 uppercase italic tracking-tight">{faq.q}</h3>
+                            <p className="text-white/50 leading-relaxed font-light italic">{faq.a}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
 
             {/* FINAL CTA: THE FORM */}
-            <DiagnosisCTA className="mb-20" />
-            <section className="px-6 py-16">
-                <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center bg-gradient-to-br from-[#111] to-black border border-white/10 p-8 md:p-16 rounded-[4rem] relative overflow-hidden shadow-2xl">
+            <div className="relative z-10 max-w-7xl mx-auto px-6">
+                <DiagnosisCTA className="mb-20" />
+
+                <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center border border-white/10 p-8 md:p-16 rounded-[3rem] bg-[#0a0a0a] relative overflow-hidden shadow-2xl mb-20">
                     <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 blur-[120px] rounded-full" />
 
                     <div className="relative z-10">
@@ -207,25 +258,25 @@ const LocalSeo = () => {
                             <span className="text-primary italic">De Tu Zona</span> <br />
                             Gratis
                         </h2>
-                        <p className="text-gray-400 text-xl font-bold mb-8 uppercase italic leading-tight opacity-80">
-                            Analizamos tu zona y tu competencia. Te diré qué estás haciendo mal y cómo podemos superarlos.
+                        <p className="text-white/60 text-xl font-bold mb-8 uppercase italic leading-tight">
+                            Te diré qué fallas estás cometiendo y cómo superar a tu competencia.
                         </p>
                         <div className="space-y-4">
                             <div className="flex items-center gap-3 text-primary font-bold italic uppercase tracking-wider text-sm">
                                 <CheckCircle className="w-5 h-5" /> Sin compromisos
                             </div>
                             <div className="flex items-center gap-3 text-primary font-bold italic uppercase tracking-wider text-sm">
-                                <CheckCircle className="w-5 h-5" /> Estrategia personalizada
+                                <CheckCircle className="w-5 h-5" /> Datos 100% reales
                             </div>
                         </div>
                     </div>
 
-                    <div className="relative z-10 bg-white/5 backdrop-blur-xl p-8 rounded-[3rem] border border-white/10">
-                        <h3 className="text-white text-xl font-black mb-6 italic uppercase">Solicitar mi auditoría</h3>
+                    <div className="relative z-10 bg-white/5 backdrop-blur-xl p-8 md:p-12 rounded-[2.5rem] border border-white/10">
+                        <h3 className="text-white text-xl font-black mb-6 italic uppercase">Cuéntanos tu caso</h3>
                         <ContactForm source="Local SEO Page" />
                     </div>
                 </div>
-            </section>
+            </div>
         </div>
     );
 };

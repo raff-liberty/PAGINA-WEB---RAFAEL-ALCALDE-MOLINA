@@ -121,8 +121,8 @@ const Services = () => {
 
     const starServices = [
         {
-            title: "Reservas WhatsApp",
-            desc: "Tu negocio en autopiloto 24/7. Citas confirmadas, dudas resueltas y recordatorios sin que muevas un dedo.",
+            title: "El Convertidor (Pieza 03)",
+            desc: "Tu asistente de ventas en autopiloto. Citas confirmadas, dudas resueltas y cierre de ventas sin intervención manual.",
             icon: MessageSquare,
             link: "/servicios/automatizacion-whatsapp",
             color: "text-primary",
@@ -135,8 +135,8 @@ const Services = () => {
             ]
         },
         {
-            title: "Web Corporativa Pro",
-            desc: "Webs que son herramientas de venta, no simples folletos. Velocidad extrema y optimización total.",
+            title: "El Chasis (Pieza 02)",
+            desc: "Infraestructura de prospección automática. Webs rápidas diseñadas para que el motor de tu empresa no gripe.",
             icon: Globe,
             link: "/servicios/desarrollo-web-medida",
             color: "text-blue-400",
@@ -149,8 +149,8 @@ const Services = () => {
             ]
         },
         {
-            title: "SEO Local Estratégico",
-            desc: "Domina Google Maps y capta clientes en tu zona. Si no estás primero, no te están llamando.",
+            title: "El Combustible (Pieza 01)",
+            desc: "Inyección constante de leads cualificados en tu zona. Si no hay clientes entrando, el motor no gira.",
             icon: Target,
             link: "/servicios/seo-local-estrategia",
             color: "text-yellow-400",
@@ -163,8 +163,8 @@ const Services = () => {
             ]
         },
         {
-            title: "Arquitectura CRM",
-            desc: "Control total de tu operativa. Centraliza facturación, stock y CRM en un solo lugar conectado.",
+            title: "El Cerebro (Pieza 04)",
+            desc: "El sistema operativo de tu libertad. Control total de tu operativa para que dejes de ser el motor.",
             icon: Database,
             link: "/servicios/sistemas-gestion-personalizados",
             color: "text-purple-400",
@@ -276,8 +276,8 @@ const Services = () => {
                         Soluciones de <span className="text-primary">automatización</span> real
                     </h1>
                     <p className="text-base md:text-lg text-gray-300 font-normal leading-relaxed mb-10 italic max-w-2xl mx-auto">
-                        No vendemos paquetes cerrados ni humo tecnológico. <br />
-                        Diseñamos el motor que tu empresa necesita para recuperar el control.
+                        No vendemos parches temporales ni humo tecnológico. <br />
+                        Diseñamos las 4 piezas del motor que te permiten dejar de ser el operario para convertirte en el piloto de tu libertad.
                     </p>
                     <div className="flex flex-wrap gap-4 justify-center">
                         <Link to="/contact" className="bg-primary hover:bg-primary-hover text-gray-900 font-bold px-8 py-4 rounded-2xl transition-all transform hover:scale-105 shadow-[0_0_30px_rgba(110,231,183,0.3)]">

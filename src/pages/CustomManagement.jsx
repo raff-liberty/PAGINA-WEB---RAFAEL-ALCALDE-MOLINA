@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import ContactForm from '../components/ContactForm';
 import DiagnosisCTA from '../components/diagnosis/DiagnosisCTA';
+import BackgroundMesh from '../components/BackgroundMesh';
 
 const CustomManagement = () => {
     const modules = [
@@ -52,214 +53,246 @@ const CustomManagement = () => {
     ];
 
     return (
-        <div className="bg-[#0A0A0A] text-white min-h-screen pt-40 md:pt-56 pb-12 overflow-hidden selection:bg-primary selection:text-black">
+        <div className="relative pt-32 md:pt-40 pb-20 min-h-screen bg-[#020202] text-white selection:bg-primary selection:text-black overflow-hidden">
             <SEO
-                title="Sistemas de Gestión y ERP a Medida: Tu Infraestructura de Guerra | Engorilate"
+                title="Gestión y Control Total: El Cerebro de tu Negocio | Engorilate"
                 description="Deja de pelearte con Excel. Diseñamos sistemas de gestión personalizados que centralizan toda la operativa de tu negocio bajo tu control total."
-                keywords="erp a medida murcia, crm personalizado pymes, software gestion operativa, automatizacion administracion"
             />
+            <BackgroundMesh />
 
-            {/* HERO: TACTICAL CONTROL */}
-            <section className="relative px-6 py-12 max-w-7xl mx-auto">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+            {/* Ambient Atmosphere (Mirroring Home) */}
+            <div className="fixed inset-0 pointer-events-none overflow-hidden">
+                <div className="absolute top-[5%] -left-[10%] w-[60%] h-[60%] bg-primary/10 blur-[130px] rounded-full animate-pulse opacity-60" />
+                <div className="absolute bottom-[5%] -right-[10%] w-[60%] h-[60%] bg-primary/10 blur-[130px] rounded-full animate-pulse opacity-60" style={{ animationDuration: '8s' }} />
+            </div>
 
-                <div className="grid lg:grid-cols-12 gap-16 items-center">
+            <div className="relative z-10 max-w-7xl mx-auto px-6">
+                {/* HERO SECTION - Mirroring Home Layout but Compact */}
+                <div className="flex flex-col mb-16">
                     <motion.div
-                        initial={{ opacity: 0, x: -30 }}
+                        initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        className="lg:col-span-7"
+                        className="mb-8 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 backdrop-blur-sm self-start"
                     >
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold mb-8 tracking-widest uppercase">
-                            <Cpu className="w-3 h-3" /> Arquitectura Operativa
+                        <div className="flex items-center gap-2">
+                            <Zap className="w-3.5 h-3.5 text-primary animate-pulse" />
+                            <span className="text-primary text-[11px] font-mono font-bold tracking-[0.2em] uppercase">
+                                Gestión y Control de Operaciones
+                            </span>
                         </div>
-                        <h1 className="text-5xl md:text-6xl font-display font-black mb-8 leading-[0.8] italic uppercase tracking-tighter">
-                            Toma el <br />
-                            <span className="text-primary italic italic">Mando</span> Total.
-                        </h1>
-                        <p className="text-lg text-gray-400 mb-10 max-w-xl leading-relaxed font-light italic">
-                            Si tu empresa depende de 15 Excels y de que alguien no se olvide de apuntar un dato, no tienes una empresa, tienes una bomba de relojería. Construimos tu <strong>Cerebro Central</strong>.
-                        </p>
-                        <Link to="/contact" className="bg-primary text-black font-black px-10 py-5 rounded-2xl hover:scale-105 transition-transform flex items-center gap-4 shadow-[0_0_50px_rgba(110,231,183,0.3)] text-lg italic uppercase">
-                            DISEÑAR MI SISTEMA <ArrowRight className="w-8 h-8 text-black" />
-                        </Link>
                     </motion.div>
 
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="lg:col-span-5 relative"
-                    >
-                        {/* Data Visualization Mockup */}
-                        <div className="bg-[#111] border border-white/10 rounded-[3rem] p-8 md:p-12 shadow-2xl relative z-10 overflow-hidden backdrop-blur-xl">
-                            <div className="flex justify-between items-center mb-10">
-                                <h4 className="text-white text-xs font-black uppercase tracking-[0.2em] opacity-50 italic">Estado Operacional</h4>
-                                <div className="flex gap-2">
-                                    <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                                    <div className="w-2 h-2 rounded-full bg-white/20" />
-                                </div>
-                            </div>
-                            <div className="space-y-8">
-                                <div className="p-6 bg-black/40 rounded-2xl border border-white/5 group hover:border-primary/30 transition-all">
-                                    <div className="flex justify-between items-end mb-4">
-                                        <span className="text-gray-500 text-[10px] font-black uppercase tracking-widest italic font-display">Margen Neto</span>
-                                        <span className="text-primary text-2xl font-black italic">+24.5%</span>
+                    <div className="grid lg:grid-cols-12 gap-8 items-center">
+                        <div className="lg:col-span-8">
+                            <motion.h1
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="font-display text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tight text-white mb-8 uppercase italic pr-2"
+                            >
+                                TU NEGOCIO <br />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/80">BAJO CONTROL.</span>
+                            </motion.h1>
+
+                            <motion.p
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.1 }}
+                                className="text-xl md:text-2xl text-white/90 font-light max-w-2xl leading-relaxed italic mb-10 border-l-2 lg:border-l-4 border-primary/40 pl-4 md:pl-6"
+                            >
+                                Creamos el <span className="text-white font-bold">Cerebro Central</span> de tu empresa. Un sistema a medida que organiza tus ventas, stock y tareas automáticamente para que dejes de perder tiempo en Excel y tareas repetitivas.
+                            </motion.p>
+
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.2 }}
+                            >
+                                <Link to="/contact" className="group/btn relative bg-primary hover:bg-white text-black font-black px-8 py-4 rounded-xl uppercase tracking-widest flex items-center gap-3 transition-all transform hover:scale-105 shadow-[0_20px_50px_rgba(34,197,94,0.3)] text-sm overflow-hidden inline-flex">
+                                    <span className="relative z-10">DISEÑAR MI SISTEMA</span>
+                                    <ArrowRight className="w-5 h-5 relative z-10 group-hover/btn:translate-x-1 transition-transform" />
+                                    <div className="absolute inset-0 bg-white translate-x-[-100%] group-hover/btn:translate-x-0 transition-transform duration-500" />
+                                </Link>
+                            </motion.div>
+                        </div>
+
+                        <div className="lg:col-span-4 hidden lg:block">
+                            <div className="bg-[#0a0a0a] border border-white/[0.15] rounded-[2.5rem] p-8 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.05)_inset] relative overflow-hidden group">
+                                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                                <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/10 blur-[50px] rounded-full group-hover:bg-primary/20 transition-all duration-700" />
+
+                                <div className="relative z-10 space-y-4">
+                                    <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 text-primary">
+                                        <Database className="w-6 h-6" />
                                     </div>
-                                    <div className="h-2 bg-white/5 rounded-full overflow-hidden">
-                                        <motion.div initial={{ width: 0 }} whileInView={{ width: '85%' }} className="h-full bg-primary" />
-                                    </div>
-                                </div>
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div className="p-5 bg-white/5 rounded-2xl border border-white/5">
-                                        <div className="text-xs text-gray-500 mb-1 uppercase font-black tracking-tighter">Pedidos Hoy</div>
-                                        <div className="text-2xl font-black text-white italic">147</div>
-                                    </div>
-                                    <div className="p-5 bg-primary rounded-2xl">
-                                        <div className="text-xs text-black/60 mb-1 uppercase font-black tracking-tighter">Eficiencia</div>
-                                        <div className="text-2xl font-black text-black italic">98%</div>
-                                    </div>
+                                    <h3 className="text-lg font-bold text-white uppercase italic">LA CLAVE:</h3>
+                                    <p className="text-white/60 text-sm italic leading-relaxed">
+                                        Eliminamos el caos de papeles y hojas de cálculo. Centralizamos todo en una herramienta que cualquiera puede usar.
+                                    </p>
                                 </div>
                             </div>
                         </div>
-                        {/* Glows */}
-                        <div className="absolute -top-10 -right-10 w-64 h-64 bg-primary/10 blur-[100px] pointer-events-none" />
-                    </motion.div>
-                </div>
-            </section>
-
-            {/* MODULAR ARCHITECTURE */}
-            <section className="px-6 py-12 bg-white/5 border-y border-white/5">
-                <div className="max-w-7xl mx-auto">
-                    <div className="text-center mb-20 max-w-3xl mx-auto">
-                        <h2 className="text-3xl md:text-5xl font-display font-black mb-4 uppercase italic tracking-tighter">
-                            Estructura <span className="text-primary italic">Modular</span>
-                        </h2>
-                        <p className="text-gray-500">No adaptas tu negocio a un software cerrado como SAP u Odoo. Nosotros adaptamos el código a la forma exacta en la que tú ganas dinero.</p>
                     </div>
-                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                </div>
+
+                {/* MODULAR ARCHITECTURE - Mirroring Home Grids Style */}
+                <div className="my-20">
+                    <div className="mb-12">
+                        <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold leading-tight uppercase italic tracking-tighter text-white">
+                            Módulos <br />
+                            <span className="text-primary italic">para tu medida</span>
+                        </h2>
+                        <p className="text-white/50 max-w-2xl mt-4 italic">No adaptas tu negocio a un programa cerrado. Nosotros creamos el programa que encaja con tu forma de trabajar.</p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {modules.map((m, i) => (
-                            <div key={i} className="bg-[#111] p-10 rounded-[2.5rem] border border-white/5 hover:border-primary/40 transition-all group">
-                                <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-primary mb-8 group-hover:bg-primary group-hover:text-black transition-all">
-                                    <m.icon className="w-8 h-8" />
+                            <motion.div
+                                key={i}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: i * 0.1 }}
+                                className="group relative bg-[#0a0a0a] border border-white/[0.15] rounded-[2rem] p-8 overflow-hidden hover:border-primary/60 transition-all duration-700 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.05)_inset]"
+                            >
+                                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-70" />
+                                <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-primary/40 group-hover:bg-primary/10 transition-all duration-700 mb-6">
+                                    <m.icon className="w-6 h-6 text-white/40 group-hover:text-primary transition-all duration-500" />
                                 </div>
-                                <h3 className="text-2xl font-display font-black mb-4 uppercase italic tracking-tighter">{m.title}</h3>
-                                <p className="text-gray-500 text-sm leading-relaxed">{m.desc}</p>
-                            </div>
+                                <h3 className="text-xl font-bold text-white uppercase italic tracking-tighter mb-4">{m.title}</h3>
+                                <p className="text-white/60 text-sm leading-relaxed italic">{m.desc}</p>
+                            </motion.div>
                         ))}
                     </div>
                 </div>
-            </section>
 
-            {/* DASHBOARD EMPHASIS */}
-            <section className="px-6 py-12 bg-[#0A0A0A]">
-                <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
-                    <div className="order-2 lg:order-1 relative">
-                        <div className="bg-gradient-to-br from-[#111] to-black border border-white/10 rounded-[3rem] p-8 md:p-12 shadow-2xl relative z-10">
-                            <div className="flex items-center gap-4 mb-10">
-                                <Activity className="w-8 h-8 text-primary" />
-                                <h3 className="text-white text-2xl font-display font-black uppercase italic">Dashboard en Tiempo Real</h3>
-                            </div>
-                            <div className="space-y-6">
-                                <div className="grid grid-cols-3 gap-4">
-                                    {[80, 45, 95].map((h, i) => (
-                                        <div key={i} className="h-32 bg-white/5 rounded-2xl relative overflow-hidden group">
-                                            <motion.div
-                                                initial={{ height: 0 }}
-                                                whileInView={{ height: `${h}%` }}
-                                                className="absolute bottom-0 left-0 right-0 bg-primary/40 group-hover:bg-primary transition-colors"
-                                            />
-                                        </div>
-                                    ))}
+                {/* THE SYSTEM REASONING - COMPACT & CLEAR */}
+                <div className="grid lg:grid-cols-2 gap-12 items-center my-20">
+                    <div>
+                        <h2 className="font-display text-3xl md:text-5xl font-bold leading-tight uppercase italic tracking-tighter text-white mb-6">
+                            Datos reales. <br />
+                            <span className="text-primary italic">Decisiones mejores</span>.
+                        </h2>
+                        <div className="space-y-6">
+                            <ul className="space-y-5">
+                                <li className="flex items-start gap-4 group">
+                                    <div className="w-10 h-10 shrink-0 rounded-xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20 group-hover:bg-primary group-hover:text-black transition-all">
+                                        <Activity className="w-5 h-5" />
+                                    </div>
+                                    <div>
+                                        <h4 className="text-white font-bold text-base mb-1 uppercase italic tracking-tighter">Informes Automáticos</h4>
+                                        <p className="text-white/50 text-xs md:text-sm leading-relaxed italic">Recibe cada semana un resumen de tus beneficios, ventas y stock sin mover un dedo.</p>
+                                    </div>
+                                </li>
+                                <li className="flex items-start gap-4 group">
+                                    <div className="w-10 h-10 shrink-0 rounded-xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20 group-hover:bg-primary group-hover:text-black transition-all">
+                                        <Layers className="w-5 h-5" />
+                                    </div>
+                                    <div>
+                                        <h4 className="text-white font-bold text-base mb-1 uppercase italic tracking-tighter">Control de Stock</h4>
+                                        <p className="text-white/50 text-xs md:text-sm leading-relaxed italic">Avisos automáticos cuando te queda poco material para que nunca dejes de producir.</p>
+                                    </div>
+                                </li>
+                                <li className="flex items-start gap-4 group">
+                                    <div className="w-10 h-10 shrink-0 rounded-xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20 group-hover:bg-primary group-hover:text-black transition-all">
+                                        <CheckCircle className="w-5 h-5" />
+                                    </div>
+                                    <div>
+                                        <h4 className="text-white font-bold text-base mb-1 uppercase italic tracking-tighter">Tareas de Empleados</h4>
+                                        <p className="text-white/50 text-xs md:text-sm leading-relaxed italic">Organiza el trabajo de tu equipo y supervisa los avances desde tu propio móvil.</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div className="bg-[#0a0a0a] border border-white/[0.15] p-8 md:p-10 rounded-[2.5rem] relative overflow-hidden shadow-[0_40px_80px_-20px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.05)_inset] hover:border-primary/40 transition-all duration-700 group/results">
+                        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-70" />
+                        <div className="absolute -bottom-20 -right-20 w-[300px] h-[300px] bg-primary/10 blur-[100px] rounded-full group-hover/results:bg-primary/20 transition-all duration-700" />
+
+                        <h3 className="relative z-10 text-primary font-mono text-[10px] font-bold tracking-[0.3em] uppercase mb-8">Estado del Negocio</h3>
+
+                        <div className="grid gap-4">
+                            <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/5">
+                                <div className="flex justify-between items-end mb-4">
+                                    <span className="text-gray-500 text-[10px] font-black uppercase tracking-widest italic">Beneficio Neto</span>
+                                    <span className="text-primary text-2xl font-black italic">+24%</span>
                                 </div>
-                                <div className="p-6 bg-white/5 rounded-2xl border border-white/5">
-                                    <div className="text-xs text-gray-500 font-black uppercase tracking-widest mb-2 italic">KPI Global de Rendimiento</div>
-                                    <div className="text-4xl font-display font-black text-primary italic">94.8%</div>
+                                <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+                                    <motion.div initial={{ width: 0 }} whileInView={{ width: '85%' }} className="h-full bg-primary shadow-[0_0_15px_rgba(34,197,94,0.5)]" />
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="p-5 rounded-2xl bg-white/[0.03] border border-white/5">
+                                    <div className="text-3xl font-display font-black text-white italic mb-1">98%</div>
+                                    <p className="text-white/40 text-[10px] uppercase font-bold tracking-widest leading-tight">PRECISIÓN STOCK</p>
+                                </div>
+                                <div className="p-5 rounded-2xl bg-primary text-black">
+                                    <div className="text-3xl font-display font-black italic mb-1">En Vivo</div>
+                                    <p className="text-black/60 text-[10px] uppercase font-bold tracking-widest leading-tight">CONTROL TOTAL</p>
                                 </div>
                             </div>
                         </div>
-                        <div className="absolute -top-10 -left-10 w-64 h-64 bg-primary/10 blur-[100px] pointer-events-none" />
-                    </div>
-
-                    <div className="order-1 lg:order-2">
-                        <h2 className="text-3xl md:text-5xl font-display font-black mb-8 uppercase italic leading-tight">
-                            Visualización y <br />
-                            <span className="text-primary">Business Intelligence</span>
-                        </h2>
-                        <p className="text-gray-400 text-lg mb-8 leading-relaxed font-light">
-                            Convierte tus datos en decisiones. Diseñamos cuadros de mando personalizados que te muestran exactamente lo que necesitas saber para escalar: márgenes, cuellos de botella y oportunidades en tiempo real.
-                        </p>
-                        <ul className="space-y-4">
-                            <li className="flex items-center gap-3 text-white font-bold italic uppercase tracking-wider text-sm">
-                                <CheckCircle className="w-5 h-5 text-primary" /> Reportes automáticos semanales
-                            </li>
-                            <li className="flex items-center gap-3 text-white font-bold italic uppercase tracking-wider text-sm">
-                                <CheckCircle className="w-5 h-5 text-primary" /> Alertas preventivas de stock
-                            </li>
-                            <li className="flex items-center gap-3 text-white font-bold italic uppercase tracking-wider text-sm">
-                                <CheckCircle className="w-5 h-5 text-primary" /> Control de costes de personal
-                            </li>
-                        </ul>
                     </div>
                 </div>
-            </section>
+            </div>
 
             {/* INTEGRATIONS MARQUEE */}
-            <section className="py-10 overflow-hidden whitespace-nowrap opacity-30 border-y border-white/5 bg-white/5">
-                <div className="inline-block animate-marquee-fast">
+            <div className="py-12 border-y border-white/5 bg-white/[0.02] overflow-hidden whitespace-nowrap">
+                <div className="inline-block animate-marquee-fast opacity-30">
                     {[...integrations, ...integrations].map((int, i) => (
-                        <span key={i} className="text-white text-4xl md:text-5xl font-display font-black mx-16 uppercase italic tracking-widest">{int}</span>
+                        <span key={i} className="text-white text-3xl md:text-5xl font-display font-black mx-12 uppercase italic tracking-widest">{int}</span>
                     ))}
                 </div>
-            </section>
+            </div>
 
             {/* FAQ SECTION */}
-            <section className="px-6 py-12 bg-white/5">
-                <div className="max-w-4xl mx-auto">
-                    <div className="text-center mb-16">
-                        <HelpCircle className="w-12 h-12 text-primary mx-auto mb-4" />
-                        <h2 className="text-3xl md:text-5xl font-display font-black uppercase italic text-white">Preguntas <span className="text-primary italic">Frecuentes</span></h2>
-                    </div>
-                    <div className="grid gap-6">
-                        {faqs.map((faq, i) => (
-                            <div key={i} className="bg-[#111] p-8 rounded-3xl border border-white/5">
-                                <h3 className="text-xl font-bold text-white mb-4 uppercase italic tracking-tight">{faq.q}</h3>
-                                <p className="text-gray-400 leading-relaxed font-light">{faq.a}</p>
-                            </div>
-                        ))}
-                    </div>
+            <div className="max-w-4xl mx-auto px-6 py-20">
+                <div className="text-center mb-16">
+                    <HelpCircle className="w-12 h-12 text-primary mx-auto mb-4" />
+                    <h2 className="text-3xl md:text-5xl font-display font-black uppercase italic text-white tracking-tighter">Dudas <span className="text-primary italic">y Respuestas</span></h2>
                 </div>
-            </section>
+                <div className="grid gap-6">
+                    {faqs.map((faq, i) => (
+                        <div key={i} className="bg-[#0a0a0a] p-8 rounded-[2rem] border border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
+                            <h3 className="text-xl font-bold text-white mb-4 uppercase italic tracking-tight">{faq.q}</h3>
+                            <p className="text-white/50 leading-relaxed font-light italic">{faq.a}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
 
             {/* FINAL CTA: THE FORM */}
-            <DiagnosisCTA className="mb-20" />
-            <section className="px-6 py-16">
-                <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center bg-gradient-to-br from-[#111] to-black border border-white/10 p-8 md:p-16 rounded-[4rem] relative overflow-hidden shadow-2xl">
+            <div className="relative z-10 max-w-7xl mx-auto px-6">
+                <DiagnosisCTA className="mb-20" />
+
+                <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center border border-white/10 p-8 md:p-16 rounded-[3rem] bg-[#0a0a0a] relative overflow-hidden shadow-2xl mb-20">
                     <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 blur-[120px] rounded-full" />
 
                     <div className="relative z-10">
                         <h2 className="text-4xl md:text-7xl font-display font-black uppercase leading-none italic mb-8 tracking-tighter text-white">
-                            Empieza el <br />
+                            Empezar el <br />
                             <span className="text-primary italic">Control</span> <br />
-                            Absoluto
+                            Total
                         </h2>
-                        <p className="text-gray-400 text-xl font-bold mb-8 uppercase italic leading-tight opacity-80">
-                            La automatización no es solo eficiencia, es la única forma de escalar sin morir en el intento.
+                        <p className="text-white/60 text-xl font-bold mb-8 uppercase italic leading-tight">
+                            El único sistema que se adapta a ti, y no al revés.
                         </p>
                         <div className="space-y-4">
                             <div className="flex items-center gap-3 text-primary font-bold italic uppercase tracking-wider text-sm">
-                                <CheckCircle className="w-5 h-5" /> Auditoría de procesos incluida
+                                <CheckCircle className="w-5 h-5" /> Análisis previo gratuito
                             </div>
                             <div className="flex items-center gap-3 text-primary font-bold italic uppercase tracking-wider text-sm">
-                                <CheckCircle className="w-5 h-5" /> Diseño escalable por módulos
+                                <CheckCircle className="w-5 h-5" /> Propiedad 100% tuya
                             </div>
                         </div>
                     </div>
 
-                    <div className="relative z-10 bg-white/5 backdrop-blur-xl p-8 md:p-12 rounded-[3rem] border border-white/10">
-                        <h3 className="text-white text-xl font-black mb-6 italic uppercase">Solicitar mi sistema</h3>
+                    <div className="relative z-10 bg-white/5 backdrop-blur-xl p-8 md:p-12 rounded-[2.5rem] border border-white/10">
+                        <h3 className="text-white text-xl font-black mb-6 italic uppercase">Cuéntanos tu caso</h3>
                         <ContactForm source="Custom Management Page" />
                     </div>
                 </div>
-            </section>
+            </div>
         </div>
     );
 };
