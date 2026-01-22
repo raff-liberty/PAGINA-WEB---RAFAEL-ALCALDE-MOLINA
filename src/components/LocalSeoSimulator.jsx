@@ -3,14 +3,23 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Star, Phone, Navigation, TrendingUp } from 'lucide-react';
 
 const LocalSeoSimulator = () => {
-    const [phase, setPhase] = useState(0); // 0 = before, 1 = after
+    const [step, setStep] = useState(0); // 0 to 3
 
-    // Auto-cycle between before/after
+    // Simulation sequence
     useEffect(() => {
-        const interval = setInterval(() => {
-            setPhase(prev => (prev === 0 ? 1 : 0));
-        }, 4000);
-        return () => clearInterval(interval);
+        let timeout;
+        const runSequence = () => {
+            setStep((prev) => {
+                const isAtTop = prev === 3;
+                const next = isAtTop ? 0 : prev + 1;
+                // If we just reached the top or are restarting, use different timing
+                const delay = next === 3 ? 5000 : next === 0 ? 3000 : 1500;
+                timeout = setTimeout(runSequence, delay);
+                return next;
+            });
+        };
+        timeout = setTimeout(runSequence, 2000);
+        return () => clearTimeout(timeout);
     }, []);
 
     const businesses = [
@@ -19,8 +28,7 @@ const LocalSeoSimulator = () => {
             rating: 4.9,
             reviews: 127,
             isClient: true,
-            beforePosition: 4,
-            afterPosition: 1,
+            positions: [4, 3, 2, 1],
             calls: "+340%",
             routes: "+280%"
         },
@@ -29,31 +37,26 @@ const LocalSeoSimulator = () => {
             rating: 4.2,
             reviews: 45,
             isClient: false,
-            beforePosition: 1,
-            afterPosition: 2
+            positions: [1, 1, 1, 2]
         },
         {
             name: "Competidor B",
             rating: 3.8,
             reviews: 23,
             isClient: false,
-            beforePosition: 2,
-            afterPosition: 3
+            positions: [2, 2, 3, 3]
         },
         {
             name: "Competidor C",
             rating: 4.0,
             reviews: 67,
             isClient: false,
-            beforePosition: 3,
-            afterPosition: 4
+            positions: [3, 4, 4, 4]
         }
     ];
 
     const currentBusinesses = [...businesses].sort((a, b) => {
-        const posA = phase === 0 ? a.beforePosition : a.afterPosition;
-        const posB = phase === 0 ? b.beforePosition : b.afterPosition;
-        return posA - posB;
+        return a.positions[step] - b.positions[step];
     });
 
     return (
@@ -73,9 +76,9 @@ const LocalSeoSimulator = () => {
                             Google Maps
                         </h3>
                         <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-white/5 border border-white/10">
-                            <div className={`w-1.5 h-1.5 rounded-full ${phase === 1 ? 'bg-primary' : 'bg-white/40'} animate-pulse`} />
+                            <div className={`w-1.5 h-1.5 rounded-full ${step === 3 ? 'bg-primary' : 'bg-white/40'} animate-pulse`} />
                             <span className="text-[8px] text-white/60 font-bold uppercase tracking-wider">
-                                {phase === 0 ? 'Antes' : 'Después'}
+                                {step === 0 ? 'Sin Estrategia' : step === 3 ? 'Dominio Local' : 'En ascenso...'}
                             </span>
                         </div>
                     </div>
@@ -87,33 +90,34 @@ const LocalSeoSimulator = () => {
                 {/* Search Results */}
                 <div className="relative z-10 space-y-3">
                     <AnimatePresence mode="popLayout">
-                        {currentBusinesses.map((business, index) => {
-                            const position = phase === 0 ? business.beforePosition : business.afterPosition;
+                        {currentBusinesses.map((business) => {
+                            const position = business.positions[step];
+                            const isAtTop = step === 3;
 
                             return (
                                 <motion.div
                                     key={business.name}
                                     layout
-                                    initial={{ opacity: 0, y: 20 }}
+                                    initial={{ opacity: 0, scale: 0.9 }}
                                     animate={{
-                                        opacity: business.isClient && phase === 1 ? 1 : business.isClient ? 0.5 : 0.3,
-                                        y: 0,
-                                        scale: business.isClient && phase === 1 ? 1.02 : 1
+                                        opacity: business.isClient ? 1 : (isAtTop ? 0.3 : 0.5),
+                                        scale: business.isClient && isAtTop ? 1.05 : 1,
+                                        borderColor: business.isClient && step > 0 ? 'rgba(34,197,94,0.4)' : 'rgba(255,255,255,0.05)'
                                     }}
-                                    exit={{ opacity: 0, y: -20 }}
                                     transition={{
-                                        layout: { duration: 0.6, ease: "easeInOut" },
-                                        opacity: { duration: 0.4 }
+                                        layout: { duration: 0.8, ease: [0.4, 0, 0.2, 1] },
+                                        opacity: { duration: 0.4 },
+                                        scale: { duration: 0.4 }
                                     }}
-                                    className={`relative p-4 rounded-2xl border transition-all duration-500 ${business.isClient && phase === 1
-                                            ? 'bg-primary/10 border-primary/40 shadow-[0_0_20px_rgba(34,197,94,0.2)]'
-                                            : 'bg-white/[0.02] border-white/5'
+                                    className={`relative p-4 rounded-2xl border transition-all duration-500 ${business.isClient
+                                        ? 'bg-primary/10 shadow-[0_0_20px_rgba(34,197,94,0.1)]'
+                                        : 'bg-white/[0.02]'
                                         }`}
                                 >
                                     {/* Position Badge */}
-                                    <div className={`absolute -top-2 -left-2 w-6 h-6 rounded-lg flex items-center justify-center text-xs font-black ${business.isClient && phase === 1
-                                            ? 'bg-primary text-black'
-                                            : 'bg-white/10 text-white/40'
+                                    <div className={`absolute -top-2 -left-2 w-6 h-6 rounded-lg flex items-center justify-center text-xs font-black transition-colors duration-500 ${business.isClient && step > 0
+                                        ? 'bg-primary text-black'
+                                        : 'bg-white/10 text-white/40'
                                         }`}>
                                         {position}º
                                     </div>
@@ -122,9 +126,9 @@ const LocalSeoSimulator = () => {
                                     <div className="flex items-start justify-between gap-3">
                                         <div className="flex-1 min-w-0">
                                             <div className="flex items-center gap-2 mb-1.5">
-                                                <MapPin className={`w-3.5 h-3.5 shrink-0 ${business.isClient && phase === 1 ? 'text-primary' : 'text-white/40'
+                                                <MapPin className={`w-3.5 h-3.5 shrink-0 transition-colors duration-500 ${business.isClient && step > 0 ? 'text-primary' : 'text-white/40'
                                                     }`} />
-                                                <h4 className={`text-sm font-bold uppercase italic tracking-tight truncate ${business.isClient && phase === 1 ? 'text-white' : 'text-white/60'
+                                                <h4 className={`text-sm font-bold uppercase italic tracking-tight truncate transition-colors duration-500 ${business.isClient ? 'text-white' : 'text-white/60'
                                                     }`}>
                                                     {business.name}
                                                 </h4>
@@ -137,8 +141,8 @@ const LocalSeoSimulator = () => {
                                                         <Star
                                                             key={i}
                                                             className={`w-2.5 h-2.5 ${i < Math.floor(business.rating)
-                                                                    ? 'fill-yellow-500 text-yellow-500'
-                                                                    : 'text-white/20'
+                                                                ? 'fill-yellow-500 text-yellow-500'
+                                                                : 'text-white/20'
                                                                 }`}
                                                         />
                                                     ))}
@@ -149,13 +153,13 @@ const LocalSeoSimulator = () => {
                                             </div>
                                         </div>
 
-                                        {/* Actions (only for client in "after" state) */}
-                                        {business.isClient && phase === 1 && (
+                                        {/* Actions (only for client in successful steps) */}
+                                        {business.isClient && step > 1 && (
                                             <div className="flex gap-1.5">
                                                 <motion.div
                                                     initial={{ scale: 0 }}
                                                     animate={{ scale: 1 }}
-                                                    className="w-7 h-7 rounded-lg bg-primary/20 flex items-center justify-center"
+                                                    className="w-7 h-7 rounded-lg bg-primary/20 flex items-center justify-center shadow-lg shadow-primary/10"
                                                 >
                                                     <Phone className="w-3.5 h-3.5 text-primary" />
                                                 </motion.div>
@@ -163,7 +167,7 @@ const LocalSeoSimulator = () => {
                                                     initial={{ scale: 0 }}
                                                     animate={{ scale: 1 }}
                                                     transition={{ delay: 0.1 }}
-                                                    className="w-7 h-7 rounded-lg bg-primary/20 flex items-center justify-center"
+                                                    className="w-7 h-7 rounded-lg bg-primary/20 flex items-center justify-center shadow-lg shadow-primary/10"
                                                 >
                                                     <Navigation className="w-3.5 h-3.5 text-primary" />
                                                 </motion.div>
@@ -176,32 +180,36 @@ const LocalSeoSimulator = () => {
                     </AnimatePresence>
                 </div>
 
-                {/* Metrics Footer (only show in "after" state) */}
+                {/* Metrics Footer (Progressive Reveal) */}
                 <AnimatePresence>
-                    {phase === 1 && (
+                    {step === 3 && (
                         <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0 }}
-                            className="relative z-10 mt-4 pt-4 border-t border-white/5"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 10 }}
+                            className="relative z-10 mt-6 pt-5 border-t border-white/5"
                         >
+                            <div className="flex items-center gap-2 mb-4">
+                                <TrendingUp className="w-4 h-4 text-primary" />
+                                <span className="text-[10px] text-primary font-black uppercase tracking-widest">Crecimiento Mensual</span>
+                            </div>
                             <div className="grid grid-cols-2 gap-3">
-                                <div className="p-3 rounded-xl bg-primary/5 border border-primary/20">
-                                    <div className="flex items-center gap-1.5 mb-1">
-                                        <Phone className="w-3 h-3 text-primary" />
+                                <div className="p-4 rounded-xl bg-primary/5 border border-primary/20 backdrop-blur-sm group/metric">
+                                    <div className="flex items-center gap-1.5 mb-1.5">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
                                         <span className="text-[8px] text-white/60 font-bold uppercase tracking-wider">Llamadas</span>
                                     </div>
-                                    <div className="text-xl font-display font-black text-primary italic">
-                                        {businesses[0].calls}
+                                    <div className="text-2xl font-display font-black text-primary italic">
+                                        {businesses.find(b => b.isClient).calls}
                                     </div>
                                 </div>
-                                <div className="p-3 rounded-xl bg-primary/5 border border-primary/20">
-                                    <div className="flex items-center gap-1.5 mb-1">
-                                        <Navigation className="w-3 h-3 text-primary" />
+                                <div className="p-4 rounded-xl bg-primary/5 border border-primary/20 backdrop-blur-sm group/metric">
+                                    <div className="flex items-center gap-1.5 mb-1.5">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
                                         <span className="text-[8px] text-white/60 font-bold uppercase tracking-wider">Rutas</span>
                                     </div>
-                                    <div className="text-xl font-display font-black text-primary italic">
-                                        {businesses[0].routes}
+                                    <div className="text-2xl font-display font-black text-primary italic">
+                                        {businesses.find(b => b.isClient).routes}
                                     </div>
                                 </div>
                             </div>
