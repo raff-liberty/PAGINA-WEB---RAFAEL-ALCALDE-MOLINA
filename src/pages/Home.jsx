@@ -344,7 +344,7 @@ const Home = () => {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.2 }}
-                                className="text-xl md:text-2xl text-white/90 font-light max-w-3xl leading-relaxed italic mb-12 border-l-2 lg:border-l-4 border-primary/40 pl-6 mx-auto lg:mx-0"
+                                className="text-xl md:text-2xl text-white/90 font-light max-w-3xl leading-relaxed italic mb-12 border-l-2 lg:border-l-4 border-primary/40 pl-4 md:pl-6 mx-auto lg:mx-0"
                             >
                                 Creamos infraestructuras automáticas que llenan tu agenda de clientes cada mañana. Profesionalizamos tu forma de captar clientes <span className="text-white font-bold">en tiempo récord</span>.
                             </motion.p>
@@ -392,7 +392,7 @@ const Home = () => {
                                 initial={{ opacity: 0, y: 30 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.2 + i * 0.1, duration: 0.8, ease: "easeOut" }}
-                                className="group relative bg-[#0a0a0a] border border-white/[0.15] rounded-[2.5rem] p-8 md:p-10 overflow-hidden hover:border-primary/60 transition-all duration-700 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.05)_inset,0_25px_50px_-12px_rgba(34,197,94,0.25)] flex flex-col h-full hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.9),0_0_0_1px_rgba(34,197,94,0.2)_inset,0_35px_70px_-15px_rgba(34,197,94,0.5)]"
+                                className="group relative bg-[#0a0a0a] border border-white/[0.15] rounded-[2.5rem] pt-6 px-8 pb-8 md:pt-8 md:px-10 md:pb-10 overflow-hidden hover:border-primary/60 transition-all duration-700 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.05)_inset,0_25px_50px_-12px_rgba(34,197,94,0.25)] flex flex-col h-full hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.9),0_0_0_1px_rgba(34,197,94,0.2)_inset,0_35px_70px_-15px_rgba(34,197,94,0.5)]"
                             >
                                 {/* Rim Light Effect */}
                                 <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-70" />
