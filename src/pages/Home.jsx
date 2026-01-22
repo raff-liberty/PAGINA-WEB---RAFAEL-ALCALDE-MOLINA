@@ -334,7 +334,7 @@ const Home = () => {
                             <motion.h1
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                className="font-display text-5xl md:text-8xl lg:text-9xl font-black leading-[0.9] tracking-tighter text-white mb-8 uppercase italic"
+                                className="font-display text-5xl md:text-8xl lg:text-9xl font-black leading-[0.9] tracking-tight text-white mb-8 uppercase italic pr-2"
                             >
                                 SISTEMAS QUE <br />
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/80 drop-shadow-[0_0_20px_rgba(110,231,183,0.5)]">VENDEN POR TI.</span>
