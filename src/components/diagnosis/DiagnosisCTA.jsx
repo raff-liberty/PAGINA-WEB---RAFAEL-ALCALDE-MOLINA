@@ -85,7 +85,12 @@ const DiagnosisCTA = ({ className = "" }) => {
                             Tu negocio debería ser un sistema automático, no una cárcel de tareas repetitivas.
                         </p>
 
-                        <div className="flex flex-wrap gap-4 pt-6">
+                        {/* DESCRIPTIVE BOX - MOVED HERE FOR BALANCE */}
+                        <div className="text-sm md:text-base text-white/70 leading-relaxed border-l-2 border-primary/30 pl-4 md:pl-6 bg-white/5 py-4 pr-4 rounded-r-xl">
+                            En 2 minutos sabrás exactamente por qué estás perdiendo tiempo y dinero. Te damos el plan para que tu negocio funcione sin que tú tengas que hacerlo todo.
+                        </div>
+
+                        <div className="flex flex-wrap gap-4 pt-4">
                             <div className="flex items-center gap-2 text-[10px] text-white/60 font-mono uppercase tracking-wider font-bold">
                                 <ShieldCheck className="w-4 h-4 text-primary" />
                                 <span>Diagnóstico 100% Real</span>
@@ -97,7 +102,7 @@ const DiagnosisCTA = ({ className = "" }) => {
                         </div>
                     </motion.div>
 
-                    {/* RIGHT SIDE: YOUTUBE WINDOW (Replicated from About.jsx style) */}
+                    {/* RIGHT SIDE: YOUTUBE WINDOW */}
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
                         whileInView={{ opacity: 1, scale: 1 }}
@@ -127,11 +132,6 @@ const DiagnosisCTA = ({ className = "" }) => {
                             )}
                             <div className="absolute inset-0 pointer-events-none border border-white/5 rounded-3xl" />
                         </div>
-
-                        {/* Descriptive Text Box - Now Below Video */}
-                        <p className="text-sm md:text-base text-white/70 leading-relaxed border-l-2 border-primary/30 pl-3 md:pl-6 bg-white/5 py-3 pr-3 md:pr-4 rounded-r-lg">
-                            Descubre en menos de 2 minutos dónde se está filtrando tu rentabilidad y cómo cerrarle el grifo al caos con ingeniería sutil.
-                        </p>
 
                         {/* Social Buttons Below Video */}
                         <div className="mt-6 space-y-4">
