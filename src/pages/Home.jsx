@@ -930,7 +930,7 @@ const Home = () => {
                                                             <span className="text-primary/60 font-mono text-sm mt-1">Q{idx + 1}.</span>
                                                             <span>{item.q}</span>
                                                         </h4>
-                                                        <p className="text-white/70 text-base leading-relaxed font-light pl-6 border-l border-white/5">
+                                                        <p className="text-white/80 text-base leading-relaxed font-light pl-6 border-l border-white/5">
                                                             {item.a}
                                                         </p>
                                                     </div>
