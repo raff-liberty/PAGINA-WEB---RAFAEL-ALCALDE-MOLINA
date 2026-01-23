@@ -198,7 +198,7 @@ const solutionAreas = [
         roi: 'Media',
         color: '#A855F7',
         desc: 'Control total de tu operativa desde un solo lugar.',
-        simulator: CustomManagementSimulator,
+        simulator: CrmArchitectureSimulator,
         items: [
             'Facturación y control de stock automatizado',
             'Dashboards en tiempo real con tus KPIs críticos',
@@ -297,7 +297,7 @@ const Home = () => {
             roi: 'Exponencial',
             color: '#FB923C',
             desc: 'Ingeniería sutil para resolver problemas complejos y cuellos de botella.',
-            simulator: CrmArchitectureSimulator,
+            simulator: CustomManagementSimulator,
             items: [
                 'Resolución de cuellos de botella mediante código',
                 'Integraciones profundas (API) entre tus apps',
