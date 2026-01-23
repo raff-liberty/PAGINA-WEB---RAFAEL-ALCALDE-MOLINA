@@ -738,13 +738,7 @@ const Home = () => {
                                         </motion.div>
                                     </AnimatePresence>
 
-                                    {/* Decoration / Status Floaties */}
-                                    <div className="absolute -bottom-6 -right-6 bg-primary/10 backdrop-blur-md border border-primary/20 p-4 rounded-2xl hidden md:block z-20">
-                                        <div className="flex items-center gap-2 text-[10px] font-mono font-bold text-primary uppercase tracking-widest">
-                                            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                                            Disponibilidad para Q1: Limitada
-                                        </div>
-                                    </div>
+                                    {/* Availability badge removed */}
                                 </div>
                             </div>
 
