@@ -7,6 +7,7 @@ import ContactForm from '../components/ContactForm';
 import DiagnosisCTA from '../components/diagnosis/DiagnosisCTA';
 import BackgroundMesh from '../components/BackgroundMesh';
 import CustomManagementSimulator from '../components/CustomManagementSimulator';
+import CrmArchitectureSimulator from '../components/CrmArchitectureSimulator';
 
 const CustomManagement = () => {
     const [expandedFaq, setExpandedFaq] = useState(null);
@@ -160,7 +161,7 @@ const CustomManagement = () => {
                         </div>
 
                         <div className="lg:col-span-12 xl:col-span-4 flex flex-col items-center xl:items-end mt-12 xl:mt-0 px-4 md:px-0">
-                            <CustomManagementSimulator />
+                            <CrmArchitectureSimulator />
 
                             {/* Subtler Mobile CTA */}
                             <motion.button
@@ -230,33 +231,8 @@ const CustomManagement = () => {
                         </div>
                     </div>
 
-                    <div className="bg-[#0a0a0a] border border-white/[0.15] p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] relative overflow-hidden shadow-2xl hover:border-primary/40 transition-all duration-700 group/results">
-                        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-70" />
-                        <div className="absolute -bottom-20 -right-20 w-[200px] md:w-[300px] h-[200px] md:h-[300px] bg-primary/10 blur-[100px] rounded-full group-hover/results:bg-primary/20 transition-all duration-700" />
-
-                        <h3 className="relative z-10 text-primary font-mono text-[9px] font-bold tracking-[0.3em] uppercase mb-6">Estado del Negocio</h3>
-
-                        <div className="grid gap-4">
-                            <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/5">
-                                <div className="flex justify-between items-end mb-4">
-                                    <span className="text-gray-500 text-[10px] font-black uppercase tracking-widest italic">Beneficio Neto</span>
-                                    <span className="text-primary text-2xl font-black italic">+24%</span>
-                                </div>
-                                <div className="h-2 bg-white/5 rounded-full overflow-hidden">
-                                    <motion.div initial={{ width: 0 }} whileInView={{ width: '85%' }} className="h-full bg-primary shadow-[0_0_15px_rgba(34,197,94,0.5)]" />
-                                </div>
-                            </div>
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/5">
-                                    <div className="text-2xl md:text-3xl font-display font-black text-white italic mb-1">98%</div>
-                                    <p className="text-white/40 text-[8px] md:text-[10px] uppercase font-bold tracking-widest leading-tight">PRECISIÓN STOCK</p>
-                                </div>
-                                <div className="p-4 rounded-2xl bg-primary text-black">
-                                    <div className="text-2xl md:text-3xl font-display font-black italic mb-1">En Vivo</div>
-                                    <p className="text-black/60 text-[8px] md:text-[10px] uppercase font-bold tracking-widest leading-tight">CONTROL TOTAL</p>
-                                </div>
-                            </div>
-                        </div>
+                    <div className="flex justify-center items-center">
+                        <CrmArchitectureSimulator />
                     </div>
                 </div>
             </div>
