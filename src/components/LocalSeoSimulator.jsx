@@ -1,6 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, useSpring, useTransform } from 'framer-motion';
 import { MapPin, Star, Phone, Navigation, TrendingUp } from 'lucide-react';
+
+const AnimatedNumber = ({ value }) => {
+    const spring = useSpring(0, { stiffness: 100, damping: 30 });
+    const display = useTransform(spring, (latest) => Math.round(latest));
+    const [displayValue, setDisplayValue] = useState(0);
+
+    useEffect(() => {
+        spring.set(value);
+        const unsubscribe = display.onChange(setDisplayValue);
+        return unsubscribe;
+    }, [value, spring, display]);
+
+    return <>{displayValue}</>;
+};
 
 const LocalSeoSimulator = () => {
     const [step, setStep] = useState(0); // 0 to 3
@@ -85,85 +99,90 @@ const LocalSeoSimulator = () => {
                     </div>
                 </div>
 
-                {/* Search Results */}
-                <div className="relative z-10 space-y-3">
-                    <AnimatePresence mode="popLayout">
-                        {currentBusinesses.map((business) => {
-                            const position = business.positions[step];
+                {/* Search Results - Fixed Height Container */}
+                <div className="relative z-10 space-y-3 min-h-[280px]">
+                    {currentBusinesses.map((business) => {
+                        const position = business.positions[step];
 
-                            return (
+                        return (
+                            <motion.div
+                                key={business.name}
+                                layout
+                                layoutId={business.name}
+                                initial={false}
+                                animate={{
+                                    opacity: business.isClient ? 1 : 0.4,
+                                }}
+                                transition={{
+                                    layout: {
+                                        type: "spring",
+                                        stiffness: 350,
+                                        damping: 30,
+                                        mass: 1
+                                    },
+                                    opacity: { duration: 0.3 }
+                                }}
+                                className={`relative p-4 rounded-2xl border transition-all duration-500 h-[62px] ${business.isClient
+                                    ? 'bg-primary/5 border-primary/30'
+                                    : 'bg-white/[0.02] border-white/5'
+                                    }`}
+                            >
+                                {/* Position Badge */}
                                 <motion.div
-                                    key={business.name}
-                                    layout
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    animate={{
-                                        opacity: business.isClient ? 1 : 0.4,
-                                        scale: 1,
-                                        borderColor: business.isClient ? 'rgba(34,197,94,0.3)' : 'rgba(255,255,255,0.05)'
-                                    }}
-                                    transition={{
-                                        layout: { duration: 0.8, ease: [0.4, 0, 0.2, 1] },
-                                        opacity: { duration: 0.4 }
-                                    }}
-                                    className={`relative p-4 rounded-2xl border transition-all duration-500 ${business.isClient
-                                        ? 'bg-primary/5'
-                                        : 'bg-white/[0.02]'
-                                        }`}
-                                >
-                                    {/* Position Badge */}
-                                    <div className={`absolute -top-2 -left-2 w-6 h-6 rounded-lg flex items-center justify-center text-xs font-black transition-colors duration-500 ${business.isClient && step > 0
+                                    layout="position"
+                                    className={`absolute -top-2 -left-2 w-6 h-6 rounded-lg flex items-center justify-center text-xs font-black transition-colors duration-500 ${business.isClient && step > 0
                                         ? 'bg-primary text-black'
                                         : 'bg-white/10 text-white/40'
-                                        }`}>
-                                        {position}º
-                                    </div>
+                                        }`}
+                                >
+                                    {position}º
+                                </motion.div>
 
-                                    {/* Business Info */}
-                                    <div className="flex items-start justify-between gap-3">
-                                        <div className="flex-1 min-w-0">
-                                            <div className="flex items-center gap-2 mb-1.5">
-                                                <MapPin className={`w-3.5 h-3.5 shrink-0 transition-colors duration-500 ${business.isClient ? 'text-primary' : 'text-white/20'
-                                                    }`} />
-                                                <h4 className={`text-sm font-bold uppercase italic tracking-tight truncate transition-colors duration-500 ${business.isClient ? 'text-white' : 'text-white/40'
-                                                    }`}>
-                                                    {business.name}
-                                                </h4>
-                                            </div>
-
-                                            <div className="flex items-center gap-2">
-                                                <div className="flex items-center gap-0.5">
-                                                    {[...Array(5)].map((_, i) => (
-                                                        <Star
-                                                            key={i}
-                                                            className={`w-2.5 h-2.5 ${i < Math.floor(business.rating)
-                                                                ? 'fill-yellow-500 text-yellow-500'
-                                                                : 'text-white/10'
-                                                                }`}
-                                                        />
-                                                    ))}
-                                                </div>
-                                                <span className="text-[10px] text-white/20 font-medium">
-                                                    {business.rating} ({business.reviews})
-                                                </span>
-                                            </div>
+                                {/* Business Info */}
+                                <div className="flex items-start justify-between gap-3 h-full">
+                                    <div className="flex-1 min-w-0 flex flex-col justify-center">
+                                        <div className="flex items-center gap-2 mb-1">
+                                            <MapPin className={`w-3.5 h-3.5 shrink-0 transition-colors duration-500 ${business.isClient ? 'text-primary' : 'text-white/20'
+                                                }`} />
+                                            <h4 className={`text-sm font-bold uppercase italic tracking-tight truncate transition-colors duration-500 ${business.isClient ? 'text-white' : 'text-white/40'
+                                                }`}>
+                                                {business.name}
+                                            </h4>
                                         </div>
 
-                                        {/* Actions always visible for client */}
-                                        {business.isClient && (
-                                            <div className="flex gap-1.5 opacity-60">
-                                                <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20">
-                                                    <Phone className="w-3.5 h-3.5 text-primary" />
-                                                </div>
-                                                <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20">
-                                                    <Navigation className="w-3.5 h-3.5 text-primary" />
-                                                </div>
+                                        <div className="flex items-center gap-2">
+                                            <div className="flex items-center gap-0.5">
+                                                {[...Array(5)].map((_, i) => (
+                                                    <Star
+                                                        key={i}
+                                                        className={`w-2.5 h-2.5 ${i < Math.floor(business.rating)
+                                                            ? 'fill-yellow-500 text-yellow-500'
+                                                            : 'text-white/10'
+                                                            }`}
+                                                    />
+                                                ))}
                                             </div>
-                                        )}
+                                            <span className="text-[10px] text-white/20 font-medium">
+                                                {business.rating} ({business.reviews})
+                                            </span>
+                                        </div>
                                     </div>
-                                </motion.div>
-                            );
-                        })}
-                    </AnimatePresence>
+
+                                    {/* Actions always visible for client */}
+                                    {business.isClient && (
+                                        <div className="flex gap-1.5 opacity-60 items-center">
+                                            <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20">
+                                                <Phone className="w-3.5 h-3.5 text-primary" />
+                                            </div>
+                                            <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20">
+                                                <Navigation className="w-3.5 h-3.5 text-primary" />
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </motion.div>
+                        );
+                    })}
                 </div>
 
                 {/* Metrics Footer (Always Visible) */}
@@ -181,7 +200,9 @@ const LocalSeoSimulator = () => {
                                     <span className="text-[9px] text-white/40 font-bold uppercase tracking-wider">Llamadas</span>
                                 </div>
                                 <div className="text-3xl font-display font-black text-white italic tracking-tighter transition-all duration-500">
-                                    <span className={step > 0 ? 'text-primary' : 'text-white/20'}>+{callsVal}%</span>
+                                    <span className={step > 0 ? 'text-primary' : 'text-white/20'}>
+                                        +<AnimatedNumber value={callsVal} />%
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -193,7 +214,9 @@ const LocalSeoSimulator = () => {
                                     <span className="text-[9px] text-white/40 font-bold uppercase tracking-wider">Rutas</span>
                                 </div>
                                 <div className="text-3xl font-display font-black text-white italic tracking-tighter transition-all duration-500">
-                                    <span className={step > 0 ? 'text-primary' : 'text-white/20'}>+{routesVal}%</span>
+                                    <span className={step > 0 ? 'text-primary' : 'text-white/20'}>
+                                        +<AnimatedNumber value={routesVal} />%
+                                    </span>
                                 </div>
                             </div>
                         </div>
