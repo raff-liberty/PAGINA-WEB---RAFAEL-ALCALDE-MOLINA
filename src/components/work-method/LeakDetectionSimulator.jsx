@@ -127,7 +127,7 @@ const LeakDetectionSimulator = () => {
 
             {/* Interactive Note */}
             <AnimatePresence>
-                {!showFinalStatus && connectedModules.length === 0 && ( /* Re-using logic check or similar */
+                {!showFinalStatus && leaksDetected.length > 0 && (
                     <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
