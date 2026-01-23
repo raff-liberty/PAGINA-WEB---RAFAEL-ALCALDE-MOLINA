@@ -236,6 +236,7 @@ const Home = () => {
     const solutionsMenuRef = useRef(null);
     const [showPreviewOnMobile, setShowPreviewOnMobile] = useState(false);
     const [showFaqOnMobile, setShowFaqOnMobile] = useState(false);
+    const [showSectorProblemsOnMobile, setShowSectorProblemsOnMobile] = useState(false);
     const content = contentMap[activeTab];
     const [siteConfig, setSiteConfig] = useState({
         whatsapp_url: 'https://wa.me/34600000000',
@@ -312,7 +313,7 @@ const Home = () => {
     return (
         <div className="relative pt-32 md:pt-48 pb-32 min-h-screen bg-[#020202] text-white selection:bg-primary selection:text-black">
             <SEO
-                title="Sistemas que Venden por Ti | Ingeniería de Ventas | Engorilate"
+                title="Sistemas que Venden por Ti | Ingeniería de Ventas"
                 description="Automatiza los procesos repetitivos de tu empresa. Recupera tu tiempo y deja de perder dinero en gestión manual con ingeniería de precisión."
                 keywords="automatización negocios murcia, digitalización pymes, eficiencia operativa"
             />
@@ -489,7 +490,12 @@ const Home = () => {
                         {businessTypes.map((type) => (
                             <button
                                 key={type.id}
-                                onClick={() => setActiveTab(type.id)}
+                                onClick={() => {
+                                    setActiveTab(type.id);
+                                    if (window.innerWidth < 1024) {
+                                        setShowSectorProblemsOnMobile(true);
+                                    }
+                                }}
                                 className={`px-5 py-2.5 rounded-xl text-xs md:text-sm font-mono tracking-widest uppercase transition-all duration-500 border ${activeTab === type.id
                                     ? 'bg-primary/10 border-primary text-primary shadow-[0_0_20px_rgba(110,231,183,0.2)]'
                                     : 'bg-white/5 border-white/10 text-white/40 hover:text-white/70 hover:border-white/20'
@@ -533,9 +539,9 @@ const Home = () => {
                                         {/* Ambient glow on hover */}
                                         <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-primary/5 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
 
-                                        <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 bg-[#0a0a0a] border border-white/[0.1] p-8 md:p-12 rounded-[2.5rem] transition-all duration-700 items-start overflow-hidden group/card shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,255,255,0.03)_inset] hover:border-primary/40 hover:shadow-[0_30px_60px_-15px_rgba(34,197,94,0.15)]">
+                                        <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 bg-gradient-to-br from-[#0c140e] to-[#050505] border border-white/[0.1] p-8 md:p-12 rounded-[2.5rem] transition-all duration-700 items-start overflow-hidden group/card shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8),0_0_0_1px_rgba(110,231,183,0.05)_inset] hover:border-primary/40 hover:shadow-[0_30px_60px_-15px_rgba(34,197,94,0.15)]">
                                             {/* Rim Light */}
-                                            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-70" />
+                                            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent opacity-70" />
 
                                             <div className="lg:col-span-4 space-y-4">
                                                 <div className="flex items-center gap-3">
@@ -760,7 +766,7 @@ const Home = () => {
                                             initial={{ opacity: 0, scale: 0.9, y: 20 }}
                                             animate={{ opacity: 1, scale: 1, y: 0 }}
                                             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                                            className="relative w-full max-w-lg bg-[#0a0a0a] border border-white/10 p-5 rounded-[2.5rem] shadow-2xl overflow-y-auto max-h-[92vh]"
+                                            className="relative w-full max-w-lg bg-gradient-to-br from-[#0c140e] to-[#050505] border border-primary/20 p-5 rounded-[2.5rem] shadow-2xl overflow-y-auto max-h-[92vh]"
                                         >
                                             {/* Close Button */}
                                             <button
@@ -791,7 +797,7 @@ const Home = () => {
                                                 </div>
 
                                                 <div className="space-y-4 -mt-2">
-                                                    <p className="text-gray-100 text-base font-bold italic leading-relaxed border-l-2 border-primary/60 pl-4 py-1">
+                                                    <p className="text-white text-base font-bold italic leading-relaxed border-l-2 border-primary/60 pl-4 py-1">
                                                         "{filteredSolutions[selectedSolutionIndex].desc}"
                                                     </p>
 
@@ -799,7 +805,7 @@ const Home = () => {
                                                         {filteredSolutions[selectedSolutionIndex].items.slice(0, 3).map((item, i) => (
                                                             <li key={i} className="flex items-start gap-2">
                                                                 <CheckCircle className="w-3.5 h-3.5 text-primary flex-shrink-0 mt-0.5" />
-                                                                <span className="text-gray-300 text-[11px] font-medium leading-tight">{item}</span>
+                                                                <span className="text-white/90 text-[11px] font-medium leading-tight">{item}</span>
                                                             </li>
                                                         ))}
                                                     </ul>
@@ -916,13 +922,13 @@ const Home = () => {
                                         animate={{ opacity: 1 }}
                                         exit={{ opacity: 0 }}
                                         onClick={() => setShowFaqOnMobile(false)}
-                                        className="absolute inset-0 bg-black/90 backdrop-blur-sm"
+                                        className="absolute inset-0 bg-gradient-to-b from-black/95 via-[#0a0f0c]/95 to-black/95 backdrop-blur-sm"
                                     />
                                     <motion.div
                                         initial={{ opacity: 0, scale: 0.9, y: 20 }}
                                         animate={{ opacity: 1, scale: 1, y: 0 }}
                                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                                        className="relative w-full max-w-lg bg-[#111111] border-2 border-white/10 p-6 md:p-8 rounded-[2rem] overflow-hidden shadow-2xl overflow-y-auto max-h-[90vh]"
+                                        className="relative w-full max-w-lg bg-gradient-to-br from-[#0c140e] to-[#050505] border-2 border-primary/20 p-6 md:p-8 rounded-[2rem] overflow-hidden shadow-2xl overflow-y-auto max-h-[90vh]"
                                     >
                                         {/* Close Button */}
                                         <button

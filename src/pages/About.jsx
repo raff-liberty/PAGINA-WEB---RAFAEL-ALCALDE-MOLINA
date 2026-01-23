@@ -78,7 +78,7 @@ const About = () => {
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(110,231,183,0.08)_0%,_transparent_50%)] pointer-events-none" />
 
             <SEO
-                title="Sobre mí | Rafael Alcalde Molina | Engorilate"
+                title="Sobre mí | Rafael Alcalde Molina"
                 description="Economista y Business Controller transformado en Arquitecto de Automatización. Ayudo a pequeños negocios a poner orden operativo antes de automatizar."
             />
             <BackgroundMesh />

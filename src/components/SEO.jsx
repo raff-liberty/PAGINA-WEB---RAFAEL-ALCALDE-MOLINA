@@ -19,7 +19,13 @@ const SEO = ({
     const defaultDescription = 'Especialistas en automatización de procesos y optimización operativa para pequeños negocios en la Región de Murcia. Recupera tu tiempo.';
     const defaultKeywords = 'automatización, negocios, murcia, eficiencia, procesos, digitalización';
 
-    const finalTitle = title ? `${title} | Engorilate` : defaultTitle;
+    const brandSuffix = 'Engorilate';
+    let finalTitle = title || defaultTitle;
+
+    // Si hay un título personalizado y no incluye ya la marca, se la añadimos de forma limpia
+    if (title && !title.includes(brandSuffix)) {
+        finalTitle = `${title} | ${brandSuffix}`;
+    }
     const finalDescription = description || defaultDescription;
     const finalKeywords = keywords || defaultKeywords;
 

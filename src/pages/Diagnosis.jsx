@@ -89,7 +89,7 @@ const Diagnosis = () => {
                 `}
             </style>
             <SEO
-                title="Diagnóstico de Eficiencia Operativa | Engorilate"
+                title="Diagnóstico de Eficiencia Operativa"
                 description="Descubre los cuellos de botella de tu negocio en 7 minutos. Recibe un informe personalizado analizado por IA para eliminar el caos."
             />
 

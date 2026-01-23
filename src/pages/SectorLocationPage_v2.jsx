@@ -241,7 +241,7 @@ const SectorLocationPage_v2 = () => {
         return {
             hero_title: `Automatización para ${sName} en ${lName}`,
             hero_subtitle: `Tu negocio de ${sNameLower} ${contextPhrase} está perdiendo dinero cada vez que haces una tarea repetitiva. Profesionalizamos tu operativa.`,
-            meta_title: `${sName} en ${lName} | Expertos en Automatización | Engorilate`,
+            meta_title: `${sName} en ${lName} | Expertos en Automatización`,
             meta_description: `¿Buscas automatizar tu ${sNameLower} en ${lName}? Ayudamos a pymes de la zona de ${lName} a eliminar el caos operativo y recuperar su tiempo con tecnología.`,
 
             // PROBLEM SECTION (The "Pain")
