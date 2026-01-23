@@ -16,6 +16,39 @@ const AnimatedNumber = ({ value }) => {
     return <>{displayValue}</>;
 };
 
+const businessesData = [
+    {
+        name: "Tu Negocio",
+        rating: 4.9,
+        reviews: 127,
+        isClient: true,
+        positions: [4, 3, 2, 1],
+        maxCalls: 340,
+        maxRoutes: 280
+    },
+    {
+        name: "Competidor A",
+        rating: 4.2,
+        reviews: 45,
+        isClient: false,
+        positions: [1, 1, 1, 2]
+    },
+    {
+        name: "Competidor B",
+        rating: 3.8,
+        reviews: 23,
+        isClient: false,
+        positions: [2, 2, 3, 3]
+    },
+    {
+        name: "Competidor C",
+        rating: 4.0,
+        reviews: 67,
+        isClient: false,
+        positions: [3, 4, 4, 4]
+    }
+];
+
 const LocalSeoSimulator = () => {
     const [step, setStep] = useState(0); // 0 to 3
 
@@ -26,60 +59,31 @@ const LocalSeoSimulator = () => {
             setStep((prev) => {
                 const isAtTop = prev === 3;
                 const next = isAtTop ? 0 : prev + 1;
-                const delay = next === 3 ? 5000 : next === 0 ? 3000 : 2000;
+                const delay = next === 3 ? 5000 : next === 0 ? 3000 : 2500;
                 timeout = setTimeout(runSequence, delay);
                 return next;
             });
         };
-        timeout = setTimeout(runSequence, 2000);
+        timeout = setTimeout(runSequence, 3000);
         return () => clearTimeout(timeout);
     }, []);
 
-    const businesses = [
-        {
-            name: "Tu Negocio",
-            rating: 4.9,
-            reviews: 127,
-            isClient: true,
-            positions: [4, 3, 2, 1],
-            maxCalls: 340,
-            maxRoutes: 280
-        },
-        {
-            name: "Competidor A",
-            rating: 4.2,
-            reviews: 45,
-            isClient: false,
-            positions: [1, 1, 1, 2]
-        },
-        {
-            name: "Competidor B",
-            rating: 3.8,
-            reviews: 23,
-            isClient: false,
-            positions: [2, 2, 3, 3]
-        },
-        {
-            name: "Competidor C",
-            rating: 4.0,
-            reviews: 67,
-            isClient: false,
-            positions: [3, 4, 4, 4]
-        }
-    ];
-
+    // Sort businesses based on current rank for DOM reordering
+    const currentBusinesses = [...businessesData].sort((a, b) => {
+        return a.positions[step] - b.positions[step];
+    });
 
     // Calculate animated metrics
-    const client = businesses.find(b => b.isClient);
+    const client = businessesData.find(b => b.isClient);
     const callsVal = Math.round((client.maxCalls / 3) * step);
     const routesVal = Math.round((client.maxRoutes / 3) * step);
 
     return (
         <div className="relative w-full max-w-[380px] mx-auto">
-            {/* Main Container */}
-            <div className="relative bg-[#0a0a0a] border border-white/[0.15] rounded-[2.5rem] p-6 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.05)_inset] overflow-hidden group">
-                {/* Header */}
-                <div className="relative z-10 mb-6">
+            {/* Main Container - STRICT FIXED HEIGHT */}
+            <div className="relative bg-[#0a0a0a] border border-white/[0.15] rounded-[2.5rem] p-6 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.05)_inset] overflow-hidden group min-h-[580px]">
+                {/* Header - Fixed height to avoid jumps */}
+                <div className="relative z-10 mb-6 h-20">
                     <div className="flex items-center justify-between mb-3">
                         <h3 className="text-primary font-mono text-[9px] font-bold tracking-[0.3em] uppercase">
                             Google Maps
@@ -96,46 +100,39 @@ const LocalSeoSimulator = () => {
                     </div>
                 </div>
 
-                {/* Search Results - Fixed Height Container */}
-                <div className="relative z-10 h-[284px]">
-                    {businesses.map((business) => {
+                {/* Search Results - Fixed Height Scroll-like list */}
+                <div className="relative z-10 flex flex-col gap-3 h-[284px]">
+                    {currentBusinesses.map((business) => {
                         const rank = business.positions[step];
-                        // Calculate Y position: (rank - 1) * (height + gap)
-                        // Height is 62px, Gap is 12px -> 74px step
-                        const yPos = (rank - 1) * 74;
 
                         return (
                             <motion.div
                                 key={business.name}
+                                layout="position"
                                 initial={false}
                                 animate={{
-                                    y: yPos,
                                     opacity: business.isClient ? 1 : 0.45,
-                                    scale: business.isClient ? 1.02 : 0.98,
-                                    zIndex: business.isClient ? 20 : 10,
-                                    boxShadow: business.isClient
-                                        ? "0 20px 40px -12px rgba(34, 197, 94, 0.2)"
-                                        : "0 0px 0px rgba(0,0,0,0)"
+                                    scale: business.isClient ? 1.02 : 1,
+                                    zIndex: business.isClient ? 20 : 10
                                 }}
                                 transition={{
-                                    y: {
+                                    layout: {
                                         type: "spring",
-                                        stiffness: 40,
-                                        damping: 12,
+                                        stiffness: 120,
+                                        damping: 20,
                                         mass: 1
                                     },
                                     opacity: { duration: 0.5 },
-                                    scale: { duration: 0.5 },
-                                    boxShadow: { duration: 0.5 }
+                                    scale: { duration: 0.5 }
                                 }}
-                                className={`absolute left-0 right-0 p-4 rounded-2xl border transition-colors duration-500 h-[62px] ${business.isClient
+                                className={`relative p-4 rounded-2xl border transition-colors duration-500 h-[62px] w-full shrink-0 flex items-center ${business.isClient
                                     ? 'bg-primary/10 border-primary/40'
                                     : 'bg-white/[0.02] border-white/5'
                                     }`}
                             >
                                 {/* Position Badge */}
                                 <div
-                                    className={`absolute -top-2 -left-2 w-6 h-6 rounded-lg flex items-center justify-center text-xs font-black transition-colors duration-500 shadow-xl ${business.isClient && step > 0
+                                    className={`absolute -top-1.5 -left-1.5 w-6 h-6 rounded-lg flex items-center justify-center text-xs font-black transition-colors duration-500 shadow-xl z-30 ${business.isClient && step > 0
                                         ? 'bg-primary text-black'
                                         : 'bg-white/10 text-white/40'
                                         }`}
