@@ -64,7 +64,7 @@ const LocalSeoSimulator = () => {
                 return next;
             });
         };
-        timeout = setTimeout(runSequence, 3000);
+        timeout = setTimeout(runSequence, 800);
         return () => clearTimeout(timeout);
     }, []);
 
