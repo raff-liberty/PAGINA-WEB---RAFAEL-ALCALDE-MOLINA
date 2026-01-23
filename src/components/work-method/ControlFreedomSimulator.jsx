@@ -19,7 +19,7 @@ const ControlFreedomSimulator = () => {
     }, [isAuto, automation]);
 
     return (
-        <div className="w-full aspect-[4/5] bg-black/40 rounded-3xl border border-white/5 relative overflow-hidden group shadow-2xl flex flex-col p-6 md:p-8 justify-between">
+        <div className="w-full min-h-[480px] md:aspect-square bg-black/40 rounded-3xl border border-white/5 relative overflow-hidden group shadow-2xl flex flex-col p-4 md:p-6 lg:p-8 justify-between">
             {/* Background Grid - Simplified */}
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
                 style={{ backgroundImage: 'linear-gradient(rgba(34,197,94,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(34,197,94,0.1) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
@@ -53,7 +53,7 @@ const ControlFreedomSimulator = () => {
                             borderColor: isAuto ? '#22c55e' : 'rgba(255,255,255,0.1)'
                         }}
                         transition={{ duration: 2, repeat: Infinity }}
-                        className={`w-24 h-24 rounded-full bg-black border-[3px] flex items-center justify-center transition-all duration-700 relative overflow-hidden`}
+                        className={`w-20 h-20 md:w-24 md:h-24 rounded-full bg-black border-[3px] flex items-center justify-center transition-all duration-700 relative overflow-hidden`}
                     >
                         {isAuto && (
                             <motion.div
@@ -62,11 +62,11 @@ const ControlFreedomSimulator = () => {
                                 className="absolute inset-0 bg-[conic-gradient(from_0deg,transparent,rgba(34,197,94,0.3),transparent)]"
                             />
                         )}
-                        <Power className={`w-10 h-10 transition-colors duration-700 relative z-10 ${isAuto ? 'text-primary' : 'text-white/10'}`} />
+                        <Power className={`w-8 h-8 md:w-10 md:h-10 transition-colors duration-700 relative z-10 ${isAuto ? 'text-primary' : 'text-white/10'}`} />
                     </motion.div>
 
                     <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 whitespace-nowrap flex flex-col items-center">
-                        <span className={`text-[12px] font-black uppercase tracking-[0.4em] transition-all duration-500 mb-1 ${isAuto ? 'text-primary' : 'text-white/30'}`}>
+                        <span className={`text-[10px] md:text-[12px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] transition-all duration-500 mb-1 ${isAuto ? 'text-primary' : 'text-white/30'}`}>
                             {isAuto ? 'PILOTO AUTO ON' : 'TOMA EL CONTROL'}
                         </span>
                         <div className="flex items-center gap-1.5 opacity-60">

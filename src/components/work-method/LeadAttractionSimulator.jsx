@@ -80,7 +80,7 @@ const LeadAttractionSimulator = () => {
     };
 
     return (
-        <div className="w-full aspect-[4/5] bg-black/40 rounded-3xl border border-white/5 relative overflow-hidden group shadow-2xl flex flex-col items-center justify-center p-6 md:p-8">
+        <div className="w-full min-h-[500px] md:aspect-square bg-black/40 rounded-3xl border border-white/5 relative overflow-hidden group shadow-2xl flex flex-col items-center justify-center p-4 md:p-6 lg:p-8">
             <div className="absolute inset-0 opacity-[0.05] pointer-events-none"
                 style={{ backgroundImage: 'radial-gradient(circle at center, #22c55e 1px, transparent 0)', backgroundSize: '40px 40px' }} />
 
@@ -94,19 +94,19 @@ const LeadAttractionSimulator = () => {
                         className="w-full flex flex-col items-center h-full"
                     >
                         {/* Quiz Header */}
-                        <div className="flex items-center justify-between w-full mb-6">
+                        <div className="flex items-center justify-between w-full mb-4 md:mb-6">
                             <div className="flex flex-col">
-                                <span className="text-[10px] font-black text-primary uppercase tracking-[0.3em]">Módulo de Educación</span>
-                                <span className="text-xl font-black text-white italic tracking-tighter uppercase">Filtro de Autoridad</span>
+                                <span className="text-[8px] md:text-[10px] font-black text-primary uppercase tracking-[0.3em]">Módulo de Educación</span>
+                                <span className="text-base md:text-xl font-black text-white italic tracking-tighter uppercase">Filtro de Autoridad</span>
                             </div>
-                            <div className="bg-white/5 px-4 py-1.5 rounded-full border border-white/10">
-                                <span className="text-[10px] font-mono text-white/40">{currentStep + 1} / {questions.length}</span>
+                            <div className="bg-white/5 px-3 md:px-4 py-1 md:py-1.5 rounded-full border border-white/10">
+                                <span className="text-[8px] md:text-[10px] font-mono text-white/40">{currentStep + 1} / {questions.length}</span>
                             </div>
                         </div>
 
                         {/* Question */}
-                        <div className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 mb-4">
-                            <h3 className="text-xs md:text-sm font-bold text-white text-center leading-relaxed">
+                        <div className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 md:p-5 mb-3 md:mb-4">
+                            <h3 className="text-[11px] md:text-xs lg:text-sm font-bold text-white text-center leading-relaxed">
                                 {questions[currentStep].q}
                             </h3>
                         </div>
@@ -119,9 +119,9 @@ const LeadAttractionSimulator = () => {
                                     whileHover={{ scale: 1.01 }}
                                     whileTap={{ scale: 0.99 }}
                                     onClick={() => handleAnswer(i)}
-                                    className={`w-full p-3.5 rounded-xl border text-left flex items-center justify-between transition-all duration-300 ${feedback === null ? 'bg-white/5 border-white/10 hover:border-primary/50 text-white/70' :
-                                            i === questions[currentStep].correct ? 'bg-primary/20 border-primary text-white' :
-                                                feedback === 'incorrect' && i !== questions[currentStep].correct ? 'bg-red-500/10 border-red-500/50 text-white/40' : 'bg-white/5 border-white/10 text-white/40'
+                                    className={`w-full p-4 md:p-3.5 rounded-xl border text-left flex items-center justify-between transition-all duration-300 ${feedback === null ? 'bg-white/5 border-white/10 hover:border-primary/50 text-white/70' :
+                                        i === questions[currentStep].correct ? 'bg-primary/20 border-primary text-white' :
+                                            feedback === 'incorrect' && i !== questions[currentStep].correct ? 'bg-red-500/10 border-red-500/50 text-white/40' : 'bg-white/5 border-white/10 text-white/40'
                                         }`}
                                 >
                                     <span className="text-[11px] font-medium leading-tight">{opt}</span>

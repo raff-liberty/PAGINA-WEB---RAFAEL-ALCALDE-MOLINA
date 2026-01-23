@@ -151,12 +151,12 @@ const WorkMethod = () => {
                         Sistema Operativo de Negocios
                     </motion.div>
 
-                    <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-black leading-none mb-8 tracking-tighter uppercase italic">
+                    <h1 className="font-display text-4xl md:text-7xl lg:text-8xl font-black leading-none mb-8 tracking-tighter uppercase italic">
                         SISTEMAS QUE <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/80 drop-shadow-[0_0_20px_rgba(110,231,183,0.5)]">VENDEN POR TI.</span>
                     </h1>
 
-                    <p className="text-xl md:text-2xl text-white/90 font-light max-w-3xl leading-relaxed italic mb-10 border-l-2 lg:border-l-4 border-primary/40 pl-6">
+                    <p className="text-lg md:text-xl lg:text-2xl text-white/90 font-light max-w-3xl leading-relaxed italic mb-10 border-l-2 lg:border-l-4 border-primary/40 pl-4 md:pl-6">
                         Creamos sistemas automáticos que llenan tu agenda de clientes cada mañana.
                         Profesionalizamos tu forma de vender para que <span className="text-white font-bold">recuperes tu tiempo</span>.
                     </p>
@@ -302,9 +302,7 @@ const WorkMethod = () => {
                                                     </div>
                                                 </div>
 
-                                                <div className="flex items-center justify-center bg-black/60 rounded-[2rem] border border-white/5 relative overflow-hidden group-hover:border-primary/20 transition-all min-h-[350px] shadow-inner">
-                                                    <phase.simulator />
-                                                </div>
+                                                <phase.simulator />
                                             </div>
                                         </div>
                                     </div>
