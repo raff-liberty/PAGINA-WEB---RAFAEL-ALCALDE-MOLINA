@@ -14,23 +14,39 @@ import {
     Database,
     CreditCard,
     BarChart,
-    ChevronDown
+    ChevronDown,
+    Laptop,
+    Mail,
+    Instagram,
+    Linkedin,
+    MapPin,
+    MessageSquare,
+    Globe
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import BackgroundMesh from '../components/BackgroundMesh';
 import SEO from '../components/SEO';
 import { supabase } from '../lib/supabaseClient';
+import ContactForm from '../components/ContactForm';
+import { analytics } from '../lib/analytics';
 
 // VLS Simulators
 import LeakDetectionSimulator from '../components/work-method/LeakDetectionSimulator';
 import SystemBuilderSimulator from '../components/work-method/SystemBuilderSimulator';
 import LeadAttractionSimulator from '../components/work-method/LeadAttractionSimulator';
 import ControlFreedomSimulator from '../components/work-method/ControlFreedomSimulator';
+import TechWalkthroughModal from '../components/work-method/TechWalkthroughModal';
 
 const WorkMethod = () => {
     const [siteConfig, setSiteConfig] = useState({
         work_method_youtube_url: '',
+        whatsapp_url: 'https://wa.me/34600000000',
+        instagram_url: 'https://instagram.com/engorilate',
+        linkedin_url: 'https://linkedin.com/in/engorilate',
+        contact_email: 'r.alcalde@engorilate.com'
     });
+    const [selectedTech, setSelectedTech] = useState(null);
+    const [isTechModalOpen, setIsTechModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchConfig = async () => {
@@ -110,11 +126,15 @@ const WorkMethod = () => {
     ];
 
     const techStack = [
-        { name: "GoHighLevel", desc: "Gestión centralizada de leads y CRM.", icon: Database, color: "#2563eb" },
-        { name: "Claude 3.5", desc: "IA avanzada para copywriting y flujos lógicos.", icon: Bot, color: "#d4d4d8" },
-        { name: "Stripe", desc: "Infraestructura de pagos automatizada.", icon: CreditCard, color: "#f59e0b" },
-        { name: "Meta Business", desc: "Motor de captación ultra-segmentado.", icon: BarChart, color: "#0ea5e9" }
+        { id: "gohighlevel", name: "Cerebro CRM", desc: "Gestión centralizada de leads y CRM.", icon: Database, color: "#2563eb" },
+        { id: "claude", name: "IA Generativa", desc: "IA avanzada para copywriting y flujos lógicos.", icon: Bot, color: "#d4d4d8" },
+        { id: "stripe", name: "Pasarela Pagos", desc: "Infraestructura de pagos automatizada.", icon: CreditCard, color: "#f59e0b" },
+        { id: "metabusiness", name: "Ads Manager", desc: "Motor de captación ultra-segmentado.", icon: BarChart, color: "#0ea5e9" }
     ];
+
+    const trackClick = (method) => {
+        analytics.trackEvent('contact_click', { method });
+    };
 
     return (
         <div className="relative pt-32 md:pt-48 pb-24 min-h-screen selection:bg-primary selection:text-black bg-[#020202] text-white">
@@ -228,28 +248,28 @@ const WorkMethod = () => {
                                 transition={{ duration: 0.6, delay: i * 0.1 }}
                                 className="group relative"
                             >
-                                <div className="relative bg-[#0a0a0a] border border-white/[0.15] rounded-[2.5rem] p-8 md:p-12 overflow-hidden hover:border-primary/60 transition-all duration-700 shadow-[0_50px_100px_-30px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.05)_inset] group">
+                                <div className="relative bg-[#0d0d0d] border border-white/[0.2] rounded-[2.5rem] p-8 md:p-12 overflow-hidden hover:border-primary/60 transition-all duration-700 shadow-[0_50px_100px_-30px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.08)_inset] group">
 
                                     {/* Reactive Background Glow for this specific box */}
-                                    <div className="absolute inset-0 bg-primary/[0.05] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
+                                    <div className="absolute inset-0 bg-primary/[0.08] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
 
                                     {/* High Intensity Rim Light */}
-                                    <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-70" />
-                                    <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent opacity-30" />
+                                    <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-80" />
+                                    <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent opacity-40" />
 
                                     {/* Glass Overlay Effect - Dynamic Blob */}
-                                    <div className="absolute -left-20 -top-20 w-[400px] h-[400px] bg-primary/[0.15] blur-[100px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                                    <div className="absolute -left-20 -top-20 w-[400px] h-[400px] bg-primary/[0.2] blur-[100px] rounded-full opacity-20 transition-opacity duration-1000" />
 
                                     <div className="grid lg:grid-cols-12 gap-6 lg:gap-10 items-center">
-                                        <div className="lg:col-span-1 border-r border-white/5 pr-8 hidden lg:block">
-                                            <span className="text-7xl font-black text-white/5 font-mono leading-none">
+                                        <div className="lg:col-span-1 border-r border-white/10 pr-8 hidden lg:block">
+                                            <span className="text-7xl font-black text-white/10 font-mono leading-none">
                                                 0{i + 1}
                                             </span>
                                         </div>
 
                                         <div className="lg:col-span-11 relative">
                                             {/* Mobile Phase Number Overlay */}
-                                            <div className="absolute -top-4 -right-4 text-6xl font-black text-white/[0.03] font-mono leading-none lg:hidden pointer-events-none">
+                                            <div className="absolute -top-4 -right-4 text-6xl font-black text-white/[0.05] font-mono leading-none lg:hidden pointer-events-none">
                                                 0{i + 1}
                                             </div>
 
@@ -323,15 +343,19 @@ const WorkMethod = () => {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
                         {techStack.map((item, i) => (
-                            <motion.div
+                            <motion.button
                                 key={i}
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: i * 0.1 }}
-                                className="relative bg-[#111111] border border-white/[0.08] p-10 rounded-[2.5rem] text-center group hover:bg-[#161616] hover:border-white/20 transition-all duration-500 shadow-2xl overflow-hidden"
+                                onClick={() => {
+                                    setSelectedTech(item);
+                                    setIsTechModalOpen(true);
+                                }}
+                                className="relative bg-[#111111] border border-white/[0.08] p-4 md:p-10 rounded-2xl md:rounded-[2.5rem] text-center group hover:bg-[#161616] hover:border-white/20 transition-all duration-500 shadow-2xl overflow-hidden cursor-pointer"
                             >
                                 {/* Brand Glow Background */}
                                 <div
@@ -339,78 +363,167 @@ const WorkMethod = () => {
                                     style={{ backgroundColor: item.color }}
                                 />
 
-                                <div
-                                    className="w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-8 border transition-all duration-500 transform group-hover:scale-110 group-hover:rotate-3 shadow-lg"
-                                    style={{
-                                        backgroundColor: `${item.color}10`, // 10% opacity
-                                        borderColor: `${item.color}30`, // 30% opacity
-                                        boxShadow: `0 0 30px ${item.color}15`
-                                    }}
-                                >
-                                    <item.icon
-                                        className="w-10 h-10 transition-colors duration-500"
-                                        style={{ color: item.color }}
-                                    />
+                                <div className="flex flex-col md:block items-center">
+                                    <div
+                                        className="w-12 h-12 md:w-20 md:h-20 rounded-xl md:rounded-3xl flex items-center justify-center mx-auto mb-3 md:mb-8 border transition-all duration-500 transform group-hover:scale-110 group-hover:rotate-3 shadow-lg"
+                                        style={{
+                                            backgroundColor: `${item.color}10`, // 10% opacity
+                                            borderColor: `${item.color}30`, // 30% opacity
+                                            boxShadow: `0 0 30px ${item.color}15`
+                                        }}
+                                    >
+                                        <item.icon
+                                            className="w-6 h-6 md:w-10 md:h-10 transition-colors duration-500"
+                                            style={{ color: item.color }}
+                                        />
+                                    </div>
+                                    <h4 className="text-[10px] md:text-xl font-bold text-white mb-1 md:mb-4 uppercase italic tracking-tighter">{item.name}</h4>
+                                    <p className="hidden md:block text-white/70 text-sm font-light italic leading-relaxed px-2 group-hover:text-white/90 transition-colors">{item.desc}</p>
+
+                                    {/* Action Label */}
+                                    <div className="mt-4 flex items-center justify-center gap-2">
+                                        <span className="text-[8px] font-black uppercase tracking-[0.2em] text-primary">Ver Tecnología</span>
+                                        <ArrowRight className="w-2.5 h-2.5 text-primary group-hover:translate-x-1 transition-transform" />
+                                    </div>
                                 </div>
-                                <h4 className="text-xl font-bold text-white mb-4 uppercase italic tracking-tighter">{item.name}</h4>
-                                <p className="text-white/70 text-sm font-light italic leading-relaxed px-2 group-hover:text-white/90 transition-colors">{item.desc}</p>
 
                                 {/* Bottom Accent Line */}
                                 <div
                                     className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-1 group-hover:w-1/2 transition-all duration-700 rounded-full"
                                     style={{ backgroundColor: item.color }}
                                 />
-                            </motion.div>
+                            </motion.button>
                         ))}
                     </div>
                 </div>
 
-                {/* FINAL SECTION: QUALIFICATION CTA */}
+                {/* FINAL SECTION: STRATEGY SESSION */}
                 <div className="pb-24">
-                    <motion.div
-                        initial={{ opacity: 0, y: 40 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="relative bg-gradient-to-br from-[#111] via-black to-[#050505] border border-primary/30 rounded-[3rem] p-10 md:p-20 overflow-hidden text-center shadow-[0_40px_100px_rgba(0,0,0,0.8)]"
-                    >
-                        {/* Dramatic Lighting */}
-                        <div className="absolute -top-40 -left-40 w-96 h-96 bg-primary/20 blur-[150px] rounded-full opacity-40" />
-                        <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-primary/10 blur-[150px] rounded-full opacity-40" />
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mb-12">
+                        {/* LEFT: Compact Form */}
+                        <motion.div
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="lg:col-span-7 bg-gradient-to-br from-[#121212] to-[#080808] border-2 border-white/20 p-8 md:p-10 rounded-[2.5rem] backdrop-blur-xl shadow-[0_50px_100px_rgba(0,0,0,0.9)] flex flex-col justify-center relative overflow-hidden group"
+                        >
+                            <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:scale-110 transition-transform duration-700">
+                                <Laptop className="w-32 h-32 text-white" />
+                            </div>
 
-                        <div className="max-w-2xl mx-auto relative z-10">
-                            <h2 className="text-3xl md:text-5xl font-black text-white mb-6 tracking-tighter uppercase italic leading-[1]">
-                                ¿TIENES UN NEGOCIO <br />
-                                <span className="text-primary italic">QUE QUIERES ESCALAR?</span>
-                            </h2>
-                            <p className="text-lg text-white/80 mb-10 font-light italic leading-relaxed">
-                                Este sistema no es para quien quiere "probar suerte". Solo trabajamos con negocios reales que están listos para dejar de ser esclavos de su día a día.
-                            </p>
+                            <div className="relative z-10 mb-8">
+                                <h2 className="font-display text-3xl font-black text-white mb-3 uppercase tracking-tight">Sesión de Estrategia</h2>
+                                <p className="text-gray-400 text-sm font-medium">Cuéntanos tu cuello de botella actual. Seremos breves y directos.</p>
+                            </div>
+                            <ContactForm source="Work Method Page" />
+                        </motion.div>
 
-                            <Link
-                                to="/diagnostico"
-                                className="group relative inline-flex items-center justify-center gap-3 bg-primary hover:bg-white text-black font-black px-10 py-5 rounded-xl text-lg transition-all shadow-[0_20px_60px_rgba(34,197,94,0.3)] w-full md:w-auto uppercase tracking-tighter overflow-hidden"
-                            >
-                                <span className="relative z-10 text-base">SOLICITAR AUDITORÍA TÉCNICA</span>
-                                <ArrowRight className="relative z-10 w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
-                                <div className="absolute inset-0 bg-white translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-in-out" />
-                            </Link>
-
-                            <div className="mt-16 pt-12 border-t border-white/5 flex flex-wrap items-center justify-center gap-10 opacity-40">
-                                <div className="flex items-center gap-3">
-                                    <Clock className="w-5 h-5 text-primary" />
-                                    <span className="text-xs uppercase font-bold tracking-[0.2em]">DESPLIEGUE INMEDIATO</span>
+                        <motion.div
+                            initial={{ opacity: 0, x: 20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="lg:col-span-5 flex flex-col gap-4"
+                        >
+                            {/* Manual Contact Card */}
+                            <div className="bg-gradient-to-br from-[#121212] to-[#080808] border-2 border-white/20 p-8 md:p-10 rounded-[2.5rem] h-full flex flex-col justify-center shadow-[0_40px_80px_rgba(0,0,0,0.8)]">
+                                <div className="flex items-center justify-between mb-8">
+                                    <h3 className="text-white text-xl font-black uppercase tracking-tighter flex items-center gap-2">
+                                        <Zap className="w-5 h-5 text-primary" /> Vía Rápida
+                                    </h3>
+                                    <span className="px-3 py-1 bg-primary/10 border border-primary/20 rounded-full text-[10px] font-black text-primary uppercase tracking-widest animate-pulse">
+                                        Detección Instantánea
+                                    </span>
                                 </div>
-                                <div className="flex items-center gap-3">
-                                    <Shield className="w-5 h-5 text-primary" />
-                                    <span className="text-xs uppercase font-bold tracking-[0.2em]">GARANTÍA DE INFRAESTRUCTURA</span>
+
+                                <div className="space-y-4">
+                                    <a
+                                        href={siteConfig.whatsapp_url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        onClick={() => trackClick('whatsapp')}
+                                        className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 hover:bg-[#25D366]/10 hover:border-[#25D366]/40 border-2 border-transparent transition-all group"
+                                    >
+                                        <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center group-hover:bg-[#25D366]/20 transition-all">
+                                            <MessageSquare className="w-6 h-6 text-[#25D366]" />
+                                        </div>
+                                        <div>
+                                            <div className="text-white text-sm font-black group-hover:text-[#25D366] transition-colors uppercase">WhatsApp</div>
+                                            <div className="text-xs text-gray-500 font-medium">Respuesta inmediata</div>
+                                        </div>
+                                        <ArrowRight className="w-4 h-4 text-gray-700 ml-auto group-hover:text-[#25D366] group-hover:translate-x-1 transition-all" />
+                                    </a>
+
+                                    <a
+                                        href={siteConfig.instagram_url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        onClick={() => trackClick('instagram')}
+                                        className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 hover:bg-[#E1306C]/10 hover:border-[#E1306C]/40 border-2 border-transparent transition-all group"
+                                    >
+                                        <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center group-hover:bg-[#E1306C]/20 transition-all">
+                                            <Instagram className="w-6 h-6 text-[#E1306C]" />
+                                        </div>
+                                        <div>
+                                            <div className="text-white text-sm font-black group-hover:text-[#E1306C] transition-colors uppercase">Instagram</div>
+                                            <div className="text-xs text-gray-500 font-medium">Casos reales</div>
+                                        </div>
+                                        <ArrowRight className="w-4 h-4 text-gray-700 ml-auto group-hover:text-[#E1306C] group-hover:translate-x-1 transition-all" />
+                                    </a>
+
+                                    <a
+                                        href={siteConfig.linkedin_url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        onClick={() => trackClick('linkedin')}
+                                        className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 hover:bg-[#0077B5]/10 hover:border-[#0077B5]/40 border-2 border-transparent transition-all group"
+                                    >
+                                        <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center group-hover:bg-[#0077B5]/20 transition-all">
+                                            <Linkedin className="w-6 h-6 text-[#0077B5]" />
+                                        </div>
+                                        <div>
+                                            <div className="text-white text-sm font-black group-hover:text-[#0077B5] transition-colors uppercase">LinkedIn</div>
+                                            <div className="text-xs text-gray-500 font-medium">Trayectoria profesional</div>
+                                        </div>
+                                        <ArrowRight className="w-4 h-4 text-gray-700 ml-auto group-hover:text-[#0077B5] group-hover:translate-x-1 transition-all" />
+                                    </a>
+
+                                    <button
+                                        onClick={() => {
+                                            trackClick('email');
+                                            const mailtoUrl = `mailto:${siteConfig.contact_email}?subject=${encodeURIComponent('Sesión de Estrategia Operativa - Engorilate')}`;
+                                            const link = document.createElement('a');
+                                            link.href = mailtoUrl;
+                                            link.target = '_self';
+                                            document.body.appendChild(link);
+                                            link.click();
+                                            document.body.removeChild(link);
+                                        }}
+                                        className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white/5 hover:bg-white/10 hover:border-white/20 border-2 border-transparent transition-all group cursor-pointer text-left"
+                                    >
+                                        <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center group-hover:bg-white/10 transition-all text-white/40 group-hover:text-primary">
+                                            <Mail className="w-6 h-6 transition-colors" />
+                                        </div>
+                                        <div>
+                                            <div className="text-white text-sm font-black transition-colors uppercase">Email</div>
+                                            <div className="text-xs text-gray-500 font-medium group-hover:text-primary/70 transition-colors">{siteConfig.contact_email}</div>
+                                        </div>
+                                        <ArrowRight className="w-4 h-4 text-gray-700 ml-auto group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                                    </button>
                                 </div>
-                                <div className="flex items-center gap-3">
-                                    <Target className="w-5 h-5 text-primary" />
-                                    <span className="text-xs uppercase font-bold tracking-[0.2em]">CUALIFICACIÓN TÉCNICA</span>
+
+                                <div className="mt-10 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+                                    <div className="flex items-center gap-3 text-xs text-gray-500 font-medium">
+                                        <MapPin className="w-4 h-4 text-primary" />
+                                        <span>Cartagena, Murcia (España)</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_10px_rgba(110,231,183,0.8)]" />
+                                        <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Atención Activa</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </motion.div>
+                        </motion.div>
+                    </div>
                 </div>
 
                 {/* REFINED BRAND SIGNATURE */}
@@ -420,6 +533,12 @@ const WorkMethod = () => {
                     </p>
                 </div>
             </div>
+
+            <TechWalkthroughModal
+                isOpen={isTechModalOpen}
+                onClose={() => setIsTechModalOpen(false)}
+                tech={selectedTech}
+            />
         </div>
     );
 };

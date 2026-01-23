@@ -54,19 +54,12 @@ const LocalSeoSimulator = () => {
 
     // Simulation sequence
     useEffect(() => {
-        let timeout;
-        const runSequence = () => {
-            setStep((prev) => {
-                const isAtTop = prev === 3;
-                const next = isAtTop ? 0 : prev + 1;
-                const delay = next === 3 ? 5000 : next === 0 ? 3000 : 2500;
-                timeout = setTimeout(runSequence, delay);
-                return next;
-            });
-        };
-        timeout = setTimeout(runSequence, 800);
-        return () => clearTimeout(timeout);
-    }, []);
+        const delays = [3500, 3000, 3000, 6000]; // Delays for steps 0, 1, 2, 3
+        const timer = setTimeout(() => {
+            setStep((prev) => (prev === 3 ? 0 : prev + 1));
+        }, delays[step]);
+        return () => clearTimeout(timer);
+    }, [step]);
 
     // Sort businesses based on current rank for DOM reordering
     const currentBusinesses = [...businessesData].sort((a, b) => {
@@ -80,28 +73,28 @@ const LocalSeoSimulator = () => {
 
     return (
         <div className="relative w-full max-w-[380px] mx-auto">
-            {/* Main Container - STRICT FIXED HEIGHT */}
-            <div className="relative bg-[#0a0a0a] border border-white/[0.15] rounded-[2.5rem] p-6 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.05)_inset] overflow-hidden group min-h-[580px]">
-                {/* Header - Fixed height to avoid jumps */}
-                <div className="relative z-10 mb-6 h-20">
-                    <div className="flex items-center justify-between mb-3">
-                        <h3 className="text-primary font-mono text-[9px] font-bold tracking-[0.3em] uppercase">
+            {/* Main Container */}
+            <div className="relative bg-[#0a0a0a] border border-white/[0.15] rounded-[2rem] p-4 md:p-6 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.05)_inset] overflow-hidden group">
+                {/* Header - Compact */}
+                <div className="relative z-10 mb-4">
+                    <div className="flex items-center justify-between mb-2">
+                        <h3 className="text-primary font-mono text-[8px] font-bold tracking-[0.3em] uppercase">
                             Google Maps
                         </h3>
-                        <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-white/5 border border-white/10">
+                        <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/5 border border-white/10">
                             <div className={`w-1.5 h-1.5 rounded-full ${step === 3 ? 'bg-primary' : 'bg-white/40'} animate-pulse`} />
-                            <span className="text-[8px] text-white/60 font-bold uppercase tracking-wider">
+                            <span className="text-[7px] text-white/60 font-bold uppercase tracking-wider">
                                 {step === 0 ? 'Situación Inicial' : step === 3 ? 'Dominio Local' : 'Optimizando...'}
                             </span>
                         </div>
                     </div>
-                    <div className="text-lg font-display font-black text-white italic uppercase tracking-tighter">
+                    <div className="text-base font-display font-black text-white italic uppercase tracking-tighter">
                         Resultados de Búsqueda
                     </div>
                 </div>
 
-                {/* Search Results - Fixed Height Scroll-like list */}
-                <div className="relative z-10 flex flex-col gap-3 h-[284px]">
+                {/* Search Results */}
+                <div className="relative z-10 flex flex-col gap-2 mb-6">
                     {currentBusinesses.map((business) => {
                         const rank = business.positions[step];
 
@@ -112,27 +105,24 @@ const LocalSeoSimulator = () => {
                                 initial={false}
                                 animate={{
                                     opacity: business.isClient ? 1 : 0.45,
-                                    scale: business.isClient ? 1.02 : 1,
+                                    scale: business.isClient ? 1 : 0.98,
                                     zIndex: business.isClient ? 20 : 10
                                 }}
                                 transition={{
                                     layout: {
                                         type: "spring",
-                                        stiffness: 120,
-                                        damping: 20,
-                                        mass: 1
-                                    },
-                                    opacity: { duration: 0.5 },
-                                    scale: { duration: 0.5 }
+                                        stiffness: 150,
+                                        damping: 25,
+                                    }
                                 }}
-                                className={`relative p-4 rounded-2xl border transition-colors duration-500 h-[62px] w-full shrink-0 flex items-center ${business.isClient
+                                className={`relative p-3 rounded-xl border transition-colors duration-500 h-[54px] w-full shrink-0 flex items-center ${business.isClient
                                     ? 'bg-primary/10 border-primary/40'
                                     : 'bg-white/[0.02] border-white/5'
                                     }`}
                             >
                                 {/* Position Badge */}
                                 <div
-                                    className={`absolute -top-1.5 -left-1.5 w-6 h-6 rounded-lg flex items-center justify-center text-xs font-black transition-colors duration-500 shadow-xl z-30 ${business.isClient && step > 0
+                                    className={`absolute -top-1.5 -left-1.5 w-5 h-5 rounded-lg flex items-center justify-center text-[9px] font-black transition-colors duration-500 shadow-xl z-30 ${business.isClient && step > 0
                                         ? 'bg-primary text-black'
                                         : 'bg-white/10 text-white/40'
                                         }`}
@@ -141,12 +131,12 @@ const LocalSeoSimulator = () => {
                                 </div>
 
                                 {/* Business Info */}
-                                <div className="flex items-start justify-between gap-3 h-full">
+                                <div className="flex items-start justify-between gap-3 h-full w-full">
                                     <div className="flex-1 min-w-0 flex flex-col justify-center">
-                                        <div className="flex items-center gap-2 mb-1">
-                                            <MapPin className={`w-3.5 h-3.5 shrink-0 transition-colors duration-500 ${business.isClient ? 'text-primary' : 'text-white/20'
+                                        <div className="flex items-center gap-2 mb-0.5">
+                                            <MapPin className={`w-3 h-3 shrink-0 transition-colors duration-500 ${business.isClient ? 'text-primary' : 'text-white/20'
                                                 }`} />
-                                            <h4 className={`text-sm font-bold uppercase italic tracking-tight truncate transition-colors duration-500 ${business.isClient ? 'text-white' : 'text-white/40'
+                                            <h4 className={`text-xs font-bold uppercase italic tracking-tight truncate transition-colors duration-500 ${business.isClient ? 'text-white' : 'text-white/40'
                                                 }`}>
                                                 {business.name}
                                             </h4>
@@ -157,27 +147,27 @@ const LocalSeoSimulator = () => {
                                                 {[...Array(5)].map((_, i) => (
                                                     <Star
                                                         key={i}
-                                                        className={`w-2.5 h-2.5 ${i < Math.floor(business.rating)
+                                                        className={`w-2 h-2 ${i < Math.floor(business.rating)
                                                             ? 'fill-yellow-500 text-yellow-500'
                                                             : 'text-white/10'
                                                             }`}
                                                     />
                                                 ))}
                                             </div>
-                                            <span className="text-[10px] text-white/20 font-medium">
+                                            <span className="text-[8px] text-white/20 font-medium font-mono">
                                                 {business.rating} ({business.reviews})
                                             </span>
                                         </div>
                                     </div>
 
-                                    {/* Actions always visible for client */}
+                                    {/* Actions */}
                                     {business.isClient && (
-                                        <div className="flex gap-1.5 opacity-60 items-center">
-                                            <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20">
-                                                <Phone className="w-3.5 h-3.5 text-primary" />
+                                        <div className="flex gap-1 opacity-60 items-center">
+                                            <div className="w-5 h-5 rounded-md bg-primary/10 flex items-center justify-center border border-primary/20">
+                                                <Phone className="w-2.5 h-2.5 text-primary" />
                                             </div>
-                                            <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20">
-                                                <Navigation className="w-3.5 h-3.5 text-primary" />
+                                            <div className="w-5 h-5 rounded-md bg-primary/10 flex items-center justify-center border border-primary/20">
+                                                <Navigation className="w-2.5 h-2.5 text-primary" />
                                             </div>
                                         </div>
                                     )}
@@ -187,35 +177,35 @@ const LocalSeoSimulator = () => {
                     })}
                 </div>
 
-                {/* Metrics Footer (Always Visible) */}
-                <div className="relative z-10 mt-8 pt-6 border-t border-white/10">
-                    <div className="flex items-center gap-2 mb-5">
-                        <TrendingUp className="w-4 h-4 text-primary" />
-                        <span className="text-[10px] text-white/40 font-black uppercase tracking-widest">Crecimiento Mensual</span>
+                {/* Metrics Footer */}
+                <div className="relative z-10 pt-4 border-t border-white/10">
+                    <div className="flex items-center gap-2 mb-3">
+                        <TrendingUp className="w-3.5 h-3.5 text-primary" />
+                        <span className="text-[8px] text-white/40 font-black uppercase tracking-widest">Crecimiento Mensual</span>
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/5 relative overflow-hidden group/metric">
+                    <div className="grid grid-cols-2 gap-3">
+                        <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5 relative overflow-hidden">
                             <div className={`absolute inset-0 bg-primary/5 transition-opacity duration-1000 ${step === 3 ? 'opacity-100' : 'opacity-0'}`} />
                             <div className="relative z-10">
-                                <div className="flex items-center gap-1.5 mb-2">
-                                    <div className={`w-1.5 h-1.5 rounded-full transition-colors duration-500 ${step > 0 ? 'bg-primary' : 'bg-white/20'}`} />
-                                    <span className="text-[9px] text-white/40 font-bold uppercase tracking-wider">Llamadas</span>
+                                <div className="flex items-center gap-1.5 mb-1 text-[7px] text-white/40 font-bold uppercase tracking-wider">
+                                    <div className={`w-1 h-1 rounded-full ${step > 0 ? 'bg-primary' : 'bg-white/20'}`} />
+                                    Llamadas
                                 </div>
-                                <div className="text-3xl font-display font-black text-white italic tracking-tighter transition-all duration-500">
+                                <div className="text-xl font-display font-black text-white italic tracking-tighter">
                                     <span className={step > 0 ? 'text-primary' : 'text-white/20'}>
                                         +<AnimatedNumber value={callsVal} />%
                                     </span>
                                 </div>
                             </div>
                         </div>
-                        <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/5 relative overflow-hidden group/metric">
+                        <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5 relative overflow-hidden">
                             <div className={`absolute inset-0 bg-primary/5 transition-opacity duration-1000 ${step === 3 ? 'opacity-100' : 'opacity-0'}`} />
                             <div className="relative z-10">
-                                <div className="flex items-center gap-1.5 mb-2">
-                                    <div className={`w-1.5 h-1.5 rounded-full transition-colors duration-500 ${step > 0 ? 'bg-primary' : 'bg-white/20'}`} />
-                                    <span className="text-[9px] text-white/40 font-bold uppercase tracking-wider">Rutas</span>
+                                <div className="flex items-center gap-1.5 mb-1 text-[7px] text-white/40 font-bold uppercase tracking-wider">
+                                    <div className={`w-1 h-1 rounded-full ${step > 0 ? 'bg-primary' : 'bg-white/20'}`} />
+                                    Rutas
                                 </div>
-                                <div className="text-3xl font-display font-black text-white italic tracking-tighter transition-all duration-500">
+                                <div className="text-xl font-display font-black text-white italic tracking-tighter">
                                     <span className={step > 0 ? 'text-primary' : 'text-white/20'}>
                                         +<AnimatedNumber value={routesVal} />%
                                     </span>
@@ -227,7 +217,7 @@ const LocalSeoSimulator = () => {
             </div>
 
             {/* Background Atmosphere */}
-            <div className="absolute inset-0 bg-primary/5 blur-[100px] rounded-full opacity-20 pointer-events-none" />
+            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-primary/10 to-transparent pointer-events-none rounded-full blur-3xl opacity-20" />
         </div>
     );
 };

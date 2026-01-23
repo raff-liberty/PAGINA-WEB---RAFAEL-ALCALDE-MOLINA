@@ -51,6 +51,14 @@ const WhatsAppChatSim = () => {
         }
     }, [step]);
 
+    const scrollRef = React.useRef(null);
+
+    useEffect(() => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        }
+    }, [messages, isTyping]);
+
     return (
         <div className="w-full max-w-[400px] mx-auto bg-[#0b141a] rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl flex flex-col h-[550px] relative group/chat">
             {/* Header */}
@@ -72,7 +80,10 @@ const WhatsAppChatSim = () => {
             </div>
 
             {/* Chat Area */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#0b141a] relative scrollbar-hide">
+            <div
+                ref={scrollRef}
+                className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#0b141a] relative scrollbar-hide scroll-smooth"
+            >
                 <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
                     style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
 
@@ -86,8 +97,8 @@ const WhatsAppChatSim = () => {
                             className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                         >
                             <div className={`max-w-[80%] px-4 py-2 rounded-2xl text-[13px] relative ${msg.role === 'user'
-                                    ? 'bg-[#005c4b] text-white rounded-tr-none'
-                                    : 'bg-[#202c33] text-white rounded-tl-none'
+                                ? 'bg-[#005c4b] text-white rounded-tr-none'
+                                : 'bg-[#202c33] text-white rounded-tl-none'
                                 }`}>
                                 {msg.text}
                                 <div className="flex items-center justify-end gap-1 mt-1">
@@ -112,6 +123,9 @@ const WhatsAppChatSim = () => {
                         </motion.div>
                     )}
                 </AnimatePresence>
+
+                {/* Scroll Anchor */}
+                <div className="h-4 w-full" />
             </div>
 
             {/* Input Bar */}

@@ -745,7 +745,7 @@ const Home = () => {
                             {/* MOBILE MODAL SHOWCASE */}
                             <AnimatePresence>
                                 {showPreviewOnMobile && (
-                                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 lg:hidden">
+                                    <div className="fixed inset-0 z-[10000] flex items-center justify-center p-3 lg:hidden pt-24">
                                         <motion.div
                                             initial={{ opacity: 0 }}
                                             animate={{ opacity: 1 }}
@@ -757,73 +757,63 @@ const Home = () => {
                                             initial={{ opacity: 0, scale: 0.9, y: 20 }}
                                             animate={{ opacity: 1, scale: 1, y: 0 }}
                                             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                                            className="relative w-full max-w-lg bg-[#111111] border-2 border-white/10 p-6 md:p-8 rounded-[2rem] overflow-hidden shadow-2xl overflow-y-auto max-h-[90vh]"
+                                            className="relative w-full max-w-lg bg-[#0a0a0a] border border-white/10 p-5 rounded-[2.5rem] shadow-2xl overflow-y-auto max-h-[92vh]"
                                         >
                                             {/* Close Button */}
                                             <button
                                                 onClick={() => setShowPreviewOnMobile(false)}
-                                                className="absolute top-4 right-4 z-20 p-2 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-white transition-colors"
+                                                className="absolute top-4 right-4 z-[30] p-2 rounded-full bg-white/5 border border-white/10 text-gray-400"
                                             >
                                                 <X className="w-5 h-5" />
                                             </button>
 
-                                            {/* Glow Background */}
-                                            <div
-                                                className="absolute -top-20 -right-20 w-64 h-64 blur-[100px] rounded-full opacity-40 pointer-events-none"
-                                                style={{ backgroundColor: filteredSolutions[selectedSolutionIndex].color || '#6EE7B7' }}
-                                            />
-
                                             <div className="relative z-10">
-                                                <div className="flex items-center gap-3 mb-6">
-                                                    <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-primary">
-                                                        {React.createElement(filteredSolutions[selectedSolutionIndex].icon, { className: "w-6 h-6" })}
+                                                {/* Compact Header */}
+                                                <div className="flex items-center gap-4 mb-4 pr-10">
+                                                    <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-primary flex-shrink-0">
+                                                        {React.createElement(filteredSolutions[selectedSolutionIndex].icon, { className: "w-5 h-5" })}
                                                     </div>
-                                                    <div>
-                                                        <span className="text-primary font-mono text-[10px] uppercase tracking-[0.2em] block mb-1 opacity-60">Impacto de Negocio</span>
-                                                        <h3 className="text-2xl font-display font-bold text-gray-100 tracking-tight">
-                                                            {filteredSolutions[selectedSolutionIndex].title}
-                                                        </h3>
-                                                    </div>
+                                                    <h3 className="text-xl font-display font-bold text-gray-100 tracking-tight leading-tight">
+                                                        {filteredSolutions[selectedSolutionIndex].title}
+                                                    </h3>
                                                 </div>
 
                                                 {/* Simulator on Mobile Modal */}
-                                                <div className="mb-8 overflow-hidden rounded-2xl border border-white/5 bg-black/40 p-4">
-                                                    <div className="transform scale-90 origin-top">
-                                                        {filteredSolutions[selectedSolutionIndex].simulator &&
-                                                            React.createElement(filteredSolutions[selectedSolutionIndex].simulator)
-                                                        }
-                                                    </div>
+                                                <div className="mb-0 transform scale-95 origin-top -mt-4">
+                                                    {filteredSolutions[selectedSolutionIndex].simulator &&
+                                                        React.createElement(filteredSolutions[selectedSolutionIndex].simulator)
+                                                    }
                                                 </div>
 
-                                                <p className="text-gray-300 text-base font-light italic leading-relaxed mb-8">
-                                                    "{filteredSolutions[selectedSolutionIndex].desc}"
-                                                </p>
+                                                <div className="space-y-4 -mt-2">
+                                                    <p className="text-gray-100 text-base font-bold italic leading-relaxed border-l-2 border-primary/60 pl-4 py-1">
+                                                        "{filteredSolutions[selectedSolutionIndex].desc}"
+                                                    </p>
 
-                                                <ul className="space-y-4 mb-10">
-                                                    {filteredSolutions[selectedSolutionIndex].items.map((item, i) => (
-                                                        <li key={i} className="flex items-start gap-3">
-                                                            <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                                                <CheckCircle className="w-3 h-3 text-primary" />
-                                                            </div>
-                                                            <span className="text-gray-300 text-sm md:text-base font-medium">{item}</span>
-                                                        </li>
-                                                    ))}
-                                                </ul>
+                                                    <ul className="grid grid-cols-1 gap-2">
+                                                        {filteredSolutions[selectedSolutionIndex].items.slice(0, 3).map((item, i) => (
+                                                            <li key={i} className="flex items-start gap-2">
+                                                                <CheckCircle className="w-3.5 h-3.5 text-primary flex-shrink-0 mt-0.5" />
+                                                                <span className="text-gray-300 text-[11px] font-medium leading-tight">{item}</span>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
 
-                                                <div className="flex flex-col gap-4">
-                                                    <button
-                                                        onClick={() => {
-                                                            const sol = filteredSolutions[selectedSolutionIndex];
-                                                            sol.path ? navigate(sol.path) : navigate(`/contact?service=${sol.serviceId}`);
-                                                        }}
-                                                        className="w-full bg-primary hover:bg-white text-black font-bold px-8 py-4 rounded-xl uppercase tracking-wider flex items-center justify-center gap-3 transition-all shadow-[0_0_20px_rgba(110,231,183,0.3)] text-sm"
-                                                    >
-                                                        Explorar Solución <ArrowRight className="w-4 h-4" />
-                                                    </button>
+                                                    <div className="flex flex-col gap-3 pt-2">
+                                                        <button
+                                                            onClick={() => {
+                                                                const sol = filteredSolutions[selectedSolutionIndex];
+                                                                sol.path ? navigate(sol.path) : navigate(`/contact?service=${sol.serviceId}`);
+                                                            }}
+                                                            className="w-full bg-primary text-black font-black py-3.5 rounded-xl uppercase tracking-widest text-[10px] flex items-center justify-center gap-2"
+                                                        >
+                                                            Explorar Solución <ArrowRight className="w-3 h-3" />
+                                                        </button>
 
-                                                    <div className="w-full p-4 rounded-xl bg-white/5 border border-white/5 text-center">
-                                                        <span className="text-gray-200 text-[10px] block uppercase font-mono tracking-widest mb-1">Consultoría Inicial</span>
-                                                        <span className="text-gray-100 font-black text-lg">GRATUITA</span>
+                                                        <div className="w-full py-2.5 rounded-xl bg-white/5 border border-white/5 text-center flex items-center justify-center gap-2">
+                                                            <span className="text-white/30 text-[8px] uppercase font-mono font-black tracking-widest">Consultoría</span>
+                                                            <span className="text-white font-black text-xs uppercase tracking-tighter">GRATUITA</span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
