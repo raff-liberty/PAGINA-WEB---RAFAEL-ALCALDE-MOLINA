@@ -231,8 +231,8 @@ const CustomManagement = () => {
                         </div>
                     </div>
 
-                    <div className="flex justify-center items-center">
-                        <CrmArchitectureSimulator />
+                    <div className="flex justify-center items-center scale-90 md:scale-100">
+                        <CustomManagementSimulator />
                     </div>
                 </div>
             </div>
