@@ -19,7 +19,7 @@ const SEO = ({
     const defaultDescription = 'Especialistas en automatización de procesos y optimización operativa para pequeños negocios en la Región de Murcia. Recupera tu tiempo.';
     const defaultKeywords = 'automatización, negocios, murcia, eficiencia, procesos, digitalización';
 
-    const finalTitle = title || defaultTitle;
+    const finalTitle = title ? `${title} | Engorilate` : defaultTitle;
     const finalDescription = description || defaultDescription;
     const finalKeywords = keywords || defaultKeywords;
 
@@ -75,9 +75,10 @@ const SEO = ({
 
         // JSON-LD Schema Injection
         if (schema) {
-            let script = document.querySelector('script[type="application/ld+json"]');
+            let script = document.querySelector('script[id="json-ld-schema"]');
             if (!script) {
                 script = document.createElement('script');
+                script.id = 'json-ld-schema';
                 script.type = 'application/ld+json';
                 document.head.appendChild(script);
             }

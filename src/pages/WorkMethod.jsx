@@ -31,11 +31,12 @@ import ContactForm from '../components/ContactForm';
 import { analytics } from '../lib/analytics';
 
 // VLS Simulators
-import LeakDetectionSimulator from '../components/work-method/LeakDetectionSimulator';
-import SystemBuilderSimulator from '../components/work-method/SystemBuilderSimulator';
-import LeadAttractionSimulator from '../components/work-method/LeadAttractionSimulator';
-import ControlFreedomSimulator from '../components/work-method/ControlFreedomSimulator';
-import TechWalkthroughModal from '../components/work-method/TechWalkthroughModal';
+// VLS Simulators - Lazy Loaded
+const LeakDetectionSimulator = React.lazy(() => import('../components/work-method/LeakDetectionSimulator'));
+const SystemBuilderSimulator = React.lazy(() => import('../components/work-method/SystemBuilderSimulator'));
+const LeadAttractionSimulator = React.lazy(() => import('../components/work-method/LeadAttractionSimulator'));
+const ControlFreedomSimulator = React.lazy(() => import('../components/work-method/ControlFreedomSimulator'));
+const TechWalkthroughModal = React.lazy(() => import('../components/work-method/TechWalkthroughModal'));
 
 const WorkMethod = () => {
     const [siteConfig, setSiteConfig] = useState({
@@ -534,11 +535,15 @@ const WorkMethod = () => {
                 </div>
             </div>
 
-            <TechWalkthroughModal
-                isOpen={isTechModalOpen}
-                onClose={() => setIsTechModalOpen(false)}
-                tech={selectedTech}
-            />
+            <React.Suspense fallback={null}>
+                {isTechModalOpen && (
+                    <TechWalkthroughModal
+                        isOpen={isTechModalOpen}
+                        onClose={() => setIsTechModalOpen(false)}
+                        tech={selectedTech}
+                    />
+                )}
+            </React.Suspense>
         </div>
     );
 };

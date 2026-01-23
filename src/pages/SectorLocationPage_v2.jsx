@@ -15,6 +15,7 @@ import BackgroundMesh from '../components/BackgroundMesh';
 import SEO from '../components/SEO';
 import { getSectorLandingContent } from '../data/sectorLandings';
 import { getHeroJourneyStories } from '../data/heroJourneyStories';
+import { ChevronRight, Home as HomeIcon } from 'lucide-react';
 
 const IconMap = {
     Scissors, Sparkles, Stethoscope, Activity, Brain, Sun, GraduationCap,
@@ -224,11 +225,24 @@ const SectorLocationPage_v2 = () => {
         const lName = locationData.name;
         const sNameLower = sName.toLowerCase().replace(/s$/, ''); // Singular-ish
 
+        // Localized phrases for different cities
+        const localContext = {
+            'murcia': 'en la capital del Segura',
+            'cartagena': 'en la ciudad portuaria',
+            'lorca': 'en la ciudad del sol',
+            'molina-de-segura': 'en la vega del Segura',
+            'alcantarilla': 'en el corazón industrial',
+            'mazarron': 'en la costa mazarronera',
+            'totana': 'bajo Sierra Espuña'
+        };
+
+        const contextPhrase = localContext[locationData.slug] || `en ${lName}`;
+
         return {
             hero_title: `Automatización para ${sName} en ${lName}`,
-            hero_subtitle: `Tu negocio de ${sNameLower} en ${lName} está perdiendo dinero cada vez que haces una tarea repetitiva. Lo solucionamos.`,
-            meta_title: `${sName} en ${lName} | Automatización y Control | Engorilate`,
-            meta_description: `¿Tienes un negocio de ${sNameLower} en ${lName}? Automatizamos tus ventas y operaciones para que dejes de apagar fuegos.`,
+            hero_subtitle: `Tu negocio de ${sNameLower} ${contextPhrase} está perdiendo dinero cada vez que haces una tarea repetitiva. Profesionalizamos tu operativa.`,
+            meta_title: `${sName} en ${lName} | Expertos en Automatización | Engorilate`,
+            meta_description: `¿Buscas automatizar tu ${sNameLower} en ${lName}? Ayudamos a pymes de la zona de ${lName} a eliminar el caos operativo y recuperar su tiempo con tecnología.`,
 
             // PROBLEM SECTION (The "Pain")
             problems: [
@@ -388,11 +402,38 @@ const SectorLocationPage_v2 = () => {
     // --- RENDER ---
     return (
         <div className="relative pt-32 pb-24 min-h-screen bg-[#0a0a0a] overflow-x-hidden">
+            <BackgroundMesh />
+
+            {/* BREADCRUMBS SCHEMA */}
             <SEO
                 title={pageContent.meta_title}
                 description={pageContent.meta_description}
+                schema={{
+                    "@context": "https://schema.org",
+                    "@type": "BreadcrumbList",
+                    "itemListElement": [
+                        { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://engorilate.com/" },
+                        { "@type": "ListItem", "position": 2, "name": "Sectores", "item": "https://engorilate.com/sectores" },
+                        { "@type": "ListItem", "position": 3, "name": sector.name, "item": `https://engorilate.com/sectores#${sector.id}` },
+                        { "@type": "ListItem", "position": 4, "name": location.name, "item": `https://engorilate.com/${sector.slug}/${location.slug}` }
+                    ]
+                }}
             />
-            <BackgroundMesh />
+
+            {/* BREADCRUMBS UI */}
+            <div className="relative z-10 max-w-7xl mx-auto px-6 mb-8 mt-8">
+                <nav className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-white/30">
+                    <Link to="/" className="hover:text-primary transition-colors flex items-center gap-1">
+                        <HomeIcon className="w-3 h-3" /> Inicio
+                    </Link>
+                    <ChevronRight className="w-3 h-3" />
+                    <Link to="/sectores" className="hover:text-primary transition-colors">Sectores</Link>
+                    <ChevronRight className="w-3 h-3" />
+                    <span className="text-white/60">{sector.name}</span>
+                    <ChevronRight className="w-3 h-3" />
+                    <span className="text-primary">{location.name}</span>
+                </nav>
+            </div>
 
             {/* HERO SECTION */}
             <div className="relative z-10 max-w-7xl mx-auto px-6 mb-32">

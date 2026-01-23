@@ -98,6 +98,7 @@ const About = () => {
                                 alt="Rafael Alcalde Molina"
                                 className="w-full h-full object-cover object-[center_15%] grayscale-[10%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
                                 src="/rafael.png"
+                                loading="lazy"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
 

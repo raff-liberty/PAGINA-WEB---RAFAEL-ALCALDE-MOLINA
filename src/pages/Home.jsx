@@ -10,11 +10,12 @@ import { ShieldCheck, HelpCircle } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
 
 // Simulators
-import LocalSeoSimulator from '../components/LocalSeoSimulator';
-import CustomManagementSimulator from '../components/CustomManagementSimulator';
-import WebDevPerformanceSimulator from '../components/WebDevPerformanceSimulator';
-import WhatsAppChatSim from '../components/WhatsAppChatSim';
-import CrmArchitectureSimulator from '../components/CrmArchitectureSimulator';
+// Simulators - Lazy Loaded for Performance
+const LocalSeoSimulator = React.lazy(() => import('../components/LocalSeoSimulator'));
+const CustomManagementSimulator = React.lazy(() => import('../components/CustomManagementSimulator'));
+const WebDevPerformanceSimulator = React.lazy(() => import('../components/WebDevPerformanceSimulator'));
+const WhatsAppChatSim = React.lazy(() => import('../components/WhatsAppChatSim'));
+const CrmArchitectureSimulator = React.lazy(() => import('../components/CrmArchitectureSimulator'));
 
 const businessTypes = [
     { id: 'hair', label: 'Peluquería / Estética' },
@@ -729,7 +730,9 @@ const Home = () => {
                                                         {/* Simulator wrapper to scale slightly on desktop if needed */}
                                                         <div className="transform scale-95 xl:scale-100 transition-transform duration-700">
                                                             {filteredSolutions[selectedSolutionIndex].simulator &&
-                                                                React.createElement(filteredSolutions[selectedSolutionIndex].simulator)
+                                                                <React.Suspense fallback={<div className="w-full h-64 bg-white/5 animate-pulse rounded-2xl flex items-center justify-center text-gray-500 font-mono text-xs">CARGANDO SIMULADOR...</div>}>
+                                                                    {React.createElement(filteredSolutions[selectedSolutionIndex].simulator)}
+                                                                </React.Suspense>
                                                             }
                                                         </div>
                                                     </div>
@@ -781,7 +784,9 @@ const Home = () => {
                                                 {/* Simulator on Mobile Modal */}
                                                 <div className="mb-0 transform scale-95 origin-top -mt-4">
                                                     {filteredSolutions[selectedSolutionIndex].simulator &&
-                                                        React.createElement(filteredSolutions[selectedSolutionIndex].simulator)
+                                                        <React.Suspense fallback={<div className="w-full h-32 bg-white/5 animate-pulse rounded-xl" />}>
+                                                            {React.createElement(filteredSolutions[selectedSolutionIndex].simulator)}
+                                                        </React.Suspense>
                                                     }
                                                 </div>
 

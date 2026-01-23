@@ -697,6 +697,7 @@ const Diagnosis = () => {
                                                 <img
                                                     src="/rafael_profile.png"
                                                     alt="Rafael Alcalde"
+                                                    loading="lazy"
                                                     className="relative w-16 h-16 md:w-20 md:h-20 rounded-2xl object-cover border-2 border-primary/20 p-1 bg-primary/5"
                                                 />
                                             </div>
@@ -781,6 +782,7 @@ const Diagnosis = () => {
                                     <img
                                         src="/diagnosis_report_mockup.png"
                                         alt="Mockup del Informe de Eficiencia IA"
+                                        loading="lazy"
                                         className="rounded-[2rem] w-full h-auto shadow-inner"
                                     />
                                     <div className="absolute -bottom-6 -right-6 bg-white p-3 md:p-4 rounded-xl shadow-2xl border border-primary/20 flex items-center gap-3">
