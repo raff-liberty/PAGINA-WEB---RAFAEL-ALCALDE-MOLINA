@@ -21,6 +21,12 @@ import BackgroundMesh from '../components/BackgroundMesh';
 import SEO from '../components/SEO';
 import { supabase } from '../lib/supabaseClient';
 
+// VLS Simulators
+import LeakDetectionSimulator from '../components/work-method/LeakDetectionSimulator';
+import SystemBuilderSimulator from '../components/work-method/SystemBuilderSimulator';
+import LeadAttractionSimulator from '../components/work-method/LeadAttractionSimulator';
+import ControlFreedomSimulator from '../components/work-method/ControlFreedomSimulator';
+
 const WorkMethod = () => {
     const [siteConfig, setSiteConfig] = useState({
         work_method_youtube_url: '',
@@ -72,7 +78,7 @@ const WorkMethod = () => {
             objective: "Crear una oferta que tus clientes no puedan rechazar.",
             result: "Hoja de ruta clara para tu negocio.",
             icon: Target,
-            image: "/gorilla-blueprints.png"
+            simulator: LeakDetectionSimulator
         },
         {
             title: "Construir tu Sistema Automático",
@@ -81,7 +87,7 @@ const WorkMethod = () => {
             objective: "Que todo funcione solo. Nosotros lo montamos todo; tú no tienes que tocar el código.",
             result: "Tu nueva máquina de ventas lista.",
             icon: Layout,
-            image: "/gorilla-blueprints.png"
+            simulator: SystemBuilderSimulator
         },
         {
             title: "Atraer Clientes que Sí PAGAN",
@@ -90,7 +96,7 @@ const WorkMethod = () => {
             objective: "Llenar tu agenda. Personas interesadas llamando a tu puerta cada día.",
             result: "Agenda llena de prospectos reales.",
             icon: Zap,
-            image: "/gorilla-dashboard.png"
+            simulator: LeadAttractionSimulator
         },
         {
             title: "Control Total y Libertad",
@@ -99,7 +105,7 @@ const WorkMethod = () => {
             objective: "Que seas libre. Te enseñamos a manejar el mando de control para que el negocio no dependa de ti.",
             result: "Sistema funcionando al 100%.",
             icon: TrendingUp,
-            image: "/gorilla-dashboard.png"
+            simulator: ControlFreedomSimulator
         }
     ];
 
@@ -114,7 +120,7 @@ const WorkMethod = () => {
         <div className="relative pt-32 md:pt-48 pb-24 min-h-screen selection:bg-primary selection:text-black bg-[#020202] text-white">
             <SEO
                 title="Cómo Trabajamos | Ingeniería de Ventas | Engorilate"
-                description="Descubre nuestro sistema operativo de crecimiento profesionalizado en 30 días con ingeniería de precisión."
+                description="Descubre nuestro sistema operativo de crecimiento profesionalizado con ingeniería de precisión."
             />
 
             {/* Ambient Background Elements - High Intensity Atmosphere */}
@@ -150,9 +156,9 @@ const WorkMethod = () => {
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/80 drop-shadow-[0_0_20px_rgba(110,231,183,0.5)]">VENDEN POR TI.</span>
                     </h1>
 
-                    <p className="text-xl md:text-2xl text-white/90 font-light max-w-3xl leading-relaxed italic mb-10 border-l mb-10 border-l-primary/40 pl-6">
+                    <p className="text-xl md:text-2xl text-white/90 font-light max-w-3xl leading-relaxed italic mb-10 border-l-2 lg:border-l-4 border-primary/40 pl-6">
                         Creamos sistemas automáticos que llenan tu agenda de clientes cada mañana.
-                        Profesionalizamos tu forma de vender en <span className="text-white font-bold">30 días</span> para que recuperes tu tiempo.
+                        Profesionalizamos tu forma de vender para que <span className="text-white font-bold">recuperes tu tiempo</span>.
                     </p>
                 </motion.div>
 
@@ -296,21 +302,8 @@ const WorkMethod = () => {
                                                     </div>
                                                 </div>
 
-                                                <div className="flex items-center justify-center bg-black/60 rounded-3xl border border-white/5 relative overflow-hidden group-hover:border-primary/20 transition-all min-h-[200px] md:min-h-0 shadow-inner">
-                                                    {/* Decorative background with more life */}
-                                                    <div className="absolute inset-0 opacity-[0.05] pointer-events-none"
-                                                        style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '20px 20px' }} />
-
-                                                    {/* Ambient Glow */}
-                                                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-
-                                                    <div className="relative z-10 p-8 text-center">
-                                                        <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-white/[0.05] to-transparent flex items-center justify-center mx-auto mb-5 border border-white/10 group-hover:border-primary/30 group-hover:shadow-[0_0_30px_rgba(34,197,94,0.15)] transition-all duration-500 transform group-hover:-rotate-3 group-hover:scale-105">
-                                                            <phase.icon className="w-12 h-12 text-white/20 group-hover:text-primary transition-all duration-500" />
-                                                        </div>
-                                                        <p className="text-[10px] font-mono text-white/30 uppercase tracking-[0.3em] font-bold">PROTOCOLO ENGORILATE</p>
-                                                        <div className="mt-2 text-[8px] font-mono text-primary/40 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Ready to Install</div>
-                                                    </div>
+                                                <div className="flex items-center justify-center bg-black/60 rounded-[2rem] border border-white/5 relative overflow-hidden group-hover:border-primary/20 transition-all min-h-[350px] shadow-inner">
+                                                    <phase.simulator />
                                                 </div>
                                             </div>
                                         </div>
@@ -407,7 +400,7 @@ const WorkMethod = () => {
                             <div className="mt-16 pt-12 border-t border-white/5 flex flex-wrap items-center justify-center gap-10 opacity-40">
                                 <div className="flex items-center gap-3">
                                     <Clock className="w-5 h-5 text-primary" />
-                                    <span className="text-xs uppercase font-bold tracking-[0.2em]">30 DÍAS DE DESPLIEGUE</span>
+                                    <span className="text-xs uppercase font-bold tracking-[0.2em]">DESPLIEGUE INMEDIATO</span>
                                 </div>
                                 <div className="flex items-center gap-3">
                                     <Shield className="w-5 h-5 text-primary" />
