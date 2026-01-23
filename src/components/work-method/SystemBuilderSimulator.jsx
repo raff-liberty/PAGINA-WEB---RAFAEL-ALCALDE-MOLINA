@@ -33,8 +33,8 @@ const SystemBuilderSimulator = () => {
 
     return (
         <div className="w-full aspect-square bg-black/40 rounded-3xl border border-white/5 relative overflow-hidden group shadow-2xl flex items-center justify-center p-8">
-            {/* Background Architecture Grid - Inset to ensure alignment */}
-            <div className="absolute inset-0.5 rounded-[2.8rem] opacity-[0.05] pointer-events-none"
+            {/* Background Architecture Grid - Simplified */}
+            <div className="absolute inset-0 opacity-[0.05] pointer-events-none"
                 style={{ backgroundImage: 'linear-gradient(rgba(34,197,94,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(34,197,94,0.1) 1px, transparent 1px)', backgroundSize: '50px 50px' }} />
 
             {/* Connection Rays (SVG) */}

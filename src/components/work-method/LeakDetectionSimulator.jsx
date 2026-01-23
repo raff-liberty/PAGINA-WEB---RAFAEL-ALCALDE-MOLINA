@@ -43,8 +43,8 @@ const LeakDetectionSimulator = () => {
 
     return (
         <div className="w-full aspect-square bg-black/40 rounded-3xl border border-white/5 relative overflow-hidden group shadow-2xl flex flex-col items-center justify-center p-6 text-center">
-            {/* Background Grid */}
-            <div className="absolute inset-x-0.5 inset-y-0.5 rounded-[2.8rem] opacity-[0.05] pointer-events-none"
+            {/* Background Grid - Simplified */}
+            <div className="absolute inset-0 opacity-[0.05] pointer-events-none"
                 style={{ backgroundImage: 'radial-gradient(circle at center, #22c55e 1px, transparent 0)', backgroundSize: '32px 32px' }} />
 
             {/* Top Stats Bar */}

@@ -20,8 +20,8 @@ const ControlFreedomSimulator = () => {
 
     return (
         <div className="w-full aspect-[4/5] bg-black/40 rounded-3xl border border-white/5 relative overflow-hidden group shadow-2xl flex flex-col p-6 md:p-8 justify-between">
-            {/* Background Grid */}
-            <div className="absolute inset-0.5 rounded-[2.8rem] opacity-[0.03] pointer-events-none"
+            {/* Background Grid - Simplified */}
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
                 style={{ backgroundImage: 'linear-gradient(rgba(34,197,94,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(34,197,94,0.1) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
 
             {/* Premium Header */}

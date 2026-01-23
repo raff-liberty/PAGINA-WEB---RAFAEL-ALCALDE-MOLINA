@@ -81,7 +81,7 @@ const LeadAttractionSimulator = () => {
 
     return (
         <div className="w-full aspect-square bg-black/40 rounded-3xl border border-white/5 relative overflow-hidden group shadow-2xl flex flex-col items-center justify-center p-8">
-            <div className="absolute inset-0.5 rounded-[2.8rem] opacity-[0.05] pointer-events-none"
+            <div className="absolute inset-0 opacity-[0.05] pointer-events-none"
                 style={{ backgroundImage: 'radial-gradient(circle at center, #22c55e 1px, transparent 0)', backgroundSize: '40px 40px' }} />
 
             <AnimatePresence mode="wait">
@@ -120,8 +120,8 @@ const LeadAttractionSimulator = () => {
                                     whileTap={{ scale: 0.98 }}
                                     onClick={() => handleAnswer(i)}
                                     className={`w-full p-4 rounded-xl border text-left flex items-center justify-between transition-all duration-300 ${feedback === null ? 'bg-white/5 border-white/10 hover:border-primary/50 text-white/70' :
-                                            i === questions[currentStep].correct ? 'bg-primary/20 border-primary text-white' :
-                                                feedback === 'incorrect' && i !== questions[currentStep].correct ? 'bg-red-500/10 border-red-500/50 text-white/40' : 'bg-white/5 border-white/10 text-white/40'
+                                        i === questions[currentStep].correct ? 'bg-primary/20 border-primary text-white' :
+                                            feedback === 'incorrect' && i !== questions[currentStep].correct ? 'bg-red-500/10 border-red-500/50 text-white/40' : 'bg-white/5 border-white/10 text-white/40'
                                         }`}
                                 >
                                     <span className="text-xs font-medium leading-normal">{opt}</span>
