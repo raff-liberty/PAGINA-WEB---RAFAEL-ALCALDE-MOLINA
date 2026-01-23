@@ -68,9 +68,6 @@ const LocalSeoSimulator = () => {
         }
     ];
 
-    const currentBusinesses = [...businesses].sort((a, b) => {
-        return a.positions[step] - b.positions[step];
-    });
 
     // Calculate animated metrics
     const client = businesses.find(b => b.isClient);
@@ -100,43 +97,51 @@ const LocalSeoSimulator = () => {
                 </div>
 
                 {/* Search Results - Fixed Height Container */}
-                <div className="relative z-10 space-y-3 min-h-[280px]">
-                    {currentBusinesses.map((business) => {
-                        const position = business.positions[step];
+                <div className="relative z-10 h-[284px]">
+                    {businesses.map((business) => {
+                        const rank = business.positions[step];
+                        // Calculate Y position: (rank - 1) * (height + gap)
+                        // Height is 62px, Gap is 12px -> 74px step
+                        const yPos = (rank - 1) * 74;
 
                         return (
                             <motion.div
                                 key={business.name}
-                                layout
-                                layoutId={business.name}
                                 initial={false}
                                 animate={{
-                                    opacity: business.isClient ? 1 : 0.4,
+                                    y: yPos,
+                                    opacity: business.isClient ? 1 : 0.45,
+                                    scale: business.isClient ? 1.02 : 0.98,
+                                    zIndex: business.isClient ? 20 : 10,
+                                    boxShadow: business.isClient
+                                        ? "0 20px 40px -12px rgba(34, 197, 94, 0.2)"
+                                        : "0 0px 0px rgba(0,0,0,0)"
                                 }}
                                 transition={{
-                                    layout: {
+                                    y: {
                                         type: "spring",
-                                        stiffness: 350,
-                                        damping: 30,
+                                        stiffness: 40,
+                                        damping: 12,
                                         mass: 1
                                     },
-                                    opacity: { duration: 0.3 }
+                                    opacity: { duration: 0.5 },
+                                    scale: { duration: 0.5 },
+                                    boxShadow: { duration: 0.5 }
                                 }}
-                                className={`relative p-4 rounded-2xl border transition-all duration-500 h-[62px] ${business.isClient
-                                    ? 'bg-primary/5 border-primary/30'
+                                className={`absolute left-0 right-0 p-4 rounded-2xl border transition-colors duration-500 h-[62px] ${business.isClient
+                                    ? 'bg-primary/10 border-primary/40'
                                     : 'bg-white/[0.02] border-white/5'
                                     }`}
                             >
                                 {/* Position Badge */}
-                                <motion.div
-                                    layout="position"
-                                    className={`absolute -top-2 -left-2 w-6 h-6 rounded-lg flex items-center justify-center text-xs font-black transition-colors duration-500 ${business.isClient && step > 0
+                                <div
+                                    className={`absolute -top-2 -left-2 w-6 h-6 rounded-lg flex items-center justify-center text-xs font-black transition-colors duration-500 shadow-xl ${business.isClient && step > 0
                                         ? 'bg-primary text-black'
                                         : 'bg-white/10 text-white/40'
                                         }`}
                                 >
-                                    {position}º
-                                </motion.div>
+                                    {rank}º
+                                </div>
 
                                 {/* Business Info */}
                                 <div className="flex items-start justify-between gap-3 h-full">
