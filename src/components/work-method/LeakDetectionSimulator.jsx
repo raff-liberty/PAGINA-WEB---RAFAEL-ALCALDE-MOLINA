@@ -11,10 +11,10 @@ const LeakDetectionSimulator = () => {
 
     // Initial leaks data
     const initialLeaks = [
-        { id: 1, x: '25%', y: '25%', label: 'Fuga de Leads', value: 1200 },
-        { id: 2, x: '75%', y: '35%', label: 'Checkout Abandonado', value: 2400 },
-        { id: 3, x: '40%', y: '70%', label: 'Fricción en Registro', value: 850 },
-        { id: 4, x: '80%', y: '75%', label: 'Lead Sin Respuesta', value: 1500 },
+        { id: 1, x: '22%', y: '22%', label: 'Fuga de Leads', value: 1200 },
+        { id: 2, x: '78%', y: '33%', label: 'Checkout Abandonado', value: 2400 },
+        { id: 3, x: '35%', y: '75%', label: 'Fricción en Registro', value: 850 },
+        { id: 4, x: '85%', y: '82%', label: 'Lead Sin Respuesta', value: 1500 },
     ];
 
     const resetSimulation = useCallback(() => {
@@ -57,7 +57,7 @@ const LeakDetectionSimulator = () => {
                             key={savings}
                             initial={{ scale: 1.2, color: '#22c55e' }}
                             animate={{ scale: 1, color: '#ffffff' }}
-                            className="text-2xl font-black font-mono tracking-tight text-white drop-shadow-[0_0_10px_rgba(34,197,94,0.3)]"
+                            className="text-2xl font-black font-mono tracking-tight text-white drop-shadow-[0_0_15px_rgba(34,197,94,0.4)]"
                         >
                             {savings.toLocaleString()}€
                         </motion.span>
@@ -79,18 +79,18 @@ const LeakDetectionSimulator = () => {
                         exit={{ opacity: 0 }}
                         className="absolute inset-0 pointer-events-none"
                     >
-                        {/* Radar Sweep Haz circular */}
+                        {/* Radar Sweep */}
                         <motion.div
                             animate={{ rotate: 360 }}
                             transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                            className="absolute inset-[-50%] bg-[conic-gradient(from_0deg,transparent_0deg,rgba(34,197,94,0.15)_180deg,transparent_200deg)] z-0 origin-center"
+                            className="absolute inset-[-50%] bg-[conic-gradient(from_0deg,transparent_0deg,rgba(34,197,94,0.2)_180deg,transparent_200deg)] z-0 origin-center"
                             style={{ borderRadius: '50%' }}
                         />
                         {/* Radar Rings */}
                         {[1, 2, 3].map(i => (
                             <div key={i} className="absolute inset-0 flex items-center justify-center pointer-events-none">
                                 <div
-                                    className="border border-primary/5 rounded-full"
+                                    className="border border-primary/10 rounded-full"
                                     style={{ width: `${i * 33}%`, height: `${i * 33}%` }}
                                 />
                             </div>
@@ -100,28 +100,29 @@ const LeakDetectionSimulator = () => {
             </AnimatePresence>
 
             {/* Central Core */}
-            <div className="relative z-20 mt-4">
+            <div className="relative z-20">
                 <motion.div
                     animate={{
                         borderColor: showFinalStatus ? 'rgba(34,197,94,0.8)' : 'rgba(255,255,255,0.1)',
-                        boxShadow: showFinalStatus ? '0 0 40px rgba(34,197,94,0.4)' : '0 0 0px transparent',
+                        boxShadow: showFinalStatus ? '0 0 50px rgba(34,197,94,0.5)' : '0 0 20px rgba(34,197,94,0.1)',
                         scale: showFinalStatus ? [1, 1.05, 1] : 1
                     }}
                     transition={{ duration: 2, repeat: showFinalStatus ? Infinity : 0 }}
-                    className="w-24 h-24 rounded-full bg-black/60 border-2 flex items-center justify-center backdrop-blur-2xl transition-all duration-700"
+                    className="w-28 h-28 rounded-full bg-black/80 border-2 flex items-center justify-center backdrop-blur-2xl transition-all duration-700"
                 >
                     {showFinalStatus ? (
-                        <ShieldAlert className="w-10 h-10 text-primary" />
+                        <ShieldAlert className="w-12 h-12 text-primary drop-shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
                     ) : (
-                        <Search className={`w-10 h-10 ${fixedCount > 0 ? 'text-primary' : 'text-white/20'}`} />
+                        <Search className={`w-12 h-12 transition-colors duration-500 ${fixedCount > 0 ? 'text-primary' : 'text-white/20'} drop-shadow-[0_0_15px_rgba(34,197,94,0.3)]`} />
                     )}
                 </motion.div>
 
-                <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 text-center w-max">
+                {/* Repositioned Text - Below Core */}
+                <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 text-center w-max">
                     <motion.span
-                        animate={{ opacity: [0.5, 1, 0.5] }}
-                        transition={{ duration: 2.5, repeat: Infinity }}
-                        className="text-[10px] font-black uppercase tracking-[0.4em] text-white/50"
+                        animate={{ opacity: [0.6, 1, 0.6], letterSpacing: ['0.4em', '0.5em', '0.4em'] }}
+                        transition={{ duration: 3, repeat: Infinity }}
+                        className="text-[11px] font-black uppercase text-white/60"
                     >
                         {showFinalStatus ? 'SISTEMA SELLADO' : 'ANALIZANDO FLUJO'}
                     </motion.span>
@@ -135,10 +136,10 @@ const LeakDetectionSimulator = () => {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
-                        className="absolute bottom-10 flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-full backdrop-blur-xl z-50 pointer-events-none"
+                        className="absolute bottom-10 flex items-center gap-2 bg-white/5 border border-white/10 px-5 py-2.5 rounded-full backdrop-blur-xl z-50 pointer-events-none shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
                     >
-                        <MousePointer2 className="w-3 h-3 text-primary animate-bounce" />
-                        <span className="text-[8px] font-black uppercase tracking-widest text-white/60">Haz clic en las alertas para optimizar</span>
+                        <MousePointer2 className="w-3.5 h-3.5 text-primary animate-bounce" />
+                        <span className="text-[9px] font-black uppercase tracking-widest text-white/80">Haz clic en las alertas para optimizar</span>
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -152,12 +153,12 @@ const LeakDetectionSimulator = () => {
                         animate={{
                             scale: 1,
                             opacity: 1,
-                            y: [0, -6, 0]
+                            y: [0, -8, 0]
                         }}
                         exit={{
                             scale: 2,
                             opacity: 0,
-                            filter: 'blur(12px)'
+                            filter: 'blur(15px)'
                         }}
                         transition={{
                             y: { duration: 3, repeat: Infinity, ease: "easeInOut" }
@@ -168,19 +169,19 @@ const LeakDetectionSimulator = () => {
                     >
                         <div className="relative">
                             <motion.div
-                                animate={{ scale: [1, 1.4, 1], opacity: [0.5, 0.2, 0.5] }}
+                                animate={{ scale: [1, 1.5, 1], opacity: [0.6, 0.3, 0.6] }}
                                 transition={{ duration: 1.2, repeat: Infinity }}
-                                className="absolute inset-[-12px] bg-red-500/30 rounded-full blur-md"
+                                className="absolute inset-[-15px] bg-red-500/40 rounded-full blur-xl"
                             />
-                            <div className="w-12 h-12 rounded-2xl bg-red-500/20 border border-red-500/60 flex items-center justify-center backdrop-blur-md group-hover:bg-red-500/40 transition-all group-hover:scale-110">
-                                <AlertTriangle className="w-6 h-6 text-red-500" />
+                            <div className="w-14 h-14 rounded-2xl bg-black/60 border border-red-500/60 flex items-center justify-center backdrop-blur-md group-hover:bg-red-500/40 transition-all group-hover:scale-110 shadow-2xl">
+                                <AlertTriangle className="w-7 h-7 text-red-500" />
                             </div>
                         </div>
                         <div className="flex flex-col items-center pointer-events-none translate-y-[-2px]">
-                            <span className="text-[8px] font-black text-red-400 uppercase bg-black/90 px-2 py-0.5 rounded-full border border-red-900/50 whitespace-nowrap shadow-2xl">
+                            <span className="text-[8px] font-black text-red-400 uppercase bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-red-900/50 whitespace-nowrap shadow-2xl tracking-tighter">
                                 {leak.label}
                             </span>
-                            <span className="text-[10px] font-black text-white font-mono mt-1 tracking-tighter">
+                            <span className="text-[11px] font-black text-white font-mono mt-1 tracking-tighter drop-shadow-lg">
                                 -{leak.value}€
                             </span>
                         </div>
@@ -196,13 +197,13 @@ const LeakDetectionSimulator = () => {
                         animate={{ opacity: 1, scale: 1 }}
                         className="absolute inset-0 z-50 flex items-center justify-center pointer-events-none"
                     >
-                        <div className="bg-primary/10 border border-primary/40 backdrop-blur-2xl px-10 py-6 rounded-[2.5rem] flex flex-col items-center gap-3 shadow-[0_0_80px_rgba(34,197,94,0.3)] border-2">
-                            <div className="w-14 h-14 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30">
-                                <Sparkles className="w-8 h-8 text-primary" />
+                        <div className="bg-primary/10 border border-primary/40 backdrop-blur-3xl px-12 py-8 rounded-[3rem] flex flex-col items-center gap-4 shadow-[0_0_100px_rgba(34,197,94,0.4)] border-2">
+                            <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30">
+                                <Sparkles className="w-10 h-10 text-primary" />
                             </div>
                             <div className="text-center">
-                                <div className="text-lg font-black text-white uppercase tracking-[0.2em] mb-1">Éxito Total</div>
-                                <div className="text-[9px] font-bold text-primary uppercase tracking-[0.4em]">Fugas 100% Selladas</div>
+                                <div className="text-xl font-black text-white uppercase tracking-[0.2em] mb-1">Éxito Total</div>
+                                <div className="text-[10px] font-bold text-primary uppercase tracking-[0.4em]">Fugas 100% Selladas</div>
                             </div>
                         </div>
                     </motion.div>
