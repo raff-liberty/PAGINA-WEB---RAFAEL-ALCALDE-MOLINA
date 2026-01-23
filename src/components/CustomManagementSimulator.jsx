@@ -59,16 +59,16 @@ const CustomManagementSimulator = () => {
 
     return (
         <div className="relative w-full max-w-[380px] mx-auto">
-            {/* Main Container */}
-            <div className="relative bg-[#0a0a0a] border border-white/[0.15] rounded-[2.5rem] p-6 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.05)_inset] overflow-hidden group">
+            {/* Main Container - STRICT FIXED HEIGHT */}
+            <div className="relative bg-[#0a0a0a] border border-white/[0.15] rounded-[2.5rem] p-6 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.05)_inset] overflow-hidden group min-h-[580px]">
                 {/* Rim Light */}
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
 
                 {/* Ambient Glow */}
                 <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/10 blur-[60px] rounded-full group-hover:bg-primary/20 transition-all duration-700" />
 
-                {/* Header */}
-                <div className="relative z-10 mb-6">
+                {/* Header - Fixed height */}
+                <div className="relative z-10 mb-6 h-20">
                     <div className="flex items-center justify-between mb-3">
                         <h3 className="text-primary font-mono text-[9px] font-bold tracking-[0.3em] uppercase">
                             Panel de Control
@@ -85,15 +85,15 @@ const CustomManagementSimulator = () => {
                     </div>
                 </div>
 
-                {/* View Tabs */}
-                <div className="relative z-10 flex gap-2 mb-6">
+                {/* View Tabs - Fixed height */}
+                <div className="relative z-10 flex gap-2 mb-6 h-20">
                     {views.map((view) => (
                         <button
                             key={view.id}
                             onClick={() => setActiveView(view.id)}
                             className={`flex-1 px-3 py-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${activeView === view.id
-                                    ? 'bg-primary text-black'
-                                    : 'bg-white/5 text-white/40 hover:bg-white/10'
+                                ? 'bg-primary text-black'
+                                : 'bg-white/5 text-white/40 hover:bg-white/10'
                                 }`}
                         >
                             <view.icon className="w-3 h-3 mx-auto mb-1" />
@@ -102,8 +102,8 @@ const CustomManagementSimulator = () => {
                     ))}
                 </div>
 
-                {/* Main Content Area */}
-                <div className="relative z-10 min-h-[280px]">
+                {/* Main Content Area - FIXED HEIGHT */}
+                <div className="relative z-10 h-[360px]">
                     <AnimatePresence mode="wait">
                         {/* Revenue View */}
                         {activeView === 0 && (
@@ -201,8 +201,8 @@ const CustomManagementSimulator = () => {
                                             animate={{ opacity: 1, x: 0 }}
                                             transition={{ delay: i * 0.1 }}
                                             className={`p-3 rounded-xl border ${product.status === 'low'
-                                                    ? 'bg-red-500/5 border-red-500/20'
-                                                    : 'bg-white/[0.02] border-white/5'
+                                                ? 'bg-red-500/5 border-red-500/20'
+                                                : 'bg-white/[0.02] border-white/5'
                                                 }`}
                                         >
                                             <div className="flex items-center justify-between">
@@ -274,13 +274,13 @@ const CustomManagementSimulator = () => {
                                             animate={{ opacity: 1, x: 0 }}
                                             transition={{ delay: i * 0.08 }}
                                             className={`p-3 rounded-xl border flex items-center gap-3 ${item.done
-                                                    ? 'bg-primary/5 border-primary/20'
-                                                    : 'bg-white/[0.02] border-white/5'
+                                                ? 'bg-primary/5 border-primary/20'
+                                                : 'bg-white/[0.02] border-white/5'
                                                 }`}
                                         >
                                             <div className={`w-5 h-5 rounded-lg border-2 flex items-center justify-center ${item.done
-                                                    ? 'border-primary bg-primary'
-                                                    : 'border-white/20'
+                                                ? 'border-primary bg-primary'
+                                                : 'border-white/20'
                                                 }`}>
                                                 {item.done && (
                                                     <CheckCircle2 className="w-3 h-3 text-black" />
