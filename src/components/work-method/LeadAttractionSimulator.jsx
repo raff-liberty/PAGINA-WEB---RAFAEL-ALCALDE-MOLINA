@@ -80,7 +80,7 @@ const LeadAttractionSimulator = () => {
     };
 
     return (
-        <div className="w-full aspect-square bg-black/40 rounded-3xl border border-white/5 relative overflow-hidden group shadow-2xl flex flex-col items-center justify-center p-8">
+        <div className="w-full aspect-[4/5] bg-black/40 rounded-3xl border border-white/5 relative overflow-hidden group shadow-2xl flex flex-col items-center justify-center p-6 md:p-8">
             <div className="absolute inset-0 opacity-[0.05] pointer-events-none"
                 style={{ backgroundImage: 'radial-gradient(circle at center, #22c55e 1px, transparent 0)', backgroundSize: '40px 40px' }} />
 
@@ -91,10 +91,10 @@ const LeadAttractionSimulator = () => {
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -20 }}
-                        className="w-full flex flex-col items-center"
+                        className="w-full flex flex-col items-center h-full"
                     >
                         {/* Quiz Header */}
-                        <div className="flex items-center justify-between w-full mb-8">
+                        <div className="flex items-center justify-between w-full mb-6">
                             <div className="flex flex-col">
                                 <span className="text-[10px] font-black text-primary uppercase tracking-[0.3em]">Módulo de Educación</span>
                                 <span className="text-xl font-black text-white italic tracking-tighter uppercase">Filtro de Autoridad</span>
@@ -105,74 +105,75 @@ const LeadAttractionSimulator = () => {
                         </div>
 
                         {/* Question */}
-                        <div className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 mb-6">
-                            <h3 className="text-sm md:text-md font-bold text-white text-center leading-relaxed">
+                        <div className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 mb-4">
+                            <h3 className="text-xs md:text-sm font-bold text-white text-center leading-relaxed">
                                 {questions[currentStep].q}
                             </h3>
                         </div>
 
                         {/* Options */}
-                        <div className="w-full space-y-3">
+                        <div className="w-full space-y-2 flex-grow">
                             {questions[currentStep].options.map((opt, i) => (
                                 <motion.button
                                     key={i}
-                                    whileHover={{ scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
+                                    whileHover={{ scale: 1.01 }}
+                                    whileTap={{ scale: 0.99 }}
                                     onClick={() => handleAnswer(i)}
-                                    className={`w-full p-4 rounded-xl border text-left flex items-center justify-between transition-all duration-300 ${feedback === null ? 'bg-white/5 border-white/10 hover:border-primary/50 text-white/70' :
-                                        i === questions[currentStep].correct ? 'bg-primary/20 border-primary text-white' :
-                                            feedback === 'incorrect' && i !== questions[currentStep].correct ? 'bg-red-500/10 border-red-500/50 text-white/40' : 'bg-white/5 border-white/10 text-white/40'
+                                    className={`w-full p-3.5 rounded-xl border text-left flex items-center justify-between transition-all duration-300 ${feedback === null ? 'bg-white/5 border-white/10 hover:border-primary/50 text-white/70' :
+                                            i === questions[currentStep].correct ? 'bg-primary/20 border-primary text-white' :
+                                                feedback === 'incorrect' && i !== questions[currentStep].correct ? 'bg-red-500/10 border-red-500/50 text-white/40' : 'bg-white/5 border-white/10 text-white/40'
                                         }`}
                                 >
-                                    <span className="text-xs font-medium leading-normal">{opt}</span>
-                                    {feedback && i === questions[currentStep].correct && <CheckCircle2 className="w-5 h-5 text-primary shrink-0" />}
+                                    <span className="text-[11px] font-medium leading-tight">{opt}</span>
+                                    {feedback && i === questions[currentStep].correct && <CheckCircle2 className="w-4 h-4 text-primary shrink-0" />}
                                 </motion.button>
                             ))}
                         </div>
 
                         {/* Educational Feedback */}
-                        <AnimatePresence>
-                            {feedback && (
-                                <motion.div
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    className={`mt-6 p-4 rounded-xl border-t-2 text-center text-[10px] uppercase font-black tracking-widest ${feedback === 'correct' ? 'text-primary' : 'text-red-400'
-                                        }`}
-                                >
-                                    <div className="flex items-center gap-2 justify-center mb-1">
-                                        <Sparkles className="w-3 h-3" />
-                                        <span>Aprendizaje Clave:</span>
-                                    </div>
-                                    <p className="normal-case font-medium text-white/60 tracking-normal text-[11px] leading-relaxed italic">
-                                        "{questions[currentStep].edu}"
-                                    </p>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
+                        <div className="h-24 w-full mt-4 flex items-center justify-center">
+                            <AnimatePresence>
+                                {feedback && (
+                                    <motion.div
+                                        initial={{ opacity: 0, scale: 0.95 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        className={`p-3 rounded-xl border border-white/5 bg-white/[0.02] text-center text-[9px] uppercase font-black tracking-widest w-full`}
+                                    >
+                                        <div className={`flex items-center gap-2 justify-center mb-1 ${feedback === 'correct' ? 'text-primary' : 'text-red-400'}`}>
+                                            <Sparkles className="w-3 h-3" />
+                                            <span>Aprendizaje Clave:</span>
+                                        </div>
+                                        <p className="normal-case font-medium text-white/60 tracking-normal text-[10px] leading-tight italic">
+                                            "{questions[currentStep].edu}"
+                                        </p>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
                     </motion.div>
                 ) : (
                     <motion.div
                         key="results"
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="flex flex-col items-center text-center"
+                        className="flex flex-col items-center text-center py-4"
                     >
-                        <div className="w-20 h-20 rounded-3xl bg-primary/20 flex items-center justify-center border-2 border-primary/50 mb-6">
-                            <ShieldCheck className="w-10 h-10 text-primary" />
+                        <div className="w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center border-2 border-primary/50 mb-4">
+                            <ShieldCheck className="w-8 h-8 text-primary" />
                         </div>
-                        <h2 className="text-2xl font-black text-white italic uppercase mb-2">Educación Completada</h2>
-                        <p className="text-sm text-white/60 mb-8 max-w-[280px]">
+                        <h2 className="text-xl font-black text-white italic uppercase mb-2">Educación Completada</h2>
+                        <p className="text-xs text-white/60 mb-6 max-w-[240px]">
                             Has entendido cómo funciona nuestro sistema de atracción y filtrado de alta autoridad.
                         </p>
 
-                        <div className="grid grid-cols-2 gap-4 w-full mb-8">
-                            <div className="bg-white/5 p-4 rounded-2xl border border-white/10">
-                                <span className="block text-[10px] font-black text-white/30 uppercase mb-1">Puntuación</span>
-                                <span className="text-2xl font-black font-mono text-primary">{score}/{questions.length}</span>
+                        <div className="grid grid-cols-2 gap-3 w-full mb-6">
+                            <div className="bg-white/5 p-3 rounded-xl border border-white/10">
+                                <span className="block text-[8px] font-black text-white/30 uppercase mb-1">Puntuación</span>
+                                <span className="text-xl font-black font-mono text-primary">{score}/{questions.length}</span>
                             </div>
-                            <div className="bg-white/5 p-4 rounded-2xl border border-white/10">
-                                <span className="block text-[10px] font-black text-white/30 uppercase mb-1">Nivel</span>
-                                <span className="text-lg font-black text-white italic">ESPERTO</span>
+                            <div className="bg-white/5 p-3 rounded-xl border border-white/10">
+                                <span className="block text-[8px] font-black text-white/30 uppercase mb-1">Nivel</span>
+                                <span className="text-sm font-black text-white italic">ESPERTO</span>
                             </div>
                         </div>
 
@@ -183,7 +184,7 @@ const LeadAttractionSimulator = () => {
                                 setShowResults(false);
                                 setFeedback(null);
                             }}
-                            className="flex items-center gap-3 bg-primary px-8 py-3 rounded-full text-black font-black uppercase text-xs hover:scale-105 transition-transform"
+                            className="flex items-center gap-2 bg-primary px-6 py-2.5 rounded-full text-black font-black uppercase text-[10px] hover:scale-105 transition-transform"
                         >
                             Reiniciar Módulo
                             <ArrowRight className="w-4 h-4" />
