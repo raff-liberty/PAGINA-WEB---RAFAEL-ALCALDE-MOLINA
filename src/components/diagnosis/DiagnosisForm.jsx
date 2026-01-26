@@ -146,7 +146,7 @@ const DiagnosisForm = () => {
             {q.type === 'open' ? (
                 <div className="space-y-4">
                     <textarea
-                        className="w-full bg-[#1E1E1E] border border-white/30 rounded-xl p-4 text-lg focus:border-primary/50 focus:outline-none transition-colors min-h-[120px] text-white placeholder-gray-500 shadow-inner"
+                        className="w-full bg-white/[0.05] border border-white/10 rounded-2xl p-5 text-lg text-white focus:border-primary/50 focus:bg-white/[0.08] outline-none transition-all placeholder:text-white/20 shadow-inner resize-none mb-4"
                         placeholder="Escribe aquí tu respuesta..."
                         value={responses[q.id] || ''}
                         onChange={handleOpenResponseChange}
@@ -233,7 +233,7 @@ const DiagnosisForm = () => {
                                 <input
                                     required
                                     type="text"
-                                    className="w-full bg-[#1E1E1E] border border-white/30 rounded-xl p-4 focus:border-primary/50 focus:outline-none transition-colors text-white placeholder-gray-500 shadow-inner"
+                                    className="w-full bg-white/[0.05] border border-white/10 rounded-2xl p-5 text-white focus:border-primary/50 focus:bg-white/[0.08] outline-none transition-all placeholder:text-white/20 shadow-inner"
                                     placeholder="Juan Pérez"
                                     value={contactInfo.full_name}
                                     onChange={(e) => setContactInfo(prev => ({ ...prev, full_name: e.target.value }))}
@@ -244,7 +244,7 @@ const DiagnosisForm = () => {
                                 <input
                                     required
                                     type="email"
-                                    className="w-full bg-[#1E1E1E] border border-white/30 rounded-xl p-4 focus:border-primary/50 focus:outline-none transition-colors text-white placeholder-gray-500 shadow-inner"
+                                    className="w-full bg-white/[0.05] border border-white/10 rounded-2xl p-5 text-white focus:border-primary/50 focus:bg-white/[0.08] outline-none transition-all placeholder:text-white/20 shadow-inner"
                                     placeholder="juan@tuempresa.com"
                                     value={contactInfo.email}
                                     onChange={(e) => setContactInfo(prev => ({ ...prev, email: e.target.value }))}
@@ -254,7 +254,7 @@ const DiagnosisForm = () => {
                                 <label className="text-sm font-medium text-text-muted ml-1">WhatsApp (opcional)</label>
                                 <input
                                     type="tel"
-                                    className="w-full bg-[#1E1E1E] border border-white/30 rounded-xl p-4 focus:border-primary/50 focus:outline-none transition-colors text-white placeholder-gray-500 shadow-inner"
+                                    className="w-full bg-white/[0.05] border border-white/10 rounded-2xl p-5 text-white focus:border-primary/50 focus:bg-white/[0.08] outline-none transition-all placeholder:text-white/20 shadow-inner"
                                     placeholder="+34 600 000 000"
                                     value={contactInfo.phone}
                                     onChange={(e) => setContactInfo(prev => ({ ...prev, phone: e.target.value }))}

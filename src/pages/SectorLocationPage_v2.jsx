@@ -789,26 +789,33 @@ const SectorLocationPage_v2 = () => {
                                                 />
                                             </div>
 
-                                            <div className="grid grid-cols-1 gap-4">
+                                            <div className="grid grid-cols-1 gap-6">
                                                 <input
                                                     type="text"
                                                     name="name"
                                                     required
-                                                    className="w-full px-6 py-4 bg-white/[0.03] border border-white/10 rounded-2xl text-white placeholder-gray-500 focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all text-base"
+                                                    className="w-full px-5 py-4 bg-white/[0.05] border border-white/10 rounded-2xl text-white placeholder:text-white/20 focus:outline-none focus:border-primary/50 focus:bg-white/[0.08] transition-all text-base shadow-inner"
                                                     placeholder="Nombre completo *"
                                                 />
                                                 <input
                                                     type="email"
                                                     name="email"
                                                     required
-                                                    className="w-full px-6 py-4 bg-white/[0.03] border border-white/10 rounded-2xl text-white placeholder-gray-500 focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all text-base"
+                                                    className="w-full px-5 py-4 bg-white/[0.05] border border-white/10 rounded-2xl text-white placeholder:text-white/20 focus:outline-none focus:border-primary/50 focus:bg-white/[0.08] transition-all text-base shadow-inner"
                                                     placeholder="Email corporativo *"
+                                                />
+                                                <input
+                                                    type="tel"
+                                                    name="phone"
+                                                    required
+                                                    className="w-full px-5 py-4 bg-white/[0.05] border border-white/10 rounded-2xl text-white placeholder:text-white/20 focus:outline-none focus:border-primary/50 focus:bg-white/[0.08] transition-all text-base shadow-inner"
+                                                    placeholder="WhatsApp *"
                                                 />
                                                 <textarea
                                                     name="message"
                                                     required
                                                     rows="4"
-                                                    className="w-full px-6 py-4 bg-white/[0.03] border border-white/10 rounded-2xl text-white placeholder-gray-500 focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all resize-none text-base"
+                                                    className="w-full px-5 py-4 bg-white/[0.05] border border-white/10 rounded-2xl text-white placeholder:text-white/20 focus:outline-none focus:border-primary/50 focus:bg-white/[0.08] transition-all resize-none text-base shadow-inner"
                                                     placeholder="¿Qué procesos quieres automatizar? *"
                                                 ></textarea>
                                             </div>

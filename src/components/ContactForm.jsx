@@ -175,39 +175,39 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
                 <div className="group/input relative">
                     <input
                         id="name"
-                        className="w-full bg-white/[0.08] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-primary/50 focus:bg-white/[0.12] outline-none transition-all placeholder:text-white/30 shadow-[0_0_20px_rgba(255,255,255,0.05),0_4px_6px_-1px_rgba(0,0,0,0.3)]"
+                        className="w-full bg-white/[0.05] border border-white/10 rounded-2xl px-5 py-4 text-white focus:border-primary/50 focus:bg-white/[0.08] outline-none transition-all placeholder:text-white/20 shadow-[0_0_20px_rgba(255,255,255,0.02),0_4px_6px_-1px_rgba(0,0,0,0.3)]"
                         placeholder="Tu Nombre"
                         type="text"
                         value={formData.name}
                         onChange={handleChange}
                         required
                     />
-                    <div className="absolute inset-0 rounded-xl bg-primary/5 blur-xl opacity-0 group-focus-within/input:opacity-100 transition-opacity pointer-events-none" />
+                    <div className="absolute inset-0 rounded-2xl bg-primary/5 blur-xl opacity-0 group-focus-within/input:opacity-100 transition-opacity pointer-events-none" />
                 </div>
                 <div className="group/input relative">
                     <input
                         id="phone"
-                        className="w-full bg-white/[0.08] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-primary/50 focus:bg-white/[0.12] outline-none transition-all placeholder:text-white/30 shadow-[0_0_20px_rgba(255,255,255,0.05),0_4px_6px_-1px_rgba(0,0,0,0.3)]"
+                        className="w-full bg-white/[0.05] border border-white/10 rounded-2xl px-5 py-4 text-white focus:border-primary/50 focus:bg-white/[0.08] outline-none transition-all placeholder:text-white/20 shadow-[0_0_20px_rgba(255,255,255,0.02),0_4px_6px_-1px_rgba(0,0,0,0.3)]"
                         placeholder="+34 WhatsApp"
                         type="tel"
                         value={formData.phone}
                         onChange={handleChange}
                         required
                     />
-                    <div className="absolute inset-0 rounded-xl bg-primary/5 blur-xl opacity-0 group-focus-within/input:opacity-100 transition-opacity pointer-events-none" />
+                    <div className="absolute inset-0 rounded-2xl bg-primary/5 blur-xl opacity-0 group-focus-within/input:opacity-100 transition-opacity pointer-events-none" />
                 </div>
             </div>
 
             <div className="group/input relative">
                 <input
                     id="company"
-                    className="w-full bg-white/[0.08] border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:border-primary/50 focus:bg-white/[0.12] outline-none transition-all placeholder:text-white/30 shadow-[0_0_20px_rgba(255,255,255,0.05),0_4px_6px_-1px_rgba(0,0,0,0.3)]"
+                    className="w-full bg-white/[0.05] border border-white/10 rounded-2xl px-5 py-4 text-white focus:border-primary/50 focus:bg-white/[0.08] outline-none transition-all placeholder:text-white/20 shadow-[0_0_20px_rgba(255,255,255,0.02),0_4px_6px_-1px_rgba(0,0,0,0.3)]"
                     placeholder="Empresa (opcional)"
                     type="text"
                     value={formData.company}
                     onChange={handleChange}
                 />
-                <div className="absolute inset-0 rounded-xl bg-primary/5 blur-xl opacity-0 group-focus-within/input:opacity-100 transition-opacity pointer-events-none" />
+                <div className="absolute inset-0 rounded-2xl bg-primary/5 blur-xl opacity-0 group-focus-within/input:opacity-100 transition-opacity pointer-events-none" />
             </div>
 
             {/* Honeypot field - Invisible to humans, trap for bots */}
@@ -227,14 +227,14 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
                 <div className="group/input relative">
                     <input
                         id="email"
-                        className="w-full bg-white/[0.08] border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:border-primary/50 focus:bg-white/[0.12] outline-none transition-all placeholder:text-white/30 shadow-[0_0_20px_rgba(255,255,255,0.05),0_4px_6px_-1px_rgba(0,0,0,0.3)]"
+                        className="w-full bg-white/[0.05] border border-white/10 rounded-2xl px-5 py-4 text-white focus:border-primary/50 focus:bg-white/[0.08] outline-none transition-all placeholder:text-white/20 shadow-[0_0_20px_rgba(255,255,255,0.02),0_4px_6px_-1px_rgba(0,0,0,0.3)]"
                         placeholder="tu@email.com"
                         type="email"
                         value={formData.email}
                         onChange={handleChange}
                         required
                     />
-                    <div className="absolute inset-0 rounded-xl bg-primary/5 blur-xl opacity-0 group-focus-within/input:opacity-100 transition-opacity pointer-events-none" />
+                    <div className="absolute inset-0 rounded-2xl bg-primary/5 blur-xl opacity-0 group-focus-within/input:opacity-100 transition-opacity pointer-events-none" />
                 </div>
                 <div className="group/input relative">
                     <div className="relative">
@@ -243,7 +243,7 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
                             id="service"
                             value={formData.service}
                             onChange={handleChange}
-                            className="w-full bg-white/[0.08] border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:border-primary/50 focus:bg-white/[0.12] outline-none appearance-none cursor-pointer transition-all shadow-[0_0_20px_rgba(255,255,255,0.05),0_4px_6px_-1px_rgba(0,0,0,0.3)]"
+                            className="w-full bg-white/[0.05] border border-white/10 rounded-2xl px-5 py-4 text-white focus:border-primary/50 focus:bg-white/[0.08] outline-none appearance-none cursor-pointer transition-all shadow-[0_0_20px_rgba(255,255,255,0.02),0_4px_6px_-1px_rgba(0,0,0,0.3)]"
                         >
                             {serviceOptions.map(opt => (
                                 <option key={opt.value} value={opt.value} className="bg-[#0a0a0a] text-white">{opt.label}</option>
@@ -259,14 +259,14 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
             <div className="group/input relative">
                 <textarea
                     id="message"
-                    className="w-full bg-white/[0.08] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-primary/50 focus:bg-white/[0.12] outline-none resize-none transition-all placeholder:text-white/30 shadow-[0_0_20px_rgba(255,255,255,0.05),0_4px_6px_-1px_rgba(0,0,0,0.3)]"
+                    className="w-full bg-white/[0.05] border border-white/10 rounded-2xl px-5 py-4 text-white focus:border-primary/50 focus:bg-white/[0.08] outline-none resize-none transition-all placeholder:text-white/20 shadow-[0_0_20px_rgba(255,255,255,0.02),0_4px_6px_-1px_rgba(0,0,0,0.3)]"
                     placeholder="¿Qué quieres automatizar? Sé breve y directo."
                     rows={3}
                     value={formData.message}
                     onChange={handleChange}
                     required
                 />
-                <div className="absolute inset-0 rounded-xl bg-primary/5 blur-xl opacity-0 group-focus-within/input:opacity-100 transition-opacity pointer-events-none" />
+                <div className="absolute inset-0 rounded-2xl bg-primary/5 blur-xl opacity-0 group-focus-within/input:opacity-100 transition-opacity pointer-events-none" />
             </div>
 
             <div className="pt-4 flex flex-col md:flex-row items-center gap-6 justify-between">
