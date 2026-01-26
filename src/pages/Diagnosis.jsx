@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import DiagnosisForm from '../components/diagnosis/DiagnosisForm';
-import { motion } from 'framer-motion';
-import { Brain, Zap, Target, ArrowDown, ShieldCheck, TrendingUp, Clock, LayoutGrid, Flame, UserMinus, Dice5, GitMerge, EyeOff, AlertCircle, MessageSquare, ShoppingCart, Star, PenTool, Rocket, ArrowRight, Linkedin } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Brain, Zap, Target, ArrowDown, ShieldCheck, TrendingUp, Clock, LayoutGrid, Flame, UserMinus, Dice5, GitMerge, EyeOff, AlertCircle, MessageSquare, ShoppingCart, Star, PenTool, Rocket, ArrowRight, Linkedin, ChevronLeft, ChevronRight, X, Info, Plus } from 'lucide-react';
 import SEO from '../components/SEO';
 import { fetchFullConfig } from '../lib/siteConfig';
 
@@ -12,6 +12,198 @@ const Diagnosis = () => {
     const [youtubeUrl, setYoutubeUrl] = useState('');
     const [whatsappUrl, setWhatsappUrl] = useState('');
     const [linkedinUrl, setLinkedinUrl] = useState('');
+
+    // Modal & Scroll State/Refs
+    const pillarsScrollRef = useRef(null);
+    const chaosScrollRef = useRef(null);
+    const [modalData, setModalData] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const serviceDetails = {
+        // Pillars
+        "Comunicación": {
+            title: "Sistema de Comunicación Inteligente",
+            subtitle: "WhatsApp no es un sistema de gestión, es un canal.",
+            description: "La mayoría de negocios mueren por una mala gestión de la comunicación: mensajes perdidos, clientes esperando y dueños esclavizados al teléfono.",
+            benefits: [
+                "Automatización de respuestas frecuentes con IA.",
+                "Centralización de canales (WhatsApp, IG, Web).",
+                "Trazabilidad total: sabe quién dijo qué y cuándo.",
+                "Escalabilidad: atiende a 100 clientes con el mismo esfuerzo que a 1."
+            ],
+            icon: MessageSquare,
+            color: "text-blue-400"
+        },
+        "Ventas": {
+            title: "Motor de Ventas Predecible",
+            subtitle: "De captación reactiva a un embudo que convierte solo.",
+            description: "Vender no debe ser una cuestión de suerte. Necesitas un sistema que califique, nutra y cierre leads mientras tú te enfocas en entregar valor.",
+            benefits: [
+                "CRM automatizado para que ningún lead se enfríe.",
+                "Estrategias de retargeting automático.",
+                "Pipeline visual de ingresos futuros.",
+                "Optimización de tasa de cierre basada en datos."
+            ],
+            icon: ShoppingCart,
+            color: "text-emerald-400"
+        },
+        "Autoridad": {
+            title: "Posicionamiento de Autoridad",
+            subtitle: "Deja de competir por precio y empieza a liderar.",
+            description: "La autoridad te permite elegir a tus clientes y cobrar lo que realmente vale tu trabajo. Tu sistema debe reflejar esa excelencia.",
+            benefits: [
+                "SEO Local de alto impacto para dominar tu zona.",
+                "Gestión proactiva de reseñas y prueba social.",
+                "Páginas de aterrizaje diseñadas para la conversión.",
+                "Estrategia de marca que genera confianza inmediata."
+            ],
+            icon: Star,
+            color: "text-amber-400"
+        },
+        "Sistemas": {
+            title: "Ecosistema de Sistemas Operativos",
+            subtitle: "La tecnología que trabaja para ti, no al revés.",
+            description: "Un negocio sin procesos es un hobby caro. Los sistemas son los activos que te dan la libertad que buscabas cuando empezaste.",
+            benefits: [
+                "Integración total entre herramientas (n8n, Odoo, etc).",
+                "Cuadros de mando (KPIs) en tiempo real.",
+                "Eliminación de tareas repetitivas y errores humanos.",
+                "Seguridad y backups automáticos de tu capital intelectual."
+            ],
+            icon: LayoutGrid,
+            color: "text-purple-400"
+        },
+        // Chaos Types
+        "Agendas y Reservas": {
+            title: "Control Total de Agendas",
+            subtitle: "Optimización máxima de tu recurso más escaso: el tiempo.",
+            description: "Los huecos muertos y las cancelaciones de última hora son cáncer para la rentabilidad. Tu sistema debe prevenir esto automáticamente.",
+            benefits: [
+                "Reservas 24/7 sincronizadas con tu equipo.",
+                "Recordatorios automáticos multi-canal (SMS/WA).",
+                "Cobro de señales para garantizar el compromiso.",
+                "Gestión de listas de espera inteligente."
+            ],
+            icon: Clock,
+            color: "text-blue-400"
+        },
+        "Producción y Pedidos": {
+            title: "Sincronización de Producción",
+            subtitle: "Cero errores, máxima eficiencia operativa.",
+            description: "El caos en la producción genera retrasos y devoluciones que destruyen tu margen. La visibilidad total es la solución.",
+            benefits: [
+                "Trazabilidad de estados en tiempo real.",
+                "Generación automática de albaranes y facturas.",
+                "Notificaciones automáticas de progreso al cliente.",
+                "Control de tiempos y costes por cada pedido."
+            ],
+            icon: Zap,
+            color: "text-yellow-400"
+        },
+        "Stock e Inventario": {
+            title: "Gestión Inteligente de Inventario",
+            subtitle: "Tu dinero no debe estar acumulando polvo en un estante.",
+            description: "El stock inmovilizado es capital perdido. Necesitas previsión y control para comprar solo lo que vas a vender.",
+            benefits: [
+                "Alertas automáticas de stock mínimo.",
+                "Previsión de demanda basada en historial.",
+                "Gestión de proveedores centralizada.",
+                "Análisis de rotación para maximizar márgenes."
+            ],
+            icon: LayoutGrid,
+            color: "text-green-400"
+        },
+        "Proyectos y Consultoría": {
+            title: "Escalabilidad de Conocimiento",
+            subtitle: "Convierte tu know-how en un proceso repetible.",
+            description: "Si el proyecto depende de tu memoria o de tu presencia constante, no puedes escalar. Necesitas procedimentar tu talento.",
+            benefits: [
+                "Gestión de tareas y hitos automatizada.",
+                "Portales de cliente para autoservicio.",
+                "Documentación interactiva y base de conocimientos.",
+                "Facturación recurrente y control de horas."
+            ],
+            icon: Brain,
+            color: "text-purple-400"
+        },
+        "Capital Humano Perdido": {
+            title: "Recuperación de Capital Humano",
+            subtitle: "Tu equipo no es un recurso, es el motor de tu negocio.",
+            description: "El tiempo dedicado a tareas repetitivas y manuales no solo es dinero perdido, es talento desperdiciado que genera frustración y rotación.",
+            benefits: [
+                "Eliminación de la fatiga por tareas duplicadas.",
+                "Redirección del personal hacia tareas de alto valor.",
+                "Automatización de la gestión interna y reporting.",
+                "Sistemas que permiten a tu equipo escalar sin sobreesfuerzo."
+            ],
+            icon: Clock,
+            color: "text-blue-400"
+        },
+        "Erosión de Márgenes": {
+            title: "Preservación de Rentabilidad",
+            subtitle: "No se trata de cuánto facturas, sino de cuánto te queda.",
+            description: "La falta de sistemas genera ineficiencias invisibles que van 'mordiendo' tus márgenes hasta que el crecimiento se vuelve peligroso.",
+            benefits: [
+                "Control de costes operativo en tiempo real.",
+                "Optimización de recursos y reducción de mermas.",
+                "Precios basados en datos reales de ejecución.",
+                "Detección inmediata de fugas de rentabilidad."
+            ],
+            icon: TrendingUp,
+            color: "text-emerald-400"
+        },
+        "Ventas Sin Cerrar": {
+            title: "Cierre de Fugas de Ventas",
+            subtitle: "Deja de dejar dinero sobre la mesa.",
+            description: "El 80% de las ventas requieren un seguimiento constante. Sin un sistema, esos leads se pierden en el olvido o se van con la competencia.",
+            benefits: [
+                "Automatización de seguimiento personalizado.",
+                "Scoring de leads para priorizar el esfuerzo humano.",
+                "Alertas de inactividad en oportunidades clave.",
+                "Análisis de motivos de pérdida para mejora continua."
+            ],
+            icon: Zap,
+            color: "text-yellow-400"
+        },
+        "Coste de Oportunidad": {
+            title: "Liberación de Oportunidades",
+            subtitle: "El verdadero coste de no hacer nada.",
+            description: "Lo más caro no es lo que gastas en sistemas, sino lo que dejas de ganar al no poder abrir nuevas líneas de negocio por falta de estructura.",
+            benefits: [
+                "Estructura lista para absorber nuevos mercados.",
+                "Capacidad instalada para lanzar nuevos servicios.",
+                "Mentalidad de dueño liberada para la estrategia.",
+                "Crecimiento predecible y documentado."
+            ],
+            icon: Target,
+            color: "text-purple-400"
+        }
+    };
+
+    useEffect(() => {
+        if (isModalOpen) {
+            const scrollY = window.scrollY;
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollY}px`;
+            document.body.style.width = '100%';
+            document.body.style.overflowY = 'scroll'; // Prevent layout shift from scrollbar disappearing
+        } else {
+            const scrollY = document.body.style.top;
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            document.body.style.overflowY = '';
+            if (scrollY) {
+                window.scrollTo(0, parseInt(scrollY || '0') * -1);
+            }
+        }
+        return () => {
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            document.body.style.overflowY = '';
+        };
+    }, [isModalOpen]);
 
     useEffect(() => {
         const loadConfig = async () => {
@@ -35,10 +227,120 @@ const Diagnosis = () => {
 
     const handleScroll = (e, setter) => {
         const scrollLeft = e.target.scrollLeft;
-        const width = e.target.offsetWidth / 2;
+        const width = e.target.offsetWidth;
         const index = Math.round(scrollLeft / width);
         setter(index);
     };
+
+    const scrollContainer = (ref, direction) => {
+        if (ref.current) {
+            const scrollAmount = ref.current.offsetWidth * 0.8;
+            ref.current.scrollBy({
+                left: direction === 'left' ? -scrollAmount : scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+    };
+
+    const scrollToPoint = (ref, index) => {
+        if (ref.current) {
+            const cardWidth = ref.current.offsetWidth;
+            ref.current.scrollTo({
+                left: index * cardWidth,
+                behavior: 'smooth'
+            });
+        }
+    };
+
+    const openModal = (key) => {
+        setModalData(serviceDetails[key]);
+        setIsModalOpen(true);
+    };
+
+    const ServiceModal = () => (
+        <AnimatePresence>
+            {isModalOpen && modalData && (
+                <div className="fixed inset-0 z-[99999] flex items-center justify-center md:p-4 overflow-y-auto outline-none">
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setIsModalOpen(false)}
+                        className="fixed inset-0 bg-black/95 backdrop-blur-md"
+                    />
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95, y: 30 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.95, y: 30 }}
+                        className="relative w-full min-h-screen md:min-h-0 md:h-auto md:max-w-2xl bg-[#0D0D0D] md:rounded-[3rem] shadow-[0_50px_100px_rgba(0,0,0,1)] border-x md:border border-white/10 z-10"
+                    >
+                        {/* Close button - Fixed on mobile top */}
+                        <div className="sticky top-0 z-50 flex justify-end p-6 bg-gradient-to-b from-[#0D0D0D] to-transparent">
+                            <button
+                                onClick={() => setIsModalOpen(false)}
+                                className="p-3 rounded-full bg-white/5 hover:bg-white/10 text-white transition-all border border-white/10 backdrop-blur-xl"
+                            >
+                                <X className="w-6 h-6" />
+                            </button>
+                        </div>
+
+                        <div className="px-6 pb-12 md:px-12 md:pb-12 space-y-8 -mt-4">
+                            <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-6">
+                                <div className={`w-20 h-20 md:w-24 md:h-24 rounded-[2rem] bg-white/[0.03] flex items-center justify-center ${modalData.color} shrink-0 border border-white/10 shadow-2xl`}>
+                                    <modalData.icon className="w-10 h-10 md:w-12 md:h-12" />
+                                </div>
+                                <div className="space-y-2">
+                                    <h3 className="text-3xl md:text-5xl font-display font-black text-white leading-tight uppercase italic tracking-tighter">
+                                        {modalData.title}
+                                    </h3>
+                                    <p className="text-primary font-black text-xs md:text-sm uppercase tracking-[0.3em]">{modalData.subtitle}</p>
+                                </div>
+                            </div>
+
+                            <div className="space-y-8">
+                                <p className="text-xl md:text-2xl text-gray-300 leading-relaxed font-medium italic text-center md:text-left border-l-4 border-primary/20 pl-6 py-2 bg-primary/5 rounded-r-2xl">
+                                    "{modalData.description}"
+                                </p>
+
+                                <div className="space-y-6">
+                                    <div className="flex items-center gap-3">
+                                        <div className="h-px flex-grow bg-white/10" />
+                                        <h4 className="text-primary font-black uppercase tracking-[0.4em] text-[10px] whitespace-nowrap">
+                                            Beneficios de Impacto
+                                        </h4>
+                                        <div className="h-px flex-grow bg-white/10" />
+                                    </div>
+                                    <div className="grid gap-3">
+                                        {modalData.benefits.map((benefit, i) => (
+                                            <motion.div
+                                                key={i}
+                                                initial={{ opacity: 0, x: -20 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                transition={{ delay: i * 0.1 }}
+                                                className="flex items-center gap-4 p-5 rounded-2xl bg-white/[0.03] border border-white/5 hover:border-primary/30 transition-all group/item"
+                                            >
+                                                <div className="w-2 h-2 rounded-full bg-primary shadow-[0_0_12px_rgba(110,231,183,0.6)] group-hover/item:scale-125 transition-transform" />
+                                                <p className="text-sm md:text-lg text-gray-200 font-bold leading-tight group-hover/item:text-white transition-colors">{benefit}</p>
+                                            </motion.div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="pt-6">
+                                <button
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="w-full py-6 rounded-2xl bg-primary text-black font-black uppercase tracking-[0.2em] hover:bg-primary-hover transition-all shadow-[0_25px_50px_rgba(110,231,183,0.25)] hover:scale-[1.02] active:scale-95 text-xs md:text-base"
+                                >
+                                    Entendido, continuar diagnóstico
+                                </button>
+                            </div>
+                        </div>
+                    </motion.div>
+                </div>
+            )}
+        </AnimatePresence>
+    );
 
     const VerticalConnector = ({ height = "h-16 md:h-20", opacity = "opacity-30 md:opacity-50" }) => (
         <div className={`flex flex-col items-center w-full ${height} ${opacity} relative z-0`}>
@@ -211,11 +513,10 @@ const Diagnosis = () => {
                                                 ? youtubeUrl.replace('watch?v=', 'embed/')
                                                 : youtubeUrl.includes('youtu.be/')
                                                     ? youtubeUrl.replace('youtu.be/', 'youtube.com/embed/')
-                                                    : youtubeUrl) + "?autoplay=1&mute=0&modestbranding=1&rel=0&controls=1"}
+                                                    : youtubeUrl).replace('youtube.com', 'youtube-nocookie.com') + "?autoplay=1&mute=0&modestbranding=1&rel=0&controls=1&enablejsapi=1"}
                                             title="Briefing de Diagnóstico"
                                             className="absolute top-0 left-0 w-full h-full border-0"
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                            allowFullScreen
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
                                         />
                                     </div>
                                 </div>
@@ -352,10 +653,31 @@ const Diagnosis = () => {
                             </div>
 
                             {/* Pillars Grid - Mobile Horizontal Scroll */}
-                            <div className="relative">
+                            <div className="relative group/scroll px-0 md:px-4">
+                                {/* Navigation Arrows - Desktop/Tablet */}
+                                <div className="hidden md:flex absolute -left-4 -right-4 top-1/2 -translate-y-1/2 justify-between pointer-events-none z-20">
+                                    <button
+                                        onClick={() => scrollContainer(pillarsScrollRef, 'left')}
+                                        className="p-4 rounded-full bg-white/5 border border-white/10 text-white hover:bg-primary hover:text-black transition-all pointer-events-auto backdrop-blur-xl shadow-2xl hover:scale-110 active:scale-95 group/arrow"
+                                    >
+                                        <ChevronLeft className="w-5 h-5 group-hover/arrow:-translate-x-0.5 transition-transform" />
+                                    </button>
+                                    <button
+                                        onClick={() => scrollContainer(pillarsScrollRef, 'right')}
+                                        className="p-4 rounded-full bg-white/5 border border-white/10 text-white hover:bg-primary hover:text-black transition-all pointer-events-auto backdrop-blur-xl shadow-2xl hover:scale-110 active:scale-95 group/arrow"
+                                    >
+                                        <ChevronRight className="w-5 h-5 group-hover/arrow:translate-x-0.5 transition-transform" />
+                                    </button>
+                                </div>
+
+                                {/* Side Fades */}
+                                <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#0A0A0A] via-[#0A0A0A]/40 to-transparent z-10 pointer-events-none md:hidden" />
+                                <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#0A0A0A] via-[#0A0A0A]/40 to-transparent z-10 pointer-events-none md:hidden" />
+
                                 <div
+                                    ref={pillarsScrollRef}
                                     onScroll={(e) => handleScroll(e, setPillarIndex)}
-                                    className="flex md:grid md:grid-cols-4 gap-4 md:gap-6 overflow-x-auto pb-8 md:pb-12 snap-x snap-mandatory no-scrollbar px-4 -mx-4 md:mx-0 md:px-0 scroll-smooth"
+                                    className="flex md:grid md:grid-cols-4 gap-4 md:gap-8 overflow-x-auto pb-6 md:pb-10 snap-x snap-mandatory no-scrollbar px-4 -mx-4 md:mx-0 md:px-0 scroll-smooth items-stretch"
                                 >
                                     {[
                                         {
@@ -393,40 +715,61 @@ const Diagnosis = () => {
                                             whileInView={{ opacity: 1, y: 0 }}
                                             viewport={{ once: true }}
                                             transition={{ delay: i * 0.1 }}
-                                            className="relative group p-6 md:p-8 rounded-[2rem] bg-gradient-to-t from-[#121212] to-[#0A0A0A] border-2 border-white/30 hover:border-primary/60 transition-all duration-500 text-center overflow-hidden flex flex-col h-full min-w-[85%] md:min-w-0 snap-center shadow-[0_30px_60px_rgba(0,0,0,1)]"
+                                            className="relative group p-8 md:p-10 rounded-[2.5rem] bg-[#0D0D0D] border border-white/10 hover:border-primary/40 transition-all duration-700 text-center flex flex-col items-center h-full min-w-full md:min-w-0 snap-center shadow-[0_40px_80px_rgba(0,0,0,0.6)]"
                                         >
                                             <div className={`absolute inset-0 bg-gradient-to-br ${pillar.color} to-transparent opacity-10 group-hover:opacity-30 transition-opacity duration-700`} />
 
                                             <div className="relative z-10 space-y-6 flex flex-col h-full">
-                                                <div className="w-16 h-16 mx-auto rounded-2xl bg-white/5 flex items-center justify-center text-primary group-hover:scale-110 group-hover:bg-primary group-hover:text-black transition-all duration-500 shrink-0">
-                                                    <pillar.icon className="w-8 h-8" />
+                                                <div className="w-20 h-20 rounded-[2rem] bg-white/[0.03] border border-white/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-black transition-all duration-700 shadow-xl group-hover:shadow-primary/20">
+                                                    <pillar.icon className="w-10 h-10" />
                                                 </div>
                                                 <div className="space-y-4 flex-grow flex flex-col">
                                                     <div>
-                                                        <p className="text-xs md:text-sm text-primary font-bold uppercase tracking-[0.3em] mb-2 ml-[0.3em]">
-                                                            {pillar.title}
+                                                        <p className="text-[10px] md:text-sm text-primary font-black uppercase tracking-[0.4em] mb-3 opacity-60">
+                                                            Pilar {i + 1}: {pillar.title}
                                                         </p>
-                                                        <h4 className="text-lg md:text-xl lg:text-2xl text-white font-bold leading-tight">
+                                                        <h4 className="text-xl md:text-2xl lg:text-3xl text-white font-display font-bold leading-tight uppercase italic tracking-tighter">
                                                             {pillar.desc}
                                                         </h4>
                                                     </div>
-                                                    <p className="text-sm md:text-base text-gray-400 font-normal leading-relaxed group-hover:text-gray-200 transition-colors">
+                                                    <p className="text-sm md:text-lg text-gray-400 font-normal leading-relaxed group-hover:text-gray-200 transition-colors">
                                                         {pillar.detail}
                                                     </p>
                                                 </div>
+
+                                                <button
+                                                    onClick={() => openModal(pillar.title)}
+                                                    className="inline-flex items-center gap-2 py-4 px-8 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-black uppercase tracking-widest hover:bg-primary hover:text-black transition-all duration-300 shadow-lg hover:shadow-primary/20 hover:scale-105 active:scale-95 group/btn"
+                                                >
+                                                    <Info className="w-4 h-4" /> Ver detalles
+                                                </button>
                                             </div>
                                         </motion.div>
                                     ))}
                                 </div>
-                                {/* Mobile Indicators */}
-                                <div className="flex md:hidden justify-center gap-3 mt-2">
-                                    {[0, 1, 2, 3].map((i) => (
-                                        <div
-                                            key={i}
-                                            className={`h-2 rounded-full transition-all duration-500 ${pillarIndex === i ? 'bg-primary w-10' : 'bg-white/10 w-2'
-                                                }`}
+                                {/* Custom Scroll Progress & Pagination for Pillars */}
+                                <div className="flex flex-col items-center gap-6 mt-8">
+                                    <div className="flex gap-4">
+                                        {[0, 1, 2, 3].map((i) => (
+                                            <button
+                                                key={i}
+                                                onClick={() => scrollToPoint(pillarsScrollRef, i)}
+                                                className={`group relative h-10 w-2 flex items-center justify-center`}
+                                            >
+                                                <div className={`h-full w-full rounded-full transition-all duration-700 ${pillarIndex === i ? 'bg-primary' : 'bg-white/10 group-hover:bg-white/30'}`} />
+                                                {pillarIndex === i && (
+                                                    <div className="absolute inset-0 bg-primary/40 blur-md rounded-full animate-pulse" />
+                                                )}
+                                            </button>
+                                        ))}
+                                    </div>
+                                    <div className="w-48 h-[1px] bg-white/10 relative overflow-hidden hidden md:block">
+                                        <motion.div
+                                            className="absolute inset-y-0 left-0 bg-primary"
+                                            animate={{ width: `${(pillarIndex + 1) * 25}%` }}
+                                            transition={{ type: "spring", stiffness: 100, damping: 20 }}
                                         />
-                                    ))}
+                                    </div>
                                 </div>
                             </div>
 
@@ -492,8 +835,8 @@ const Diagnosis = () => {
                         <div className="absolute -top-32 -right-32 w-[35rem] h-[35rem] bg-primary/20 blur-[150px] rounded-full group-hover:bg-primary/30 transition-all duration-1000" />
                         <div className="absolute -bottom-32 -left-32 w-[30rem] h-[30rem] bg-white/[0.08] blur-[150px] rounded-full group-hover:bg-white/15 transition-all duration-1000" />
 
-                        <div className="relative z-10 space-y-8 md:space-y-12 text-center">
-                            <div className="space-y-4">
+                        <div className="relative z-10 space-y-4 md:space-y-8 text-center">
+                            <div className="space-y-3">
                                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] md:text-xs font-bold uppercase tracking-[0.2em]">
                                     Impacto Financiero
                                 </div>
@@ -507,22 +850,34 @@ const Diagnosis = () => {
                                 </p>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
                                 {[
-                                    { title: "Capital Humano Perdido", icon: Clock, desc: "Horas de gestión que podrías invertir en estrategia o expansión." },
-                                    { title: "Erosión de Márgenes", icon: TrendingUp, desc: "Decisiones reactivas que diluyen la rentabilidad de cada operación." },
-                                    { title: "Ventas Sin Cerrar", icon: Zap, desc: "Fugas en el seguimiento que entregan tus clientes a la competencia." },
-                                    { title: "Coste de Oportunidad", icon: Target, desc: "Nuevas líneas de negocio que no puedes abrir por falta de estructura." }
+                                    { title: "Capital Humano Perdido", icon: Clock },
+                                    { title: "Erosión de Márgenes", icon: TrendingUp },
+                                    { title: "Ventas Sin Cerrar", icon: Zap },
+                                    { title: "Coste de Oportunidad", icon: Target }
                                 ].map((item, i) => (
-                                    <div key={i} className="flex flex-col items-center text-center gap-4 md:gap-6 group/item p-6 md:p-10 rounded-[2rem] bg-white/[0.03] hover:bg-white/[0.05] transition-all duration-500 border border-white/5 hover:border-white/20 shadow-lg hover:shadow-primary/5">
-                                        <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-white/10 flex items-center justify-center text-primary group-hover/item:scale-110 group-hover/item:bg-primary group-hover/item:text-black transition-all duration-700 shrink-0 shadow-inner border border-white/5">
-                                            <item.icon className="w-8 h-8 md:w-10 md:h-10" />
+                                    <button
+                                        key={i}
+                                        onClick={() => openModal(item.title)}
+                                        className="flex flex-col items-center gap-3 p-5 md:p-6 rounded-2xl bg-primary/[0.03] hover:bg-primary/[0.08] transition-all duration-500 border border-primary/20 hover:border-primary/50 group/item text-center shadow-[0_0_30px_rgba(110,231,183,0.05)] hover:shadow-primary/20 hover:scale-[1.02] active:scale-95 group relative overflow-hidden"
+                                    >
+                                        <div className="absolute top-2 right-2 md:hidden">
+                                            <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30">
+                                                <Plus className="w-3 h-3 text-primary" />
+                                            </div>
                                         </div>
-                                        <div className="space-y-2 md:space-y-3">
-                                            <p className="text-xl md:text-3xl text-white font-bold leading-tight">{item.title}</p>
-                                            <p className="text-sm md:text-base text-gray-400 font-normal leading-relaxed group-hover/item:text-gray-200 transition-colors">{item.desc}</p>
+                                        <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 group-hover:bg-primary group-hover:text-black transition-all duration-500 shrink-0 border border-primary/20 shadow-inner">
+                                            <item.icon className="w-6 h-6 md:w-7 md:h-7" />
                                         </div>
-                                    </div>
+                                        <div className="space-y-1.5">
+                                            <p className="text-[10px] md:text-xs lg:text-sm text-white font-black leading-tight uppercase tracking-[0.1em] group-hover:text-primary transition-colors">{item.title}</p>
+                                            <div className="flex items-center justify-center gap-1.5 md:opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <span className="text-[8px] font-black uppercase tracking-widest text-primary/80 group-hover:text-primary">Ver detalles</span>
+                                                <Plus className="hidden md:block w-2.5 h-2.5 text-primary" />
+                                            </div>
+                                        </div>
+                                    </button>
                                 ))}
                             </div>
                         </div>
@@ -547,10 +902,31 @@ const Diagnosis = () => {
                         </p>
                     </motion.div>
 
-                    <div className="relative">
+                    <div className="relative group/scroll px-0 md:px-4">
+                        {/* Navigation Arrows - Desktop/Tablet */}
+                        <div className="hidden md:flex absolute -left-4 -right-4 top-1/2 -translate-y-1/2 justify-between pointer-events-none z-20">
+                            <button
+                                onClick={() => scrollContainer(chaosScrollRef, 'left')}
+                                className="p-4 rounded-full bg-white/5 border border-white/10 text-white hover:bg-primary hover:text-black transition-all pointer-events-auto backdrop-blur-xl shadow-2xl hover:scale-110 active:scale-95 group/arrow"
+                            >
+                                <ChevronLeft className="w-5 h-5 group-hover/arrow:-translate-x-0.5 transition-transform" />
+                            </button>
+                            <button
+                                onClick={() => scrollContainer(chaosScrollRef, 'right')}
+                                className="p-4 rounded-full bg-white/5 border border-white/10 text-white hover:bg-primary hover:text-black transition-all pointer-events-auto backdrop-blur-xl shadow-2xl hover:scale-110 active:scale-95 group/arrow"
+                            >
+                                <ChevronRight className="w-5 h-5 group-hover/arrow:translate-x-0.5 transition-transform" />
+                            </button>
+                        </div>
+
+                        {/* Side Fades - More pronounced */}
+                        <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#0A0A0A] via-[#0A0A0A]/40 to-transparent z-10 pointer-events-none md:hidden" />
+                        <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#0A0A0A] via-[#0A0A0A]/40 to-transparent z-10 pointer-events-none md:hidden" />
+
                         <div
+                            ref={chaosScrollRef}
                             onScroll={(e) => handleScroll(e, setChaosIndex)}
-                            className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 overflow-x-auto pb-8 snap-x snap-mandatory no-scrollbar -mx-4 px-4 md:mx-0 md:px-0 scroll-smooth"
+                            className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 overflow-x-auto pb-6 md:pb-10 snap-x snap-mandatory no-scrollbar -mx-4 px-4 md:mx-0 md:px-0 scroll-smooth items-stretch"
                         >
                             {[
                                 {
@@ -604,242 +980,162 @@ const Diagnosis = () => {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: i * 0.1 }}
-                                    className={`group relative p-6 md:p-8 rounded-[2rem] bg-gradient-to-br from-[#121212] to-[#080808] border-2 border-white/20 hover:border-primary/70 shadow-[0_30px_60px_rgba(0,0,0,1)] transition-all duration-500 flex flex-col h-full min-w-[85%] md:min-w-0 snap-center`}
+                                    className="relative group p-8 md:p-10 rounded-[2.5rem] bg-[#0D0D0D] border border-white/10 hover:border-primary/40 transition-all duration-700 flex flex-col h-full min-w-full md:min-w-0 snap-center shadow-[0_40px_80px_rgba(0,0,0,0.6)]"
                                 >
-                                    <div className="relative z-10 flex flex-col items-center text-center">
-                                        <div className="w-14 h-14 md:w-20 md:h-20 rounded-2xl bg-white/5 flex items-center justify-center text-white mb-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-background-dark transition-all duration-500 ring-1 ring-white/10 group-hover:ring-primary/40 shadow-xl">
+                                    <div className={`absolute inset-0 bg-gradient-to-br ${type.color} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 rounded-[2.5rem]`} />
+
+                                    <div className="relative z-10 flex flex-col items-center text-center h-full w-full">
+                                        <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center justify-center text-white mb-8 group-hover:scale-110 group-hover:bg-primary group-hover:text-background-dark transition-all duration-700 shadow-xl">
                                             <type.icon className="w-8 h-8 md:w-10 md:h-10" />
                                         </div>
-                                        <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-6 bg-gradient-to-br from-white to-gray-400 bg-clip-text text-transparent">{type.title}</h3>
-                                        <ul className="space-y-4 mb-8 text-left w-full">
+                                        <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-6 bg-gradient-to-br from-white to-gray-400 bg-clip-text text-transparent uppercase italic tracking-tighter">{type.title}</h3>
+                                        <ul className="space-y-4 mb-10 text-left w-full flex-grow">
                                             {type.pain.map((p, j) => (
-                                                <li key={j} className="flex items-start gap-2 text-gray-300 text-sm md:text-base font-normal leading-relaxed">
+                                                <li key={j} className="flex items-start gap-3 text-gray-300 text-sm md:text-base font-normal leading-relaxed">
                                                     <div className="w-1.5 h-1.5 rounded-full bg-red-500/60 mt-2 shrink-0 shadow-[0_0_8px_rgba(239,68,68,0.4)]" />
                                                     {p}
                                                 </li>
                                             ))}
                                         </ul>
+
+                                        <div className="flex flex-col gap-3 w-full">
+                                            <button
+                                                onClick={() => openModal(type.title)}
+                                                className="w-full py-4 rounded-xl border border-primary/20 bg-primary/5 text-primary text-[10px] font-black uppercase tracking-widest hover:bg-primary hover:text-black transition-all duration-300 flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95 shadow-md"
+                                            >
+                                                <Info className="w-4 h-4" /> Ver detalles técnicos
+                                            </button>
+                                            <button
+                                                onClick={scrollToForm}
+                                                className="w-full py-4 rounded-xl bg-white/5 border border-white/10 text-white text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all flex items-center justify-center gap-2"
+                                            >
+                                                Esto me representa
+                                            </button>
+                                        </div>
                                     </div>
-                                    <button
-                                        onClick={scrollToForm}
-                                        className="relative z-10 mt-auto w-full py-2.5 rounded-xl border border-white/10 text-white text-[10px] font-bold uppercase tracking-widest group-hover:bg-white group-hover:text-black transition-all"
-                                    >
-                                        Esto se parece a mi negocio
-                                    </button>
                                 </motion.div>
                             ))}
                         </div>
-                    </div>
-                </div>
 
-                <VerticalConnector height="h-20" />
-            </section>
-
-            {/* BLOQUE 6 — EL ARQUITECTO (ENFOQUE ENGORILATE) */}
-            <section className="relative z-10 py-12 md:py-20 px-4 md:px-6 bg-white/[0.02]">
-                <div className="max-w-6xl mx-auto">
-                    <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 items-center">
-                        <motion.div
-                            initial={{ opacity: 0, x: -30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="lg:col-span-6 space-y-6 md:space-y-8"
-                        >
-                            <div className="space-y-3 md:space-y-4">
-                                <div className="inline-flex items-center gap-2 text-primary text-xs md:text-sm font-bold uppercase tracking-[0.3em]">
-                                    Metodología Engorilate
-                                </div>
-                                <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white leading-tight tracking-tight">
-                                    No instalo <br />
-                                    <span className="text-primary italic">herramientas.</span>
-                                </h2>
-                                <p className="text-xl md:text-2xl text-gray-300 font-light leading-relaxed">
-                                    Diseño el sistema que hace que la tecnología tenga sentido para tu negocio.
-                                </p>
-                            </div>
-
-                            <div className="space-y-4 pt-2">
-                                {[
-                                    { title: "Identificación del Caos", sub: "Entender dónde se rompe el proceso actual." },
-                                    { title: "Arquitectura del Sistema", sub: "Diseñar el flujo óptimo para tu rentabilidad." },
-                                    { title: "Selección Tecnológica", sub: "Implementar la herramienta que mejor lo ejecute." }
-                                ].map((step, i) => (
-                                    <div key={i} className="flex items-start gap-4 group">
-                                        <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-bold text-lg group-hover:bg-primary group-hover:text-black transition-all duration-500 shrink-0">
-                                            {i + 1}
-                                        </div>
-                                        <div>
-                                            <p className="text-lg md:text-xl text-white font-bold mb-0.5">{step.title}</p>
-                                            <p className="text-gray-300 font-normal text-sm md:text-base">{step.sub}</p>
-                                        </div>
-                                    </div>
+                        {/* Custom Scroll Progress & Pagination for Chaos */}
+                        <div className="flex flex-col items-center gap-6 mt-8">
+                            <div className="flex gap-4">
+                                {[0, 1, 2, 3].map((i) => (
+                                    <button
+                                        key={i}
+                                        onClick={() => scrollToPoint(chaosScrollRef, i)}
+                                        className={`group relative h-10 w-2 flex items-center justify-center`}
+                                    >
+                                        <div className={`h-full w-full rounded-full transition-all duration-700 ${chaosIndex === i ? 'bg-primary' : 'bg-white/10 group-hover:bg-white/30'}`} />
+                                        {chaosIndex === i && (
+                                            <div className="absolute inset-0 bg-primary/40 blur-md rounded-full animate-pulse" />
+                                        )}
+                                    </button>
                                 ))}
                             </div>
-                        </motion.div>
-
-                        <motion.div
-                            initial={{ opacity: 0, x: 30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="lg:col-span-6 relative"
-                        >
-                            <div className="absolute -inset-4 bg-primary/10 blur-3xl rounded-full opacity-20" />
-                            <div className="relative bg-[#0D0D0D] bg-gradient-to-br from-primary/[0.04] to-transparent backdrop-blur-3xl p-6 md:p-12 rounded-[3rem] border border-white/20 shadow-[0_40px_80px_rgba(0,0,0,0.8)] text-left">
-                                <div className="space-y-6">
-                                    <p className="text-xl md:text-3xl lg:text-4xl text-white font-medium leading-tight italic">
-                                        "Entiendo cómo funciona tu negocio <span className="text-primary block mt-2 not-italic font-black">cuando tú no estás encima."</span>
-                                    </p>
-                                    <div className="flex flex-col gap-8">
-                                        {/* Perfil alineado a la izquierda */}
-                                        <div className="flex items-center gap-5">
-                                            <div className="relative group/avatar">
-                                                <div className="absolute -inset-1 bg-primary/20 blur-md rounded-2xl opacity-0 group-hover/avatar:opacity-100 transition-opacity" />
-                                                <img
-                                                    src="/rafael_profile.png"
-                                                    alt="Rafael Alcalde"
-                                                    loading="lazy"
-                                                    className="relative w-16 h-16 md:w-20 md:h-20 rounded-2xl object-cover border-2 border-primary/20 p-1 bg-primary/5"
-                                                />
-                                            </div>
-                                            <div>
-                                                <p className="text-white text-xl md:text-2xl font-bold tracking-tight">Rafael Alcalde</p>
-                                                <p className="text-primary/70 text-[10px] md:text-xs italic uppercase tracking-[0.3em] font-black">Arquitecto de Eficiencia</p>
-                                            </div>
-                                        </div>
-
-                                        {/* Frase CTA */}
-                                        <p className="text-gray-400 text-sm md:text-lg font-medium leading-relaxed max-w-lg">
-                                            Ayudo a dueños de negocio a recuperar su libertad mediante sistemas y tecnología de alto rendimiento.
-                                        </p>
-
-                                        {/* Botones alineados en la misma fila */}
-                                        <div className="grid grid-cols-2 gap-3 md:gap-4">
-                                            <a
-                                                href="/contact"
-                                                className="relative group/btn flex items-center justify-center px-4 md:px-8 py-3 md:py-4 bg-gradient-to-r from-primary via-[#4ADE80] to-primary text-black rounded-2xl font-black text-[10px] md:text-sm transition-all duration-300 hover:scale-[1.05] shadow-[0_15px_40px_rgba(110,231,183,0.3)] hover:shadow-[0_20px_50px_rgba(110,231,183,0.5)] uppercase tracking-[0.1em] md:tracking-[0.15em] text-center overflow-hidden"
-                                            >
-                                                <div className="absolute inset-0 bg-white/20 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
-                                                <span className="relative z-10">Conóceme</span>
-                                            </a>
-                                            <a
-                                                href={linkedinUrl || "https://www.linkedin.com/in/alcalderafael/"}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="relative group/btn flex items-center justify-center gap-2 px-4 md:px-8 py-3 md:py-4 bg-gradient-to-br from-[#0077B5] via-[#00A0DC] to-[#0077B5] text-white rounded-2xl font-black text-[10px] md:text-sm transition-all duration-300 hover:scale-[1.05] shadow-[0_15px_40px_rgba(0,119,181,0.3)] hover:shadow-[0_20px_50px_rgba(0,119,181,0.5)] uppercase tracking-[0.1em] md:tracking-[0.15em] text-center border border-white/20 overflow-hidden"
-                                            >
-                                                <div className="absolute inset-0 bg-white/10 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
-                                                <Linkedin className="w-3 h-3 md:w-4 md:h-4 fill-white relative z-10" />
-                                                <span className="relative z-10">LinkedIn</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div className="w-48 h-[1px] bg-white/10 relative overflow-hidden hidden md:block">
+                                <motion.div
+                                    className="absolute inset-y-0 left-0 bg-primary"
+                                    animate={{ width: `${(chaosIndex + 1) * 25}%` }}
+                                    transition={{ type: "spring", stiffness: 100, damping: 20 }}
+                                />
                             </div>
-                        </motion.div>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <VerticalConnector height="h-24 md:h-32" />
-
-            {/* SECCIÓN FINAL — AUDITORÍA Y ACCIÓN (FUSIONADA) */}
-            <section className="relative z-10 py-16 md:py-24 px-4 md:px-6 overflow-hidden">
+            {/* SECCIÓN FINAL — AUDITORÍA Y ACCIÓN (FUSIONADA) - REDUCIDA */}
+            <section className="relative z-10 py-8 md:py-12 px-4 md:px-6 overflow-hidden">
                 {/* Background high-impact glow */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-primary/20 blur-[180px] rounded-full opacity-40 animate-pulse" />
 
-                <div className="max-w-6xl mx-auto relative px-4">
+                <div className="max-w-5xl mx-auto relative px-4">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
-                        className="bg-[#0D0D0D] backdrop-blur-3xl p-6 md:p-16 rounded-[3rem] md:rounded-[4rem] border-2 border-white/40 text-center space-y-10 md:space-y-16 shadow-[0_60px_120px_rgba(0,0,0,1)] relative overflow-hidden group"
+                        className="bg-[#0D0D0D] backdrop-blur-3xl p-6 md:p-10 rounded-[2.5rem] md:rounded-[3.5rem] border-2 border-white/40 text-center space-y-8 md:space-y-12 shadow-[0_60px_120px_rgba(0,0,0,1)] relative overflow-hidden group"
                     >
                         {/* Heading Area */}
-                        <div className="space-y-4 md:space-y-6 relative z-10">
-                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] md:text-xs font-black uppercase tracking-[0.4em]">
+                        <div className="space-y-3 md:space-y-4 relative z-10">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-black uppercase tracking-[0.4em]">
                                 Recompensa Inmediata
                             </div>
-                            <h2 className="text-3xl md:text-5xl lg:text-7xl font-display font-bold leading-tight tracking-tighter">
+                            <h2 className="text-2xl md:text-4xl lg:text-5xl font-display font-bold leading-tight tracking-tighter">
                                 <span className="bg-gradient-to-r from-white via-primary to-primary bg-clip-text text-transparent italic">Tu Auditoría de Eficiencia</span> <br />
                                 <span className="text-white">Lista en 7 Minutos.</span>
                             </h2>
-                            <p className="text-lg md:text-2xl text-gray-300 font-medium max-w-3xl mx-auto leading-relaxed italic">
+                            <p className="text-sm md:text-lg text-gray-300 font-medium max-w-2xl mx-auto leading-relaxed italic">
                                 Tras responder 14 preguntas clave, nuestra IA procesará tu estructura para entregarte este informe técnico personalizado.
                             </p>
                         </div>
 
                         {/* Core Content: Mockup & Stats */}
-                        <div className="grid lg:grid-cols-2 gap-12 items-center max-w-5xl mx-auto relative z-10">
+                        <div className="grid lg:grid-cols-2 gap-8 items-center max-w-4xl mx-auto relative z-10">
                             {/* Visual Reward (Mockup) */}
                             <motion.div
                                 initial={{ opacity: 0, x: -30 }}
                                 whileInView={{ opacity: 1, x: 0 }}
                                 transition={{ delay: 0.2 }}
-                                className="relative"
+                                className="relative max-w-sm mx-auto lg:mx-0"
                             >
                                 <div className="absolute -inset-4 bg-primary/20 blur-3xl rounded-full opacity-30 animate-pulse" />
-                                <div className="relative p-2 rounded-[2.5rem] bg-gradient-to-br from-white/20 to-transparent border border-white/20 shadow-2xl">
+                                <div className="relative p-2 rounded-[2rem] bg-gradient-to-br from-white/20 to-transparent border border-white/20 shadow-2xl">
                                     <img
                                         src="/diagnosis_report_mockup.png"
                                         alt="Mockup del Informe de Eficiencia IA"
                                         loading="lazy"
-                                        className="rounded-[2rem] w-full h-auto shadow-inner"
+                                        className="rounded-[1.8rem] w-full h-auto shadow-inner"
                                     />
-                                    <div className="absolute -bottom-6 -right-6 bg-white p-3 md:p-4 rounded-xl shadow-2xl border border-primary/20 flex items-center gap-3">
-                                        <PenTool className="w-5 h-5 text-primary" />
-                                        <p className="text-black font-black text-xs uppercase tracking-tighter">Auditoría PDF</p>
+                                    <div className="absolute -bottom-4 -right-4 bg-white p-2 md:p-3 rounded-xl shadow-2xl border border-primary/20 flex items-center gap-2">
+                                        <PenTool className="w-4 h-4 text-primary" />
+                                        <p className="text-black font-black text-[10px] uppercase tracking-tighter">Auditoría PDF</p>
                                     </div>
                                 </div>
                             </motion.div>
 
                             {/* Logic & Call to Action Area */}
-                            <div className="space-y-8 md:space-y-10">
+                            <div className="space-y-6 md:space-y-8">
                                 {/* Stats Row */}
-                                <div className="grid grid-cols-3 gap-3">
+                                <div className="grid grid-cols-3 gap-2">
                                     {[
                                         { text: "7 min", sub: "Tiempo", icon: Clock },
                                         { text: "Análisis IA", sub: "Motor", icon: Brain },
-                                        { text: "Estrategia", sub: "Hojas ruta", icon: Target }
+                                        { text: "Estrategia", sub: "Hojas Ruta", icon: Target }
                                     ].map((stat, i) => (
-                                        <div key={i} className="p-3 md:p-4 rounded-2xl bg-white/5 border border-white/10 flex flex-col items-center gap-1.5 shadow-xl">
-                                            <stat.icon className="w-5 h-5 text-primary" />
-                                            <div className="text-center">
-                                                <p className="text-white font-bold text-xs md:text-base leading-none mb-1">{stat.text}</p>
-                                                <p className="text-gray-400 font-bold text-[8px] md:text-[10px] uppercase tracking-widest leading-none">{stat.sub}</p>
-                                            </div>
+                                        <div key={i} className="p-3 md:p-4 rounded-2xl bg-white/[0.03] border border-white/10 text-center group/stat hover:bg-white/[0.06] transition-all">
+                                            <stat.icon className="w-5 h-5 text-primary mx-auto mb-2 group-hover/stat:scale-110 transition-transform" />
+                                            <p className="text-white font-black text-xs md:text-sm uppercase tracking-tighter mb-0.5">{stat.text}</p>
+                                            <p className="text-[8px] md:text-[10px] text-gray-400 font-bold uppercase tracking-widest">{stat.sub}</p>
                                         </div>
                                     ))}
                                 </div>
 
-                                {/* Summary Benefits */}
-                                <ul className="space-y-4 text-left">
+                                {/* Checklist Points */}
+                                <ul className="space-y-3 text-left max-w-sm mx-auto lg:mx-0">
                                     {[
                                         "Cálculo de capital perdido por ineficiencias.",
                                         "Mapa de calor de tus cuellos de botella.",
                                         "Plan técnico para recuperar tus márgenes."
-                                    ].map((benefit, i) => (
-                                        <li key={i} className="flex items-center gap-3 text-gray-200 text-sm md:text-lg">
-                                            <div className="w-2 h-2 rounded-full bg-primary shadow-[0_0_10px_rgba(110,231,183,0.5)]" />
-                                            {benefit}
+                                    ].map((li, i) => (
+                                        <li key={i} className="flex items-center gap-3 text-white/90 text-sm md:text-base font-medium">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(110,231,183,0.5)]" />
+                                            {li}
                                         </li>
                                     ))}
                                 </ul>
 
-                                {/* CTA Pulsing Button */}
-                                <div className="pt-4">
+                                <div className="space-y-4 pt-4">
                                     <button
                                         onClick={scrollToForm}
-                                        className="w-full group animate-pulse-slow py-5 md:py-8 rounded-2xl md:rounded-[2.5rem] bg-gradient-to-r from-primary via-[#4ADE80] to-primary text-black font-black text-lg md:text-2xl transition-all duration-500 hover:scale-[1.03] shadow-[0_20px_60px_rgba(110,231,183,0.4)] hover:shadow-[0_25px_80px_rgba(110,231,183,0.6)] uppercase tracking-[0.2em] relative overflow-hidden"
+                                        className="w-full group/cta relative flex items-center justify-center gap-4 px-8 py-4 md:py-6 bg-primary hover:bg-primary-hover text-background-dark rounded-2xl md:rounded-3xl font-black text-lg md:text-2xl transition-all duration-300 shadow-[0_20px_50px_rgba(110,231,183,0.3)] hover:scale-[1.02] uppercase tracking-tighter overflow-hidden"
                                     >
-                                        {/* Efecto de brillo al pasar el ratón */}
-                                        <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                                        <span className="relative z-10 flex items-center justify-center gap-4 text-center">
-                                            Empezar Diagnóstico
-                                            <ArrowRight className="w-6 h-6 md:w-8 md:h-8 group-hover:translate-x-3 transition-transform" />
-                                        </span>
+                                        <span className="relative z-10">Empezar Diagnóstico</span>
+                                        <ArrowRight className="w-6 h-6 md:w-8 md:h-8 group-hover/cta:translate-x-2 transition-transform" />
+                                        <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover/cta:translate-x-[100%] transition-transform duration-1000" />
                                     </button>
-                                    <p className="mt-4 text-center text-gray-500 text-[10px] md:text-xs font-medium italic">
+                                    <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest italic">
                                         Privacidad 100% garantizada. Análisis exclusivamente técnico.
                                     </p>
                                 </div>
@@ -847,28 +1143,19 @@ const Diagnosis = () => {
                         </div>
                     </motion.div>
                 </div>
-            </section>
+            </section >
 
-            {/* FORMULARIO DE DIAGNÓSTICO */}
-            <section id="diagnosis-form-section" ref={formRef} className="relative z-10 pt-16 md:pt-32 pb-8 md:pb-12 px-4 md:px-6 bg-[#080808]">
-                <div className="max-w-5xl mx-auto">
-                    <div className="relative p-[1px] rounded-[3rem] bg-gradient-to-b from-white/25 to-transparent">
-                        <div className="bg-[#0F0F0F] backdrop-blur-xl rounded-[2.95rem] p-6 md:p-16 shadow-[0_50px_100px_rgba(0,0,0,1)] relative overflow-hidden ring-1 ring-white/10">
-                            <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 blur-[120px] rounded-full" />
-                            <DiagnosisForm />
-                        </div>
-                    </div>
+            {/* SECCIÓN FORMULARIO DIAGNÓSTICO */}
+            < section ref={formRef} className="relative z-10 py-12 md:py-20 px-4 md:px-6" >
+                <div className="max-w-4xl mx-auto">
+                    <DiagnosisForm />
                 </div>
-            </section>
+            </section >
 
-            {/* Cinematic background text */}
-            <div className="fixed bottom-10 right-10 z-0 opacity-[0.03] pointer-events-none hidden lg:block">
-                <div className="text-[20rem] font-display font-black text-white select-none whitespace-nowrap">
-                    EFFICIENCY
-                </div>
-            </div>
+            <ServiceModal />
         </div >
     );
 };
+
 
 export default Diagnosis;
