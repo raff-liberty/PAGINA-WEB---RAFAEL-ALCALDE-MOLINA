@@ -211,27 +211,58 @@ const LocalSeo = () => {
                         </div>
                     </div>
 
-                    <div className="bg-[#0a0a0a] border border-white/[0.15] p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] relative overflow-hidden shadow-2xl hover:border-primary/40 transition-all duration-700 group/results">
-                        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-70" />
-                        <div className="absolute -bottom-20 -right-20 w-[200px] md:w-[300px] h-[200px] md:h-[300px] bg-primary/10 blur-[100px] rounded-full group-hover/results:bg-primary/20 transition-all duration-700" />
+                    <div className="bg-[#1A1A1A] border border-white/20 p-6 md:p-10 rounded-[2.5rem] relative overflow-hidden shadow-[0_60px_120px_-20px_rgba(0,0,0,1)] hover:border-primary/40 transition-all duration-700 group/results">
+                        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent opacity-100" />
+                        <div className="absolute -bottom-20 -right-20 w-[200px] md:w-[300px] h-[200px] md:h-[300px] bg-primary/5 blur-[100px] rounded-full group-hover/results:bg-primary/20 transition-all duration-700" />
 
-                        <h3 className="relative z-10 text-primary font-mono text-[9px] font-bold tracking-[0.3em] uppercase mb-6">Impacto Visual</h3>
+                        <h3 className="relative z-10 text-primary font-mono text-[9px] font-black tracking-[0.4em] uppercase mb-8">Auditoría de Impacto Visual</h3>
 
-                        <div className="space-y-6">
-                            {/* Comparison Example */}
-                            <div className="bg-white/[0.03] border border-white/5 p-6 rounded-2xl relative overflow-hidden">
-                                <div className="absolute top-0 right-0 p-2 bg-primary text-black text-[9px] font-black uppercase italic">Tú</div>
-                                <div className="flex justify-between items-center">
-                                    <div className="space-y-1">
-                                        <div className="text-white font-bold uppercase italic text-sm">ENGORILADOS LOCAL</div>
-                                        <div className="flex text-yellow-500 text-[10px]">★★★★★ (100+)</div>
+                        <div className="space-y-4">
+                            {/* Comparison Example - MAX CONTRAST & COMPACT */}
+                            <div className="bg-[#222222] border border-primary/40 p-5 pr-16 md:p-6 md:pr-20 rounded-2xl relative overflow-hidden group/card shadow-2xl">
+                                <div className="absolute inset-x-0 bottom-0 h-0.5 bg-primary/20" />
+
+                                <div className="absolute top-0 right-0 flex">
+                                    <div className="bg-primary text-black px-3 py-1 text-[9px] font-black uppercase italic rounded-bl-xl shadow-lg relative z-10">Tú</div>
+                                </div>
+
+                                <div className="flex justify-between items-center relative z-10">
+                                    <div className="space-y-2">
+                                        <div className="space-y-0.5">
+                                            <h4 className="text-white font-black uppercase italic text-lg tracking-tight leading-none">ENGORILADOS LOCAL</h4>
+                                            <div className="flex items-center gap-2 text-[8px] text-primary font-bold uppercase italic tracking-widest">
+                                                <span>Agencia de Automatización</span>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex items-center gap-2.5">
+                                            <div className="flex text-yellow-500 gap-0.5">
+                                                {[...Array(5)].map((_, i) => <Star key={i} className="w-3 h-3 fill-current" />)}
+                                            </div>
+                                            <span className="text-[10px] text-white/50 font-mono font-black">(128 reseñas)</span>
+                                        </div>
+
+                                        <div className="flex items-center gap-3 text-[10px]">
+                                            <span className="text-primary font-bold">Abierto 24/7</span>
+                                            <span className="text-white/30 font-medium italic">Murcia</span>
+                                        </div>
                                     </div>
-                                    <div className="bg-primary text-black w-10 h-10 rounded-xl flex items-center justify-center font-black text-xl italic">1º</div>
+
+                                    <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 group-hover/card:translate-x-0 transition-transform duration-500 flex items-center justify-center">
+                                        <div className="bg-primary text-black w-14 h-14 md:w-16 md:h-16 rounded-2xl rounded-tr-none flex items-center justify-center font-black text-2xl md:text-3xl italic shadow-[0_15px_40px_rgba(34,197,94,0.6)] border-2 border-white/30">
+                                            1º
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="bg-white/[0.01] border border-white/5 p-6 rounded-2xl opacity-40 grayscale flex justify-between items-center">
-                                <div className="h-4 bg-white/10 w-2/3 rounded" />
-                                <div className="bg-white/10 w-10 h-10 rounded-xl" />
+
+                            {/* Improved Competitor Card - Compact */}
+                            <div className="bg-white/[0.03] border border-white/10 p-5 rounded-2xl opacity-30 grayscale flex justify-between items-center">
+                                <div className="space-y-2 w-2/3">
+                                    <div className="h-4 bg-white/10 w-full rounded-md" />
+                                    <div className="h-3 bg-white/5 w-1/2 rounded-md" />
+                                </div>
+                                <div className="bg-white/10 w-12 h-12 rounded-xl" />
                             </div>
                         </div>
                     </div>

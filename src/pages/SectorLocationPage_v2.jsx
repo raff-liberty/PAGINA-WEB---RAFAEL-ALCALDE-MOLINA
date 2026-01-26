@@ -217,6 +217,9 @@ const SectorLocationPage_v2 = () => {
         linkedin_url: 'https://linkedin.com/in/engorilate',
         contact_email: 'r.alcalde@engorilate.com'
     });
+    const [loadTimestamp] = useState(Date.now());
+    const [hpot, setHpot] = useState('');
+    const [formSubmitted, setFormSubmitted] = useState(false);
 
     // --- SMART DEFAULT GENERATOR ---
     // This is the magic sauce. If DB is empty, this builds a perfect landing page instantly.
@@ -398,6 +401,50 @@ const SectorLocationPage_v2 = () => {
 
     // Get YouTube URL for this sector's macrosegmento
     const youtubeUrl = getYouTubeUrlForSector(sector.slug, siteConfig);
+
+    const handleFormSubmit = async (e) => {
+        // 1. Anti-spam: Honeypot check
+        if (hpot) {
+            e.preventDefault();
+            console.warn('Spam detected: Honeypot filled');
+            setFormSubmitted(true);
+            return;
+        }
+
+        // 2. Anti-spam: Timing check
+        const timeDiff = Date.now() - loadTimestamp;
+        if (timeDiff < 4000) {
+            e.preventDefault();
+            console.warn('Spam detected: Submission too fast');
+            setFormSubmitted(true);
+            return;
+        }
+
+        // 3. Anti-spam: Phone validation (finding phone input by name in the form)
+        const formData = new FormData(e.target);
+        const phone = formData.get('phone') || '';
+        const phoneDigits = phone.replace(/\D/g, '');
+        if (phoneDigits.length > 0 && phoneDigits.length < 5) {
+            e.preventDefault();
+            alert('Por favor, introduce un número de teléfono válido.');
+            return;
+        }
+
+        // Let it proceed to Formspree if everything is okay
+    };
+
+    if (formSubmitted) {
+        return (
+            <div className="min-h-screen bg-[#0a0a0a] flex flex-col items-center justify-center p-6 text-center">
+                <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mb-6">
+                    <CheckCircle className="w-10 h-10 text-primary" />
+                </div>
+                <h2 className="text-3xl font-bold text-white mb-4">¡Mensaje Recibido!</h2>
+                <p className="text-gray-400 max-w-md mx-auto">He recibido tu solicitud. Te contactaré en las próximas horas para agendar tu diagnóstico.</p>
+                <button onClick={() => window.location.reload()} className="mt-8 text-primary hover:underline">Volver</button>
+            </div>
+        );
+    }
 
     // --- RENDER ---
     return (
@@ -722,11 +769,25 @@ const SectorLocationPage_v2 = () => {
                                         <form
                                             action="https://formspree.io/f/xwpkqbvz"
                                             method="POST"
+                                            onSubmit={handleFormSubmit}
                                             className="space-y-6"
                                         >
                                             <input type="hidden" name="_subject" value={`Contacto desde ${sector.name} en ${location.name}`} />
                                             <input type="hidden" name="sector" value={sector.name} />
                                             <input type="hidden" name="location" value={location.name} />
+
+                                            {/* Honeypot field */}
+                                            <div className="hidden pointer-events-none opacity-0 h-0 overflow-hidden" aria-hidden="true">
+                                                <input
+                                                    type="text"
+                                                    name="_gotcha"
+                                                    tabIndex="-1"
+                                                    autoComplete="off"
+                                                    value={hpot}
+                                                    onChange={(e) => setHpot(e.target.value)}
+                                                    placeholder="Dejar en blanco"
+                                                />
+                                            </div>
 
                                             <div className="grid grid-cols-1 gap-4">
                                                 <input

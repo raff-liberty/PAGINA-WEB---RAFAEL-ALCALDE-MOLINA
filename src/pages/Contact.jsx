@@ -38,7 +38,7 @@ const Contact = () => {
     };
 
     return (
-        <div className="relative pt-32 md:pt-40 pb-12 min-h-screen bg-background-dark flex items-center justify-center">
+        <div className="relative pt-20 md:pt-28 pb-8 min-h-screen bg-background-dark flex items-center justify-center">
             <SEO
                 title="Sesión de Estrategia | Habla con el Arquitecto | Engorilate"
                 description="Habla directamente conmigo, sin filtros comerciales. Rediseñamos tu operativa para que el negocio deje de depender de ti."
@@ -55,11 +55,11 @@ const Contact = () => {
 
             <div className="relative z-10 w-full max-w-6xl px-6">
                 {/* Header Authority */}
-                <div className="flex flex-col items-center text-center mb-16">
+                <div className="flex flex-col items-center text-center mb-8 md:mb-12">
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 text-primary text-[11px] font-mono tracking-widest uppercase mb-8 backdrop-blur-sm"
+                        className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/10 text-primary text-[10px] font-mono tracking-widest uppercase mb-6 backdrop-blur-sm"
                     >
                         <Zap className="w-3.5 h-3.5 animate-pulse" />
                         Comunicación Directa & Sin Filtros
@@ -67,7 +67,7 @@ const Contact = () => {
                     <motion.h1
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="font-display text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white mb-8 leading-none uppercase italic"
+                        className="font-display text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter text-white mb-6 leading-none uppercase italic"
                     >
                         Hablemos de <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/80 drop-shadow-[0_0_20px_rgba(110,231,183,0.5)]">tu operativa.</span>
@@ -76,7 +76,7 @@ const Contact = () => {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="text-xl md:text-2xl text-white/70 font-light max-w-3xl leading-relaxed italic border-l-primary/40 pl-6 border-l"
+                        className="text-lg md:text-xl text-white/70 font-light max-w-2xl leading-relaxed italic border-l-primary/40 pl-6 border-l"
                     >
                         Olvida a los comerciales. Aquí hablas directamente con el arquitecto que diseñará e implementará tu sistema.
                     </motion.p>
@@ -88,10 +88,11 @@ const Contact = () => {
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        className="lg:col-span-7 bg-gradient-to-br from-[#121212] to-[#080808] border-2 border-white/20 p-8 md:p-10 rounded-[2.5rem] backdrop-blur-xl shadow-[0_50px_100px_rgba(0,0,0,0.9)] flex flex-col justify-center relative overflow-hidden group"
+                        className="lg:col-span-7 bg-gradient-to-br from-[#1A1A1A] to-[#121212] border-2 border-white/20 p-6 md:p-8 rounded-[2.5rem] backdrop-blur-xl shadow-[0_50px_100px_rgba(0,0,0,0.9)] flex flex-col justify-center relative overflow-hidden group"
                     >
-                        <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:scale-110 transition-transform duration-700">
-                            <Laptop className="w-32 h-32 text-white" />
+                        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent opacity-100" />
+                        <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:scale-110 transition-transform duration-700 pointer-events-none">
+                            <Laptop className="w-20 h-20 text-white" />
                         </div>
 
                         <div className="relative z-10 mb-8">
@@ -107,8 +108,9 @@ const Contact = () => {
                         className="lg:col-span-5 flex flex-col gap-4"
                     >
                         {/* Manual Contact Card */}
-                        <div className="bg-gradient-to-br from-[#121212] to-[#080808] border-2 border-white/20 p-8 md:p-10 rounded-[2.5rem] h-full flex flex-col justify-center shadow-[0_40px_80px_rgba(0,0,0,0.8)]">
-                            <div className="flex items-center justify-between mb-8">
+                        <div className="bg-gradient-to-br from-[#1A1A1A] to-[#121212] border-2 border-white/20 p-6 md:p-8 rounded-[2.5rem] h-full flex flex-col justify-center shadow-[0_40px_80px_rgba(0,0,0,0.8)] relative overflow-hidden">
+                            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent opacity-100" />
+                            <div className="flex items-center justify-between mb-6">
                                 <h3 className="text-white text-xl font-black uppercase tracking-tighter flex items-center gap-2">
                                     <Zap className="w-5 h-5 text-primary" /> Vía Rápida
                                 </h3>
@@ -196,7 +198,7 @@ const Contact = () => {
                                 </button>
                             </div>
 
-                            <div className="mt-10 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+                            <div className="mt-8 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
                                 <div className="flex items-center gap-3 text-xs text-gray-500 font-medium">
                                     <MapPin className="w-4 h-4 text-primary" />
                                     <span>Cartagena, Murcia (España)</span>

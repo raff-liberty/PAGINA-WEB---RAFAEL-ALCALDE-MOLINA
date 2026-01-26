@@ -126,13 +126,18 @@ const About = () => {
                                 Economista de formación
                             </div>
 
-                            <h1 className="font-display text-5xl md:text-8xl font-bold leading-[0.9] text-white tracking-tighter">
-                                Engorilao por <br />
-                                <span className="text-primary italic">vocación.</span>
-                            </h1>
+                            <div className="space-y-4">
+                                <h1 className="font-display text-5xl md:text-8xl font-bold leading-[0.9] text-white tracking-tighter">
+                                    Engorilao por <br />
+                                    <span className="text-primary italic">vocación.</span>
+                                </h1>
+                                <div className="text-xl md:text-2xl font-black text-white px-1 uppercase tracking-[0.3em] font-display italic opacity-80">
+                                    Rafael Alcalde Molina
+                                </div>
+                            </div>
 
                             <p className="text-xl md:text-2xl text-gray-300 font-light leading-relaxed max-w-3xl italic">
-                                Ayudo a poner un orden industrial donde hay caos operativo. Mi trabajo no es venderte software, sino construir el motor que te devuelva tu tiempo.
+                                Soy Rafael Alcalde Molina, economista de formación y apasionado de la eficiencia tecnológica. Ayudo a poner un orden industrial donde hay caos operativo.
                             </p>
 
                             <div className="grid grid-cols-2 gap-4 pt-6">
@@ -258,11 +263,11 @@ const About = () => {
 
                         <section className="prose prose-invert prose-2xl text-gray-200 leading-relaxed font-normal">
                             <p>
-                                Vengo de los números. Durante años en el mundo del control de gestión, analicé por qué las empresas perdían dinero.
+                                Mi nombre es <span className="text-white font-bold">Rafael Alcalde Molina</span> y vengo de los números. Durante años en el mundo del control de gestión, analicé por qué las empresas perdían dinero.
                                 <span className="text-primary font-black underline decoration-primary/50"> La respuesta nunca era falta de herramientas</span>, siempre era falta de claridad operativa.
                             </p>
                             <p className="mt-8 text-gray-300">
-                                He visto a dueños de negocios brillantes quemarse en tareas de copiar y pegar. He visto el techo de cristal de "no puedo crecer sin explotar". Por eso creé Engorilate: para aplicar lógica industrial a negocios que quieren ser libres.
+                                He visto a dueños de negocios brillantes quemarse en tareas de copiar y pegar. He visto el techo de cristal de "no puedo crecer sin explotar". Por eso creé Engorilate: para aplicar mi experiencia como economista a negocios que quieren ser libres de verdad.
                             </p>
                         </section>
 

@@ -61,11 +61,11 @@ const CrmArchitectureSimulator = () => {
                             strokeWidth={hoveredNode === node.id ? "3" : "1.5"}
                             initial={{ pathLength: 0 }}
                             animate={{ pathLength: 1 }}
-                            transition={{ duration: 1.5, ease: "easeOut" }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
                             style={{ filter: hoveredNode === node.id ? 'url(#glow)' : 'none' }}
                         />
 
-                        {/* Flowing Data Particles */}
+                        {/* Flowing Data Particles - FASTER */}
                         {[...Array(3)].map((_, i) => (
                             <motion.circle
                                 key={`pulse-${node.id}-${i}`}
@@ -79,8 +79,8 @@ const CrmArchitectureSimulator = () => {
                                 }}
                                 transition={{
                                     repeat: Infinity,
-                                    duration: 3,
-                                    delay: i * 1 + (nodes.indexOf(node) * 0.5),
+                                    duration: 1.5,
+                                    delay: i * 0.5 + (nodes.indexOf(node) * 0.3),
                                     ease: "easeInOut"
                                 }}
                                 style={{ filter: 'blur(1px)' }}

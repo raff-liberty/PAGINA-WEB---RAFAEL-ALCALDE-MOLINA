@@ -27,55 +27,60 @@ const Footer = () => {
                         </div>
                     </div>
 
-                    {/* Recursos - NUEVO PARA SEO */}
+                    {/* Recursos */}
                     <div>
                         <h4 className="font-display font-semibold text-sm text-white mb-4 uppercase tracking-wider">Recursos</h4>
                         <div className="flex flex-col space-y-2 text-sm">
                             <Link className="text-gray-500 hover:text-primary transition-colors" to="/blog">Blog</Link>
                             <Link className="text-gray-500 hover:text-primary transition-colors" to="/peluquerias/murcia">Peluquerías</Link>
-                            <Link className="text-gray-500 hover:text-primary transition-colors" to="/restaurantes/murcia">Restaurantes</Link>
                             <Link className="text-gray-500 hover:text-primary transition-colors" to="/clinicas/murcia">Clínicas</Link>
-                            <Link className="text-gray-500 hover:text-primary transition-colors" to="/talleres/murcia">Talleres</Link>
                             <Link className="text-primary hover:text-primary-hover transition-colors font-medium" to="/sectores">
                                 Ver todos los sectores →
                             </Link>
                         </div>
                     </div>
 
-                    {/* Locations */}
+                    {/* Contact Support */}
                     <div>
-                        <h4 className="font-display font-semibold text-sm text-white mb-4 uppercase tracking-wider">Dónde Trabajamos</h4>
+                        <h4 className="font-display font-semibold text-sm text-white mb-4 uppercase tracking-wider">Hablemos</h4>
                         <div className="flex flex-col space-y-2 text-sm">
-                            {locations.slice(0, 5).map((location) => (
-                                <Link
-                                    key={location.id}
-                                    className="text-gray-500 hover:text-primary transition-colors"
-                                    to={`/servicios/${location.slug}`}
-                                >
-                                    {location.name}
-                                </Link>
-                            ))}
-                            <Link className="text-primary hover:text-primary-hover transition-colors font-medium" to="/donde-trabajamos">
-                                Ver todas las localidades →
+                            <a href="mailto:r.alcalde@engorilate.com" className="text-gray-500 hover:text-primary transition-colors">r.alcalde@engorilate.com</a>
+                            <Link className="text-primary hover:text-primary-hover transition-colors font-medium" to="/contact">
+                                Pedir Diagnóstico Gratuito →
                             </Link>
                         </div>
+                    </div>
+                </div>
+
+                {/* Directorio de Localidades para SEO - Elimina páginas huérfanas */}
+                <div className="pt-12 mb-12 border-t border-white/5">
+                    <h4 className="font-display font-semibold text-[10px] text-white/40 mb-6 uppercase tracking-[0.2em]">Automatización en la Región de Murcia</h4>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-x-4 gap-y-2 text-[9px] sm:text-[10px]">
+                        {locations.map((loc) => (
+                            <Link
+                                key={loc.id}
+                                to={`/peluquerias/${loc.slug}`}
+                                className="text-gray-500 hover:text-primary transition-colors whitespace-nowrap"
+                            >
+                                {loc.name}
+                            </Link>
+                        ))}
                     </div>
                 </div>
 
                 {/* Bottom Bar */}
                 <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
                     <div className="mb-4 md:mb-0">
-                        <p>© {new Date().getFullYear()} Engorilate. Todos los derechos reservados.</p>
+                        <p>© {new Date().getFullYear()} Engorilate. Rafael Alcalde Molina.</p>
                     </div>
-                    <div className="flex space-x-6">
+                    <div className="flex space-x-6 text-xs">
                         <Link className="hover:text-primary transition-colors" to="/legal">Aviso Legal</Link>
                         <Link className="hover:text-primary transition-colors" to="/privacidad">Privacidad</Link>
                         <Link className="hover:text-primary transition-colors" to="/cookies">Cookies</Link>
-                        <Link className="hover:text-primary transition-colors" to="/contact">Contacto</Link>
                     </div>
                 </div>
             </div>
-        </footer >
+        </footer>
     );
 };
 

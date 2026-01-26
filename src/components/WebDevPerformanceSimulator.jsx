@@ -14,13 +14,13 @@ const WebDevPerformanceSimulator = () => {
     // Animate score on mount
     useEffect(() => {
         const timer = setTimeout(() => {
-            animateValue(setScore, 0, 99, 2000);
+            animateValue(setScore, 0, 99, 800); // Reduced from 2000
 
-            // Animate metrics with delays
-            setTimeout(() => animateValue((val) => setMetrics(prev => ({ ...prev, fcp: val })), 0, 0.4, 800), 500);
-            setTimeout(() => animateValue((val) => setMetrics(prev => ({ ...prev, lcp: val })), 0, 0.8, 800), 800);
-            setTimeout(() => animateValue((val) => setMetrics(prev => ({ ...prev, cls: val })), 0, 0.02, 800), 1100);
-        }, 300);
+            // Animate metrics with delays - FASTER
+            setTimeout(() => animateValue((val) => setMetrics(prev => ({ ...prev, fcp: val })), 0, 0.4, 400), 200);
+            setTimeout(() => animateValue((val) => setMetrics(prev => ({ ...prev, lcp: val })), 0, 0.8, 400), 400);
+            setTimeout(() => animateValue((val) => setMetrics(prev => ({ ...prev, cls: val })), 0, 0.02, 400), 600);
+        }, 100);
 
         return () => clearTimeout(timer);
     }, []);
@@ -80,8 +80,8 @@ const WebDevPerformanceSimulator = () => {
                             key={device.id}
                             onClick={() => setActiveDevice(device.id)}
                             className={`flex-1 px-3 py-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 ${activeDevice === device.id
-                                    ? 'bg-primary text-black'
-                                    : 'bg-white/5 text-white/40 hover:bg-white/10'
+                                ? 'bg-primary text-black'
+                                : 'bg-white/5 text-white/40 hover:bg-white/10'
                                 }`}
                         >
                             <device.icon className="w-3 h-3" />
@@ -116,7 +116,7 @@ const WebDevPerformanceSimulator = () => {
                                 animate={{
                                     strokeDasharray: `${(score / 100) * 440} 440`,
                                 }}
-                                transition={{ duration: 2, ease: "easeOut" }}
+                                transition={{ duration: 0.8, ease: "easeOut" }}
                             />
                             <defs>
                                 <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">

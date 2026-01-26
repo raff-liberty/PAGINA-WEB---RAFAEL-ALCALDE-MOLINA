@@ -12,7 +12,13 @@ const DiagnosisForm = () => {
     const [branch, setBranch] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
-    const [contactInfo, setContactInfo] = useState({ full_name: '', email: '', phone: '' });
+    const [contactInfo, setContactInfo] = useState({
+        full_name: '',
+        email: '',
+        phone: '',
+        website_url: '' // Honeypot field
+    });
+    const [loadTimestamp] = useState(Date.now());
 
     useEffect(() => {
         if (step === 1 && currentQuestionIdx === 0) {
@@ -72,6 +78,23 @@ const DiagnosisForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // 1. Anti-spam: Honeypot check
+        if (contactInfo.website_url) {
+            console.warn('Spam detected: Honeypot filled');
+            setStep(5); // Silent success
+            return;
+        }
+
+        // 2. Anti-spam: Timing check (Bots submit too fast)
+        // Since it's a multi-step quiz, standard users take at least 15-20s
+        const timeDiff = Date.now() - loadTimestamp;
+        if (timeDiff < 10000) { // Less than 10 seconds for the whole quiz is suspicious
+            console.warn('Spam detected: Submission too fast');
+            setStep(5); // Silent success
+            return;
+        }
+
         setIsSubmitting(true);
         setError(null);
 
@@ -235,6 +258,18 @@ const DiagnosisForm = () => {
                                     placeholder="+34 600 000 000"
                                     value={contactInfo.phone}
                                     onChange={(e) => setContactInfo(prev => ({ ...prev, phone: e.target.value }))}
+                                />
+                            </div>
+
+                            {/* Honeypot field - Invisible to humans */}
+                            <div className="hidden pointer-events-none opacity-0 h-0 overflow-hidden" aria-hidden="true">
+                                <input
+                                    type="text"
+                                    tabIndex="-1"
+                                    autoComplete="off"
+                                    value={contactInfo.website_url}
+                                    onChange={(e) => setContactInfo(prev => ({ ...prev, website_url: e.target.value }))}
+                                    placeholder="Tu sitio web (dejar en blanco)"
                                 />
                             </div>
 

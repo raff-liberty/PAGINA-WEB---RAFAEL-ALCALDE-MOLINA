@@ -18,7 +18,7 @@ const CustomManagementSimulator = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             setActiveView(prev => (prev + 1) % 3);
-        }, 3500);
+        }, 2000);
         return () => clearInterval(interval);
     }, []);
 
@@ -31,13 +31,13 @@ const CustomManagementSimulator = () => {
 
         const timer = setTimeout(() => {
             if (activeView === 0) {
-                animateValue(setRevenue, 0, 24567, 1000);
+                animateValue(setRevenue, 0, 24567, 600);
             } else if (activeView === 1) {
-                animateValue(setStockLevel, 0, 94, 800);
+                animateValue(setStockLevel, 0, 94, 500);
             } else {
-                animateValue(setTasksCompleted, 0, 18, 600);
+                animateValue(setTasksCompleted, 0, 18, 400);
             }
-        }, 200);
+        }, 100);
 
         return () => clearTimeout(timer);
     }, [activeView]);

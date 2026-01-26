@@ -26,12 +26,13 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
         email: '',
         phone: '',
         company: '',
-        message: '',
-        privacyAccepted: false
+        privacyAccepted: false,
+        website_url: '' // Honeypot field
     });
     const [submitted, setSubmitted] = useState(false);
     const [loading, setLoading] = useState(false);
     const [siteConfig, setSiteConfig] = useState(null);
+    const [loadTimestamp] = useState(Date.now());
 
     const serviceOptions = [
         { value: 'automation', label: 'Automatización (n8n, Make)' },
@@ -65,6 +66,29 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
         setLoading(true);
 
         try {
+            // 1. Anti-spam: Honeypot check
+            if (formData.website_url) {
+                console.warn('Spam detected: Honeypot filled');
+                setSubmitted(true); // Silent discard
+                return;
+            }
+
+            // 2. Anti-spam: Timing check (Bots submit too fast)
+            const timeDiff = Date.now() - loadTimestamp;
+            if (timeDiff < 3000) { // Less than 3 seconds
+                console.warn('Spam detected: Submission too fast');
+                setSubmitted(true); // Silent discard
+                return;
+            }
+
+            // 3. Anti-spam: Basic Phone Validation (Must contain digits)
+            const phoneDigits = formData.phone.replace(/\D/g, '');
+            if (phoneDigits.length < 5) {
+                alert('Por favor, introduce un número de teléfono válido.');
+                setLoading(false);
+                return;
+            }
+
             // Capturar datos de origen automáticamente
             const originData = captureOriginData();
 
@@ -146,12 +170,12 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
     }
 
     return (
-        <form onSubmit={handleSubmit} className={`space-y-4 md:space-y-6 ${className}`}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+        <form onSubmit={handleSubmit} className={`space-y-3 md:space-y-4 ${className}`}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                 <div className="group/input relative">
                     <input
                         id="name"
-                        className="w-full bg-white/[0.08] border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:border-primary/50 focus:bg-white/[0.12] outline-none transition-all placeholder:text-white/30 shadow-[0_0_20px_rgba(255,255,255,0.05),0_4px_6px_-1px_rgba(0,0,0,0.3)]"
+                        className="w-full bg-white/[0.08] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-primary/50 focus:bg-white/[0.12] outline-none transition-all placeholder:text-white/30 shadow-[0_0_20px_rgba(255,255,255,0.05),0_4px_6px_-1px_rgba(0,0,0,0.3)]"
                         placeholder="Tu Nombre"
                         type="text"
                         value={formData.name}
@@ -163,7 +187,7 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
                 <div className="group/input relative">
                     <input
                         id="phone"
-                        className="w-full bg-white/[0.08] border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:border-primary/50 focus:bg-white/[0.12] outline-none transition-all placeholder:text-white/30 shadow-[0_0_20px_rgba(255,255,255,0.05),0_4px_6px_-1px_rgba(0,0,0,0.3)]"
+                        className="w-full bg-white/[0.08] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-primary/50 focus:bg-white/[0.12] outline-none transition-all placeholder:text-white/30 shadow-[0_0_20px_rgba(255,255,255,0.05),0_4px_6px_-1px_rgba(0,0,0,0.3)]"
                         placeholder="+34 WhatsApp"
                         type="tel"
                         value={formData.phone}
@@ -184,6 +208,19 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
                     onChange={handleChange}
                 />
                 <div className="absolute inset-0 rounded-xl bg-primary/5 blur-xl opacity-0 group-focus-within/input:opacity-100 transition-opacity pointer-events-none" />
+            </div>
+
+            {/* Honeypot field - Invisible to humans, trap for bots */}
+            <div className="hidden pointer-events-none opacity-0 h-0 overflow-hidden" aria-hidden="true">
+                <input
+                    id="website_url"
+                    type="text"
+                    tabIndex="-1"
+                    autoComplete="off"
+                    value={formData.website_url}
+                    onChange={handleChange}
+                    placeholder="Tu sitio web (dejar en blanco)"
+                />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
@@ -222,9 +259,9 @@ const ContactForm = ({ className = "", source = "Contact Page" }) => {
             <div className="group/input relative">
                 <textarea
                     id="message"
-                    className="w-full bg-white/[0.08] border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:border-primary/50 focus:bg-white/[0.12] outline-none resize-none transition-all placeholder:text-white/30 shadow-[0_0_20px_rgba(255,255,255,0.05),0_4px_6px_-1px_rgba(0,0,0,0.3)]"
+                    className="w-full bg-white/[0.08] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-primary/50 focus:bg-white/[0.12] outline-none resize-none transition-all placeholder:text-white/30 shadow-[0_0_20px_rgba(255,255,255,0.05),0_4px_6px_-1px_rgba(0,0,0,0.3)]"
                     placeholder="¿Qué quieres automatizar? Sé breve y directo."
-                    rows={4}
+                    rows={3}
                     value={formData.message}
                     onChange={handleChange}
                     required
