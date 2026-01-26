@@ -146,7 +146,7 @@ const DiagnosisForm = () => {
             {q.type === 'open' ? (
                 <div className="space-y-4">
                     <textarea
-                        className="w-full bg-white/[0.05] border border-white/10 rounded-2xl p-5 text-lg text-white focus:border-primary/50 focus:bg-white/[0.08] outline-none transition-all placeholder:text-white/20 shadow-inner resize-none mb-4"
+                        className="w-full bg-white/[0.05] border border-white/10 rounded-xl p-4 text-base text-white focus:border-primary/50 focus:bg-white/[0.08] outline-none transition-all placeholder:text-white/20 shadow-inner resize-none mb-3"
                         placeholder="Escribe aquí tu respuesta..."
                         value={responses[q.id] || ''}
                         onChange={handleOpenResponseChange}
@@ -166,15 +166,15 @@ const DiagnosisForm = () => {
                         <button
                             key={opt.value}
                             onClick={() => handleOptionSelect(opt.value, opt)}
-                            className={`w-full text-left p-4 md:p-5 rounded-xl border transition-all duration-300 flex items-center justify-between group
+                            className={`w-full text-left p-3.5 md:p-4 rounded-xl border transition-all duration-300 flex items-center justify-between group
                                 ${responses[q.id] === opt.value
-                                    ? 'bg-primary/30 border-primary text-primary shadow-[0_0_30px_rgba(110,231,183,0.25)]'
+                                    ? 'bg-primary/30 border-primary text-primary shadow-[0_0_20px_rgba(110,231,183,0.2)]'
                                     : 'bg-[#1E1E1E] bg-gradient-to-br from-primary/[0.04] to-transparent border-white/30 hover:bg-white/10 hover:border-white/50 shadow-xl'}`}
                         >
-                            <span className="text-lg md:text-xl font-medium">{opt.label}</span>
-                            <div className={`w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all
+                            <span className="text-base md:text-lg font-medium">{opt.label}</span>
+                            <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all
                                 ${responses[q.id] === opt.value ? 'bg-primary border-primary' : 'border-white/30 group-hover:border-white/50'}`}>
-                                {responses[q.id] === opt.value && <Check className="w-4 h-4 text-background-dark" />}
+                                {responses[q.id] === opt.value && <Check className="w-3 h-3 text-background-dark" />}
                             </div>
                         </button>
                     ))}
@@ -233,7 +233,7 @@ const DiagnosisForm = () => {
                                 <input
                                     required
                                     type="text"
-                                    className="w-full bg-white/[0.05] border border-white/10 rounded-2xl p-5 text-white focus:border-primary/50 focus:bg-white/[0.08] outline-none transition-all placeholder:text-white/20 shadow-inner"
+                                    className="w-full bg-white/[0.05] border border-white/10 rounded-xl p-4 text-white focus:border-primary/50 focus:bg-white/[0.08] outline-none transition-all placeholder:text-white/20 shadow-inner"
                                     placeholder="Juan Pérez"
                                     value={contactInfo.full_name}
                                     onChange={(e) => setContactInfo(prev => ({ ...prev, full_name: e.target.value }))}
@@ -244,7 +244,7 @@ const DiagnosisForm = () => {
                                 <input
                                     required
                                     type="email"
-                                    className="w-full bg-white/[0.05] border border-white/10 rounded-2xl p-5 text-white focus:border-primary/50 focus:bg-white/[0.08] outline-none transition-all placeholder:text-white/20 shadow-inner"
+                                    className="w-full bg-white/[0.05] border border-white/10 rounded-xl p-4 text-white focus:border-primary/50 focus:bg-white/[0.08] outline-none transition-all placeholder:text-white/20 shadow-inner"
                                     placeholder="juan@tuempresa.com"
                                     value={contactInfo.email}
                                     onChange={(e) => setContactInfo(prev => ({ ...prev, email: e.target.value }))}
@@ -254,7 +254,7 @@ const DiagnosisForm = () => {
                                 <label className="text-sm font-medium text-text-muted ml-1">WhatsApp (opcional)</label>
                                 <input
                                     type="tel"
-                                    className="w-full bg-white/[0.05] border border-white/10 rounded-2xl p-5 text-white focus:border-primary/50 focus:bg-white/[0.08] outline-none transition-all placeholder:text-white/20 shadow-inner"
+                                    className="w-full bg-white/[0.05] border border-white/10 rounded-xl p-4 text-white focus:border-primary/50 focus:bg-white/[0.08] outline-none transition-all placeholder:text-white/20 shadow-inner"
                                     placeholder="+34 600 000 000"
                                     value={contactInfo.phone}
                                     onChange={(e) => setContactInfo(prev => ({ ...prev, phone: e.target.value }))}

@@ -389,29 +389,29 @@ const About = () => {
 
                     <div className="grid lg:grid-cols-2 gap-0">
                         {/* Left: Diagnosis Hook */}
-                        <div className="p-10 md:p-16 flex flex-col justify-center border-b-2 lg:border-b-0 lg:border-r-2 border-white/10 bg-white/[0.02]">
-                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-black tracking-[0.3em] uppercase mb-8 w-fit shadow-xl">
-                                <Brain className="w-4 h-4" />
+                        <div className="p-8 md:p-12 flex flex-col justify-center border-b-2 lg:border-b-0 lg:border-r-2 border-white/10 bg-white/[0.02]">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[9px] font-black tracking-[0.3em] uppercase mb-6 w-fit shadow-xl">
+                                <Brain className="w-3.5 h-3.5" />
                                 Paso 1: El Diagnóstico
                             </div>
 
-                            <h2 className="font-display text-4xl md:text-5xl font-black text-white mb-6 tracking-tighter leading-none uppercase italic">
+                            <h2 className="font-display text-3xl md:text-4xl font-black text-white mb-4 tracking-tighter leading-none uppercase italic">
                                 ¿TU NEGOCIO ES <br />
                                 <span className="text-primary drop-shadow-[0_0_15px_rgba(110,231,183,0.4)]">AUTÓNOMO</span> <br />
                                 O DEPENDE DE TI?
                             </h2>
 
-                            <p className="text-xl text-gray-400 mb-10 font-medium italic leading-relaxed">
+                            <p className="text-base md:text-lg text-gray-400 mb-6 font-medium italic leading-relaxed">
                                 Antes de hablar, descubre exactamente dónde están tus fugas de rentabilidad con nuestra herramienta de análisis IA.
                             </p>
 
-                            <div className="space-y-4 mb-12">
-                                <div className="flex items-center gap-3 text-sm text-gray-500 font-bold uppercase tracking-wider">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(110,231,183,1)]"></div>
+                            <div className="space-y-3 mb-8">
+                                <div className="flex items-center gap-3 text-[10px] text-gray-500 font-bold uppercase tracking-wider">
+                                    <div className="w-1 h-1 rounded-full bg-primary shadow-[0_0_8px_rgba(110,231,183,1)]"></div>
                                     Análisis Operativo en 2 min
                                 </div>
-                                <div className="flex items-center gap-3 text-sm text-gray-500 font-bold uppercase tracking-wider">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(110,231,183,1)]"></div>
+                                <div className="flex items-center gap-3 text-[10px] text-gray-500 font-bold uppercase tracking-wider">
+                                    <div className="w-1 h-1 rounded-full bg-primary shadow-[0_0_8px_rgba(110,231,183,1)]"></div>
                                     Resultados Estratégicos Imediatos
                                 </div>
                             </div>
@@ -426,9 +426,9 @@ const About = () => {
                         </div>
 
                         {/* Right: Direct Contact Form */}
-                        <div className="p-10 md:p-16 flex flex-col justify-center">
-                            <div className="mb-10">
-                                <h3 className="text-3xl md:text-4xl font-black text-white mb-3 tracking-tighter uppercase italic leading-none">
+                        <div className="p-8 md:p-12 flex flex-col justify-center">
+                            <div className="mb-6">
+                                <h3 className="text-2xl md:text-3xl font-black text-white mb-2 tracking-tighter uppercase italic leading-none">
                                     ¿Hablamos <br />
                                     <span className="text-primary">directamente?</span>
                                 </h3>
@@ -442,29 +442,29 @@ const About = () => {
                                 className="space-y-4"
                             />
 
-                            <div className="mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
-                                <div className="flex flex-col items-center md:items-start gap-1">
-                                    <span className="text-xs text-white font-black uppercase tracking-widest italic">Rafael Alcalde Molina</span>
-                                    <span className="text-[10px] text-primary font-bold uppercase tracking-[0.2em]">Economista & Controller</span>
+                            <div className="mt-8 pt-6 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
+                                <div className="flex flex-col items-center md:items-start gap-0.5">
+                                    <span className="text-[10px] text-white font-black uppercase tracking-widest italic">Rafael Alcalde Molina</span>
+                                    <span className="text-[9px] text-primary font-bold uppercase tracking-[0.2em]">Economista & Controller</span>
                                 </div>
-                                <div className="flex items-center gap-3">
+                                <div className="flex items-center gap-2">
                                     <a
                                         href={siteConfig.whatsapp_url}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-[#25D366]/10 hover:border-[#25D366]/30 transition-all group shadow-xl"
+                                        className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-[#25D366]/10 hover:border-[#25D366]/30 transition-all group shadow-xl"
                                     >
-                                        <MessageCircle className="w-4 h-4 text-[#25D366]" />
-                                        <span className="text-[10px] text-white font-black uppercase tracking-widest group-hover:underline">WhatsApp</span>
+                                        <MessageCircle className="w-3.5 h-3.5 text-[#25D366]" />
+                                        <span className="text-[9px] text-white font-black uppercase tracking-widest group-hover:underline">WhatsApp</span>
                                     </a>
                                     <a
                                         href={siteConfig.linkedin_url}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-[#0077B5]/10 hover:border-[#0077B5]/30 transition-all group shadow-xl"
+                                        className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-[#0077B5]/10 hover:border-[#0077B5]/30 transition-all group shadow-xl"
                                     >
-                                        <Linkedin className="w-4 h-4 text-[#0077B5]" />
-                                        <span className="text-[10px] text-white font-black uppercase tracking-widest group-hover:underline">LinkedIn</span>
+                                        <Linkedin className="w-3.5 h-3.5 text-[#0077B5]" />
+                                        <span className="text-[9px] text-white font-black uppercase tracking-widest group-hover:underline">LinkedIn</span>
                                     </a>
                                 </div>
                             </div>
