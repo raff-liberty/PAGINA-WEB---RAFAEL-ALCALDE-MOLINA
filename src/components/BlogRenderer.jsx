@@ -222,7 +222,7 @@ const BlogRenderer = ({ post }) => {
                             <ArrowRight className="w-5 h-5" />
                         </Link>
                         <Link
-                            to="/sobre-mi"
+                            to="/rafael-alcalde-molina"
                             className="inline-flex items-center justify-center gap-3 bg-white/5 hover:bg-white/10 text-white font-bold px-10 py-5 rounded-xl border border-white/10 transition-all uppercase tracking-tighter"
                         >
                             ¿Quién es este tío?
