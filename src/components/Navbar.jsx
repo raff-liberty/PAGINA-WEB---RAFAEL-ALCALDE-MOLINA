@@ -56,7 +56,7 @@ const Navbar = () => {
         },
         { name: 'Cómo Trabajamos', path: '/como-trabajamos' },
         { name: 'Blog', path: '/blog' },
-        { name: 'Sobre mí', path: '/sobre-mi' },
+        { name: 'Sobre mí', path: '/rafael-alcalde-molina' },
     ];
 
     return (

@@ -31,6 +31,7 @@ const AdminPanel = lazy(() => import('./pages/AdminPanel'));
 const Diagnosis = lazy(() => import('./pages/Diagnosis'));
 const ChaosLanding = lazy(() => import('./pages/ChaosLanding'));
 const SegmentLanding = lazy(() => import('./pages/SegmentLanding'));
+const RafaelPortfolio = lazy(() => import('./pages/RafaelPortfolio'));
 import { supabase } from './lib/supabaseClient';
 
 import { useAnalytics } from './lib/useAnalytics';
@@ -56,7 +57,7 @@ function App() {
                                 <Route path="/" element={<Home />} />
                                 <Route path="/como-trabajamos" element={<WorkMethod />} />
                                 <Route path="/por-que-funciona" element={<WhyThisWorks />} />
-                                <Route path="/sobre-mi" element={<About />} />
+                                <Route path="/sobre-mi" element={<RafaelPortfolio />} />
                                 <Route path="/contact" element={<Contact />} />
                                 <Route path="/legal" element={<Legal />} />
                                 <Route path="/privacidad" element={<Privacy />} />
@@ -75,6 +76,7 @@ function App() {
                                 <Route path="/diagnostico" element={<Diagnosis />} />
                                 <Route path="/caos-operativo" element={<ChaosLanding />} />
                                 <Route path="/segmentos/:segmentId" element={<SegmentLanding />} />
+                                <Route path="/rafael-alcalde-molina" element={<RafaelPortfolio />} />
                                 <Route path="/:sector" element={<SectorLocationPage />} />
                                 <Route path="/:sector/:location" element={<SectorLocationPage />} />
                             </Routes>
